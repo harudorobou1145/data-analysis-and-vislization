@@ -422,7 +422,7 @@
       if (a.is_test_execution) parts.push("自测");
       detail.textContent = parts.join(" · ");
       var flag = document.createElement("span");
-      if (a.is_error) { flag.className = "err"; flag.textContent = "⚠ " + (a.error_category || "错误"); }
+      if (a.is_error) { flag.className = "err"; flag.textContent = a.error_category || "错误"; }
       else { flag.className = "t"; flag.textContent = a.command_duration_seconds != null ? a.command_duration_seconds.toFixed(2) + "s" : (a.bridge_duration_seconds != null ? a.bridge_duration_seconds.toFixed(2) + "s" : ""); }
       row.appendChild(t); row.appendChild(cat); row.appendChild(detail); row.appendChild(flag);
       box.appendChild(row);
@@ -509,14 +509,14 @@
     ];
     tiles.forEach(function (t) { box.appendChild(statTile(t.l, t.v, t.s)); });
   }
-  function subjBar(id, vals, name, unit, isInt, ymin, ymax) {
+  function subjBar(id, vals, name, isInt, ymin, ymax) {
     var p = pal();
     chart(id).setOption({
       backgroundColor: "transparent", textStyle: { color: p.text2 },
       title: { text: name, left: 0, top: 0, textStyle: { color: p.text1, fontSize: 12.5, fontWeight: 600 } },
-      grid: { left: 8, right: 8, top: 26, bottom: 20, containLabel: true },
+      grid: { left: 8, right: 8, top: 30, bottom: 20, containLabel: true },
       xAxis: Object.assign(axisCategory(p), { data: SUBJ_EFFORTS.map(function (e) { return SUBJ_LABEL[e]; }) }),
-      yAxis: Object.assign(axisValue(p), { name: unit, nameTextStyle: { color: p.muted }, min: ymin, max: ymax }),
+      yAxis: Object.assign(axisValue(p), { min: ymin, max: ymax }),
       series: [{
         type: "bar", barWidth: 20,
         data: vals.map(function (v, i) { return { value: v, itemStyle: { color: p.seq[i], borderRadius: [4, 4, 0, 0] } }; }),
@@ -528,9 +528,9 @@
   function renderSubjBars() {
     var g = subjAllGroups();
     function val(e, k) { var x = g.find(function (y) { return y.effort === e; }); return x ? x[k] : null; }
-    subjBar("chartSubjScore", SUBJ_EFFORTS.map(function (e) { return val(e, "mean_score_10"); }), "质量均分（纵轴 9.0 起）", "/10", false, 9.0, 10.05);
-    subjBar("chartSubjTime", SUBJ_EFFORTS.map(function (e) { return val(e, "median_elapsed_seconds"); }), "耗时中位数", "秒", false, 0, null);
-    subjBar("chartSubjReason", SUBJ_EFFORTS.map(function (e) { return val(e, "mean_reasoning_tokens"); }), "平均推理 Token", "Token", true, 0, null);
+    subjBar("chartSubjScore", SUBJ_EFFORTS.map(function (e) { return val(e, "mean_score_10"); }), "质量均分 /10（纵轴 9.0 起）", false, 9.0, 10.05);
+    subjBar("chartSubjTime", SUBJ_EFFORTS.map(function (e) { return val(e, "median_elapsed_seconds"); }), "耗时中位数（秒）", false, 0, null);
+    subjBar("chartSubjReason", SUBJ_EFFORTS.map(function (e) { return val(e, "mean_reasoning_tokens"); }), "平均推理 Token", true, 0, null);
   }
   function renderSubjHist() {
     var p = pal();
@@ -543,7 +543,7 @@
     var labels = edges.map(function (e, i) { return i === edges.length - 1 ? "10.0" : e.toFixed(2); });
     chart("chartSubjHist").setOption({
       backgroundColor: "transparent", textStyle: { color: p.text2 },
-      grid: { left: 8, right: 16, top: 20, bottom: 30, containLabel: true },
+      grid: { left: 8, right: 16, top: 34, bottom: 30, containLabel: true },
       xAxis: Object.assign(axisCategory(p), { data: labels, axisLabel: { color: p.text2, fontSize: 10 } }),
       yAxis: Object.assign(axisValue(p), { name: "回答数", nameTextStyle: { color: p.muted } }),
       series: [{
