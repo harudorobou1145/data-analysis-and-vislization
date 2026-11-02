@@ -9,7 +9,7 @@
 - docs/experiment_design.md：研究问题、控制变量、隔离边界。
 - docs/data_schema.md：三层数据字典、计数与缺失口径。
 - docs/setup_report.md：环境、测试、文件清单和下一步。
-- dashboard/README.md：未来交互系统计划。
+- dashboard/README.md：EvalPlus 交互式可视化系统（四视图+联动，已接入队友真实交接数据）。
 
 ## 本地复核（PowerShell，从 codedepth 目录运行）
 ```powershell
@@ -38,7 +38,7 @@ CLI支持`exec --json`，通过stdin提交prompt，`workspace-write`、`approval
 results/<run_id>/保存初始hash、请求配置、工作区、原始trace、stderr、接收时间、验收和三张CSV；results/runs.csv为顺序汇总。未批准独立验收时task_success为空。日志/消息是私有原始材料，公开前必须脱敏；正式采集前建立独立备份。不要并发运行多个调度器。
 
 ## AI 使用说明
-本准备阶段由AI辅助提取课程要求、设计实验、编写程序/测试/文档；组员需复核并能在答辩解释代码。所有模拟数据仅用于软件验证，未作为研究结果。前端、正式统计和案例结论尚未开发。
+本准备阶段由AI辅助提取课程要求、设计实验、编写程序/测试/文档；组员需复核并能在答辩解释代码。所有模拟数据仅用于软件验证，未作为研究结果。前端可视化系统已接入队友 EvalPlus 交接数据的真实结果（dashboard/，四视图+联动，经 analysis/export_evalplus_data.py 导出 data.js）；正式统计、案例短报告与答辩材料尚未完成。
 
 ## 首次调用故障修复（2026-10-30）
 真实日志已证实当前ChatGPT认证拒绝gpt-6.1-sol（model_not_found），缓存不能证明账号权限；此前启动示例中的该默认模型已撤销。--model现在必填，必须使用CLI账号实际可用的精确ID。先在独立终端运行codex，查看/model，不发送任务，确认账号及支持的推理档位；若无法列出可用模型，先解决CLI登录/权限/版本问题，不重复提交实验。不要仅凭本地缓存猜模型名。

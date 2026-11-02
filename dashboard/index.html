@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CodeDepth · EvalPlus 推理强度行为分析</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --surface-1: #fcfcfb; --page: #f9f9f7;
+      --text-1: #0b0b0b; --text-2: #52514e; --muted: #898781;
+      --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+      --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a; --series-4: #eda100; --series-5: #e87ba4;
+      --good: #0ca30c; --warn: #fab219; --serious: #ec835a; --critical: #d03b3b; --success-text: #006300;
+      --banner-bg: #eaf6ea; --banner-border: #0ca30c; --banner-text: #006300;
+      --card: #fcfcfb; --code-bg: #f4f3ef;
+    }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --surface-1: #1a1a19; --page: #0d0d0d;
+      --text-1: #f0efec; --text-2: #c3c2b7; --muted: #898781;
+      --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+      --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; --series-4: #c98500; --series-5: #d55181;
+      --good: #0ca30c; --warn: #fab219; --serious: #ec835a; --critical: #d03b3b; --success-text: #0ca30c;
+      --banner-bg: #142a14; --banner-border: #0ca30c; --banner-text: #9fe79f;
+      --card: #1a1a19; --code-bg: #151514;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:where(:not([data-theme="light"])) {
+        color-scheme: dark;
+        --surface-1: #1a1a19; --page: #0d0d0d;
+        --text-1: #f0efec; --text-2: #c3c2b7; --muted: #898781;
+        --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+        --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; --series-4: #c98500; --series-5: #d55181;
+        --good: #0ca30c; --warn: #fab219; --serious: #ec835a; --critical: #d03b3b; --success-text: #0ca30c;
+        --banner-bg: #142a14; --banner-border: #0ca30c; --banner-text: #9fe79f;
+        --card: #1a1a19; --code-bg: #151514;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { background: var(--page); color: var(--text-1); font-family: system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; font-size: 14px; line-height: 1.5; }
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 18px 22px 56px; }
+
+    header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    h1 { font-size: 21px; margin: 0 0 4px; }
+    .subtitle { color: var(--text-2); margin: 0; font-size: 13px; }
+    button.ghost { background: transparent; color: var(--text-1); border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; cursor: pointer; font: inherit; font-size: 13px; }
+    button.ghost:hover { background: var(--grid); }
+
+    .banner { margin: 14px 0 0; padding: 9px 14px; border-radius: 8px; background: var(--banner-bg); border: 1px solid var(--banner-border); color: var(--banner-text); font-size: 13px; }
+    .banner.synthetic { --banner-bg: #fff4e0; --banner-border: #eda100; --banner-text: #7a5b00; }
+
+    .controls { display: flex; gap: 14px; align-items: flex-end; flex-wrap: wrap; margin: 16px 0 6px; padding: 12px 14px; background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; }
+    .controls label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--text-2); }
+    .controls select, .controls input[type=checkbox] { font: inherit; font-size: 13px; }
+    .controls select { color: var(--text-1); background: var(--surface-1); border: 1px solid var(--axis); border-radius: 7px; padding: 6px 8px; min-width: 128px; }
+    .controls .chk { flex-direction: row; align-items: center; gap: 6px; }
+
+    .tabs { display: flex; gap: 4px; margin: 14px 0 0; border-bottom: 1px solid var(--grid); }
+    .tab-btn { background: none; border: none; border-bottom: 2px solid transparent; color: var(--text-2); padding: 9px 14px; cursor: pointer; font: inherit; font-size: 14px; }
+    .tab-btn.active { color: var(--text-1); border-bottom-color: var(--series-1); font-weight: 600; }
+    .tab-btn:hover { color: var(--text-1); }
+
+    .exp-toggle { display: flex; gap: 8px; margin: 14px 0 0; }
+    .exp-btn { background: var(--surface-1); color: var(--text-2); border: 1px solid var(--border); border-radius: 999px; padding: 8px 18px; cursor: pointer; font: inherit; font-size: 14px; }
+    .exp-btn.active { background: var(--series-1); color: #ffffff; border-color: var(--series-1); font-weight: 600; }
+    .exp-btn:hover { border-color: var(--axis); }
+
+    .selbar { margin: 12px 0 0; font-size: 12.5px; color: var(--text-2); }
+    .selbar b { color: var(--text-1); }
+
+    section { margin-top: 16px; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    h2 { font-size: 16px; margin: 0 0 4px; }
+    .note { color: var(--text-2); font-size: 12.5px; margin: 0 0 12px; }
+
+    .cards { display: grid; gap: 16px; }
+    .cols-2 { grid-template-columns: 1fr 1fr; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px 12px; }
+    .card h3 { font-size: 14px; margin: 0 0 2px; }
+    .card .src { color: var(--muted); font-size: 11.5px; margin: 0 0 8px; }
+    .chart { width: 100%; }
+
+    .legend-status { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--text-2); margin-bottom: 6px; }
+    .legend-status .item { display: inline-flex; align-items: center; gap: 5px; }
+    .sw { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+
+    .repair-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .repair-panel .chart { height: 260px; }
+
+    .tool-list { max-height: 360px; overflow: auto; border: 1px solid var(--border); border-radius: 8px; }
+    .tool-item { display: grid; grid-template-columns: 52px 78px 1fr 110px; gap: 8px; padding: 7px 10px; border-bottom: 1px solid var(--grid); font-size: 12.5px; align-items: baseline; }
+    .tool-item:last-child { border-bottom: none; }
+    .tool-item .t { color: var(--muted); font-variant-numeric: tabular-nums; }
+    .tool-item .cat { font-weight: 600; }
+    .tool-item .err { color: var(--critical); font-weight: 600; }
+
+    .code-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .code-box { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .code-box .hd { font-size: 12px; font-weight: 600; padding: 6px 10px; background: var(--grid); border-bottom: 1px solid var(--border); }
+    .code-box pre { margin: 0; padding: 10px 12px; background: var(--code-bg); color: var(--text-1); font: 12px/1.45 ui-monospace, SFMono-Regular, Consolas, "Courier New", monospace; max-height: 420px; overflow: auto; white-space: pre; }
+    .code-box .none { padding: 12px; color: var(--muted); font-size: 12.5px; }
+
+    .empty { color: var(--muted); padding: 24px; text-align: center; }
+
+    .forest { display: flex; flex-direction: column; gap: 16px; padding: 10px 4px; }
+    .frow { display: grid; grid-template-columns: 110px 1fr 210px; gap: 12px; align-items: center; }
+    .flabel { font-size: 12.5px; font-weight: 600; color: var(--text-1); }
+    .ftrack { position: relative; height: 20px; }
+    .fzero { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--muted); }
+    .fci { position: absolute; top: 7px; height: 6px; background: var(--series-1); border-radius: 3px; }
+    .fdot { position: absolute; top: 4px; width: 12px; height: 12px; background: var(--series-1); border-radius: 50%; border: 2px solid var(--card); transform: translateX(-50%); }
+    .fval { font-size: 12px; color: var(--text-2); font-variant-numeric: tabular-nums; }
+
+    footer { margin-top: 30px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--grid); padding-top: 14px; }
+    footer a { color: var(--series-1); text-decoration: none; }
+
+    @media (max-width: 980px) {
+      .cols-2, .repair-grid, .code-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Codex 推理强度行为分析 · EvalPlus</h1>
+        <p class="subtitle">100 道算法题 × low/medium/high/max 四档 + 失败题修复链 · 单模型对照</p>
+      </div>
+      <button class="ghost" id="themeToggle" type="button">切换深浅色</button>
+    </header>
+
+    <div class="banner" id="dataBanner"></div>
+
+    <div class="exp-toggle" role="tablist" aria-label="实验切换">
+      <button class="exp-btn active" data-exp="coding" type="button">代码实验 · EvalPlus</button>
+      <button class="exp-btn" data-exp="subjective" type="button">主观评分实验</button>
+    </div>
+
+    <div id="exp-coding">
+    <div class="controls" role="group" aria-label="控制">
+      <label>矩阵着色
+        <select id="matrixMetric">
+          <option value="status">状态（base/plus）</option>
+          <option value="output_tokens">输出 Token</option>
+          <option value="total_tokens">总 Token</option>
+          <option value="duration_seconds">耗时（秒）</option>
+        </select>
+      </label>
+      <label>散点对比
+        <select id="diffCompare">
+          <option value="mh">Max vs High</option>
+          <option value="hl">High vs Low</option>
+          <option value="ml">Max vs Low</option>
+        </select>
+      </label>
+      <label class="chk"><input type="checkbox" id="onlyFailed" /> 只看失败题（5 题）</label>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="tab-primary" type="button">① 主实验矩阵与差值</button>
+      <button class="tab-btn" data-tab="tab-repair" type="button">② 修复轨迹</button>
+      <button class="tab-btn" data-tab="tab-tool" type="button">③ 工具与代码</button>
+    </div>
+
+    <div class="selbar" id="selbar">未选中任何题目或运行。</div>
+
+    <section class="panel active" id="tab-primary">
+      <h2>主实验矩阵（100 题 × 3 档）</h2>
+      <p class="note">点格子选中题目；着色可切换为状态或 Token/耗时。四档成功率：低/中/高 96%，Max 95%（各 100 题）。</p>
+      <div class="legend-status" id="matrixLegend"></div>
+      <div class="card">
+        <h3>任务 × 档位矩阵</h3>
+        <p class="src">数据源：02_Max100与四档对比 four_efforts_runs.csv（n=100 题 × 4 档，每档各 1 次）</p>
+        <div class="chart" id="chartMatrix" style="height:760px"></div>
+      </div>
+
+      <div class="cards cols-2" style="margin-top:16px">
+        <div class="card">
+          <h3>配对差值分布（输出 Token）</h3>
+          <p class="src">同题 High−Low / Med−Low / Max−High / Max−Low 逐题差值箱线（n=100 题）</p>
+          <div class="chart" id="chartDiffBox" style="height:300px"></div>
+        </div>
+        <div class="card">
+          <h3>逐题输出 Token 散点（档位对比）</h3>
+          <p class="src">对角虚线为 y=x；点在对角线之上表示右档用更多输出 Token（n=100 题）</p>
+          <div class="chart" id="chartDiffScatter" style="height:300px"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="tab-repair">
+      <h2>失败题修复轨迹</h2>
+      <p class="note">5 道失败题，每题按失败档位分泳道；横轴为追加轮次（0 = 原失败候选）。点圆点选中该轮；空圈=600s 预算（Max 修复及 EP032 High 恢复）。</p>
+      <div class="legend-status" id="repairLegend"></div>
+      <div class="repair-grid" id="repairGrid"></div>
+    </section>
+
+    <section class="panel" id="tab-tool">
+      <h2>工具时间轴与代码对比</h2>
+      <p class="note">选中一个运行后，此处显示其审计工具动作序列；失败 4 题显示候选代码与公开题面，并可与父版本对照。</p>
+      <div class="cards">
+        <div class="card">
+          <h3 id="toolTitle">工具动作序列</h3>
+          <p class="src">数据源：交接包 data/09_tool_actions.csv（按 action_index 保序）</p>
+          <div class="tool-list" id="toolList"><div class="empty">请先在矩阵或修复轨迹中选中一个运行。</div></div>
+        </div>
+        <div class="card" style="margin-top:16px">
+          <h3 id="codeTitle">候选代码与题面</h3>
+          <p class="src">数据源：交接包 cases/candidates/*.py 与 cases/public_tasks/*.txt（仅失败 4 题内嵌）</p>
+          <div class="code-grid" id="codeGrid"><div class="empty">请选中一个失败题的运行以查看代码。</div></div>
+        </div>
+      </div>
+    </section>
+    </div>
+
+    <div id="exp-subjective" style="display:none">
+      <section>
+        <h2>主观评分实验总览</h2>
+        <p class="note">60 题（写作 / 分析 / 规划各 20）× low / high / ultra × 2 次 = 360 份回答；裁判固定同模型 high 盲评，四维各 0~5，总分 /10。评分存在明显天花板（83.9% 满分），高档位增加耗时与推理投入、质量仅小幅变化。</p>
+        <div class="kpi-grid" id="subjKpi"></div>
+      </section>
+      <div class="cards cols-2" style="margin-top:16px">
+        <div class="card">
+          <h3>质量 / 耗时 / 推理 Token 按档位</h3>
+          <p class="src">数据源：summary.json groups（题级均分、耗时中位数、推理 Token 均值）</p>
+          <div class="chart" id="chartSubjScore" style="height:120px"></div>
+          <div class="chart" id="chartSubjTime" style="height:120px"></div>
+          <div class="chart" id="chartSubjReason" style="height:120px"></div>
+        </div>
+        <div class="card">
+          <h3>总分分布（n=360 份回答）</h3>
+          <p class="src">数据源：primary_rows.score_10；满分柱 = 302/360（83.9%）</p>
+          <div class="chart" id="chartSubjHist" style="height:360px"></div>
+        </div>
+      </div>
+      <div class="cards cols-2" style="margin-top:16px">
+        <div class="card">
+          <h3>分任务方向 × 档位 质量均分</h3>
+          <p class="src">纵轴从 9.0 起（分数贴近满分，全 0~10 尺度差异不可见），数据源 groups</p>
+          <div class="chart" id="chartSubjType" style="height:320px"></div>
+        </div>
+        <div class="card">
+          <h3>配对分差（题级 bootstrap 95% 区间）</h3>
+          <p class="src">high−low / ultra−low / ultra−high；区间含 0 = 无显著差异（n=60 题）</p>
+          <div class="chart" id="chartSubjForest" style="height:320px"></div>
+        </div>
+      </div>
+      <div class="cards" style="margin-top:16px">
+        <div class="card">
+          <h3>复评稳定性（36 次重复盲评）</h3>
+          <p class="src">复评分 vs 原主评分，对角虚线为完全一致；平均绝对差 0.035</p>
+          <div class="chart" id="chartSubjRepeat" style="height:300px"></div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      CodeDepth · EvalPlus 子实验可视化。reasoning_effort 为请求档位、未经独立验证；相关≠因果；修复实验与主实验口径不同，不合并为单一准确率。
+      原始日志私有，未包含在本系统。重新生成数据：<code>python analysis/export_evalplus_data.py &lt;交接包目录&gt;</code>。图表渲染依赖 ECharts CDN（联网）。
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
