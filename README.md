@@ -4,7 +4,7 @@ CodeDepth 是「数据分析与可视化」课程题目二选项 B 的四人小�
 
 ## 打开系统
 
-克隆或解压本仓库后，用浏览器打开 [dashboard/index.html](dashboard/index.html)。页面使用仓库内的 [dashboard/data.js](dashboard/data.js)，打开时无需安装 Python、构建前端或登录模型账号。ECharts 通过 CDN 加载，图表渲染需要联网。
+仓库已部署到网页，可以直接打开 https://harudorobou1145.github.io/data-analysis-and-vislization/dashboard/ 进行查看。
 
 ## 页面导览
 
