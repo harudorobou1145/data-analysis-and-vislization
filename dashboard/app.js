@@ -181,7 +181,7 @@
         type: "heatmap", data: data,
         itemStyle: { borderColor: p.surface, borderWidth: 2 },
         label: {
-          show: metric !== "status", fontSize: 10,
+          show: false, fontSize: 10,
           rich: { onDark: { color: "#ffffff", fontWeight: 600 }, onLight: { color: "#0b0b0b", fontWeight: 600 } },
           formatter: function (pr) {
             if (metric === "status") return "";
@@ -216,6 +216,22 @@
     var c = chart("chartMatrix");
     c.resize();
     c.setOption(option, true);
+
+    // Measure the spacing between rows after ECharts applies the zoom.
+    var labelsVisible = false;
+    function updateMatrixLabels() {
+      var first = c.convertToPixel({ yAxisIndex: 0 }, 0);
+      var second = c.convertToPixel({ yAxisIndex: 0 }, 1);
+      var rowHeight = yData.length === 1 ? hgt : Math.abs(second - first);
+      var show = metric !== "status" && rowHeight >= 16;
+      if (show === labelsVisible) return;
+      labelsVisible = show;
+      c.setOption({ series: [{ label: { show: show } }] });
+    }
+    c.off("datazoom");
+    c.on("datazoom", updateMatrixLabels);
+    updateMatrixLabels();
+
     c.off("click");
     c.on("click", function (pr) {
       if (pr.data && pr.data.run_id) { state.task = pr.data.task_id; state.run = pr.data.run_id; onSelect(); }
