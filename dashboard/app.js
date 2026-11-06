@@ -661,10 +661,11 @@
     var box = document.getElementById("lunadsKpi");
     box.innerHTML = "";
     var defs = [
+      ["Sol · HumanEval", "sol", "humaneval100", 100],
       ["Luna · HumanEval", "luna", "humaneval100", 100],
+      ["DeepSeek Flash · HumanEval", "deepseek", "humaneval100", 100],
       ["Luna · ALFWorld", "luna", "alfworld60", 60],
-      ["DeepSeek · HumanEval", "deepseek", "humaneval100", 100],
-      ["DeepSeek · ALFWorld", "deepseek", "alfworld60", 60],
+      ["DeepSeek Flash · ALFWorld", "deepseek", "alfworld60", 60],
     ];
     defs.forEach(function (d) {
       var g = lunadsGroup(d[1], d[2]);
@@ -680,14 +681,11 @@
       grid: { left: 8, right: 16, top: 36, bottom: 24, containLabel: true },
       xAxis: Object.assign(axisCategory(p), { data: LUNADS_BENCH.map(function (b) { return LUNADS_BENCH_LABEL[b]; }) }),
       yAxis: Object.assign(axisValue(p), { name: unit, nameTextStyle: { color: p.muted }, min: min, max: max }),
-      series: [
-        { name: "Luna", type: "bar", barWidth: 18, itemStyle: { color: p.series[0], borderRadius: [4, 4, 0, 0] },
-          data: LUNADS_BENCH.map(function (b) { return val("luna", b); }),
-          label: { show: true, position: "top", color: p.text1, fontSize: 10, formatter: function (pr) { return pr.value == null ? "" : (isInt ? fmt(pr.value) : fmt1(pr.value)); } } },
-        { name: "DeepSeek", type: "bar", barWidth: 18, itemStyle: { color: p.series[1], borderRadius: [4, 4, 0, 0] },
-          data: LUNADS_BENCH.map(function (b) { return val("deepseek", b); }),
-          label: { show: true, position: "top", color: p.text1, fontSize: 10, formatter: function (pr) { return pr.value == null ? "" : (isInt ? fmt(pr.value) : fmt1(pr.value)); } } },
-      ],
+      series: MODEL_ORDER.map(function (m) {
+        return { name: MODEL_LABEL[m], type: "bar", barWidth: 16, itemStyle: { color: modelColor(p, m), borderRadius: [4, 4, 0, 0] },
+          data: LUNADS_BENCH.map(function (b) { return val(m, b); }),
+          label: { show: true, position: "top", color: p.text1, fontSize: 10, formatter: function (pr) { return pr.value == null ? "" : (isInt ? fmt(pr.value) : fmt1(pr.value)); } } };
+      }),
       tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
     }, true);
   }

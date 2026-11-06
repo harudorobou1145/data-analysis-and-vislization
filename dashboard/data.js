@@ -3,7 +3,7 @@
 window.CODEDEPTH_DATA = {
  "kind": "real",
  "source": "CodeDepth 四档 + 主观评分 + Luna/DeepSeek + WildBench",
- "generatedAt": "2026-11-06T15:24:11.317544+08:00",
+ "generatedAt": "2026-11-06T15:37:55.680534+08:00",
  "note": "四个子实验合并。reasoning_effort 未经独立验证；相关≠因果；不同实验口径不合并。",
  "efforts": [
   "low",
@@ -46951,6 +46951,22 @@ window.CODEDEPTH_DATA = {
     "reasoning_tokens_mean": 349.51666666666665,
     "reasoning_tokens_n": 60,
     "reasoning_tokens_sum": 20971
+   },
+   {
+    "model_group": "sol",
+    "benchmark": "humaneval100",
+    "official_success": 96,
+    "success_rate": 0.96,
+    "duration_seconds_mean": 28.902857249997325,
+    "output_tokens_mean": 791.24,
+    "input_tokens_mean": null,
+    "reasoning_tokens_mean": null,
+    "environment_steps_mean": null,
+    "tool_call_count_mean": null,
+    "tool_error_count_mean": null,
+    "invalid_action_count_mean": null,
+    "base_pass": null,
+    "plus_pass": null
    }
   ],
   "paired": [

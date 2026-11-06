@@ -150,7 +150,7 @@
     <div class="exp-toggle" role="tablist" aria-label="实验切换">
       <button class="exp-btn active" data-exp="model" type="button">模型对比</button>
       <button class="exp-btn" data-exp="coding" type="button">代码 · EvalPlus 四档</button>
-      <button class="exp-btn" data-exp="lunads" type="button">代码 · Luna vs DeepSeek</button>
+      <button class="exp-btn" data-exp="lunads" type="button">代码 · 三模型</button>
       <button class="exp-btn" data-exp="subjective" type="button">主观评分 · 60题</button>
       <button class="exp-btn" data-exp="wildbench" type="button">WildBench · 五组</button>
     </div>
@@ -290,13 +290,13 @@
 
     <div id="exp-lunads" style="display:none">
       <section>
-        <h2>Luna vs DeepSeek（代码模型对比）</h2>
-        <p class="note">HumanEval 100 题 + ALFWorld 60 题，两模型各跑一遍，共 320 条运行、160 组同题配对。注意：Luna 走 Plus/CLI+MCP、DeepSeek 走官方 API，通道与 Token 计数口径不同，不能只当作"模型"差异。</p>
+        <h2>代码 · 三模型（同为 high）</h2>
+        <p class="note">HumanEval 100 题三模型对比（Sol / Luna / DeepSeek Flash）；ALFWorld 60 题仅 Luna vs DeepSeek（Sol 未跑）。注意通道/控制器不同，Token 口径不可直接等同。</p>
         <div class="kpi-grid" id="lunadsKpi"></div>
       </section>
       <div class="cards cols-2" style="margin-top:16px">
         <div class="card"><h3>成功率（%）</h3><p class="src">数据源 summary.json official_success / success_rate</p><div class="chart" id="chartLunadsSucc" style="height:300px"></div></div>
-        <div class="card"><h3>平均耗时（秒）</h3><p class="src">DeepSeek 明显更快；Luna 前 8 题含 WebSocket 重连，见局限</p><div class="chart" id="chartLunadsTime" style="height:300px"></div></div>
+        <div class="card"><h3>平均耗时（秒）</h3><p class="src">DeepSeek Flash 最快；Luna 前 8 题含 WebSocket 重连，见局限</p><div class="chart" id="chartLunadsTime" style="height:300px"></div></div>
       </div>
       <div class="cards cols-2" style="margin-top:16px">
         <div class="card"><h3>平均输出 Token</h3><p class="src">DeepSeek 输出更长；output 含 reasoning，勿重复相加</p><div class="chart" id="chartLunadsOut" style="height:300px"></div></div>

@@ -347,6 +347,22 @@ def main():
     if paired and lunads and subjective and wildbench:
         model_compare = build_model_compare(paired, lunads, subjective, wildbench)
 
+    # 把 sol 加入 lunads 的 HumanEval（三模型对比），ALFWorld 保持 luna/deepseek
+    if lunads and model_compare:
+        sol = next((s for s in model_compare["code"]["summary"] if s["model"] == "sol"), None)
+        if sol:
+            lunads["summary"].append({
+                "model_group": "sol", "benchmark": "humaneval100",
+                "official_success": round(sol["success_rate"] * 100),
+                "success_rate": sol["success_rate"],
+                "duration_seconds_mean": sol["mean_duration"],
+                "output_tokens_mean": sol["mean_output_tokens"],
+                "input_tokens_mean": None, "reasoning_tokens_mean": None,
+                "environment_steps_mean": None, "tool_call_count_mean": None,
+                "tool_error_count_mean": None, "invalid_action_count_mean": None,
+                "base_pass": None, "plus_pass": None,
+            })
+
     payload = {
         "kind": "real",
         "source": "CodeDepth 四档 + 主观评分 + Luna/DeepSeek + WildBench",
