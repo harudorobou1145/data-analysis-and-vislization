@@ -3,7 +3,7 @@
 window.CODEDEPTH_DATA = {
  "kind": "real",
  "source": "CodeDepth 四档 + 主观评分 + Luna/DeepSeek + WildBench",
- "generatedAt": "2026-11-06T15:00:17.264803+08:00",
+ "generatedAt": "2026-11-06T15:24:11.317544+08:00",
  "note": "四个子实验合并。reasoning_effort 未经独立验证；相关≠因果；不同实验口径不合并。",
  "efforts": [
   "low",
@@ -21,7 +21,8 @@ window.CODEDEPTH_DATA = {
   "subjective_answers": 360,
   "lunads_runs": 160,
   "wildbench_rows": 200,
-  "flash_formal60": 5
+  "flash_formal60": 5,
+  "model_compare_code_tasks": 100
  },
  "paired": [
   {
@@ -56733,6 +56734,1879 @@ window.CODEDEPTH_DATA = {
      "reasoning_tokens": 608,
      "row_status": "completed",
      "join_issues": []
+    }
+   ]
+  }
+ },
+ "model_compare": {
+  "code": {
+   "summary": [
+    {
+     "model": "sol",
+     "n": 100,
+     "success_rate": 0.96,
+     "mean_duration": 28.902857249997325,
+     "mean_output_tokens": 791.24
+    },
+    {
+     "model": "luna",
+     "n": 100,
+     "success_rate": 0.93,
+     "mean_duration": 40.62189558000129,
+     "mean_output_tokens": 625.22
+    },
+    {
+     "model": "deepseek",
+     "n": 100,
+     "success_rate": 0.96,
+     "mean_duration": 13.97606434500427,
+     "mean_output_tokens": 1426.1
+    }
+   ],
+   "per_task": [
+    {
+     "task_id": "EP078",
+     "sol": {
+      "success": true,
+      "duration": 28.20859329996165,
+      "output_tokens": 1009
+     },
+     "luna": {
+      "success": true,
+      "duration": 137.19028059998527,
+      "output_tokens": 434
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 7.985438300005626,
+      "output_tokens": 449
+     }
+    },
+    {
+     "task_id": "EP061",
+     "sol": {
+      "success": true,
+      "duration": 24.192193900002167,
+      "output_tokens": 634
+     },
+     "luna": {
+      "success": true,
+      "duration": 137.9451631999691,
+      "output_tokens": 416
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 9.894231100042816,
+      "output_tokens": 650
+     }
+    },
+    {
+     "task_id": "EP096",
+     "sol": {
+      "success": true,
+      "duration": 26.023514200001955,
+      "output_tokens": 934
+     },
+     "luna": {
+      "success": true,
+      "duration": 137.4471425000229,
+      "output_tokens": 657
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 10.309345800022129,
+      "output_tokens": 1114
+     }
+    },
+    {
+     "task_id": "EP018",
+     "sol": {
+      "success": true,
+      "duration": 25.085663600009866,
+      "output_tokens": 653
+     },
+     "luna": {
+      "success": true,
+      "duration": 138.32449289999204,
+      "output_tokens": 557
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 13.51831170002697,
+      "output_tokens": 1489
+     }
+    },
+    {
+     "task_id": "EP131",
+     "sol": {
+      "success": true,
+      "duration": 20.467475300072692,
+      "output_tokens": 617
+     },
+     "luna": {
+      "success": true,
+      "duration": 135.15948939998634,
+      "output_tokens": 375
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 9.611784099950455,
+      "output_tokens": 779
+     }
+    },
+    {
+     "task_id": "EP010",
+     "sol": {
+      "success": true,
+      "duration": 35.34128740010783,
+      "output_tokens": 996
+     },
+     "luna": {
+      "success": true,
+      "duration": 170.85519460000796,
+      "output_tokens": 1827
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 13.548458100005519,
+      "output_tokens": 1327
+     }
+    },
+    {
+     "task_id": "EP053",
+     "sol": {
+      "success": true,
+      "duration": 19.066127700032666,
+      "output_tokens": 346
+     },
+     "luna": {
+      "success": true,
+      "duration": 130.69708600000013,
+      "output_tokens": 223
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 7.474574899999425,
+      "output_tokens": 348
+     }
+    },
+    {
+     "task_id": "EP063",
+     "sol": {
+      "success": true,
+      "duration": 25.5210615999531,
+      "output_tokens": 752
+     },
+     "luna": {
+      "success": true,
+      "duration": 136.53606270003365,
+      "output_tokens": 505
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 14.937645800004248,
+      "output_tokens": 1601
+     }
+    },
+    {
+     "task_id": "EP121",
+     "sol": {
+      "success": true,
+      "duration": 23.901622999925166,
+      "output_tokens": 609
+     },
+     "luna": {
+      "success": true,
+      "duration": 30.84038160002092,
+      "output_tokens": 431
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 10.825464499997906,
+      "output_tokens": 810
+     }
+    },
+    {
+     "task_id": "EP056",
+     "sol": {
+      "success": true,
+      "duration": 24.06664279999677,
+      "output_tokens": 606
+     },
+     "luna": {
+      "success": true,
+      "duration": 29.405682200042065,
+      "output_tokens": 428
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 10.077771600044798,
+      "output_tokens": 848
+     }
+    },
+    {
+     "task_id": "EP040",
+     "sol": {
+      "success": true,
+      "duration": 24.359580400050618,
+      "output_tokens": 818
+     },
+     "luna": {
+      "success": true,
+      "duration": 33.72128340002382,
+      "output_tokens": 656
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 12.083018000004813,
+      "output_tokens": 1300
+     }
+    },
+    {
+     "task_id": "EP027",
+     "sol": {
+      "success": true,
+      "duration": 23.00041149999015,
+      "output_tokens": 360
+     },
+     "luna": {
+      "success": true,
+      "duration": 21.63902209996013,
+      "output_tokens": 266
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 8.523383599997032,
+      "output_tokens": 397
+     }
+    },
+    {
+     "task_id": "EP146",
+     "sol": {
+      "success": true,
+      "duration": 26.679165000095963,
+      "output_tokens": 807
+     },
+     "luna": {
+      "success": true,
+      "duration": 75.51674330001697,
+      "output_tokens": 2183
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 15.22537589998683,
+      "output_tokens": 1656
+     }
+    },
+    {
+     "task_id": "EP150",
+     "sol": {
+      "success": true,
+      "duration": 22.436825999990106,
+      "output_tokens": 668
+     },
+     "luna": {
+      "success": true,
+      "duration": 32.211380499997176,
+      "output_tokens": 492
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 10.142949599947315,
+      "output_tokens": 978
+     }
+    },
+    {
+     "task_id": "EP008",
+     "sol": {
+      "success": true,
+      "duration": 23.38149629998952,
+      "output_tokens": 630
+     },
+     "luna": {
+      "success": true,
+      "duration": 23.321112099976745,
+      "output_tokens": 377
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 13.126069799996912,
+      "output_tokens": 989
+     }
+    },
+    {
+     "task_id": "EP069",
+     "sol": {
+      "success": true,
+      "duration": 28.793550199945457,
+      "output_tokens": 886
+     },
+     "luna": {
+      "success": true,
+      "duration": 31.418048000021372,
+      "output_tokens": 550
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 12.686746999970637,
+      "output_tokens": 1249
+     }
+    },
+    {
+     "task_id": "EP058",
+     "sol": {
+      "success": true,
+      "duration": 26.66551870002877,
+      "output_tokens": 674
+     },
+     "luna": {
+      "success": true,
+      "duration": 25.466848599957302,
+      "output_tokens": 451
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 14.036272899946198,
+      "output_tokens": 1429
+     }
+    },
+    {
+     "task_id": "EP020",
+     "sol": {
+      "success": true,
+      "duration": 30.22483820002526,
+      "output_tokens": 902
+     },
+     "luna": {
+      "success": true,
+      "duration": 27.608124700025655,
+      "output_tokens": 525
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 17.782353900023736,
+      "output_tokens": 1879
+     }
+    },
+    {
+     "task_id": "EP147",
+     "sol": {
+      "success": true,
+      "duration": 42.23200399999041,
+      "output_tokens": 921
+     },
+     "luna": {
+      "success": true,
+      "duration": 37.55921729997499,
+      "output_tokens": 933
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 16.09659550001379,
+      "output_tokens": 1770
+     }
+    },
+    {
+     "task_id": "EP144",
+     "sol": {
+      "success": true,
+      "duration": 36.04312489996664,
+      "output_tokens": 876
+     },
+     "luna": {
+      "success": true,
+      "duration": 26.650377699988894,
+      "output_tokens": 379
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 13.773072400013916,
+      "output_tokens": 1300
+     }
+    },
+    {
+     "task_id": "EP155",
+     "sol": {
+      "success": true,
+      "duration": 24.060013399925083,
+      "output_tokens": 621
+     },
+     "luna": {
+      "success": true,
+      "duration": 24.325834699964616,
+      "output_tokens": 408
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 11.084493400005158,
+      "output_tokens": 812
+     }
+    },
+    {
+     "task_id": "EP046",
+     "sol": {
+      "success": true,
+      "duration": 24.888787700096145,
+      "output_tokens": 769
+     },
+     "luna": {
+      "success": true,
+      "duration": 41.040488600032404,
+      "output_tokens": 958
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 9.841718300012872,
+      "output_tokens": 1109
+     }
+    },
+    {
+     "task_id": "EP161",
+     "sol": {
+      "success": true,
+      "duration": 26.842157099978067,
+      "output_tokens": 607
+     },
+     "luna": {
+      "success": true,
+      "duration": 23.815864500007592,
+      "output_tokens": 462
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 9.94417070003692,
+      "output_tokens": 737
+     }
+    },
+    {
+     "task_id": "EP092",
+     "sol": {
+      "success": true,
+      "duration": 25.552637899992988,
+      "output_tokens": 749
+     },
+     "luna": {
+      "success": true,
+      "duration": 30.73161610000534,
+      "output_tokens": 600
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 14.687723999959417,
+      "output_tokens": 1440
+     }
+    },
+    {
+     "task_id": "EP162",
+     "sol": {
+      "success": true,
+      "duration": 41.38571740000043,
+      "output_tokens": 924
+     },
+     "luna": {
+      "success": true,
+      "duration": 29.762040000001434,
+      "output_tokens": 363
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 8.588624799973331,
+      "output_tokens": 574
+     }
+    },
+    {
+     "task_id": "EP152",
+     "sol": {
+      "success": true,
+      "duration": 28.01170729997102,
+      "output_tokens": 894
+     },
+     "luna": {
+      "success": true,
+      "duration": 31.25541179999709,
+      "output_tokens": 510
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 11.077796900004614,
+      "output_tokens": 819
+     }
+    },
+    {
+     "task_id": "EP158",
+     "sol": {
+      "success": true,
+      "duration": 23.258208099985495,
+      "output_tokens": 404
+     },
+     "luna": {
+      "success": true,
+      "duration": 29.842986800009385,
+      "output_tokens": 539
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 14.063344300026074,
+      "output_tokens": 1038
+     }
+    },
+    {
+     "task_id": "EP108",
+     "sol": {
+      "success": true,
+      "duration": 34.57541690010112,
+      "output_tokens": 1137
+     },
+     "luna": {
+      "success": true,
+      "duration": 38.5040069000097,
+      "output_tokens": 652
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 18.08957329997793,
+      "output_tokens": 1735
+     }
+    },
+    {
+     "task_id": "EP153",
+     "sol": {
+      "success": true,
+      "duration": 33.14753339998424,
+      "output_tokens": 1057
+     },
+     "luna": {
+      "success": true,
+      "duration": 39.219211200019345,
+      "output_tokens": 578
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 11.759156099986285,
+      "output_tokens": 1224
+     }
+    },
+    {
+     "task_id": "EP106",
+     "sol": {
+      "success": true,
+      "duration": 25.953558600042015,
+      "output_tokens": 644
+     },
+     "luna": {
+      "success": true,
+      "duration": 33.01989710005,
+      "output_tokens": 563
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 17.248512499965727,
+      "output_tokens": 1608
+     }
+    },
+    {
+     "task_id": "EP125",
+     "sol": {
+      "success": true,
+      "duration": 28.186657499987632,
+      "output_tokens": 813
+     },
+     "luna": {
+      "success": true,
+      "duration": 30.642707699968014,
+      "output_tokens": 627
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 14.10932019999018,
+      "output_tokens": 1375
+     }
+    },
+    {
+     "task_id": "EP084",
+     "sol": {
+      "success": true,
+      "duration": 27.866548100020736,
+      "output_tokens": 689
+     },
+     "luna": {
+      "success": true,
+      "duration": 37.819439799990505,
+      "output_tokens": 550
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 9.900831199949607,
+      "output_tokens": 760
+     }
+    },
+    {
+     "task_id": "EP116",
+     "sol": {
+      "success": true,
+      "duration": 39.192967999959365,
+      "output_tokens": 1120
+     },
+     "luna": {
+      "success": false,
+      "duration": 42.45093390002148,
+      "output_tokens": 1044
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 47.398531100014225,
+      "output_tokens": 7116
+     }
+    },
+    {
+     "task_id": "EP093",
+     "sol": {
+      "success": true,
+      "duration": 27.640197100001387,
+      "output_tokens": 616
+     },
+     "luna": {
+      "success": true,
+      "duration": 32.07031159999315,
+      "output_tokens": 588
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 32.49092529999325,
+      "output_tokens": 3829
+     }
+    },
+    {
+     "task_id": "EP099",
+     "sol": {
+      "success": false,
+      "duration": 31.280270599992946,
+      "output_tokens": 896
+     },
+     "luna": {
+      "success": false,
+      "duration": 32.72609280003235,
+      "output_tokens": 601
+     },
+     "deepseek": {
+      "success": false,
+      "duration": 12.314127299992833,
+      "output_tokens": 1213
+     }
+    },
+    {
+     "task_id": "EP095",
+     "sol": {
+      "success": true,
+      "duration": 24.493818400078453,
+      "output_tokens": 930
+     },
+     "luna": {
+      "success": true,
+      "duration": 34.281751800037455,
+      "output_tokens": 747
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 13.930249200027902,
+      "output_tokens": 1528
+     }
+    },
+    {
+     "task_id": "EP101",
+     "sol": {
+      "success": true,
+      "duration": 21.52934489992913,
+      "output_tokens": 589
+     },
+     "luna": {
+      "success": true,
+      "duration": 22.65047150000464,
+      "output_tokens": 431
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 12.5706759999739,
+      "output_tokens": 1005
+     }
+    },
+    {
+     "task_id": "EP047",
+     "sol": {
+      "success": true,
+      "duration": 39.88159360003192,
+      "output_tokens": 1037
+     },
+     "luna": {
+      "success": false,
+      "duration": 72.42606849997537,
+      "output_tokens": 2498
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 16.200413100013975,
+      "output_tokens": 1729
+     }
+    },
+    {
+     "task_id": "EP014",
+     "sol": {
+      "success": true,
+      "duration": 27.101542399963364,
+      "output_tokens": 432
+     },
+     "luna": {
+      "success": true,
+      "duration": 22.326587499992456,
+      "output_tokens": 287
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 8.334897399996407,
+      "output_tokens": 416
+     }
+    },
+    {
+     "task_id": "EP070",
+     "sol": {
+      "success": true,
+      "duration": 26.236658600042574,
+      "output_tokens": 824
+     },
+     "luna": {
+      "success": true,
+      "duration": 29.97658230003435,
+      "output_tokens": 559
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 9.70438660000218,
+      "output_tokens": 826
+     }
+    },
+    {
+     "task_id": "EP082",
+     "sol": {
+      "success": true,
+      "duration": 24.84351300005801,
+      "output_tokens": 673
+     },
+     "luna": {
+      "success": true,
+      "duration": 26.176258500025142,
+      "output_tokens": 441
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 8.984619700000621,
+      "output_tokens": 624
+     }
+    },
+    {
+     "task_id": "EP032",
+     "sol": {
+      "success": false,
+      "duration": 37.606340300058946,
+      "output_tokens": 1783
+     },
+     "luna": {
+      "success": false,
+      "duration": 59.93130309996195,
+      "output_tokens": 1957
+     },
+     "deepseek": {
+      "success": false,
+      "duration": 107.68531279999297,
+      "output_tokens": 16435
+     }
+    },
+    {
+     "task_id": "EP023",
+     "sol": {
+      "success": true,
+      "duration": 19.890625499887392,
+      "output_tokens": 229
+     },
+     "luna": {
+      "success": true,
+      "duration": 27.90459109999938,
+      "output_tokens": 256
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 7.666273700015154,
+      "output_tokens": 361
+     }
+    },
+    {
+     "task_id": "EP005",
+     "sol": {
+      "success": true,
+      "duration": 32.24148069997318,
+      "output_tokens": 578
+     },
+     "luna": {
+      "success": true,
+      "duration": 24.886450799996965,
+      "output_tokens": 417
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 9.721407500037458,
+      "output_tokens": 782
+     }
+    },
+    {
+     "task_id": "EP055",
+     "sol": {
+      "success": true,
+      "duration": 27.19946480006911,
+      "output_tokens": 427
+     },
+     "luna": {
+      "success": true,
+      "duration": 27.27326740004355,
+      "output_tokens": 433
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 10.320191000006162,
+      "output_tokens": 959
+     }
+    },
+    {
+     "task_id": "EP009",
+     "sol": {
+      "success": true,
+      "duration": 24.940267300000414,
+      "output_tokens": 579
+     },
+     "luna": {
+      "success": true,
+      "duration": 24.103030500002205,
+      "output_tokens": 429
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 10.461259900010191,
+      "output_tokens": 788
+     }
+    },
+    {
+     "task_id": "EP036",
+     "sol": {
+      "success": true,
+      "duration": 22.93184609990567,
+      "output_tokens": 577
+     },
+     "luna": {
+      "success": true,
+      "duration": 27.043355499976315,
+      "output_tokens": 533
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 21.947648700035643,
+      "output_tokens": 2930
+     }
+    },
+    {
+     "task_id": "EP048",
+     "sol": {
+      "success": true,
+      "duration": 25.64352019992657,
+      "output_tokens": 417
+     },
+     "luna": {
+      "success": true,
+      "duration": 28.23961180000333,
+      "output_tokens": 310
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 8.167965399974491,
+      "output_tokens": 565
+     }
+    },
+    {
+     "task_id": "EP127",
+     "sol": {
+      "success": true,
+      "duration": 30.55902619997505,
+      "output_tokens": 1299
+     },
+     "luna": {
+      "success": true,
+      "duration": 30.43992169998819,
+      "output_tokens": 589
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 18.223893599992152,
+      "output_tokens": 2358
+     }
+    },
+    {
+     "task_id": "EP133",
+     "sol": {
+      "success": true,
+      "duration": 26.040462500066496,
+      "output_tokens": 731
+     },
+     "luna": {
+      "success": true,
+      "duration": 25.789519799989648,
+      "output_tokens": 374
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 9.429211299982853,
+      "output_tokens": 866
+     }
+    },
+    {
+     "task_id": "EP163",
+     "sol": {
+      "success": true,
+      "duration": 25.353611500002444,
+      "output_tokens": 738
+     },
+     "luna": {
+      "success": true,
+      "duration": 39.09442040004069,
+      "output_tokens": 1034
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 23.89327600004617,
+      "output_tokens": 3153
+     }
+    },
+    {
+     "task_id": "EP030",
+     "sol": {
+      "success": true,
+      "duration": 69.7673454999458,
+      "output_tokens": 570
+     },
+     "luna": {
+      "success": true,
+      "duration": 25.021884499990847,
+      "output_tokens": 388
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 8.583071799948812,
+      "output_tokens": 603
+     }
+    },
+    {
+     "task_id": "EP132",
+     "sol": {
+      "success": false,
+      "duration": 37.00331840000581,
+      "output_tokens": 1014
+     },
+     "luna": {
+      "success": false,
+      "duration": 62.65513190004276,
+      "output_tokens": 1979
+     },
+     "deepseek": {
+      "success": false,
+      "duration": 21.220530799997505,
+      "output_tokens": 2556
+     }
+    },
+    {
+     "task_id": "EP115",
+     "sol": {
+      "success": true,
+      "duration": 32.52970189996995,
+      "output_tokens": 1163
+     },
+     "luna": {
+      "success": true,
+      "duration": 34.62490120000439,
+      "output_tokens": 718
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 13.482738299993798,
+      "output_tokens": 1449
+     }
+    },
+    {
+     "task_id": "EP024",
+     "sol": {
+      "success": true,
+      "duration": 29.914285099948756,
+      "output_tokens": 660
+     },
+     "luna": {
+      "success": true,
+      "duration": 34.75807109999005,
+      "output_tokens": 818
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 9.279921500012279,
+      "output_tokens": 842
+     }
+    },
+    {
+     "task_id": "EP016",
+     "sol": {
+      "success": true,
+      "duration": 24.22870380000677,
+      "output_tokens": 414
+     },
+     "luna": {
+      "success": true,
+      "duration": 28.17177920002723,
+      "output_tokens": 589
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 6.896428100008052,
+      "output_tokens": 440
+     }
+    },
+    {
+     "task_id": "EP015",
+     "sol": {
+      "success": false,
+      "duration": 21.091396900010295,
+      "output_tokens": 425
+     },
+     "luna": {
+      "success": false,
+      "duration": 25.679190299997572,
+      "output_tokens": 332
+     },
+     "deepseek": {
+      "success": false,
+      "duration": 9.496636099996977,
+      "output_tokens": 582
+     }
+    },
+    {
+     "task_id": "EP124",
+     "sol": {
+      "success": true,
+      "duration": 33.779931299970485,
+      "output_tokens": 1453
+     },
+     "luna": {
+      "success": true,
+      "duration": 33.329900400014594,
+      "output_tokens": 756
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 15.416163699992467,
+      "output_tokens": 1855
+     }
+    },
+    {
+     "task_id": "EP025",
+     "sol": {
+      "success": true,
+      "duration": 35.573482700041495,
+      "output_tokens": 879
+     },
+     "luna": {
+      "success": true,
+      "duration": 31.386317100026645,
+      "output_tokens": 677
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 10.63498079997953,
+      "output_tokens": 994
+     }
+    },
+    {
+     "task_id": "EP137",
+     "sol": {
+      "success": true,
+      "duration": 30.513398400042206,
+      "output_tokens": 945
+     },
+     "luna": {
+      "success": true,
+      "duration": 30.51889929996105,
+      "output_tokens": 547
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 22.224649799987674,
+      "output_tokens": 2701
+     }
+    },
+    {
+     "task_id": "EP021",
+     "sol": {
+      "success": true,
+      "duration": 50.22212859999854,
+      "output_tokens": 740
+     },
+     "luna": {
+      "success": true,
+      "duration": 33.391056399967056,
+      "output_tokens": 617
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 11.95709410001291,
+      "output_tokens": 1169
+     }
+    },
+    {
+     "task_id": "EP065",
+     "sol": {
+      "success": true,
+      "duration": 23.052452400093898,
+      "output_tokens": 581
+     },
+     "luna": {
+      "success": true,
+      "duration": 32.15061740000965,
+      "output_tokens": 687
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 15.303661600046325,
+      "output_tokens": 1465
+     }
+    },
+    {
+     "task_id": "EP031",
+     "sol": {
+      "success": true,
+      "duration": 24.414132000063546,
+      "output_tokens": 696
+     },
+     "luna": {
+      "success": true,
+      "duration": 29.272808899986558,
+      "output_tokens": 578
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 8.990213799988851,
+      "output_tokens": 985
+     }
+    },
+    {
+     "task_id": "EP011",
+     "sol": {
+      "success": true,
+      "duration": 24.58853809989523,
+      "output_tokens": 522
+     },
+     "luna": {
+      "success": true,
+      "duration": 28.500255099963397,
+      "output_tokens": 376
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 12.83833689999301,
+      "output_tokens": 1061
+     }
+    },
+    {
+     "task_id": "EP094",
+     "sol": {
+      "success": true,
+      "duration": 37.04464880004525,
+      "output_tokens": 1700
+     },
+     "luna": {
+      "success": true,
+      "duration": 36.6020145000075,
+      "output_tokens": 764
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 12.773092699993867,
+      "output_tokens": 1698
+     }
+    },
+    {
+     "task_id": "EP002",
+     "sol": {
+      "success": true,
+      "duration": 24.061900199973024,
+      "output_tokens": 494
+     },
+     "luna": {
+      "success": true,
+      "duration": 28.159249000018463,
+      "output_tokens": 341
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 12.278966000012588,
+      "output_tokens": 1044
+     }
+    },
+    {
+     "task_id": "EP110",
+     "sol": {
+      "success": true,
+      "duration": 28.21791010000743,
+      "output_tokens": 1023
+     },
+     "luna": {
+      "success": true,
+      "duration": 28.958020100020804,
+      "output_tokens": 612
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 9.078418200020678,
+      "output_tokens": 1018
+     }
+    },
+    {
+     "task_id": "EP081",
+     "sol": {
+      "success": true,
+      "duration": 31.927896300097927,
+      "output_tokens": 1274
+     },
+     "luna": {
+      "success": true,
+      "duration": 37.57569249998778,
+      "output_tokens": 841
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 15.49633570003789,
+      "output_tokens": 1904
+     }
+    },
+    {
+     "task_id": "EP126",
+     "sol": {
+      "success": true,
+      "duration": 23.08238220005296,
+      "output_tokens": 1120
+     },
+     "luna": {
+      "success": true,
+      "duration": 35.28521310002543,
+      "output_tokens": 702
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 10.351378599996679,
+      "output_tokens": 1254
+     }
+    },
+    {
+     "task_id": "EP051",
+     "sol": {
+      "success": true,
+      "duration": 26.9329485000344,
+      "output_tokens": 703
+     },
+     "luna": {
+      "success": true,
+      "duration": 29.270974199986085,
+      "output_tokens": 450
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 17.580545300035737,
+      "output_tokens": 1737
+     }
+    },
+    {
+     "task_id": "EP067",
+     "sol": {
+      "success": true,
+      "duration": 27.476227500010282,
+      "output_tokens": 778
+     },
+     "luna": {
+      "success": true,
+      "duration": 28.998898799996823,
+      "output_tokens": 506
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 12.484185500012245,
+      "output_tokens": 1127
+     }
+    },
+    {
+     "task_id": "EP134",
+     "sol": {
+      "success": true,
+      "duration": 32.8660063999705,
+      "output_tokens": 935
+     },
+     "luna": {
+      "success": true,
+      "duration": 32.776606199971866,
+      "output_tokens": 657
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 14.098813900025561,
+      "output_tokens": 1708
+     }
+    },
+    {
+     "task_id": "EP028",
+     "sol": {
+      "success": true,
+      "duration": 23.311473299982026,
+      "output_tokens": 424
+     },
+     "luna": {
+      "success": true,
+      "duration": 23.045540400024038,
+      "output_tokens": 204
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 8.723244399996474,
+      "output_tokens": 442
+     }
+    },
+    {
+     "task_id": "EP100",
+     "sol": {
+      "success": true,
+      "duration": 24.056387400021777,
+      "output_tokens": 563
+     },
+     "luna": {
+      "success": true,
+      "duration": 25.685110899969004,
+      "output_tokens": 389
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 9.577875299961306,
+      "output_tokens": 938
+     }
+    },
+    {
+     "task_id": "EP042",
+     "sol": {
+      "success": true,
+      "duration": 24.96137309994083,
+      "output_tokens": 498
+     },
+     "luna": {
+      "success": true,
+      "duration": 26.633918099978473,
+      "output_tokens": 414
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 8.46487220004201,
+      "output_tokens": 568
+     }
+    },
+    {
+     "task_id": "EP072",
+     "sol": {
+      "success": true,
+      "duration": 29.06688319996465,
+      "output_tokens": 899
+     },
+     "luna": {
+      "success": true,
+      "duration": 34.88825269998051,
+      "output_tokens": 431
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 9.768062700051814,
+      "output_tokens": 958
+     }
+    },
+    {
+     "task_id": "EP148",
+     "sol": {
+      "success": true,
+      "duration": 25.590143300010823,
+      "output_tokens": 1025
+     },
+     "luna": {
+      "success": true,
+      "duration": 32.68428679998033,
+      "output_tokens": 653
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 10.58218189998297,
+      "output_tokens": 1065
+     }
+    },
+    {
+     "task_id": "EP109",
+     "sol": {
+      "success": true,
+      "duration": 33.307360199978575,
+      "output_tokens": 1139
+     },
+     "luna": {
+      "success": true,
+      "duration": 38.12833139998838,
+      "output_tokens": 513
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 11.694007900019642,
+      "output_tokens": 1331
+     }
+    },
+    {
+     "task_id": "EP138",
+     "sol": {
+      "success": true,
+      "duration": 22.430780700058676,
+      "output_tokens": 492
+     },
+     "luna": {
+      "success": true,
+      "duration": 26.092445400019642,
+      "output_tokens": 392
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 8.664621600008104,
+      "output_tokens": 763
+     }
+    },
+    {
+     "task_id": "EP145",
+     "sol": {
+      "success": true,
+      "duration": 45.118845099932514,
+      "output_tokens": 1605
+     },
+     "luna": {
+      "success": false,
+      "duration": 43.83369510003831,
+      "output_tokens": 1114
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 33.88904699997511,
+      "output_tokens": 4619
+     }
+    },
+    {
+     "task_id": "EP154",
+     "sol": {
+      "success": true,
+      "duration": 26.086826799903065,
+      "output_tokens": 785
+     },
+     "luna": {
+      "success": true,
+      "duration": 31.099474300048314,
+      "output_tokens": 615
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 16.02284370001871,
+      "output_tokens": 1328
+     }
+    },
+    {
+     "task_id": "EP080",
+     "sol": {
+      "success": true,
+      "duration": 26.539116199943237,
+      "output_tokens": 679
+     },
+     "luna": {
+      "success": true,
+      "duration": 30.988944199983962,
+      "output_tokens": 439
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 11.98192500002915,
+      "output_tokens": 928
+     }
+    },
+    {
+     "task_id": "EP071",
+     "sol": {
+      "success": true,
+      "duration": 31.753423999994993,
+      "output_tokens": 901
+     },
+     "luna": {
+      "success": true,
+      "duration": 36.30161439999938,
+      "output_tokens": 834
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 9.851137000019662,
+      "output_tokens": 922
+     }
+    },
+    {
+     "task_id": "EP136",
+     "sol": {
+      "success": true,
+      "duration": 27.692074399907142,
+      "output_tokens": 920
+     },
+     "luna": {
+      "success": true,
+      "duration": 27.079319400014356,
+      "output_tokens": 548
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 9.825667900033295,
+      "output_tokens": 915
+     }
+    },
+    {
+     "task_id": "EP064",
+     "sol": {
+      "success": true,
+      "duration": 23.39619760005735,
+      "output_tokens": 681
+     },
+     "luna": {
+      "success": true,
+      "duration": 25.55080710002221,
+      "output_tokens": 442
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 12.227606000029482,
+      "output_tokens": 880
+     }
+    },
+    {
+     "task_id": "EP073",
+     "sol": {
+      "success": true,
+      "duration": 28.159355800016783,
+      "output_tokens": 838
+     },
+     "luna": {
+      "success": true,
+      "duration": 26.143375999992713,
+      "output_tokens": 493
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 12.791736300045159,
+      "output_tokens": 1257
+     }
+    },
+    {
+     "task_id": "EP074",
+     "sol": {
+      "success": true,
+      "duration": 25.966847299947403,
+      "output_tokens": 845
+     },
+     "luna": {
+      "success": true,
+      "duration": 28.057221099967137,
+      "output_tokens": 559
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 13.036518300010357,
+      "output_tokens": 1040
+     }
+    },
+    {
+     "task_id": "EP006",
+     "sol": {
+      "success": true,
+      "duration": 24.606682100100443,
+      "output_tokens": 696
+     },
+     "luna": {
+      "success": true,
+      "duration": 28.159191499988083,
+      "output_tokens": 506
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 10.10375099995872,
+      "output_tokens": 743
+     }
+    },
+    {
+     "task_id": "EP157",
+     "sol": {
+      "success": true,
+      "duration": 24.847085100016557,
+      "output_tokens": 669
+     },
+     "luna": {
+      "success": true,
+      "duration": 33.805259499989916,
+      "output_tokens": 917
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 12.992730500001926,
+      "output_tokens": 1105
+     }
+    },
+    {
+     "task_id": "EP019",
+     "sol": {
+      "success": true,
+      "duration": 25.88519159995485,
+      "output_tokens": 765
+     },
+     "luna": {
+      "success": true,
+      "duration": 29.28343529999256,
+      "output_tokens": 464
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 11.477254000026733,
+      "output_tokens": 840
+     }
+    },
+    {
+     "task_id": "EP007",
+     "sol": {
+      "success": true,
+      "duration": 22.406371299992315,
+      "output_tokens": 535
+     },
+     "luna": {
+      "success": true,
+      "duration": 21.048463900049683,
+      "output_tokens": 348
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 8.923407500027679,
+      "output_tokens": 496
+     }
+    },
+    {
+     "task_id": "EP122",
+     "sol": {
+      "success": true,
+      "duration": 23.319131499971263,
+      "output_tokens": 688
+     },
+     "luna": {
+      "success": true,
+      "duration": 27.918098299996927,
+      "output_tokens": 527
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 15.493153300019912,
+      "output_tokens": 1268
+     }
+    },
+    {
+     "task_id": "EP004",
+     "sol": {
+      "success": true,
+      "duration": 23.66452709992882,
+      "output_tokens": 727
+     },
+     "luna": {
+      "success": true,
+      "duration": 27.409572799981106,
+      "output_tokens": 412
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 11.214721099997405,
+      "output_tokens": 904
+     }
+    },
+    {
+     "task_id": "EP113",
+     "sol": {
+      "success": true,
+      "duration": 34.17660749994684,
+      "output_tokens": 1222
+     },
+     "luna": {
+      "success": true,
+      "duration": 53.68077460001223,
+      "output_tokens": 1372
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 19.076884099980816,
+      "output_tokens": 2093
+     }
+    },
+    {
+     "task_id": "EP012",
+     "sol": {
+      "success": true,
+      "duration": 22.310323400073685,
+      "output_tokens": 572
+     },
+     "luna": {
+      "success": true,
+      "duration": 24.907345800020266,
+      "output_tokens": 392
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 10.004614300036337,
+      "output_tokens": 616
+     }
+    },
+    {
+     "task_id": "EP000",
+     "sol": {
+      "success": true,
+      "duration": 29.63286649994552,
+      "output_tokens": 834
+     },
+     "luna": {
+      "success": true,
+      "duration": 27.35436329996446,
+      "output_tokens": 549
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 12.601778200012632,
+      "output_tokens": 925
+     }
+    },
+    {
+     "task_id": "EP149",
+     "sol": {
+      "success": true,
+      "duration": 27.595860399887897,
+      "output_tokens": 828
+     },
+     "luna": {
+      "success": true,
+      "duration": 25.742412899970077,
+      "output_tokens": 371
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 10.250081100035459,
+      "output_tokens": 772
+     }
+    },
+    {
+     "task_id": "EP117",
+     "sol": {
+      "success": true,
+      "duration": 27.383755499962717,
+      "output_tokens": 848
+     },
+     "luna": {
+      "success": true,
+      "duration": 27.115273699979298,
+      "output_tokens": 540
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 12.070021399995312,
+      "output_tokens": 1115
+     }
+    },
+    {
+     "task_id": "EP105",
+     "sol": {
+      "success": true,
+      "duration": 26.53090290003456,
+      "output_tokens": 1086
+     },
+     "luna": {
+      "success": true,
+      "duration": 30.187347600003704,
+      "output_tokens": 686
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 13.57628580002347,
+      "output_tokens": 1639
+     }
+    },
+    {
+     "task_id": "EP128",
+     "sol": {
+      "success": true,
+      "duration": 78.1744034999283,
+      "output_tokens": 790
+     },
+     "luna": {
+      "success": true,
+      "duration": 22.995031200000085,
+      "output_tokens": 460
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 10.754845999996178,
+      "output_tokens": 872
+     }
+    }
+   ]
+  },
+  "subj60": {
+   "summary": [
+    {
+     "model": "sol",
+     "mean_score_10": 9.960416666666667,
+     "elapsed_median": 33.0095,
+     "output_tokens_mean": 1129.2083333333333
+    },
+    {
+     "model": "luna",
+     "mean_score_10": 9.3625,
+     "elapsed_median": 6.425,
+     "output_tokens_mean": 515.15
+    },
+    {
+     "model": "deepseek",
+     "mean_score_10": 8.96875,
+     "elapsed_median": 18.609,
+     "output_tokens_mean": 3058.891666666667
+    }
+   ]
+  },
+  "wild20": {
+   "summary": [
+    {
+     "model": "sol",
+     "mean_score_10": 8.675,
+     "elapsed_median": 78.3945,
+     "output_tokens_mean": 2576.7
+    },
+    {
+     "model": "luna",
+     "mean_score_10": 6.375,
+     "elapsed_median": 15.384,
+     "output_tokens_mean": 1403.5
+    },
+    {
+     "model": "deepseek",
+     "mean_score_10": 6.65,
+     "elapsed_median": 55.76649999999999,
+     "output_tokens_mean": 10617.275
     }
    ]
   }

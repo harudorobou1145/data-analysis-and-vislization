@@ -148,13 +148,29 @@
     <div class="banner" id="dataBanner"></div>
 
     <div class="exp-toggle" role="tablist" aria-label="实验切换">
-      <button class="exp-btn active" data-exp="coding" type="button">代码 · EvalPlus 四档</button>
+      <button class="exp-btn active" data-exp="model" type="button">模型对比</button>
+      <button class="exp-btn" data-exp="coding" type="button">代码 · EvalPlus 四档</button>
       <button class="exp-btn" data-exp="lunads" type="button">代码 · Luna vs DeepSeek</button>
       <button class="exp-btn" data-exp="subjective" type="button">主观评分 · 60题</button>
       <button class="exp-btn" data-exp="wildbench" type="button">WildBench · 五组</button>
     </div>
 
-    <div id="exp-coding">
+    <div id="exp-model">
+      <section>
+        <h2>模型对比（同为 high）</h2>
+        <p class="note">固定 high 档位，对比 3 个模型：Sol（gpt-6.1-sol）、Luna（gpt-6-luna）、DeepSeek Flash。代码题用同一套 HumanEval 100 题，主观题同题同裁判，可直接并排。</p>
+      </section>
+      <div class="cards cols-2" style="margin-top:16px">
+        <div class="card"><h3>代码题 · 成功率（HumanEval 100）</h3><p class="src">base+plus 均通过才算成功（n=100 题，同为 high）</p><div class="chart" id="chartModelCodeSucc" style="height:280px"></div></div>
+        <div class="card"><h3>代码题 · 平均耗时 / 输出 Token</h3><p class="src">同为 high；DeepSeek Flash 快且输出长</p><div class="chart" id="chartModelCodeTime" style="height:140px"></div><div class="chart" id="chartModelCodeOut" style="height:140px"></div></div>
+      </div>
+      <div class="cards cols-2" style="margin-top:16px">
+        <div class="card"><h3>主观评分 · 60 题 质量分</h3><p class="src">四维 0-10，裁判 Sol high（n=60 题）</p><div class="chart" id="chartModelSubjScore" style="height:280px"></div></div>
+        <div class="card"><h3>WildBench 20 · 质量分</h3><p class="src">1-10 整数分，裁判 Sol high（n=20 题）</p><div class="chart" id="chartModelWbScore" style="height:280px"></div></div>
+      </div>
+    </div>
+
+    <div id="exp-coding" style="display:none">
     <div class="controls" role="group" aria-label="控制">
       <label>矩阵着色
         <select id="matrixMetric">

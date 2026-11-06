@@ -1,11 +1,12 @@
-# 交互式可视化系统（四个子实验）
+# 交互式可视化系统（两个研究问题）
 
-单页交互系统，顶部「实验切换」按钮在四个子实验间切换：
+单页交互系统，围绕两个研究问题组织：**RQ1 不同推理强度**（同模型不同档）、**RQ2 不同模型**（同档不同模型）。顶部「实验切换」按钮：
 
-1. **代码 · EvalPlus 四档**：同一 Codex 模型（`gpt-6.1-sol`）在 low/medium/high/max 四档下做 100 道算法题 + 失败题修复。
-2. **代码 · Luna vs DeepSeek**：Luna（Plus/CLI）与 DeepSeek（官方 API）在 HumanEval 100 + ALFWorld 60 上的对比。
-3. **主观评分 · 60 题**：60 道开放题，Sol low/high/ultra + Luna high + DeepSeek Flash high 五配置，同模型（Sol high）盲评四维质量。
-4. **WildBench · 五组**：WildBench v2-hard 20 题，Sol low/high/ultra + Luna high + DeepSeek Flash high 五配置，1-10 整数分。
+1. **模型对比**（RQ2）：固定 high 档，Sol / Luna / DeepSeek Flash 三模型并排——代码题（HumanEval 100 成功率/耗时/Token）+ 主观题（60 题、WildBench 质量分）。
+2. **代码 · EvalPlus 四档**（RQ1）：`gpt-6.1-sol` 在 low/medium/high/max 四档下做 100 道算法题 + 失败题修复。
+3. **代码 · Luna vs DeepSeek**：Luna 与 DeepSeek Flash 在 HumanEval 100 + ALFWorld 60 上的原始对比。
+4. **主观评分 · 60 题**：60 道开放题，Sol low/high/ultra + Luna high + DeepSeek Flash high 五配置，Sol high 盲评四维质量。
+5. **WildBench · 五组**：WildBench v2-hard 20 题，五配置，1-10 整数分。
 
 数据来自队友交接包（脱敏派生数据，非原始日志）。
 

@@ -51,8 +51,10 @@
   var WB_COND_LABEL = { sol_low: "Sol Low", sol_high: "Sol High", sol_ultra: "Sol Ultra", luna_high: "Luna High", deepseek_high: "DeepSeek Flash" };
   var FLASH_CONDS = ["sol_low", "sol_high", "sol_ultra", "luna_high", "deepseek_high"];
   var FLASH_LABEL = { sol_low: "Sol Low", sol_high: "Sol High", sol_ultra: "Sol Ultra", luna_high: "Luna High", deepseek_high: "DeepSeek Flash" };
+  var MODEL_ORDER = ["sol", "luna", "deepseek"];
+  var MODEL_LABEL = { sol: "Sol", luna: "Luna", deepseek: "DeepSeek Flash" };
 
-  var state = { exp: "coding", metric: "status", onlyFailed: false, compare: "mh", task: null, run: null, tab: "tab-primary" };
+  var state = { exp: "model", metric: "status", onlyFailed: false, compare: "mh", task: null, run: null, tab: "tab-primary" };
   var charts = {};
   var renderedRepair = false, renderedSubj = false, renderedLunads = false, renderedWb = false, renderedFlash = false;
   var pairedByTask = {};
@@ -113,6 +115,7 @@
     if (renderedLunads) renderLunads();
     if (renderedWb) renderWb();
     if (renderedFlash) renderFlash();
+    renderModelCompare();
   }
 
   function renderBanner() {
@@ -822,9 +825,10 @@
     if (c === "sol_high") return p.seq[1];
     if (c === "sol_ultra") return p.seq[2];
     if (c === "luna_high") return p.series[1];
-    if (c === "deepseek_high") return p.series[3];
+    if (c === "deepseek_high") return p.series[2];
     return p.muted;
   }
+  function modelColor(p, m) { return m === "sol" ? p.series[0] : m === "luna" ? p.series[1] : p.series[2]; }
   function flashGroup(which, c) {
     return DATA.flash[which].groups.find(function (g) { return g.condition_id === c; }) || null;
   }
@@ -892,6 +896,39 @@
     ["chartFlash60Score", "chartFlash60Time", "chartFlash60Out", "chartFlashWbScore", "chartFlashWbTime", "chartFlashWbOut", "chartFlash60Forest", "chartFlashWbForest"].forEach(function (id) { if (charts[id]) charts[id].resize(); });
   }
 
+  // ---------- 模型对比（RQ2） ----------
+  function modelBar(id, vals, name, unit, ymin, ymax, isInt) {
+    var p = pal();
+    var opt = {
+      backgroundColor: "transparent", textStyle: { color: p.text2 },
+      grid: { left: 8, right: 16, top: name ? 30 : 20, bottom: 22, containLabel: true },
+      xAxis: Object.assign(axisCategory(p), { data: MODEL_ORDER.map(function (m) { return MODEL_LABEL[m]; }) }),
+      yAxis: Object.assign(axisValue(p), { name: unit, nameTextStyle: { color: p.muted }, min: ymin, max: ymax }),
+      series: [{
+        type: "bar", barWidth: 26,
+        data: vals.map(function (v, i) { return { value: v, itemStyle: { color: modelColor(p, MODEL_ORDER[i]), borderRadius: [4, 4, 0, 0] } }; }),
+        label: { show: true, position: "top", color: p.text1, formatter: function (pr) { return pr.value == null ? "" : (isInt ? fmt(pr.value) : fmt1(pr.value)); } },
+      }],
+      tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
+    };
+    if (name) opt.title = { text: name, left: 0, top: 0, textStyle: { color: p.text1, fontSize: 12.5, fontWeight: 600 } };
+    chart(id).setOption(opt, true);
+  }
+  function modelSummaryVal(section, m, key) {
+    var s = DATA.model_compare[section].summary.find(function (x) { return x.model === m; });
+    return s ? s[key] : null;
+  }
+  function renderModelCompare() {
+    modelBar("chartModelCodeSucc", MODEL_ORDER.map(function (m) { var v = modelSummaryVal("code", m, "success_rate"); return v == null ? null : v * 100; }), null, "%", 0, 100, false);
+    modelBar("chartModelCodeTime", MODEL_ORDER.map(function (m) { return modelSummaryVal("code", m, "mean_duration"); }), "平均耗时", "秒", 0, null, false);
+    modelBar("chartModelCodeOut", MODEL_ORDER.map(function (m) { return modelSummaryVal("code", m, "mean_output_tokens"); }), "平均输出 Token", "Token", 0, null, true);
+    modelBar("chartModelSubjScore", MODEL_ORDER.map(function (m) { return modelSummaryVal("subj60", m, "mean_score_10"); }), null, "/10", 0, 10, false);
+    modelBar("chartModelWbScore", MODEL_ORDER.map(function (m) { return modelSummaryVal("wild20", m, "mean_score_10"); }), null, "/10", 0, 10, false);
+  }
+  function resizeModel() {
+    ["chartModelCodeSucc", "chartModelCodeTime", "chartModelCodeOut", "chartModelSubjScore", "chartModelWbScore"].forEach(function (id) { if (charts[id]) charts[id].resize(); });
+  }
+
   // ---------- 主题 / 标签 / 事件 ----------
   function initTheme() {
     var saved = localStorage.getItem("codedepth-theme");
@@ -915,7 +952,7 @@
   document.getElementById("onlyFailed").addEventListener("change", function (e) { state.onlyFailed = e.target.checked; renderMatrix(); });
   document.getElementById("diffCompare").addEventListener("change", function (e) { state.compare = e.target.value; renderDiffScatter(); });
 
-  var EXP_IDS = { coding: "exp-coding", lunads: "exp-lunads", subjective: "exp-subjective", wildbench: "exp-wildbench" };
+  var EXP_IDS = { model: "exp-model", coding: "exp-coding", lunads: "exp-lunads", subjective: "exp-subjective", wildbench: "exp-wildbench" };
   document.querySelectorAll(".exp-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
       document.querySelectorAll(".exp-btn").forEach(function (x) { x.classList.remove("active"); });
@@ -936,6 +973,7 @@
         if (!renderedWb) { renderedWb = true; renderWb(); }
         else setTimeout(resizeWb, 0);
       }
+      if (state.exp === "model") setTimeout(resizeModel, 0);
       if (state.exp === "coding") setTimeout(function () { resizePanel(state.tab); }, 0);
     });
   });

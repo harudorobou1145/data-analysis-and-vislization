@@ -211,6 +211,58 @@ def build_flash(root):
     }
 
 
+def build_model_compare(paired, lunads, subjective, wildbench):
+    """三模型对比（同为 high）：sol / luna / deepseek-flash。代码题按 task_id 联表，主观题取 high 配置汇总。"""
+    # 代码题：EvalPlus 的 sol high 与 Luna/DeepSeek 的 humaneval100 联表
+    luna_by_task = {r["task_id"]: r for r in lunads["paired"] if r["benchmark"] == "humaneval100"}
+    code_per_task = []
+    for p in paired:
+        lr = luna_by_task.get(p["task_id"])
+        if not lr:
+            continue
+        code_per_task.append({
+            "task_id": p["task_id"],
+            "sol": {"success": p["high"]["task_success"], "duration": p["high"]["duration_seconds"], "output_tokens": p["high"]["output_tokens"]},
+            "luna": {"success": lr["luna"]["task_success"], "duration": lr["luna"]["duration_seconds"], "output_tokens": lr["luna"]["output_tokens"]},
+            "deepseek": {"success": lr["deepseek"]["task_success"], "duration": lr["deepseek"]["duration_seconds"], "output_tokens": lr["deepseek"]["output_tokens"]},
+        })
+
+    def code_summary(name, key):
+        n = len(code_per_task)
+        succ = sum(1 for t in code_per_task if t[key]["success"] is True)
+        durs = [t[key]["duration"] for t in code_per_task if t[key]["duration"] is not None]
+        outs = [t[key]["output_tokens"] for t in code_per_task if t[key]["output_tokens"] is not None]
+        return {
+            "model": name,
+            "n": n,
+            "success_rate": (succ / n) if n else None,
+            "mean_duration": (sum(durs) / len(durs)) if durs else None,
+            "mean_output_tokens": (sum(outs) / len(outs)) if outs else None,
+        }
+
+    def subj_summary(conds):
+        out = []
+        for cid, name in (("sol_high", "sol"), ("luna_high", "luna"), ("deepseek_high", "deepseek")):
+            g = next((x for x in conds if x["condition_id"] == cid), None)
+            if g:
+                out.append({
+                    "model": name,
+                    "mean_score_10": g.get("mean_score_10"),
+                    "elapsed_median": g.get("elapsed_median"),
+                    "output_tokens_mean": g.get("output_tokens_mean"),
+                })
+        return out
+
+    return {
+        "code": {
+            "summary": [code_summary("sol", "sol"), code_summary("luna", "luna"), code_summary("deepseek", "deepseek")],
+            "per_task": code_per_task,
+        },
+        "subj60": {"summary": subj_summary(subjective["conditions"]) if subjective.get("conditions") else []},
+        "wild20": {"summary": subj_summary(wildbench["groups"])},
+    }
+
+
 def build_wildbench(root):
     root = Path(root)
     rdir = root / "result" / "wildbench_20"
@@ -291,6 +343,10 @@ def main():
         subjective["conditions"] = flash["formal60"]["groups"]  # 5 配置汇总
         subjective["conditions_paired"] = flash["formal60"]["paired"]
 
+    model_compare = None
+    if paired and lunads and subjective and wildbench:
+        model_compare = build_model_compare(paired, lunads, subjective, wildbench)
+
     payload = {
         "kind": "real",
         "source": "CodeDepth 四档 + 主观评分 + Luna/DeepSeek + WildBench",
@@ -308,6 +364,7 @@ def main():
             "lunads_runs": len(lunads["paired"]) if lunads else 0,
             "wildbench_rows": len(wildbench["rows"]) if wildbench else 0,
             "flash_formal60": len(flash["formal60"]["groups"]) if flash else 0,
+            "model_compare_code_tasks": len(model_compare["code"]["per_task"]) if model_compare else 0,
         },
         "paired": paired,
         "repair_rounds": repair_rounds,
@@ -319,6 +376,7 @@ def main():
         "lunads": lunads,
         "wildbench": wildbench,
         "flash": flash,
+        "model_compare": model_compare,
     }
 
     header = (
