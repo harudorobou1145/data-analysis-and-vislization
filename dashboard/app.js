@@ -90,7 +90,7 @@
     return charts[id];
   }
   function axisValue(p) {
-    return { type: "value", splitLine: { lineStyle: { color: p.grid, width: 1 } }, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: p.text2, fontSize: 11 }, nameGap: 16, nameLocation: "middle", nameTextStyle: { color: p.muted } };
+    return { type: "value", splitLine: { lineStyle: { color: p.grid, width: 1 } }, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: p.text2, fontSize: 11 }, nameGap: 48, nameLocation: "middle", nameTextStyle: { color: p.muted, align: "left" } };
   }
   function axisCategory(p) {
     return { type: "category", axisLine: { lineStyle: { color: p.axis } }, axisTick: { show: false }, axisLabel: { color: p.text2, fontSize: 11 } };
@@ -174,7 +174,7 @@
             "<br/>工具 " + fmt(r.tool_call_count) + " 次 · 自测 " + fmt(r.test_execution_count) + " · 错误 " + fmt(r.tool_error_count);
         },
       },
-      grid: { left: 68, right: 30, top: 8, bottom: 30, containLabel: true },
+      grid: { left: 115, right: 30, top: 8, bottom: 30, containLabel: true },
       xAxis: Object.assign(axisCategory(p), { data: EFFORTS.map(function (e) { return EFFORT_LABEL[e]; }) }),
       yAxis: Object.assign(axisCategory(p), { data: yData, axisLabel: { color: p.text2, fontSize: 11 } }),
       series: [{
@@ -261,7 +261,7 @@
     chart("chartDiffBox").setOption({
       backgroundColor: "transparent", textStyle: { color: p.text2 },
       tooltip: { trigger: "item", formatter: function (pr) { return (names[pr.dataIndex] || "") + " 输出 Token 差值"; } },
-      grid: { left: 68, right: 20, top: 30, bottom: 26, containLabel: true },
+      grid: { left: 115, right: 20, top: 30, bottom: 26, containLabel: true },
       xAxis: Object.assign(axisCategory(p), { data: names }),
       yAxis: Object.assign(axisValue(p), { name: "输出 Token 差值", nameTextStyle: { color: p.muted } }),
       series: [{
@@ -300,7 +300,7 @@
         },
       },
       legend: { show: false },
-      grid: { left: 68, right: 24, top: 20, bottom: 26, containLabel: true },
+      grid: { left: 115, right: 24, top: 20, bottom: 26, containLabel: true },
       xAxis: Object.assign(axisValue(p), { name: EFFORT_LABEL[xE] + " 输出 Token", nameTextStyle: { color: p.muted } }),
       yAxis: Object.assign(axisValue(p), { name: EFFORT_LABEL[yE] + " 输出 Token", nameTextStyle: { color: p.muted } }),
       series: [{
@@ -399,7 +399,7 @@
             "<br/>结果：" + STATUS[d.outcome].label + (d.first ? "（首次通过）" : "") + (d.recover ? "（600s 预算）" : "");
         },
       },
-      grid: { left: 68, right: 16, top: 16, bottom: 24, containLabel: true },
+      grid: { left: 115, right: 16, top: 16, bottom: 24, containLabel: true },
       xAxis: Object.assign(axisValue(p), { minInterval: 1, name: "追加轮次", nameTextStyle: { color: p.muted } }),
       yAxis: Object.assign(axisCategory(p), { data: lanes.map(function (e) { return EFFORT_LABEL[e]; }) }),
       series: series,
@@ -521,7 +521,7 @@
     chart(id).setOption({
       backgroundColor: "transparent", textStyle: { color: p.text2 },
       title: { text: name, left: 0, top: 0, textStyle: { color: p.text1, fontSize: 12.5, fontWeight: 600 } },
-      grid: { left: 68, right: 8, top: 30, bottom: 20, containLabel: true },
+      grid: { left: 115, right: 8, top: 30, bottom: 20, containLabel: true },
       xAxis: Object.assign(axisCategory(p), { data: FLASH_CONDS.map(function (c) { return FLASH_LABEL[c]; }), axisLabel: { fontSize: 10, interval: 0 } }),
       yAxis: Object.assign(axisValue(p), { min: ymin, max: ymax }),
       series: [{
@@ -549,7 +549,7 @@
     var labels = edges.map(function (e, i) { return i === edges.length - 1 ? "10.0" : e.toFixed(2); });
     chart("chartSubjHist").setOption({
       backgroundColor: "transparent", textStyle: { color: p.text2 },
-      grid: { left: 68, right: 16, top: 34, bottom: 30, containLabel: true },
+      grid: { left: 115, right: 16, top: 34, bottom: 30, containLabel: true },
       xAxis: Object.assign(axisCategory(p), { data: labels, axisLabel: { color: p.text2, fontSize: 10 } }),
       yAxis: Object.assign(axisValue(p), { name: "回答数", nameTextStyle: { color: p.muted } }),
       series: [{
@@ -577,7 +577,7 @@
     chart("chartSubjType").setOption({
       backgroundColor: "transparent", textStyle: { color: p.text2 },
       legend: { top: 0, left: 0, textStyle: { color: p.text2 }, itemWidth: 12, itemHeight: 8 },
-      grid: { left: 68, right: 16, top: 36, bottom: 24, containLabel: true },
+      grid: { left: 115, right: 16, top: 36, bottom: 24, containLabel: true },
       xAxis: Object.assign(axisCategory(p), { data: SUBJ_EFFORTS.map(function (e) { return SUBJ_LABEL[e]; }) }),
       yAxis: Object.assign(axisValue(p), { name: "/10", nameTextStyle: { color: p.muted }, min: 9.0, max: 10.08 }),
       series: series,
@@ -610,7 +610,7 @@
     });
     chart("chartSubjForest").setOption({
       backgroundColor: "transparent", textStyle: { color: p.text2 },
-      grid: { left: 68, right: 60, top: 16, bottom: 24, containLabel: true },
+      grid: { left: 115, right: 60, top: 16, bottom: 24, containLabel: true },
       xAxis: Object.assign(axisValue(p), { name: "分差", nameTextStyle: { color: p.muted } }),
       yAxis: Object.assign(axisCategory(p), { data: rows.map(function (r) { return r.name; }) }),
       series: [{
@@ -628,7 +628,7 @@
     chart("chartSubjRepeat").setOption({
       backgroundColor: "transparent", textStyle: { color: p.text2 },
       tooltip: { trigger: "item", formatter: function (pr) { return "<strong>" + pr.data.run_id + "</strong><br/>主评分 " + pr.value[0] + " → 复评分 " + pr.value[1] + "<br/>绝对差 " + pr.data.diff.toFixed(3); } },
-      grid: { left: 68, right: 20, top: 20, bottom: 26, containLabel: true },
+      grid: { left: 115, right: 20, top: 20, bottom: 26, containLabel: true },
       xAxis: Object.assign(axisValue(p), { name: "原主评分 /10", nameTextStyle: { color: p.muted }, min: lo, max: hi }),
       yAxis: Object.assign(axisValue(p), { name: "复评分 /10", nameTextStyle: { color: p.muted }, min: lo, max: hi }),
       series: [{
@@ -678,7 +678,7 @@
     chart(id).setOption({
       backgroundColor: "transparent", textStyle: { color: p.text2 },
       legend: { top: 0, left: 0, textStyle: { color: p.text2 }, itemWidth: 12, itemHeight: 8 },
-      grid: { left: 68, right: 16, top: 36, bottom: 24, containLabel: true },
+      grid: { left: 115, right: 16, top: 36, bottom: 24, containLabel: true },
       xAxis: Object.assign(axisCategory(p), { data: LUNADS_BENCH.map(function (b) { return LUNADS_BENCH_LABEL[b]; }) }),
       yAxis: Object.assign(axisValue(p), { name: unit, nameTextStyle: { color: p.muted }, min: min, max: max }),
       series: MODEL_ORDER.map(function (m) {
@@ -703,7 +703,7 @@
     chart("chartLunadsScatter").setOption({
       backgroundColor: "transparent", textStyle: { color: p.text2 },
       legend: { top: 0, left: 0, textStyle: { color: p.text2 }, itemWidth: 12, itemHeight: 8 },
-      grid: { left: 68, right: 20, top: 36, bottom: 24, containLabel: true },
+      grid: { left: 115, right: 20, top: 36, bottom: 24, containLabel: true },
       xAxis: Object.assign(axisValue(p), { name: "Luna 耗时 (s)", nameTextStyle: { color: p.muted } }),
       yAxis: Object.assign(axisValue(p), { name: "DeepSeek 耗时 (s)", nameTextStyle: { color: p.muted } }),
       series: series,
@@ -738,7 +738,7 @@
     var data = WB_CONDS.map(function (c) { var g = wbGroup(c); return g ? g.mean_score_10 : null; });
     chart("chartWbScore").setOption({
       backgroundColor: "transparent", textStyle: { color: p.text2 },
-      grid: { left: 68, right: 16, top: 20, bottom: 24, containLabel: true },
+      grid: { left: 115, right: 16, top: 20, bottom: 24, containLabel: true },
       xAxis: Object.assign(axisCategory(p), { data: WB_CONDS.map(function (c) { return WB_COND_LABEL[c]; }), axisLabel: { fontSize: 10, interval: 0 } }),
       yAxis: Object.assign(axisValue(p), { name: "质量分 /10", nameTextStyle: { color: p.muted }, min: 0, max: 10 }),
       series: [{
@@ -754,7 +754,7 @@
     chart(id).setOption({
       backgroundColor: "transparent", textStyle: { color: p.text2 },
       title: { text: name, left: 0, top: 0, textStyle: { color: p.text1, fontSize: 12.5, fontWeight: 600 } },
-      grid: { left: 68, right: 8, top: 26, bottom: 20, containLabel: true },
+      grid: { left: 115, right: 8, top: 26, bottom: 20, containLabel: true },
       xAxis: Object.assign(axisCategory(p), { data: WB_CONDS.map(function (c) { return WB_COND_LABEL[c]; }), axisLabel: { fontSize: 10, interval: 0 } }),
       yAxis: Object.assign(axisValue(p), { name: unit, nameTextStyle: { color: p.muted }, min: ymin, max: ymax }),
       series: [{
@@ -774,7 +774,7 @@
     });
     chart("chartWbForest").setOption({
       backgroundColor: "transparent", textStyle: { color: p.text2 },
-      grid: { left: 68, right: 60, top: 16, bottom: 24, containLabel: true },
+      grid: { left: 115, right: 60, top: 16, bottom: 24, containLabel: true },
       xAxis: Object.assign(axisValue(p), { name: "分差 /10", nameTextStyle: { color: p.muted } }),
       yAxis: Object.assign(axisCategory(p), { data: rows.map(function (r) { return r.name; }) }),
       series: [{
@@ -806,7 +806,7 @@
     chart("chartWbMatrix").setOption({
       backgroundColor: "transparent", textStyle: { color: p.text2 },
       tooltip: { trigger: "item", formatter: function (pr) { var d = pr.data; return WB_COND_LABEL[WB_CONDS[d[0]]] + " × " + tasks[d[1]] + "<br/>质量分 " + d[2].toFixed(2); } },
-      grid: { left: 68, right: 60, top: 10, bottom: 28, containLabel: true },
+      grid: { left: 115, right: 60, top: 10, bottom: 28, containLabel: true },
       xAxis: Object.assign(axisCategory(p), { data: WB_CONDS.map(function (c) { return WB_COND_LABEL[c]; }), axisLabel: { fontSize: 10, interval: 0 } }),
       yAxis: Object.assign(axisCategory(p), { data: tasks }),
       visualMap: { min: 0, max: 10, calculable: false, orient: "vertical", right: 0, top: "center", itemWidth: 12, itemHeight: 100, text: ["10", "0"], textStyle: { color: p.muted, fontSize: 10 }, inRange: { color: p.seqHeat } },
@@ -845,7 +845,7 @@
     var data = FLASH_CONDS.map(function (c) { var g = flashGroup(which, c); return g ? g.mean_score_10 : null; });
     chart(id).setOption({
       backgroundColor: "transparent", textStyle: { color: p.text2 },
-      grid: { left: 68, right: 16, top: 20, bottom: 24, containLabel: true },
+      grid: { left: 115, right: 16, top: 20, bottom: 24, containLabel: true },
       xAxis: Object.assign(axisCategory(p), { data: FLASH_CONDS.map(function (c) { return FLASH_LABEL[c]; }), axisLabel: { fontSize: 10 } }),
       yAxis: Object.assign(axisValue(p), { name: "质量分 /10", nameTextStyle: { color: p.muted }, min: 0, max: 10 }),
       series: [{
@@ -861,7 +861,7 @@
     chart(id).setOption({
       backgroundColor: "transparent", textStyle: { color: p.text2 },
       title: { text: name, left: 0, top: 0, textStyle: { color: p.text1, fontSize: 12.5, fontWeight: 600 } },
-      grid: { left: 68, right: 8, top: 26, bottom: 20, containLabel: true },
+      grid: { left: 115, right: 8, top: 26, bottom: 20, containLabel: true },
       xAxis: Object.assign(axisCategory(p), { data: FLASH_CONDS.map(function (c) { return FLASH_LABEL[c]; }), axisLabel: { fontSize: 10 } }),
       yAxis: Object.assign(axisValue(p), { name: unit, nameTextStyle: { color: p.muted } }),
       series: [{
@@ -879,7 +879,7 @@
     });
     chart(id).setOption({
       backgroundColor: "transparent", textStyle: { color: p.text2 },
-      grid: { left: 68, right: 60, top: 16, bottom: 24, containLabel: true },
+      grid: { left: 115, right: 60, top: 16, bottom: 24, containLabel: true },
       xAxis: Object.assign(axisValue(p), { name: "分差", nameTextStyle: { color: p.muted } }),
       yAxis: Object.assign(axisCategory(p), { data: rows.map(function (r) { return r.name; }) }),
       series: [{
@@ -899,7 +899,7 @@
     var p = pal();
     var opt = {
       backgroundColor: "transparent", textStyle: { color: p.text2 },
-      grid: { left: 68, right: 16, top: name ? 30 : 20, bottom: 22, containLabel: true },
+      grid: { left: 115, right: 16, top: name ? 30 : 20, bottom: 22, containLabel: true },
       xAxis: Object.assign(axisCategory(p), { data: MODEL_ORDER.map(function (m) { return MODEL_LABEL[m]; }) }),
       yAxis: Object.assign(axisValue(p), { name: unit, nameTextStyle: { color: p.muted }, min: ymin, max: ymax }),
       series: [{
