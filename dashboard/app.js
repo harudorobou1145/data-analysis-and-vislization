@@ -48,11 +48,11 @@
   var LUNADS_BENCH = ["humaneval100", "alfworld60"];
   var LUNADS_BENCH_LABEL = { humaneval100: "HumanEval 100", alfworld60: "ALFWorld 60" };
   var WB_CONDS = ["sol_low", "sol_high", "sol_ultra", "luna_high", "deepseek_high"];
-  var WB_COND_LABEL = { sol_low: "Sol Low", sol_high: "Sol High", sol_ultra: "Sol Ultra", luna_high: "Luna High", deepseek_high: "DeepSeek Flash" };
+  var WB_COND_LABEL = { sol_low: "Sol Low", sol_high: "Sol High", sol_ultra: "Sol Ultra", luna_high: "Luna High", deepseek_high: "DeepSeek" };
   var FLASH_CONDS = ["sol_low", "sol_high", "sol_ultra", "luna_high", "deepseek_high"];
-  var FLASH_LABEL = { sol_low: "Sol Low", sol_high: "Sol High", sol_ultra: "Sol Ultra", luna_high: "Luna High", deepseek_high: "DeepSeek Flash" };
+  var FLASH_LABEL = { sol_low: "Sol Low", sol_high: "Sol High", sol_ultra: "Sol Ultra", luna_high: "Luna High", deepseek_high: "DeepSeek" };
   var MODEL_ORDER = ["sol", "luna", "deepseek"];
-  var MODEL_LABEL = { sol: "Sol", luna: "Luna", deepseek: "DeepSeek Flash" };
+  var MODEL_LABEL = { sol: "Sol", luna: "Luna", deepseek: "DeepSeek" };
 
   var state = { exp: "model", metric: "status", onlyFailed: false, compare: "mh", task: null, run: null, tab: "tab-primary" };
   var charts = {};
@@ -522,7 +522,7 @@
       backgroundColor: "transparent", textStyle: { color: p.text2 },
       title: { text: name, left: 0, top: 0, textStyle: { color: p.text1, fontSize: 12.5, fontWeight: 600 } },
       grid: { left: 8, right: 8, top: 30, bottom: 20, containLabel: true },
-      xAxis: Object.assign(axisCategory(p), { data: FLASH_CONDS.map(function (c) { return FLASH_LABEL[c]; }), axisLabel: { fontSize: 10 } }),
+      xAxis: Object.assign(axisCategory(p), { data: FLASH_CONDS.map(function (c) { return FLASH_LABEL[c]; }), axisLabel: { fontSize: 10, interval: 0 } }),
       yAxis: Object.assign(axisValue(p), { min: ymin, max: ymax }),
       series: [{
         type: "bar", barWidth: 16,
@@ -739,7 +739,7 @@
     chart("chartWbScore").setOption({
       backgroundColor: "transparent", textStyle: { color: p.text2 },
       grid: { left: 8, right: 16, top: 20, bottom: 24, containLabel: true },
-      xAxis: Object.assign(axisCategory(p), { data: WB_CONDS.map(function (c) { return WB_COND_LABEL[c]; }) }),
+      xAxis: Object.assign(axisCategory(p), { data: WB_CONDS.map(function (c) { return WB_COND_LABEL[c]; }), axisLabel: { fontSize: 10, interval: 0 } }),
       yAxis: Object.assign(axisValue(p), { name: "质量分 /10", nameTextStyle: { color: p.muted }, min: 0, max: 10 }),
       series: [{
         type: "bar", barWidth: 22,
@@ -755,7 +755,7 @@
       backgroundColor: "transparent", textStyle: { color: p.text2 },
       title: { text: name, left: 0, top: 0, textStyle: { color: p.text1, fontSize: 12.5, fontWeight: 600 } },
       grid: { left: 8, right: 8, top: 26, bottom: 20, containLabel: true },
-      xAxis: Object.assign(axisCategory(p), { data: WB_CONDS.map(function (c) { return WB_COND_LABEL[c]; }) }),
+      xAxis: Object.assign(axisCategory(p), { data: WB_CONDS.map(function (c) { return WB_COND_LABEL[c]; }), axisLabel: { fontSize: 10, interval: 0 } }),
       yAxis: Object.assign(axisValue(p), { name: unit, nameTextStyle: { color: p.muted }, min: ymin, max: ymax }),
       series: [{
         type: "bar", barWidth: 20,
@@ -807,7 +807,7 @@
       backgroundColor: "transparent", textStyle: { color: p.text2 },
       tooltip: { trigger: "item", formatter: function (pr) { var d = pr.data; return WB_COND_LABEL[WB_CONDS[d[0]]] + " × " + tasks[d[1]] + "<br/>质量分 " + d[2].toFixed(2); } },
       grid: { left: 8, right: 60, top: 10, bottom: 28, containLabel: true },
-      xAxis: Object.assign(axisCategory(p), { data: WB_CONDS.map(function (c) { return WB_COND_LABEL[c]; }) }),
+      xAxis: Object.assign(axisCategory(p), { data: WB_CONDS.map(function (c) { return WB_COND_LABEL[c]; }), axisLabel: { fontSize: 10, interval: 0 } }),
       yAxis: Object.assign(axisCategory(p), { data: tasks }),
       visualMap: { min: 0, max: 10, calculable: false, orient: "vertical", right: 0, top: "center", itemWidth: 12, itemHeight: 100, text: ["10", "0"], textStyle: { color: p.muted, fontSize: 10 }, inRange: { color: p.seqHeat } },
       series: [{ type: "heatmap", data: data, itemStyle: { borderColor: p.surface, borderWidth: 1 }, label: { show: false } }],
