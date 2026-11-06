@@ -3,7 +3,7 @@
 window.CODEDEPTH_DATA = {
  "kind": "real",
  "source": "CodeDepth 四档 + 主观评分 + Luna/DeepSeek + WildBench",
- "generatedAt": "2026-11-06T13:32:34.503918+08:00",
+ "generatedAt": "2026-11-06T14:48:26.571718+08:00",
  "note": "四个子实验合并。reasoning_effort 未经独立验证；相关≠因果；不同实验口径不合并。",
  "efforts": [
   "low",
@@ -20,7 +20,8 @@ window.CODEDEPTH_DATA = {
   "specs": 5,
   "subjective_answers": 360,
   "lunads_runs": 160,
-  "wildbench_rows": 160
+  "wildbench_rows": 160,
+  "flash_formal60": 5
  },
  "paired": [
   {
@@ -55023,5 +55024,181 @@ window.CODEDEPTH_DATA = {
     "join_issues": []
    }
   ]
+ },
+ "flash": {
+  "formal60": {
+   "groups": [
+    {
+     "condition_id": "sol_low",
+     "model": "gpt-6.1-sol",
+     "mean_score_10": 9.904166666666667,
+     "full_score_rate": 0.7583333333333333,
+     "elapsed_median": 24.4925,
+     "output_tokens_mean": 828.1166666666667,
+     "reasoning_tokens_mean": 12.9
+    },
+    {
+     "condition_id": "sol_high",
+     "model": "gpt-6.1-sol",
+     "mean_score_10": 9.960416666666667,
+     "full_score_rate": 0.8833333333333333,
+     "elapsed_median": 33.0095,
+     "output_tokens_mean": 1129.2083333333333,
+     "reasoning_tokens_mean": 323.98333333333335
+    },
+    {
+     "condition_id": "sol_ultra",
+     "model": "gpt-6.1-sol",
+     "mean_score_10": 9.958333333333334,
+     "full_score_rate": 0.875,
+     "elapsed_median": 55.213499999999996,
+     "output_tokens_mean": 2139.1833333333334,
+     "reasoning_tokens_mean": 1310.6833333333334
+    },
+    {
+     "condition_id": "luna_high",
+     "model": "gpt-6-luna",
+     "mean_score_10": 9.3625,
+     "full_score_rate": 0.3,
+     "elapsed_median": 6.425,
+     "output_tokens_mean": 515.15,
+     "reasoning_tokens_mean": 38.65
+    },
+    {
+     "condition_id": "deepseek_high",
+     "model": "deepseek-flash",
+     "mean_score_10": 8.96875,
+     "full_score_rate": 0.09166666666666666,
+     "elapsed_median": 18.609,
+     "output_tokens_mean": 3058.891666666667,
+     "reasoning_tokens_mean": 1636.175
+    }
+   ],
+   "paired": [
+    {
+     "condition_id": "deepseek_high",
+     "reference_condition_id": "sol_low",
+     "paired_tasks": 60,
+     "mean_difference": -0.9354166666666667,
+     "higher": 2,
+     "tied": 2,
+     "lower": 56
+    },
+    {
+     "condition_id": "deepseek_high",
+     "reference_condition_id": "sol_high",
+     "paired_tasks": 60,
+     "mean_difference": -0.9916666666666667,
+     "higher": 1,
+     "tied": 1,
+     "lower": 58
+    },
+    {
+     "condition_id": "deepseek_high",
+     "reference_condition_id": "sol_ultra",
+     "paired_tasks": 60,
+     "mean_difference": -0.9895833333333334,
+     "higher": 1,
+     "tied": 1,
+     "lower": 58
+    },
+    {
+     "condition_id": "deepseek_high",
+     "reference_condition_id": "luna_high",
+     "paired_tasks": 60,
+     "mean_difference": -0.39375,
+     "higher": 11,
+     "tied": 4,
+     "lower": 45
+    }
+   ]
+  },
+  "wild20": {
+   "groups": [
+    {
+     "condition_id": "sol_low",
+     "model": "gpt-6.1-sol",
+     "mean_score_10": 8.225,
+     "full_score_rate": 0.125,
+     "elapsed_median": 35.902,
+     "output_tokens_mean": 1352.075,
+     "reasoning_tokens_mean": 185.35
+    },
+    {
+     "condition_id": "sol_high",
+     "model": "gpt-6.1-sol",
+     "mean_score_10": 8.675,
+     "full_score_rate": 0.375,
+     "elapsed_median": 78.3945,
+     "output_tokens_mean": 2576.7,
+     "reasoning_tokens_mean": 1328.25
+    },
+    {
+     "condition_id": "sol_ultra",
+     "model": "gpt-6.1-sol",
+     "mean_score_10": 8.725,
+     "full_score_rate": 0.325,
+     "elapsed_median": 168.5405,
+     "output_tokens_mean": 5283.65,
+     "reasoning_tokens_mean": 4027.85
+    },
+    {
+     "condition_id": "luna_high",
+     "model": "gpt-6-luna",
+     "mean_score_10": 6.375,
+     "full_score_rate": 0.025,
+     "elapsed_median": 15.384,
+     "output_tokens_mean": 1403.5,
+     "reasoning_tokens_mean": 562.05
+    },
+    {
+     "condition_id": "deepseek_high",
+     "model": "deepseek-flash",
+     "mean_score_10": 6.65,
+     "full_score_rate": 0.05,
+     "elapsed_median": 55.76649999999999,
+     "output_tokens_mean": 10617.275,
+     "reasoning_tokens_mean": 8941.1
+    }
+   ],
+   "paired": [
+    {
+     "condition_id": "deepseek_high",
+     "reference_condition_id": "sol_low",
+     "paired_tasks": 20,
+     "mean_difference": -1.575,
+     "higher": 2,
+     "tied": 2,
+     "lower": 16
+    },
+    {
+     "condition_id": "deepseek_high",
+     "reference_condition_id": "sol_high",
+     "paired_tasks": 20,
+     "mean_difference": -2.025,
+     "higher": 0,
+     "tied": 1,
+     "lower": 19
+    },
+    {
+     "condition_id": "deepseek_high",
+     "reference_condition_id": "sol_ultra",
+     "paired_tasks": 20,
+     "mean_difference": -2.075,
+     "higher": 0,
+     "tied": 2,
+     "lower": 18
+    },
+    {
+     "condition_id": "deepseek_high",
+     "reference_condition_id": "luna_high",
+     "paired_tasks": 20,
+     "mean_difference": 0.275,
+     "higher": 8,
+     "tied": 4,
+     "lower": 8
+    }
+   ]
+  }
  }
 };

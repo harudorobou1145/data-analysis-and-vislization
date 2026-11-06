@@ -6,6 +6,7 @@
 2. **代码 · Luna vs DeepSeek**：Luna（Plus/CLI）与 DeepSeek（官方 API）在 HumanEval 100 + ALFWorld 60 上的对比。
 3. **主观评分 · 60 题**：同一模型 low/high/ultra 三档回答 60 道开放题，同模型 high 盲评四维质量。
 4. **WildBench · 四组**：WildBench v2-hard 20 题，Sol low/high/ultra + Luna high 四组，1-10 整数分。
+5. **DeepSeek Flash 补充**：DeepSeek Flash/high 重跑 60 题与 WildBench 20 题，凑成 5 配置对比（含分差）。
 
 数据来自队友交接包（脱敏派生数据，非原始日志）。
 
@@ -33,6 +34,8 @@
 **主观评分 60 题**：high/ultra 质量均分几乎相同（9.96），但 ultra 耗时中位数是 high 的 1.67 倍、推理 Token 是 4 倍；302/360 满分（评分天花板）。
 
 **WildBench 20 题**：Sol ultra≈high（8.72 vs 8.68）但更慢（168s vs 78s）；Sol low 8.22；Luna high 6.38（明显更低）但最快（15s）。
+
+**DeepSeek Flash 补充**：60 题上 DeepSeek Flash 垫底（8.97，vs Sol high 9.96、Luna 9.36）；WildBench 上与 Luna 接近（6.65 vs 6.38），但输出 Token 极高（WildBench 均值 10617）。
 
 ## 数据接口
 

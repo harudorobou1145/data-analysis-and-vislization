@@ -171,6 +171,27 @@ def build_lunads(root):
     return {"summary": summary, "paired": paired}
 
 
+def build_flash(root):
+    root = Path(root)
+    cs = json.loads((root / "result" / "comparison_summary.json").read_text(encoding="utf-8"))
+    def norm(g):
+        tok = g.get("tokens") or {}
+        return {
+            "condition_id": g["condition_id"], "model": g.get("model"),
+            "mean_score_10": g.get("mean_score_10"),
+            "full_score_rate": g.get("full_score_rate"),
+            "elapsed_median": (g.get("successful_candidate_timing") or {}).get("median"),
+            "output_tokens_mean": tok.get("outputTokens", {}).get("mean"),
+            "reasoning_tokens_mean": tok.get("reasoningOutputTokens", {}).get("mean"),
+        }
+    return {
+        "formal60": {"groups": [norm(g) for g in cs["formal60"]["groups"]],
+                     "paired": cs["formal60"].get("paired_comparisons", [])},
+        "wild20": {"groups": [norm(g) for g in cs["wild20"]["groups"]],
+                   "paired": cs["wild20"].get("paired_comparisons", [])},
+    }
+
+
 def build_wildbench(root):
     root = Path(root)
     rdir = root / "result" / "wildbench_20"
@@ -215,6 +236,7 @@ def main():
     ap.add_argument("--subjective", default=None, help="主观评分实验包根目录（可选）")
     ap.add_argument("--lunads", default=None, help="Luna vs DeepSeek 交接包根目录（可选）")
     ap.add_argument("--wildbench", default=None, help="WildBench 四组实验包根目录（可选）")
+    ap.add_argument("--flash", default=None, help="DeepSeek Flash 补充实验包根目录（可选）")
     ap.add_argument("-o", "--output", default="dashboard/data.js")
     a = ap.parse_args()
     b = Path(a.bundle)
@@ -233,6 +255,7 @@ def main():
     subjective = build_subjective(a.subjective) if a.subjective else None
     lunads = build_lunads(a.lunads) if a.lunads else None
     wildbench = build_wildbench(a.wildbench) if a.wildbench else None
+    flash = build_flash(a.flash) if a.flash else None
 
     payload = {
         "kind": "real",
@@ -250,6 +273,7 @@ def main():
             "subjective_answers": len(subjective["primary_rows"]) if subjective else 0,
             "lunads_runs": len(lunads["paired"]) if lunads else 0,
             "wildbench_rows": len(wildbench["rows"]) if wildbench else 0,
+            "flash_formal60": len(flash["formal60"]["groups"]) if flash else 0,
         },
         "paired": paired,
         "repair_rounds": repair_rounds,
@@ -260,6 +284,7 @@ def main():
         "subjective": subjective,
         "lunads": lunads,
         "wildbench": wildbench,
+        "flash": flash,
     }
 
     header = (

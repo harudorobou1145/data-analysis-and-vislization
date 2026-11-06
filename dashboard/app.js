@@ -49,10 +49,12 @@
   var LUNADS_BENCH_LABEL = { humaneval100: "HumanEval 100", alfworld60: "ALFWorld 60" };
   var WB_CONDS = ["sol_low", "sol_high", "sol_ultra", "luna_high"];
   var WB_COND_LABEL = { sol_low: "Sol Low", sol_high: "Sol High", sol_ultra: "Sol Ultra", luna_high: "Luna High" };
+  var FLASH_CONDS = ["sol_low", "sol_high", "sol_ultra", "luna_high", "deepseek_high"];
+  var FLASH_LABEL = { sol_low: "Sol Low", sol_high: "Sol High", sol_ultra: "Sol Ultra", luna_high: "Luna High", deepseek_high: "DeepSeek Flash" };
 
   var state = { exp: "coding", metric: "status", onlyFailed: false, compare: "mh", task: null, run: null, tab: "tab-primary" };
   var charts = {};
-  var renderedRepair = false, renderedSubj = false, renderedLunads = false, renderedWb = false;
+  var renderedRepair = false, renderedSubj = false, renderedLunads = false, renderedWb = false, renderedFlash = false;
   var pairedByTask = {};
 
   function isDark() { return document.documentElement.getAttribute("data-theme") === "dark"; }
@@ -110,6 +112,7 @@
     if (renderedSubj) renderSubjective();
     if (renderedLunads) renderLunads();
     if (renderedWb) renderWb();
+    if (renderedFlash) renderFlash();
   }
 
   function renderBanner() {
@@ -829,6 +832,82 @@
     ["chartWbScore", "chartWbTime", "chartWbOut", "chartWbForest", "chartWbMatrix"].forEach(function (id) { if (charts[id]) charts[id].resize(); });
   }
 
+  // ---------- DeepSeek Flash 补充 ----------
+  function flashColor(p, c) {
+    if (c === "sol_low") return p.seq[0];
+    if (c === "sol_high") return p.seq[1];
+    if (c === "sol_ultra") return p.seq[2];
+    if (c === "luna_high") return p.series[1];
+    if (c === "deepseek_high") return p.series[3];
+    return p.muted;
+  }
+  function flashGroup(which, c) {
+    return DATA.flash[which].groups.find(function (g) { return g.condition_id === c; }) || null;
+  }
+  function renderFlash() {
+    renderFlashScore("chartFlash60Score", "formal60");
+    renderFlashScore("chartFlashWbScore", "wild20");
+    renderFlashMini("chartFlash60Time", "formal60", "elapsed_median", "耗时中位数", "秒", false);
+    renderFlashMini("chartFlash60Out", "formal60", "output_tokens_mean", "平均输出 Token", "Token", true);
+    renderFlashMini("chartFlashWbTime", "wild20", "elapsed_median", "耗时中位数", "秒", false);
+    renderFlashMini("chartFlashWbOut", "wild20", "output_tokens_mean", "平均输出 Token", "Token", true);
+    renderFlashForest("chartFlash60Forest", "formal60");
+    renderFlashForest("chartFlashWbForest", "wild20");
+  }
+  function renderFlashScore(id, which) {
+    var p = pal();
+    var data = FLASH_CONDS.map(function (c) { var g = flashGroup(which, c); return g ? g.mean_score_10 : null; });
+    chart(id).setOption({
+      backgroundColor: "transparent", textStyle: { color: p.text2 },
+      grid: { left: 8, right: 16, top: 20, bottom: 24, containLabel: true },
+      xAxis: Object.assign(axisCategory(p), { data: FLASH_CONDS.map(function (c) { return FLASH_LABEL[c]; }), axisLabel: { fontSize: 10 } }),
+      yAxis: Object.assign(axisValue(p), { name: "质量分 /10", nameTextStyle: { color: p.muted }, min: 0, max: 10 }),
+      series: [{
+        type: "bar", barWidth: 20,
+        data: data.map(function (v, i) { return { value: v, itemStyle: { color: flashColor(p, FLASH_CONDS[i]), borderRadius: [4, 4, 0, 0] } }; }),
+        label: { show: true, position: "top", color: p.text1, fontSize: 10, formatter: function (pr) { return pr.value == null ? "" : pr.value.toFixed(2); } },
+      }],
+      tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
+    }, true);
+  }
+  function renderFlashMini(id, which, field, name, unit, isInt) {
+    var p = pal();
+    chart(id).setOption({
+      backgroundColor: "transparent", textStyle: { color: p.text2 },
+      title: { text: name, left: 0, top: 0, textStyle: { color: p.text1, fontSize: 12.5, fontWeight: 600 } },
+      grid: { left: 8, right: 8, top: 26, bottom: 20, containLabel: true },
+      xAxis: Object.assign(axisCategory(p), { data: FLASH_CONDS.map(function (c) { return FLASH_LABEL[c]; }), axisLabel: { fontSize: 10 } }),
+      yAxis: Object.assign(axisValue(p), { name: unit, nameTextStyle: { color: p.muted } }),
+      series: [{
+        type: "bar", barWidth: 18,
+        data: FLASH_CONDS.map(function (c) { var g = flashGroup(which, c); return { value: g ? g[field] : null, itemStyle: { color: flashColor(p, c), borderRadius: [4, 4, 0, 0] } }; }),
+        label: { show: true, position: "top", color: p.text1, fontSize: 10, formatter: function (pr) { return pr.value == null ? "" : (isInt ? fmt(pr.value) : fmt1(pr.value)); } },
+      }],
+      tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
+    }, true);
+  }
+  function renderFlashForest(id, which) {
+    var p = pal();
+    var rows = DATA.flash[which].paired.map(function (c) {
+      return { name: FLASH_LABEL[c.reference_condition_id], mean: c.mean_difference, higher: c.higher, tied: c.tied, lower: c.lower };
+    });
+    chart(id).setOption({
+      backgroundColor: "transparent", textStyle: { color: p.text2 },
+      grid: { left: 8, right: 60, top: 16, bottom: 24, containLabel: true },
+      xAxis: Object.assign(axisValue(p), { name: "分差", nameTextStyle: { color: p.muted } }),
+      yAxis: Object.assign(axisCategory(p), { data: rows.map(function (r) { return r.name; }) }),
+      series: [{
+        type: "bar", barWidth: 16,
+        data: rows.map(function (r) { return { value: r.mean, itemStyle: { color: r.mean < 0 ? "#d03b3b" : "#0ca30c", borderRadius: [4, 4, 4, 4] } }; }),
+        label: { show: true, position: "right", color: p.text1, formatter: function (pr) { return pr.value == null ? "" : (pr.value >= 0 ? "+" : "") + pr.value.toFixed(2); } },
+      }],
+      tooltip: { trigger: "item", formatter: function (pr) { var r = rows[pr.dataIndex]; return "<strong>DeepSeek Flash vs " + r.name + "</strong><br/>均分差 " + (r.mean >= 0 ? "+" : "") + r.mean.toFixed(2) + "<br/>更高/持平/更低: " + r.higher + "/" + r.tied + "/" + r.lower; } },
+    }, true);
+  }
+  function resizeFlash() {
+    ["chartFlash60Score", "chartFlash60Time", "chartFlash60Out", "chartFlashWbScore", "chartFlashWbTime", "chartFlashWbOut", "chartFlash60Forest", "chartFlashWbForest"].forEach(function (id) { if (charts[id]) charts[id].resize(); });
+  }
+
   // ---------- 主题 / 标签 / 事件 ----------
   function initTheme() {
     var saved = localStorage.getItem("codedepth-theme");
@@ -852,7 +931,7 @@
   document.getElementById("onlyFailed").addEventListener("change", function (e) { state.onlyFailed = e.target.checked; renderMatrix(); });
   document.getElementById("diffCompare").addEventListener("change", function (e) { state.compare = e.target.value; renderDiffScatter(); });
 
-  var EXP_IDS = { coding: "exp-coding", lunads: "exp-lunads", subjective: "exp-subjective", wildbench: "exp-wildbench" };
+  var EXP_IDS = { coding: "exp-coding", lunads: "exp-lunads", subjective: "exp-subjective", wildbench: "exp-wildbench", flash: "exp-flash" };
   document.querySelectorAll(".exp-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
       document.querySelectorAll(".exp-btn").forEach(function (x) { x.classList.remove("active"); });
@@ -872,6 +951,10 @@
       if (state.exp === "wildbench") {
         if (!renderedWb) { renderedWb = true; renderWb(); }
         else setTimeout(resizeWb, 0);
+      }
+      if (state.exp === "flash") {
+        if (!renderedFlash) { renderedFlash = true; renderFlash(); }
+        else setTimeout(resizeFlash, 0);
       }
       if (state.exp === "coding") setTimeout(function () { resizePanel(state.tab); }, 0);
     });
