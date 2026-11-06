@@ -184,11 +184,30 @@ def build_flash(root):
             "output_tokens_mean": tok.get("outputTokens", {}).get("mean"),
             "reasoning_tokens_mean": tok.get("reasoningOutputTokens", {}).get("mean"),
         }
+    wb_rows = []
+    fp = root / "wild20" / "result" / "wildbench_20" / "frontend_rows.jsonl"
+    if fp.exists():
+        with fp.open(encoding="utf-8") as f:
+            for line in f:
+                r = json.loads(line)
+                tok = r.get("token_usage") or {}
+                wb_rows.append({
+                    "run_id": r.get("run_id"), "task_id": r.get("task_id"), "task_type": r.get("task_type"),
+                    "condition_id": r.get("condition_id"), "model": r.get("model"), "effort": r.get("effort"),
+                    "repeat_id": r.get("repeat_id"),
+                    "score_10": r.get("score_10"), "wb_score": r.get("wb_score"),
+                    "elapsed_seconds": r.get("elapsed_seconds"),
+                    "client_first_answer_delta_seconds": r.get("client_first_answer_delta_seconds"),
+                    "input_tokens": tok.get("inputTokens"), "output_tokens": tok.get("outputTokens"),
+                    "reasoning_tokens": tok.get("reasoningOutputTokens"),
+                    "row_status": r.get("row_status"), "join_issues": r.get("join_issues"),
+                })
     return {
         "formal60": {"groups": [norm(g) for g in cs["formal60"]["groups"]],
                      "paired": cs["formal60"].get("paired_comparisons", [])},
         "wild20": {"groups": [norm(g) for g in cs["wild20"]["groups"]],
-                   "paired": cs["wild20"].get("paired_comparisons", [])},
+                   "paired": cs["wild20"].get("paired_comparisons", []),
+                   "rows": wb_rows},
     }
 
 
@@ -256,6 +275,21 @@ def main():
     lunads = build_lunads(a.lunads) if a.lunads else None
     wildbench = build_wildbench(a.wildbench) if a.wildbench else None
     flash = build_flash(a.flash) if a.flash else None
+
+    # 把 DeepSeek Flash 补充合并进两个主观实验
+    if wildbench and flash:
+        wildbench["groups"] = flash["wild20"]["groups"]  # 5 配置
+        wildbench["rows"] = wildbench["rows"] + flash["wild20"]["rows"]  # 追加 deepseek 逐题数据
+        ds_vs_high = next((c for c in flash["wild20"]["paired"] if c["reference_condition_id"] == "sol_high"), None)
+        if ds_vs_high:
+            wildbench["paired"] = wildbench["paired"] + [{
+                "condition_id": "deepseek_high", "reference_condition_id": "sol_high",
+                "mean_difference": ds_vs_high["mean_difference"],
+                "higher": ds_vs_high["higher"], "tied": ds_vs_high["tied"], "lower": ds_vs_high["lower"],
+            }]
+    if subjective and flash:
+        subjective["conditions"] = flash["formal60"]["groups"]  # 5 配置汇总
+        subjective["conditions_paired"] = flash["formal60"]["paired"]
 
     payload = {
         "kind": "real",

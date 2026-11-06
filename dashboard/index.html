@@ -151,8 +151,7 @@
       <button class="exp-btn active" data-exp="coding" type="button">代码 · EvalPlus 四档</button>
       <button class="exp-btn" data-exp="lunads" type="button">代码 · Luna vs DeepSeek</button>
       <button class="exp-btn" data-exp="subjective" type="button">主观评分 · 60题</button>
-      <button class="exp-btn" data-exp="wildbench" type="button">WildBench · 四组</button>
-      <button class="exp-btn" data-exp="flash" type="button">DeepSeek Flash 补充</button>
+      <button class="exp-btn" data-exp="wildbench" type="button">WildBench · 五组</button>
     </div>
 
     <div id="exp-coding">
@@ -235,38 +234,38 @@
     <div id="exp-subjective" style="display:none">
       <section>
         <h2>主观评分实验总览</h2>
-        <p class="note">60 题（写作 / 分析 / 规划各 20）× low / high / ultra × 2 次 = 360 份回答；裁判固定同模型 high 盲评，四维各 0~5，总分 /10。评分存在明显天花板（83.9% 满分），高档位增加耗时与推理投入、质量仅小幅变化。</p>
+        <p class="note">60 题（写作 / 分析 / 规划各 20）× 5 配置（Sol low/high/ultra + Luna high + DeepSeek Flash high）× 各 2 次；裁判固定 Sol high 盲评，四维各 0~5，总分 /10。Sol 三档存在明显天花板（83.9% 满分）。</p>
         <div class="kpi-grid" id="subjKpi"></div>
       </section>
       <div class="cards cols-2" style="margin-top:16px">
         <div class="card">
-          <h3>质量 / 耗时 / 推理 Token 按档位</h3>
-          <p class="src">数据源：summary.json groups（题级均分、耗时中位数、推理 Token 均值）</p>
+          <h3>质量 / 耗时 / 推理 Token 按配置</h3>
+          <p class="src">数据源 comparison_summary.json formal60.groups（题级均分、耗时中位数、推理 Token 均值）</p>
           <div class="chart" id="chartSubjScore" style="height:140px"></div>
           <div class="chart" id="chartSubjTime" style="height:140px"></div>
           <div class="chart" id="chartSubjReason" style="height:140px"></div>
         </div>
         <div class="card">
-          <h3>总分分布（n=360 份回答）</h3>
+          <h3>Sol 三档 · 总分分布（n=360 份回答）</h3>
           <p class="src">数据源：primary_rows.score_10；满分柱 = 302/360（83.9%）</p>
           <div class="chart" id="chartSubjHist" style="height:420px"></div>
         </div>
       </div>
       <div class="cards cols-2" style="margin-top:16px">
         <div class="card">
-          <h3>分任务方向 × 档位 质量均分</h3>
+          <h3>Sol 三档 · 分任务方向 质量均分</h3>
           <p class="src">纵轴从 9.0 起（分数贴近满分，全 0~10 尺度差异不可见），数据源 groups</p>
           <div class="chart" id="chartSubjType" style="height:320px"></div>
         </div>
         <div class="card">
-          <h3>配对分差（题级 bootstrap 95% 区间）</h3>
-          <p class="src">high−low / ultra−low / ultra−high；区间含 0 = 无显著差异（n=60 题）</p>
+          <h3>DeepSeek Flash 相对各配置分差</h3>
+          <p class="src">同题配对均分差；负 = 低于该配置（n=60 题）</p>
           <div class="chart" id="chartSubjForest" style="height:320px"></div>
         </div>
       </div>
       <div class="cards" style="margin-top:16px">
         <div class="card">
-          <h3>复评稳定性（36 次重复盲评）</h3>
+          <h3>Sol 三档 · 复评稳定性（36 次重复盲评）</h3>
           <p class="src">复评分 vs 原主评分，对角虚线为完全一致；平均绝对差 0.035</p>
           <div class="chart" id="chartSubjRepeat" style="height:300px"></div>
         </div>
@@ -291,8 +290,8 @@
 
     <div id="exp-wildbench" style="display:none">
       <section>
-        <h2>WildBench v2-hard 20 题 · 四组</h2>
-        <p class="note">20 题 × 4 配置（Sol low/high/ultra + Luna high）× 2 次 = 160 份；裁判固定 Sol high，1-10 整数分。Sol ultra≈high 但更慢，Luna high 明显更低但最快。</p>
+        <h2>WildBench v2-hard 20 题 · 五组</h2>
+        <p class="note">20 题 × 5 配置（Sol low/high/ultra + Luna high + DeepSeek Flash high）× 2 次；裁判固定 Sol high，1-10 整数分。Sol ultra≈high 但更慢，Luna 与 DeepSeek Flash 明显更低。</p>
         <div class="kpi-grid" id="wbKpi"></div>
       </section>
       <div class="cards cols-2" style="margin-top:16px">
@@ -301,26 +300,7 @@
       </div>
       <div class="cards cols-2" style="margin-top:16px">
         <div class="card"><h3>配对分差（vs Sol high）</h3><p class="src">同题配对均分差；负 = 低于 Sol high（n=20 题）</p><div class="chart" id="chartWbForest" style="height:300px"></div></div>
-        <div class="card"><h3>20 题 × 4 配置 质量矩阵</h3><p class="src">题级均分（同题两次取平均）</p><div class="chart" id="chartWbMatrix" style="height:320px"></div></div>
-      </div>
-    </div>
-
-    <div id="exp-flash" style="display:none">
-      <section>
-        <h2>DeepSeek Flash / high 补充（80 题）</h2>
-        <p class="note">在原有主观评分（60 题）与 WildBench（20 题）基础上，新增 DeepSeek Flash/high 配置，共 5 个配置对比；裁判固定 Sol high。DeepSeek Flash 在 60 题上垫底（8.97），WildBench 上与 Luna 接近。</p>
-      </section>
-      <div class="cards cols-2" style="margin-top:16px">
-        <div class="card"><h3>60 题 · 质量分（四维 0-10）</h3><p class="src">数据源 comparison_summary.json formal60.groups（题级均分）</p><div class="chart" id="chartFlash60Score" style="height:300px"></div></div>
-        <div class="card"><h3>60 题 · 耗时 / 输出 Token</h3><p class="src">中位数 / 均值</p><div class="chart" id="chartFlash60Time" style="height:150px"></div><div class="chart" id="chartFlash60Out" style="height:150px"></div></div>
-      </div>
-      <div class="cards cols-2" style="margin-top:16px">
-        <div class="card"><h3>WildBench 20 · 质量分（1-10）</h3><p class="src">comparison_summary.json wild20.groups</p><div class="chart" id="chartFlashWbScore" style="height:300px"></div></div>
-        <div class="card"><h3>WildBench 20 · 耗时 / 输出 Token</h3><p class="src">groups</p><div class="chart" id="chartFlashWbTime" style="height:150px"></div><div class="chart" id="chartFlashWbOut" style="height:150px"></div></div>
-      </div>
-      <div class="cards cols-2" style="margin-top:16px">
-        <div class="card"><h3>60 题 · DeepSeek Flash 相对各配置分差</h3><p class="src">配对均分差（n=60 题）</p><div class="chart" id="chartFlash60Forest" style="height:300px"></div></div>
-        <div class="card"><h3>WildBench · DeepSeek Flash 相对各配置分差</h3><p class="src">配对均分差（n=20 题）</p><div class="chart" id="chartFlashWbForest" style="height:300px"></div></div>
+        <div class="card"><h3>20 题 × 5 配置 质量矩阵</h3><p class="src">题级均分（同题两次取平均）</p><div class="chart" id="chartWbMatrix" style="height:320px"></div></div>
       </div>
     </div>
 

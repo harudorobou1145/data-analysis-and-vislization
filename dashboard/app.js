@@ -47,8 +47,8 @@
   var SUBJ_TYPE_LABEL = { writing: "写作表达", analysis: "分析论证", planning: "方案设计" };
   var LUNADS_BENCH = ["humaneval100", "alfworld60"];
   var LUNADS_BENCH_LABEL = { humaneval100: "HumanEval 100", alfworld60: "ALFWorld 60" };
-  var WB_CONDS = ["sol_low", "sol_high", "sol_ultra", "luna_high"];
-  var WB_COND_LABEL = { sol_low: "Sol Low", sol_high: "Sol High", sol_ultra: "Sol Ultra", luna_high: "Luna High" };
+  var WB_CONDS = ["sol_low", "sol_high", "sol_ultra", "luna_high", "deepseek_high"];
+  var WB_COND_LABEL = { sol_low: "Sol Low", sol_high: "Sol High", sol_ultra: "Sol Ultra", luna_high: "Luna High", deepseek_high: "DeepSeek Flash" };
   var FLASH_CONDS = ["sol_low", "sol_high", "sol_ultra", "luna_high", "deepseek_high"];
   var FLASH_LABEL = { sol_low: "Sol Low", sol_high: "Sol High", sol_ultra: "Sol Ultra", luna_high: "Luna High", deepseek_high: "DeepSeek Flash" };
 
@@ -504,19 +504,14 @@
   function subjAllGroups() {
     return DATA.subjective.groups.filter(function (g) { return g.task_type === "all"; });
   }
+  function subjCondGroup(c) { return DATA.subjective.conditions.find(function (g) { return g.condition_id === c; }) || null; }
   function renderSubjKpi() {
     var box = document.getElementById("subjKpi");
     box.innerHTML = "";
-    var g = subjAllGroups();
-    function mean(e) { var x = g.find(function (y) { return y.effort === e; }); return x ? x.mean_score_10 : null; }
-    var full = DATA.subjective.primary_rows.filter(function (r) { return r.score_10 === 10; }).length;
-    var tiles = [
-      { l: "质量均分 Low", v: mean("low") == null ? "—" : mean("low").toFixed(2), s: "/10 · 120 份回答" },
-      { l: "质量均分 High", v: mean("high") == null ? "—" : mean("high").toFixed(2), s: "/10 · 120 份回答" },
-      { l: "质量均分 Ultra", v: mean("ultra") == null ? "—" : mean("ultra").toFixed(2), s: "/10 · 120 份回答" },
-      { l: "满分回答占比", v: (full / DATA.subjective.primary_rows.length * 100).toFixed(1) + "%", s: full + "/" + DATA.subjective.primary_rows.length + " 份" },
-    ];
-    tiles.forEach(function (t) { box.appendChild(statTile(t.l, t.v, t.s)); });
+    FLASH_CONDS.forEach(function (c) {
+      var g = subjCondGroup(c);
+      box.appendChild(statTile(FLASH_LABEL[c], g && g.mean_score_10 != null ? g.mean_score_10.toFixed(2) : "—", g ? "满分率 " + (g.full_score_rate * 100).toFixed(1) + "%" : ""));
+    });
   }
   function subjBar(id, vals, name, isInt, ymin, ymax) {
     var p = pal();
@@ -524,22 +519,21 @@
       backgroundColor: "transparent", textStyle: { color: p.text2 },
       title: { text: name, left: 0, top: 0, textStyle: { color: p.text1, fontSize: 12.5, fontWeight: 600 } },
       grid: { left: 8, right: 8, top: 30, bottom: 20, containLabel: true },
-      xAxis: Object.assign(axisCategory(p), { data: SUBJ_EFFORTS.map(function (e) { return SUBJ_LABEL[e]; }) }),
+      xAxis: Object.assign(axisCategory(p), { data: FLASH_CONDS.map(function (c) { return FLASH_LABEL[c]; }), axisLabel: { fontSize: 10 } }),
       yAxis: Object.assign(axisValue(p), { min: ymin, max: ymax }),
       series: [{
-        type: "bar", barWidth: 20,
-        data: vals.map(function (v, i) { return { value: v, itemStyle: { color: p.seq[i], borderRadius: [4, 4, 0, 0] } }; }),
-        label: { show: true, position: "top", color: p.text1, formatter: function (pr) { return isInt ? fmt(pr.value) : fmt1(pr.value); } },
+        type: "bar", barWidth: 16,
+        data: vals.map(function (v, i) { return { value: v, itemStyle: { color: flashColor(p, FLASH_CONDS[i]), borderRadius: [4, 4, 0, 0] } }; }),
+        label: { show: true, position: "top", color: p.text1, fontSize: 10, formatter: function (pr) { return pr.value == null ? "" : (isInt ? fmt(pr.value) : fmt1(pr.value)); } },
       }],
       tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
     }, true);
   }
   function renderSubjBars() {
-    var g = subjAllGroups();
-    function val(e, k) { var x = g.find(function (y) { return y.effort === e; }); return x ? x[k] : null; }
-    subjBar("chartSubjScore", SUBJ_EFFORTS.map(function (e) { return val(e, "mean_score_10"); }), "质量均分 /10（纵轴 9.0 起）", false, 9.0, 10.05);
-    subjBar("chartSubjTime", SUBJ_EFFORTS.map(function (e) { return val(e, "median_elapsed_seconds"); }), "耗时中位数（秒）", false, 0, null);
-    subjBar("chartSubjReason", SUBJ_EFFORTS.map(function (e) { return val(e, "mean_reasoning_tokens"); }), "平均推理 Token", true, 0, null);
+    function val(c, k) { var x = subjCondGroup(c); return x ? x[k] : null; }
+    subjBar("chartSubjScore", FLASH_CONDS.map(function (c) { return val(c, "mean_score_10"); }), "质量均分 /10（纵轴 9.0 起）", false, 9.0, 10.05);
+    subjBar("chartSubjTime", FLASH_CONDS.map(function (c) { return val(c, "elapsed_median"); }), "耗时中位数（秒）", false, 0, null);
+    subjBar("chartSubjReason", FLASH_CONDS.map(function (c) { return val(c, "reasoning_tokens_mean"); }), "平均推理 Token", true, 0, null);
   }
   function renderSubjHist() {
     var p = pal();
@@ -607,32 +601,22 @@
     return [means[Math.floor(n * 0.025)], means[Math.floor(n * 0.975)]];
   }
   function renderSubjForest() {
-    var box = document.getElementById("chartSubjForest");
-    var diffs = subjDiffs();
-    var comps = [["high − low", "high", "low"], ["ultra − low", "ultra", "low"], ["ultra − high", "ultra", "high"]];
-    var xmin = -0.05, xmax = 0.12;
-    function pct(v) { return (v - xmin) / (xmax - xmin) * 100; }
-    var rows = comps.map(function (c) {
-      var d = diffs(c[1], c[2]);
-      var mean = d.reduce(function (a, b) { return a + b; }, 0) / d.length;
-      var ci = bootCI(d, 1000);
-      return { name: c[0], mean: mean, ci: ci };
+    var p = pal();
+    var rows = DATA.subjective.conditions_paired.map(function (c) {
+      return { name: FLASH_LABEL[c.reference_condition_id], mean: c.mean_difference, higher: c.higher, tied: c.tied, lower: c.lower };
     });
-    box.innerHTML = '<div class="forest">' + rows.map(function (r) {
-      var l = pct(r.ci[0]), w = pct(r.ci[1]) - l;
-      var val = (r.mean >= 0 ? "+" : "") + r.mean.toFixed(3) + " [" + r.ci[0].toFixed(3) + ", " + r.ci[1].toFixed(3) + "]";
-      return [
-        '<div class="frow">',
-        '<span class="flabel">' + r.name + '</span>',
-        '<span class="ftrack">',
-        '<span class="fzero" style="left:' + pct(0).toFixed(2) + '%"></span>',
-        '<span class="fci" style="left:' + l.toFixed(2) + '%;width:' + w.toFixed(2) + '%"></span>',
-        '<span class="fdot" style="left:' + pct(r.mean).toFixed(2) + '%"></span>',
-        '</span>',
-        '<span class="fval">' + val + '</span>',
-        '</div>'
-      ].join("");
-    }).join("") + '</div>';
+    chart("chartSubjForest").setOption({
+      backgroundColor: "transparent", textStyle: { color: p.text2 },
+      grid: { left: 8, right: 60, top: 16, bottom: 24, containLabel: true },
+      xAxis: Object.assign(axisValue(p), { name: "分差", nameTextStyle: { color: p.muted } }),
+      yAxis: Object.assign(axisCategory(p), { data: rows.map(function (r) { return r.name; }) }),
+      series: [{
+        type: "bar", barWidth: 16,
+        data: rows.map(function (r) { return { value: r.mean, itemStyle: { color: r.mean < 0 ? "#d03b3b" : "#0ca30c", borderRadius: [4, 4, 4, 4] } }; }),
+        label: { show: true, position: "right", color: p.text1, formatter: function (pr) { return pr.value == null ? "" : (pr.value >= 0 ? "+" : "") + pr.value.toFixed(2); } },
+      }],
+      tooltip: { trigger: "item", formatter: function (pr) { var r = rows[pr.dataIndex]; return "<strong>DeepSeek Flash vs " + r.name + "</strong><br/>均分差 " + (r.mean >= 0 ? "+" : "") + r.mean.toFixed(2) + "<br/>更高/持平/更低: " + r.higher + "/" + r.tied + "/" + r.lower; } },
+    }, true);
   }
   function renderSubjRepeat() {
     var p = pal();
@@ -731,7 +715,7 @@
 
   // ---------- WildBench 四组 ----------
   function wbGroup(cond) { return DATA.wildbench.groups.find(function (g) { return g.condition_id === cond; }) || null; }
-  function wbColor(p, c) { return c === "luna_high" ? p.series[1] : p.seq[WB_CONDS.indexOf(c)]; }
+  function wbColor(p, c) { return flashColor(p, c); }
   function renderWb() {
     renderWbKpi();
     renderWbScore();
@@ -931,7 +915,7 @@
   document.getElementById("onlyFailed").addEventListener("change", function (e) { state.onlyFailed = e.target.checked; renderMatrix(); });
   document.getElementById("diffCompare").addEventListener("change", function (e) { state.compare = e.target.value; renderDiffScatter(); });
 
-  var EXP_IDS = { coding: "exp-coding", lunads: "exp-lunads", subjective: "exp-subjective", wildbench: "exp-wildbench", flash: "exp-flash" };
+  var EXP_IDS = { coding: "exp-coding", lunads: "exp-lunads", subjective: "exp-subjective", wildbench: "exp-wildbench" };
   document.querySelectorAll(".exp-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
       document.querySelectorAll(".exp-btn").forEach(function (x) { x.classList.remove("active"); });
@@ -951,10 +935,6 @@
       if (state.exp === "wildbench") {
         if (!renderedWb) { renderedWb = true; renderWb(); }
         else setTimeout(resizeWb, 0);
-      }
-      if (state.exp === "flash") {
-        if (!renderedFlash) { renderedFlash = true; renderFlash(); }
-        else setTimeout(resizeFlash, 0);
       }
       if (state.exp === "coding") setTimeout(function () { resizePanel(state.tab); }, 0);
     });

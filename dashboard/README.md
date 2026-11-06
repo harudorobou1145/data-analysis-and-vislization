@@ -4,9 +4,8 @@
 
 1. **代码 · EvalPlus 四档**：同一 Codex 模型（`gpt-6.1-sol`）在 low/medium/high/max 四档下做 100 道算法题 + 失败题修复。
 2. **代码 · Luna vs DeepSeek**：Luna（Plus/CLI）与 DeepSeek（官方 API）在 HumanEval 100 + ALFWorld 60 上的对比。
-3. **主观评分 · 60 题**：同一模型 low/high/ultra 三档回答 60 道开放题，同模型 high 盲评四维质量。
-4. **WildBench · 四组**：WildBench v2-hard 20 题，Sol low/high/ultra + Luna high 四组，1-10 整数分。
-5. **DeepSeek Flash 补充**：DeepSeek Flash/high 重跑 60 题与 WildBench 20 题，凑成 5 配置对比（含分差）。
+3. **主观评分 · 60 题**：60 道开放题，Sol low/high/ultra + Luna high + DeepSeek Flash high 五配置，同模型（Sol high）盲评四维质量。
+4. **WildBench · 五组**：WildBench v2-hard 20 题，Sol low/high/ultra + Luna high + DeepSeek Flash high 五配置，1-10 整数分。
 
 数据来自队友交接包（脱敏派生数据，非原始日志）。
 
@@ -22,6 +21,7 @@
   --subjective "<主观评分包根目录>" `
   --lunads "<Luna_DeepSeek 包根目录>" `
   --wildbench "<WildBench 包根目录>" `
+  --flash "<DeepSeek Flash 补充包根目录>" `
   -o dashboard/data.js
 ```
 
@@ -31,15 +31,13 @@
 
 **Luna vs DeepSeek**：DeepSeek 略强（Python 96 vs 93，ALFWorld 60 vs 58）且快得多（Python 14s vs 41s、ALFWorld 25s vs 79s）；DeepSeek 输出更长（1426 vs 625 Token）、输入更少（7871 vs 11631）。注意两模型通道/控制器不同，Token 口径不可直接等同。
 
-**主观评分 60 题**：high/ultra 质量均分几乎相同（9.96），但 ultra 耗时中位数是 high 的 1.67 倍、推理 Token 是 4 倍；302/360 满分（评分天花板）。
+**主观评分 60 题**：Sol high/ultra 几乎相同（9.96）但 ultra 更慢、推理 Token 更多；Luna high 9.36；**DeepSeek Flash 垫底（8.97）**；302/360 满分（Sol 评分天花板）。
 
-**WildBench 20 题**：Sol ultra≈high（8.72 vs 8.68）但更慢（168s vs 78s）；Sol low 8.22；Luna high 6.38（明显更低）但最快（15s）。
-
-**DeepSeek Flash 补充**：60 题上 DeepSeek Flash 垫底（8.97，vs Sol high 9.96、Luna 9.36）；WildBench 上与 Luna 接近（6.65 vs 6.38），但输出 Token 极高（WildBench 均值 10617）。
+**WildBench 20 题**：Sol ultra≈high（8.72 vs 8.68）但更慢（168s vs 78s）；Luna high 6.38、**DeepSeek Flash 6.65（两者接近，均远低于 Sol）**；DeepSeek Flash 输出 Token 极高（WildBench 均值 10617）。
 
 ## 数据接口
 
-`window.CODEDEPTH_DATA`：`paired`/`repair_rounds`/`repair_groups`/`tool_actions`/`candidates`/`specs`（EvalPlus）、`subjective`（60 题）、`lunads`（summary+paired）、`wildbench`（groups+paired+repeats+rows）。
+`window.CODEDEPTH_DATA`：`paired`/`repair_rounds`/`repair_groups`/`tool_actions`/`candidates`/`specs`（EvalPlus）、`subjective`（60 题，含 5 配置 `conditions`）、`lunads`（summary+paired）、`wildbench`（5 配置 groups+paired+repeats+rows）。
 
 ## 已知边界（各实验各自的局限，报告须写明）
 
