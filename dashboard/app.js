@@ -920,11 +920,13 @@
     modelBar("chartModelCodeSucc", MODEL_ORDER.map(function (m) { var v = modelSummaryVal("code", m, "success_rate"); return v == null ? null : v * 100; }), null, "%", 0, 100, false);
     modelBar("chartModelCodeTime", MODEL_ORDER.map(function (m) { return modelSummaryVal("code", m, "mean_duration"); }), "平均耗时", "秒", 0, null, false);
     modelBar("chartModelCodeOut", MODEL_ORDER.map(function (m) { return modelSummaryVal("code", m, "mean_output_tokens"); }), "平均输出 Token", "Token", 0, null, true);
+    modelBar("chartModelAlfSucc", MODEL_ORDER.map(function (m) { var v = modelSummaryVal("alfworld", m, "success_rate"); return v == null ? null : v * 100; }), "成功率", "%", 0, 100, false);
+    modelBar("chartModelAlfSteps", MODEL_ORDER.map(function (m) { return modelSummaryVal("alfworld", m, "mean_steps"); }), "平均步数", "步", 0, null, true);
     modelBar("chartModelSubjScore", MODEL_ORDER.map(function (m) { return modelSummaryVal("subj60", m, "mean_score_10"); }), null, "/10", 0, 10, false);
     modelBar("chartModelWbScore", MODEL_ORDER.map(function (m) { return modelSummaryVal("wild20", m, "mean_score_10"); }), null, "/10", 0, 10, false);
   }
   function resizeModel() {
-    ["chartModelCodeSucc", "chartModelCodeTime", "chartModelCodeOut", "chartModelSubjScore", "chartModelWbScore"].forEach(function (id) { if (charts[id]) charts[id].resize(); });
+    ["chartModelCodeSucc", "chartModelCodeTime", "chartModelCodeOut", "chartModelAlfSucc", "chartModelAlfSteps", "chartModelSubjScore", "chartModelWbScore"].forEach(function (id) { if (charts[id]) charts[id].resize(); });
   }
 
   // ---------- 主题 / 标签 / 事件 ----------

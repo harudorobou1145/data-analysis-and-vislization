@@ -3,7 +3,7 @@
 window.CODEDEPTH_DATA = {
  "kind": "real",
  "source": "CodeDepth 四档 + 主观评分 + Luna/DeepSeek + WildBench",
- "generatedAt": "2026-11-06T15:37:55.680534+08:00",
+ "generatedAt": "2026-11-06T16:28:21.085500+08:00",
  "note": "四个子实验合并。reasoning_effort 未经独立验证；相关≠因果；不同实验口径不合并。",
  "efforts": [
   "low",
@@ -46967,6 +46967,22 @@ window.CODEDEPTH_DATA = {
     "invalid_action_count_mean": null,
     "base_pass": null,
     "plus_pass": null
+   },
+   {
+    "model_group": "sol",
+    "benchmark": "alfworld60",
+    "official_success": 60,
+    "success_rate": 1.0,
+    "duration_seconds_mean": 66.2670054699988,
+    "output_tokens_mean": 350.28333333333336,
+    "input_tokens_mean": 97406.46666666666,
+    "reasoning_tokens_mean": 2.65,
+    "environment_steps_mean": 7.283333333333333,
+    "tool_call_count_mean": 8.283333333333333,
+    "tool_error_count_mean": 0.0,
+    "invalid_action_count_mean": 0.0,
+    "base_pass": null,
+    "plus_pass": null
    }
   ],
   "paired": [
@@ -58623,6 +58639,1473 @@ window.CODEDEPTH_DATA = {
      "mean_score_10": 6.65,
      "elapsed_median": 55.76649999999999,
      "output_tokens_mean": 10617.275
+    }
+   ]
+  },
+  "alfworld": {
+   "summary": [
+    {
+     "model": "sol",
+     "n": 60,
+     "success_rate": 1.0,
+     "mean_duration": 66.2670054699988,
+     "mean_steps": 7.283333333333333
+    },
+    {
+     "model": "luna",
+     "n": 60,
+     "success_rate": 0.9666666666666667,
+     "mean_duration": 79.0343620716633,
+     "mean_steps": 15.55
+    },
+    {
+     "model": "deepseek",
+     "n": 60,
+     "success_rate": 1.0,
+     "mean_duration": 24.659212300001915,
+     "mean_steps": 12.1
+    }
+   ],
+   "per_task": [
+    {
+     "task_id": "AW000",
+     "sol": {
+      "success": true,
+      "duration": 94.04473639999924,
+      "steps": 16,
+      "tool_calls": 17,
+      "output_tokens": 526
+     },
+     "luna": {
+      "success": true,
+      "duration": 73.05842329998268,
+      "steps": 15,
+      "tool_calls": 16,
+      "output_tokens": 599
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 51.184927300026175,
+      "steps": 31,
+      "tool_calls": 32,
+      "output_tokens": 1786
+     }
+    },
+    {
+     "task_id": "AW001",
+     "sol": {
+      "success": true,
+      "duration": 59.0392439999996,
+      "steps": 6,
+      "tool_calls": 7,
+      "output_tokens": 217
+     },
+     "luna": {
+      "success": true,
+      "duration": 73.7271303999587,
+      "steps": 16,
+      "tool_calls": 17,
+      "output_tokens": 500
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 24.472858699969947,
+      "steps": 14,
+      "tool_calls": 15,
+      "output_tokens": 832
+     }
+    },
+    {
+     "task_id": "AW002",
+     "sol": {
+      "success": true,
+      "duration": 42.669948299997486,
+      "steps": 5,
+      "tool_calls": 6,
+      "output_tokens": 254
+     },
+     "luna": {
+      "success": true,
+      "duration": 49.161807399999816,
+      "steps": 7,
+      "tool_calls": 8,
+      "output_tokens": 651
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 16.172585600055754,
+      "steps": 6,
+      "tool_calls": 7,
+      "output_tokens": 822
+     }
+    },
+    {
+     "task_id": "AW003",
+     "sol": {
+      "success": true,
+      "duration": 50.7205615999992,
+      "steps": 6,
+      "tool_calls": 7,
+      "output_tokens": 284
+     },
+     "luna": {
+      "success": true,
+      "duration": 387.14691190002486,
+      "steps": 22,
+      "tool_calls": 23,
+      "output_tokens": 1041
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 39.38121379999211,
+      "steps": 21,
+      "tool_calls": 22,
+      "output_tokens": 1392
+     }
+    },
+    {
+     "task_id": "AW004",
+     "sol": {
+      "success": true,
+      "duration": 93.03374650000478,
+      "steps": 14,
+      "tool_calls": 15,
+      "output_tokens": 475
+     },
+     "luna": {
+      "success": true,
+      "duration": 189.72572659997968,
+      "steps": 37,
+      "tool_calls": 38,
+      "output_tokens": 3081
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 40.477485099982005,
+      "steps": 23,
+      "tool_calls": 24,
+      "output_tokens": 1651
+     }
+    },
+    {
+     "task_id": "AW005",
+     "sol": {
+      "success": true,
+      "duration": 53.47999130000244,
+      "steps": 7,
+      "tool_calls": 8,
+      "output_tokens": 282
+     },
+     "luna": {
+      "success": true,
+      "duration": 64.03567359998124,
+      "steps": 15,
+      "tool_calls": 16,
+      "output_tokens": 486
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 26.955920699983835,
+      "steps": 15,
+      "tool_calls": 16,
+      "output_tokens": 923
+     }
+    },
+    {
+     "task_id": "AW006",
+     "sol": {
+      "success": true,
+      "duration": 51.13535499999125,
+      "steps": 7,
+      "tool_calls": 8,
+      "output_tokens": 273
+     },
+     "luna": {
+      "success": true,
+      "duration": 76.13917080004467,
+      "steps": 16,
+      "tool_calls": 17,
+      "output_tokens": 645
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 19.188936299993657,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 616
+     }
+    },
+    {
+     "task_id": "AW007",
+     "sol": {
+      "success": true,
+      "duration": 50.56856429998879,
+      "steps": 6,
+      "tool_calls": 7,
+      "output_tokens": 227
+     },
+     "luna": {
+      "success": true,
+      "duration": 43.31337749998784,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 360
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 21.52989389997674,
+      "steps": 9,
+      "tool_calls": 10,
+      "output_tokens": 586
+     }
+    },
+    {
+     "task_id": "AW008",
+     "sol": {
+      "success": true,
+      "duration": 40.792378400001326,
+      "steps": 6,
+      "tool_calls": 7,
+      "output_tokens": 229
+     },
+     "luna": {
+      "success": true,
+      "duration": 50.83231209998485,
+      "steps": 10,
+      "tool_calls": 11,
+      "output_tokens": 441
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 16.234902399999555,
+      "steps": 6,
+      "tool_calls": 7,
+      "output_tokens": 552
+     }
+    },
+    {
+     "task_id": "AW009",
+     "sol": {
+      "success": true,
+      "duration": 59.854665599996224,
+      "steps": 7,
+      "tool_calls": 8,
+      "output_tokens": 284
+     },
+     "luna": {
+      "success": true,
+      "duration": 82.01243120001163,
+      "steps": 22,
+      "tool_calls": 23,
+      "output_tokens": 776
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 71.2898404999869,
+      "steps": 35,
+      "tool_calls": 36,
+      "output_tokens": 2179
+     }
+    },
+    {
+     "task_id": "AW010",
+     "sol": {
+      "success": true,
+      "duration": 90.61796269999468,
+      "steps": 16,
+      "tool_calls": 17,
+      "output_tokens": 534
+     },
+     "luna": {
+      "success": true,
+      "duration": 109.28079709998565,
+      "steps": 25,
+      "tool_calls": 26,
+      "output_tokens": 1444
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 35.26153899997007,
+      "steps": 20,
+      "tool_calls": 21,
+      "output_tokens": 1300
+     }
+    },
+    {
+     "task_id": "AW011",
+     "sol": {
+      "success": true,
+      "duration": 55.76759750000201,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 316
+     },
+     "luna": {
+      "success": true,
+      "duration": 67.55867389997002,
+      "steps": 15,
+      "tool_calls": 16,
+      "output_tokens": 674
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 28.982605000026524,
+      "steps": 16,
+      "tool_calls": 17,
+      "output_tokens": 1025
+     }
+    },
+    {
+     "task_id": "AW012",
+     "sol": {
+      "success": true,
+      "duration": 31.766388500022003,
+      "steps": 4,
+      "tool_calls": 5,
+      "output_tokens": 188
+     },
+     "luna": {
+      "success": true,
+      "duration": 29.140977200004272,
+      "steps": 4,
+      "tool_calls": 5,
+      "output_tokens": 224
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 10.845372199954,
+      "steps": 4,
+      "tool_calls": 5,
+      "output_tokens": 279
+     }
+    },
+    {
+     "task_id": "AW013",
+     "sol": {
+      "success": true,
+      "duration": 41.338102800014894,
+      "steps": 4,
+      "tool_calls": 5,
+      "output_tokens": 189
+     },
+     "luna": {
+      "success": true,
+      "duration": 39.02111580001656,
+      "steps": 4,
+      "tool_calls": 5,
+      "output_tokens": 207
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 13.380162800021935,
+      "steps": 4,
+      "tool_calls": 5,
+      "output_tokens": 281
+     }
+    },
+    {
+     "task_id": "AW014",
+     "sol": {
+      "success": true,
+      "duration": 46.7364993999945,
+      "steps": 7,
+      "tool_calls": 8,
+      "output_tokens": 277
+     },
+     "luna": {
+      "success": true,
+      "duration": 69.81979290000163,
+      "steps": 16,
+      "tool_calls": 17,
+      "output_tokens": 581
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 19.439576699980535,
+      "steps": 7,
+      "tool_calls": 8,
+      "output_tokens": 528
+     }
+    },
+    {
+     "task_id": "AW015",
+     "sol": {
+      "success": true,
+      "duration": 126.41185940001742,
+      "steps": 5,
+      "tool_calls": 6,
+      "output_tokens": 218
+     },
+     "luna": {
+      "success": true,
+      "duration": 127.83550590003142,
+      "steps": 30,
+      "tool_calls": 31,
+      "output_tokens": 1063
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 36.69779010000639,
+      "steps": 21,
+      "tool_calls": 22,
+      "output_tokens": 1213
+     }
+    },
+    {
+     "task_id": "AW016",
+     "sol": {
+      "success": true,
+      "duration": 109.22872320000897,
+      "steps": 5,
+      "tool_calls": 6,
+      "output_tokens": 222
+     },
+     "luna": {
+      "success": true,
+      "duration": 65.3518013000139,
+      "steps": 15,
+      "tool_calls": 16,
+      "output_tokens": 583
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 13.27277869998943,
+      "steps": 5,
+      "tool_calls": 6,
+      "output_tokens": 379
+     }
+    },
+    {
+     "task_id": "AW017",
+     "sol": {
+      "success": true,
+      "duration": 32.28554419998545,
+      "steps": 5,
+      "tool_calls": 6,
+      "output_tokens": 193
+     },
+     "luna": {
+      "success": true,
+      "duration": 35.866870799975004,
+      "steps": 5,
+      "tool_calls": 6,
+      "output_tokens": 195
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 26.377562000008766,
+      "steps": 12,
+      "tool_calls": 13,
+      "output_tokens": 881
+     }
+    },
+    {
+     "task_id": "AW018",
+     "sol": {
+      "success": true,
+      "duration": 41.653733299986925,
+      "steps": 6,
+      "tool_calls": 7,
+      "output_tokens": 216
+     },
+     "luna": {
+      "success": true,
+      "duration": 28.403993399988394,
+      "steps": 4,
+      "tool_calls": 5,
+      "output_tokens": 208
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 13.048435700009577,
+      "steps": 4,
+      "tool_calls": 5,
+      "output_tokens": 293
+     }
+    },
+    {
+     "task_id": "AW019",
+     "sol": {
+      "success": true,
+      "duration": 46.63471990000107,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 278
+     },
+     "luna": {
+      "success": true,
+      "duration": 88.2307949999813,
+      "steps": 20,
+      "tool_calls": 21,
+      "output_tokens": 716
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 19.789076700049918,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 640
+     }
+    },
+    {
+     "task_id": "AW020",
+     "sol": {
+      "success": true,
+      "duration": 32.50335279997671,
+      "steps": 5,
+      "tool_calls": 6,
+      "output_tokens": 197
+     },
+     "luna": {
+      "success": true,
+      "duration": 51.043446900031995,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 833
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 19.265494199993555,
+      "steps": 6,
+      "tool_calls": 7,
+      "output_tokens": 1023
+     }
+    },
+    {
+     "task_id": "AW021",
+     "sol": {
+      "success": true,
+      "duration": 35.28548900000169,
+      "steps": 5,
+      "tool_calls": 6,
+      "output_tokens": 187
+     },
+     "luna": {
+      "success": true,
+      "duration": 61.13363280001795,
+      "steps": 14,
+      "tool_calls": 15,
+      "output_tokens": 747
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 15.042834100022446,
+      "steps": 5,
+      "tool_calls": 6,
+      "output_tokens": 462
+     }
+    },
+    {
+     "task_id": "AW022",
+     "sol": {
+      "success": true,
+      "duration": 33.67855069998768,
+      "steps": 3,
+      "tool_calls": 4,
+      "output_tokens": 131
+     },
+     "luna": {
+      "success": true,
+      "duration": 30.74859859998105,
+      "steps": 3,
+      "tool_calls": 4,
+      "output_tokens": 291
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 9.565837599977385,
+      "steps": 3,
+      "tool_calls": 4,
+      "output_tokens": 294
+     }
+    },
+    {
+     "task_id": "AW023",
+     "sol": {
+      "success": true,
+      "duration": 28.099654199992074,
+      "steps": 3,
+      "tool_calls": 4,
+      "output_tokens": 165
+     },
+     "luna": {
+      "success": true,
+      "duration": 34.62710619997233,
+      "steps": 4,
+      "tool_calls": 5,
+      "output_tokens": 427
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 9.937182000023313,
+      "steps": 3,
+      "tool_calls": 4,
+      "output_tokens": 335
+     }
+    },
+    {
+     "task_id": "AW024",
+     "sol": {
+      "success": true,
+      "duration": 103.32139220001409,
+      "steps": 5,
+      "tool_calls": 6,
+      "output_tokens": 224
+     },
+     "luna": {
+      "success": true,
+      "duration": 47.89711459999671,
+      "steps": 7,
+      "tool_calls": 8,
+      "output_tokens": 886
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 22.656361699977424,
+      "steps": 6,
+      "tool_calls": 7,
+      "output_tokens": 1657
+     }
+    },
+    {
+     "task_id": "AW025",
+     "sol": {
+      "success": true,
+      "duration": 59.41535429999931,
+      "steps": 3,
+      "tool_calls": 4,
+      "output_tokens": 167
+     },
+     "luna": {
+      "success": true,
+      "duration": 26.721503900014795,
+      "steps": 3,
+      "tool_calls": 4,
+      "output_tokens": 200
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 10.49447690002853,
+      "steps": 3,
+      "tool_calls": 4,
+      "output_tokens": 305
+     }
+    },
+    {
+     "task_id": "AW026",
+     "sol": {
+      "success": true,
+      "duration": 109.02552830000059,
+      "steps": 5,
+      "tool_calls": 6,
+      "output_tokens": 217
+     },
+     "luna": {
+      "success": true,
+      "duration": 39.89958939998178,
+      "steps": 5,
+      "tool_calls": 6,
+      "output_tokens": 429
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 13.942240400006995,
+      "steps": 5,
+      "tool_calls": 6,
+      "output_tokens": 498
+     }
+    },
+    {
+     "task_id": "AW027",
+     "sol": {
+      "success": true,
+      "duration": 28.63256339999498,
+      "steps": 3,
+      "tool_calls": 4,
+      "output_tokens": 166
+     },
+     "luna": {
+      "success": false,
+      "duration": 25.757898499956354,
+      "steps": 3,
+      "tool_calls": 4,
+      "output_tokens": 147
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 12.588306399993598,
+      "steps": 3,
+      "tool_calls": 4,
+      "output_tokens": 539
+     }
+    },
+    {
+     "task_id": "AW028",
+     "sol": {
+      "success": true,
+      "duration": 101.91311369999312,
+      "steps": 7,
+      "tool_calls": 8,
+      "output_tokens": 295
+     },
+     "luna": {
+      "success": true,
+      "duration": 121.24522750003962,
+      "steps": 30,
+      "tool_calls": 31,
+      "output_tokens": 994
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 40.84485489997314,
+      "steps": 23,
+      "tool_calls": 24,
+      "output_tokens": 1371
+     }
+    },
+    {
+     "task_id": "AW029",
+     "sol": {
+      "success": true,
+      "duration": 75.81297830000403,
+      "steps": 6,
+      "tool_calls": 7,
+      "output_tokens": 252
+     },
+     "luna": {
+      "success": true,
+      "duration": 62.82065069995588,
+      "steps": 14,
+      "tool_calls": 15,
+      "output_tokens": 567
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 23.058849700028077,
+      "steps": 13,
+      "tool_calls": 14,
+      "output_tokens": 719
+     }
+    },
+    {
+     "task_id": "AW030",
+     "sol": {
+      "success": true,
+      "duration": 50.284998799994355,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 312
+     },
+     "luna": {
+      "success": true,
+      "duration": 43.44860709999921,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 400
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 18.859141400025692,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 518
+     }
+    },
+    {
+     "task_id": "AW031",
+     "sol": {
+      "success": true,
+      "duration": 48.59044219998759,
+      "steps": 7,
+      "tool_calls": 8,
+      "output_tokens": 290
+     },
+     "luna": {
+      "success": true,
+      "duration": 105.78899199998705,
+      "steps": 25,
+      "tool_calls": 26,
+      "output_tokens": 864
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 25.71828780003125,
+      "steps": 13,
+      "tool_calls": 14,
+      "output_tokens": 1006
+     }
+    },
+    {
+     "task_id": "AW032",
+     "sol": {
+      "success": true,
+      "duration": 64.79463739998755,
+      "steps": 7,
+      "tool_calls": 8,
+      "output_tokens": 287
+     },
+     "luna": {
+      "success": true,
+      "duration": 43.15445410000393,
+      "steps": 9,
+      "tool_calls": 10,
+      "output_tokens": 408
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 18.285430399992038,
+      "steps": 9,
+      "tool_calls": 10,
+      "output_tokens": 584
+     }
+    },
+    {
+     "task_id": "AW033",
+     "sol": {
+      "success": true,
+      "duration": 34.150633499986725,
+      "steps": 4,
+      "tool_calls": 5,
+      "output_tokens": 201
+     },
+     "luna": {
+      "success": true,
+      "duration": 137.23417310003424,
+      "steps": 23,
+      "tool_calls": 24,
+      "output_tokens": 797
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 66.16252680000616,
+      "steps": 34,
+      "tool_calls": 35,
+      "output_tokens": 3376
+     }
+    },
+    {
+     "task_id": "AW034",
+     "sol": {
+      "success": true,
+      "duration": 49.71336860000156,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 311
+     },
+     "luna": {
+      "success": true,
+      "duration": 40.71576290001394,
+      "steps": 7,
+      "tool_calls": 8,
+      "output_tokens": 326
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 14.258310100005474,
+      "steps": 7,
+      "tool_calls": 8,
+      "output_tokens": 456
+     }
+    },
+    {
+     "task_id": "AW035",
+     "sol": {
+      "success": true,
+      "duration": 53.31801680001081,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 320
+     },
+     "luna": {
+      "success": true,
+      "duration": 63.64563660003478,
+      "steps": 16,
+      "tool_calls": 17,
+      "output_tokens": 645
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 32.370446900022216,
+      "steps": 18,
+      "tool_calls": 19,
+      "output_tokens": 1223
+     }
+    },
+    {
+     "task_id": "AW036",
+     "sol": {
+      "success": true,
+      "duration": 53.08367230001022,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 305
+     },
+     "luna": {
+      "success": true,
+      "duration": 92.1406839999836,
+      "steps": 23,
+      "tool_calls": 24,
+      "output_tokens": 768
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 20.7050863999757,
+      "steps": 9,
+      "tool_calls": 10,
+      "output_tokens": 724
+     }
+    },
+    {
+     "task_id": "AW037",
+     "sol": {
+      "success": true,
+      "duration": 33.97404720002669,
+      "steps": 4,
+      "tool_calls": 5,
+      "output_tokens": 188
+     },
+     "luna": {
+      "success": true,
+      "duration": 36.01640849997057,
+      "steps": 6,
+      "tool_calls": 7,
+      "output_tokens": 303
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 13.809444699960295,
+      "steps": 5,
+      "tool_calls": 6,
+      "output_tokens": 472
+     }
+    },
+    {
+     "task_id": "AW038",
+     "sol": {
+      "success": true,
+      "duration": 49.50459959998261,
+      "steps": 7,
+      "tool_calls": 8,
+      "output_tokens": 278
+     },
+     "luna": {
+      "success": true,
+      "duration": 43.23659689998021,
+      "steps": 7,
+      "tool_calls": 8,
+      "output_tokens": 353
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 15.388656000024639,
+      "steps": 7,
+      "tool_calls": 8,
+      "output_tokens": 459
+     }
+    },
+    {
+     "task_id": "AW039",
+     "sol": {
+      "success": true,
+      "duration": 50.56569180000224,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 306
+     },
+     "luna": {
+      "success": true,
+      "duration": 57.70170450001024,
+      "steps": 10,
+      "tool_calls": 11,
+      "output_tokens": 432
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 19.16327940003248,
+      "steps": 10,
+      "tool_calls": 11,
+      "output_tokens": 689
+     }
+    },
+    {
+     "task_id": "AW040",
+     "sol": {
+      "success": true,
+      "duration": 59.405059999990044,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 304
+     },
+     "luna": {
+      "success": true,
+      "duration": 46.6429612999782,
+      "steps": 9,
+      "tool_calls": 10,
+      "output_tokens": 443
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 18.125228199991398,
+      "steps": 9,
+      "tool_calls": 10,
+      "output_tokens": 612
+     }
+    },
+    {
+     "task_id": "AW041",
+     "sol": {
+      "success": true,
+      "duration": 65.93099320001784,
+      "steps": 11,
+      "tool_calls": 12,
+      "output_tokens": 388
+     },
+     "luna": {
+      "success": false,
+      "duration": 77.46389000001363,
+      "steps": 11,
+      "tool_calls": 13,
+      "output_tokens": 666
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 44.74773820000701,
+      "steps": 18,
+      "tool_calls": 19,
+      "output_tokens": 3150
+     }
+    },
+    {
+     "task_id": "AW042",
+     "sol": {
+      "success": true,
+      "duration": 60.81181529999594,
+      "steps": 10,
+      "tool_calls": 11,
+      "output_tokens": 366
+     },
+     "luna": {
+      "success": true,
+      "duration": 105.06064049998531,
+      "steps": 25,
+      "tool_calls": 26,
+      "output_tokens": 838
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 18.1432965999702,
+      "steps": 10,
+      "tool_calls": 11,
+      "output_tokens": 663
+     }
+    },
+    {
+     "task_id": "AW043",
+     "sol": {
+      "success": true,
+      "duration": 128.93739529998857,
+      "steps": 10,
+      "tool_calls": 11,
+      "output_tokens": 357
+     },
+     "luna": {
+      "success": true,
+      "duration": 37.12626499996986,
+      "steps": 7,
+      "tool_calls": 8,
+      "output_tokens": 260
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 15.11948960000882,
+      "steps": 7,
+      "tool_calls": 8,
+      "output_tokens": 481
+     }
+    },
+    {
+     "task_id": "AW044",
+     "sol": {
+      "success": true,
+      "duration": 261.0641768000205,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 304
+     },
+     "luna": {
+      "success": true,
+      "duration": 67.90722120000282,
+      "steps": 17,
+      "tool_calls": 18,
+      "output_tokens": 727
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 22.3457708999631,
+      "steps": 11,
+      "tool_calls": 12,
+      "output_tokens": 1055
+     }
+    },
+    {
+     "task_id": "AW045",
+     "sol": {
+      "success": true,
+      "duration": 158.44519930001115,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 312
+     },
+     "luna": {
+      "success": true,
+      "duration": 56.46938719996251,
+      "steps": 9,
+      "tool_calls": 10,
+      "output_tokens": 529
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 17.38769050000701,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 690
+     }
+    },
+    {
+     "task_id": "AW046",
+     "sol": {
+      "success": true,
+      "duration": 56.177131499978714,
+      "steps": 6,
+      "tool_calls": 7,
+      "output_tokens": 255
+     },
+     "luna": {
+      "success": true,
+      "duration": 97.13364289997844,
+      "steps": 24,
+      "tool_calls": 25,
+      "output_tokens": 793
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 18.346715099993162,
+      "steps": 9,
+      "tool_calls": 10,
+      "output_tokens": 698
+     }
+    },
+    {
+     "task_id": "AW047",
+     "sol": {
+      "success": true,
+      "duration": 47.885449499997776,
+      "steps": 6,
+      "tool_calls": 7,
+      "output_tokens": 590
+     },
+     "luna": {
+      "success": true,
+      "duration": 48.303917600016575,
+      "steps": 9,
+      "tool_calls": 10,
+      "output_tokens": 378
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 15.552897300047334,
+      "steps": 6,
+      "tool_calls": 7,
+      "output_tokens": 608
+     }
+    },
+    {
+     "task_id": "AW048",
+     "sol": {
+      "success": true,
+      "duration": 42.15585660000215,
+      "steps": 6,
+      "tool_calls": 7,
+      "output_tokens": 231
+     },
+     "luna": {
+      "success": true,
+      "duration": 89.61221069999738,
+      "steps": 24,
+      "tool_calls": 25,
+      "output_tokens": 776
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 17.747182500024792,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 638
+     }
+    },
+    {
+     "task_id": "AW049",
+     "sol": {
+      "success": true,
+      "duration": 40.21102950000204,
+      "steps": 6,
+      "tool_calls": 7,
+      "output_tokens": 226
+     },
+     "luna": {
+      "success": true,
+      "duration": 34.79493239999283,
+      "steps": 6,
+      "tool_calls": 7,
+      "output_tokens": 316
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 13.928902000014205,
+      "steps": 6,
+      "tool_calls": 7,
+      "output_tokens": 460
+     }
+    },
+    {
+     "task_id": "AW050",
+     "sol": {
+      "success": true,
+      "duration": 62.06291979999514,
+      "steps": 7,
+      "tool_calls": 8,
+      "output_tokens": 644
+     },
+     "luna": {
+      "success": true,
+      "duration": 85.0164474999765,
+      "steps": 19,
+      "tool_calls": 20,
+      "output_tokens": 758
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 18.214510200021323,
+      "steps": 9,
+      "tool_calls": 10,
+      "output_tokens": 663
+     }
+    },
+    {
+     "task_id": "AW051",
+     "sol": {
+      "success": true,
+      "duration": 61.62610530000529,
+      "steps": 8,
+      "tool_calls": 9,
+      "output_tokens": 725
+     },
+     "luna": {
+      "success": true,
+      "duration": 87.23011909995694,
+      "steps": 23,
+      "tool_calls": 24,
+      "output_tokens": 826
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 32.868987899972126,
+      "steps": 19,
+      "tool_calls": 20,
+      "output_tokens": 1408
+     }
+    },
+    {
+     "task_id": "AW052",
+     "sol": {
+      "success": true,
+      "duration": 82.51990299997851,
+      "steps": 10,
+      "tool_calls": 11,
+      "output_tokens": 920
+     },
+     "luna": {
+      "success": true,
+      "duration": 117.39698850002605,
+      "steps": 29,
+      "tool_calls": 30,
+      "output_tokens": 1006
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 22.40432879998116,
+      "steps": 11,
+      "tool_calls": 12,
+      "output_tokens": 770
+     }
+    },
+    {
+     "task_id": "AW053",
+     "sol": {
+      "success": true,
+      "duration": 77.42493259999901,
+      "steps": 11,
+      "tool_calls": 12,
+      "output_tokens": 1101
+     },
+     "luna": {
+      "success": true,
+      "duration": 60.115016900002956,
+      "steps": 12,
+      "tool_calls": 13,
+      "output_tokens": 731
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 24.31895450002048,
+      "steps": 11,
+      "tool_calls": 12,
+      "output_tokens": 739
+     }
+    },
+    {
+     "task_id": "AW054",
+     "sol": {
+      "success": true,
+      "duration": 71.37830529999337,
+      "steps": 10,
+      "tool_calls": 11,
+      "output_tokens": 935
+     },
+     "luna": {
+      "success": true,
+      "duration": 107.47793619998265,
+      "steps": 27,
+      "tool_calls": 28,
+      "output_tokens": 1074
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 30.181474399985746,
+      "steps": 16,
+      "tool_calls": 17,
+      "output_tokens": 982
+     }
+    },
+    {
+     "task_id": "AW055",
+     "sol": {
+      "success": true,
+      "duration": 60.81545669998741,
+      "steps": 9,
+      "tool_calls": 10,
+      "output_tokens": 332
+     },
+     "luna": {
+      "success": true,
+      "duration": 127.46444820001489,
+      "steps": 30,
+      "tool_calls": 31,
+      "output_tokens": 1407
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 26.593548300035764,
+      "steps": 15,
+      "tool_calls": 16,
+      "output_tokens": 862
+     }
+    },
+    {
+     "task_id": "AW056",
+     "sol": {
+      "success": true,
+      "duration": 67.64565520000178,
+      "steps": 11,
+      "tool_calls": 12,
+      "output_tokens": 398
+     },
+     "luna": {
+      "success": true,
+      "duration": 80.13570629997412,
+      "steps": 17,
+      "tool_calls": 18,
+      "output_tokens": 1112
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 25.560835899959784,
+      "steps": 12,
+      "tool_calls": 13,
+      "output_tokens": 1000
+     }
+    },
+    {
+     "task_id": "AW057",
+     "sol": {
+      "success": true,
+      "duration": 89.89206959999865,
+      "steps": 10,
+      "tool_calls": 11,
+      "output_tokens": 881
+     },
+     "luna": {
+      "success": true,
+      "duration": 145.2328674000455,
+      "steps": 28,
+      "tool_calls": 29,
+      "output_tokens": 1183
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 28.416760799998883,
+      "steps": 17,
+      "tool_calls": 18,
+      "output_tokens": 963
+     }
+    },
+    {
+     "task_id": "AW058",
+     "sol": {
+      "success": true,
+      "duration": 97.21957180000027,
+      "steps": 10,
+      "tool_calls": 11,
+      "output_tokens": 901
+     },
+     "luna": {
+      "success": true,
+      "duration": 195.79101370001445,
+      "steps": 41,
+      "tool_calls": 42,
+      "output_tokens": 1615
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 56.946116900013294,
+      "steps": 39,
+      "tool_calls": 40,
+      "output_tokens": 2267
+     }
+    },
+    {
+     "task_id": "AW059",
+     "sol": {
+      "success": true,
+      "duration": 70.9628945000004,
+      "steps": 10,
+      "tool_calls": 11,
+      "output_tokens": 366
+     },
+     "luna": {
+      "success": true,
+      "duration": 161.04503480001586,
+      "steps": 35,
+      "tool_calls": 36,
+      "output_tokens": 1888
+     },
+     "deepseek": {
+      "success": true,
+      "duration": 46.501798400015105,
+      "steps": 26,
+      "tool_calls": 27,
+      "output_tokens": 1781
+     }
     }
    ]
   }

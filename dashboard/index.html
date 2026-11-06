@@ -158,11 +158,14 @@
     <div id="exp-model">
       <section>
         <h2>模型对比（同为 high）</h2>
-        <p class="note">固定 high 档位，对比 3 个模型：Sol（gpt-6.1-sol）、Luna（gpt-6-luna）、DeepSeek Flash。代码题用同一套 HumanEval 100 题，主观题同题同裁判，可直接并排。</p>
+        <p class="note">固定 high 档位，对比 3 个模型：Sol（gpt-6.1-sol）、Luna（gpt-6-luna）、DeepSeek Flash。代码题用同一套 HumanEval 100 + ALFWorld 60 题，主观题同题同裁判，可直接并排。</p>
       </section>
       <div class="cards cols-2" style="margin-top:16px">
         <div class="card"><h3>代码题 · 成功率（HumanEval 100）</h3><p class="src">base+plus 均通过才算成功（n=100 题，同为 high）</p><div class="chart" id="chartModelCodeSucc" style="height:280px"></div></div>
         <div class="card"><h3>代码题 · 平均耗时 / 输出 Token</h3><p class="src">同为 high；DeepSeek Flash 快且输出长</p><div class="chart" id="chartModelCodeTime" style="height:140px"></div><div class="chart" id="chartModelCodeOut" style="height:140px"></div></div>
+      </div>
+      <div class="cards" style="margin-top:16px">
+        <div class="card"><h3>代码题 · ALFWorld（60 题）成功率 / 平均步数</h3><p class="src">agent 任务，同为 high（n=60 题）；Sol 步数最少（更高效）</p><div class="chart" id="chartModelAlfSucc" style="height:140px"></div><div class="chart" id="chartModelAlfSteps" style="height:140px"></div></div>
       </div>
       <div class="cards cols-2" style="margin-top:16px">
         <div class="card"><h3>主观评分 · 60 题 质量分</h3><p class="src">四维 0-10，裁判 Sol high（n=60 题）</p><div class="chart" id="chartModelSubjScore" style="height:280px"></div></div>
@@ -291,7 +294,7 @@
     <div id="exp-lunads" style="display:none">
       <section>
         <h2>代码 · 三模型（同为 high）</h2>
-        <p class="note">HumanEval 100 题三模型对比（Sol / Luna / DeepSeek Flash）；ALFWorld 60 题仅 Luna vs DeepSeek（Sol 未跑）。注意通道/控制器不同，Token 口径不可直接等同。</p>
+        <p class="note">HumanEval 100 + ALFWorld 60 题三模型对比（Sol / Luna / DeepSeek Flash）。注意通道/控制器不同，Token 口径不可直接等同。</p>
         <div class="kpi-grid" id="lunadsKpi"></div>
       </section>
       <div class="cards cols-2" style="margin-top:16px">

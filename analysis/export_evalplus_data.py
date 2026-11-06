@@ -301,6 +301,24 @@ def build_wildbench(root):
     }
 
 
+def build_solalfworld(root):
+    root = Path(root)
+    runs = json.loads((root / "data" / "all_runs.json").read_text(encoding="utf-8"))
+    summary = json.loads((root / "data" / "summary.json").read_text(encoding="utf-8"))
+    high = next((s for s in summary if s.get("reasoning_effort") == "high"), None)
+    per_task = {}
+    for r in runs:
+        if r.get("reasoning_effort") == "high":
+            per_task[r["task_id"]] = {
+                "success": r.get("task_success"),
+                "duration": r.get("duration_seconds"),
+                "steps": r.get("environment_steps"),
+                "tool_calls": r.get("tool_call_count"),
+                "output_tokens": r.get("output_tokens"),
+            }
+    return {"summary": summary, "high": high, "per_task": per_task}
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("bundle", help="完整交接包根目录")
@@ -308,6 +326,7 @@ def main():
     ap.add_argument("--lunads", default=None, help="Luna vs DeepSeek 交接包根目录（可选）")
     ap.add_argument("--wildbench", default=None, help="WildBench 四组实验包根目录（可选）")
     ap.add_argument("--flash", default=None, help="DeepSeek Flash 补充实验包根目录（可选）")
+    ap.add_argument("--solalfworld", default=None, help="Sol ALFWorld 补充实验包根目录（可选）")
     ap.add_argument("-o", "--output", default="dashboard/data.js")
     a = ap.parse_args()
     b = Path(a.bundle)
@@ -327,6 +346,7 @@ def main():
     lunads = build_lunads(a.lunads) if a.lunads else None
     wildbench = build_wildbench(a.wildbench) if a.wildbench else None
     flash = build_flash(a.flash) if a.flash else None
+    solalf = build_solalfworld(a.solalfworld) if a.solalfworld else None
 
     # 把 DeepSeek Flash 补充合并进两个主观实验
     if wildbench and flash:
@@ -362,6 +382,51 @@ def main():
                 "tool_error_count_mean": None, "invalid_action_count_mean": None,
                 "base_pass": None, "plus_pass": None,
             })
+
+    # 把 Sol 加入 ALFWorld（三模型对比），并扩展 model_compare
+    if lunads and solalf and solalf["high"] and model_compare:
+        h = solalf["high"]
+        lunads["summary"].append({
+            "model_group": "sol", "benchmark": "alfworld60",
+            "official_success": h.get("success"),
+            "success_rate": h.get("success_rate"),
+            "duration_seconds_mean": h.get("duration_seconds_mean"),
+            "output_tokens_mean": h.get("output_tokens_mean"),
+            "input_tokens_mean": h.get("input_tokens_mean"),
+            "reasoning_tokens_mean": h.get("reasoning_tokens_mean"),
+            "environment_steps_mean": h.get("environment_steps_mean"),
+            "tool_call_count_mean": h.get("tool_call_count_mean"),
+            "tool_error_count_mean": h.get("tool_error_count_mean"),
+            "invalid_action_count_mean": h.get("invalid_action_count_mean"),
+            "base_pass": None, "plus_pass": None,
+        })
+        luna_alf = {p["task_id"]: p for p in lunads["paired"] if p["benchmark"] == "alfworld60"}
+        alf_per_task = []
+        for tid, s in solalf["per_task"].items():
+            lr = luna_alf.get(tid)
+            if not lr:
+                continue
+            alf_per_task.append({
+                "task_id": tid,
+                "sol": {"success": s["success"], "duration": s["duration"], "steps": s["steps"], "tool_calls": s["tool_calls"], "output_tokens": s["output_tokens"]},
+                "luna": {"success": lr["luna"]["task_success"], "duration": lr["luna"]["duration_seconds"], "steps": lr["luna"]["environment_steps"], "tool_calls": lr["luna"]["tool_call_count"], "output_tokens": lr["luna"]["output_tokens"]},
+                "deepseek": {"success": lr["deepseek"]["task_success"], "duration": lr["deepseek"]["duration_seconds"], "steps": lr["deepseek"]["environment_steps"], "tool_calls": lr["deepseek"]["tool_call_count"], "output_tokens": lr["deepseek"]["output_tokens"]},
+            })
+
+        def alf_summary(name, key):
+            n = len(alf_per_task)
+            succ = sum(1 for t in alf_per_task if t[key]["success"] is True)
+            durs = [t[key]["duration"] for t in alf_per_task if t[key]["duration"] is not None]
+            steps = [t[key]["steps"] for t in alf_per_task if t[key]["steps"] is not None]
+            return {"model": name, "n": n,
+                    "success_rate": (succ / n) if n else None,
+                    "mean_duration": (sum(durs) / len(durs)) if durs else None,
+                    "mean_steps": (sum(steps) / len(steps)) if steps else None}
+
+        model_compare["alfworld"] = {
+            "summary": [alf_summary("sol", "sol"), alf_summary("luna", "luna"), alf_summary("deepseek", "deepseek")],
+            "per_task": alf_per_task,
+        }
 
     payload = {
         "kind": "real",
