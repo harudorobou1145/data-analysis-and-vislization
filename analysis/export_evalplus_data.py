@@ -147,10 +147,74 @@ def build_subjective(root):
     return {"primary_rows": primary, "repeat_scores": repeats, "groups": groups, "paired": paired}
 
 
+def build_lunads(root):
+    root = Path(root)
+    summary = json.loads((root / "data" / "summary.json").read_text(encoding="utf-8"))
+    paired = []
+    for r in load_csv(root / "data" / "paired_luna_deepseek.csv"):
+        rec = {"benchmark": r["benchmark"], "task_id": r["task_id"]}
+        for m in ("luna", "deepseek"):
+            rec[m] = {
+                "task_success": b(r[f"{m}_task_success"]),
+                "base_status": r[f"{m}_base_status"] or None,
+                "plus_status": r[f"{m}_plus_status"] or None,
+                "duration_seconds": num(r[f"{m}_duration_seconds"]),
+                "environment_steps": num(r[f"{m}_environment_steps"]),
+                "tool_call_count": num(r[f"{m}_tool_call_count"]),
+                "tool_error_count": num(r[f"{m}_tool_error_count"]),
+                "invalid_action_count": num(r[f"{m}_invalid_action_count"]),
+                "input_tokens": num(r[f"{m}_input_tokens"]),
+                "output_tokens": num(r[f"{m}_output_tokens"]),
+                "reasoning_tokens": num(r[f"{m}_reasoning_tokens"]),
+            }
+        paired.append(rec)
+    return {"summary": summary, "paired": paired}
+
+
+def build_wildbench(root):
+    root = Path(root)
+    rdir = root / "result" / "wildbench_20"
+    summ = json.loads((rdir / "summary.json").read_text(encoding="utf-8"))
+    groups = []
+    for g in summ.get("groups", []):
+        groups.append({
+            "condition_id": g["condition_id"], "model": g["model"], "effort": g["effort"],
+            "mean_score_10": g.get("mean_score_10"), "mean_wb_score": g.get("mean_wb_score"),
+            "full_score_rate": g.get("full_score_rate"),
+            "elapsed_median": (g.get("timing") or {}).get("elapsed_seconds", {}).get("median"),
+            "output_tokens_mean": (g.get("tokens") or {}).get("outputTokens", {}).get("mean"),
+            "reasoning_tokens_mean": (g.get("tokens") or {}).get("reasoningOutputTokens", {}).get("mean"),
+        })
+    rows = []
+    with (rdir / "frontend_rows.jsonl").open(encoding="utf-8") as f:
+        for line in f:
+            r = json.loads(line)
+            tok = r.get("token_usage") or {}
+            rows.append({
+                "run_id": r.get("run_id"), "task_id": r.get("task_id"), "task_type": r.get("task_type"),
+                "condition_id": r.get("condition_id"), "model": r.get("model"), "effort": r.get("effort"),
+                "repeat_id": r.get("repeat_id"),
+                "score_10": r.get("score_10"), "wb_score": r.get("wb_score"),
+                "elapsed_seconds": r.get("elapsed_seconds"),
+                "client_first_answer_delta_seconds": r.get("client_first_answer_delta_seconds"),
+                "input_tokens": tok.get("inputTokens"), "output_tokens": tok.get("outputTokens"),
+                "reasoning_tokens": tok.get("reasoningOutputTokens"),
+                "row_status": r.get("row_status"), "join_issues": r.get("join_issues"),
+            })
+    return {
+        "groups": groups,
+        "paired": summ.get("paired_task_comparisons", []),
+        "repeats": summ.get("repeat_judge_agreement", []),
+        "rows": rows,
+    }
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("bundle", help="完整交接包根目录")
     ap.add_argument("--subjective", default=None, help="主观评分实验包根目录（可选）")
+    ap.add_argument("--lunads", default=None, help="Luna vs DeepSeek 交接包根目录（可选）")
+    ap.add_argument("--wildbench", default=None, help="WildBench 四组实验包根目录（可选）")
     ap.add_argument("-o", "--output", default="dashboard/data.js")
     a = ap.parse_args()
     b = Path(a.bundle)
@@ -167,12 +231,14 @@ def main():
 
     candidates, specs = build_candidates(b)
     subjective = build_subjective(a.subjective) if a.subjective else None
+    lunads = build_lunads(a.lunads) if a.lunads else None
+    wildbench = build_wildbench(a.wildbench) if a.wildbench else None
 
     payload = {
         "kind": "real",
-        "source": "CodeDepth Complete Handoff 2026-11-02 + Subjective 60",
+        "source": "CodeDepth 四档 + 主观评分 + Luna/DeepSeek + WildBench",
         "generatedAt": datetime.datetime.now().astimezone().isoformat(),
-        "note": "代码四档对比 + Max 修复 + 主观评分实验。reasoning_effort 未经独立验证；相关≠因果。",
+        "note": "四个子实验合并。reasoning_effort 未经独立验证；相关≠因果；不同实验口径不合并。",
         "efforts": EFFORTS,
         "meta": {
             "primary_tasks": len(paired),
@@ -182,6 +248,8 @@ def main():
             "candidates": len(candidates),
             "specs": len(specs),
             "subjective_answers": len(subjective["primary_rows"]) if subjective else 0,
+            "lunads_runs": len(lunads["paired"]) if lunads else 0,
+            "wildbench_rows": len(wildbench["rows"]) if wildbench else 0,
         },
         "paired": paired,
         "repair_rounds": repair_rounds,
@@ -190,6 +258,8 @@ def main():
         "candidates": candidates,
         "specs": specs,
         "subjective": subjective,
+        "lunads": lunads,
+        "wildbench": wildbench,
     }
 
     header = (
