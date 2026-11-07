@@ -27,10 +27,24 @@
 
 目录严格按原始字段分组，包括仅在辅助记录出现的 `deepseek-v4.1-flash`、`kimi-k3`。不将它们自动改名成 `deepseek-flash` 或其他模型。共享表和兼容归档不参与结果重复计数。
 
-XWB 分组表中的 `artifact_dir` 已改为统一 raw 路径；其余以 `data/` 开头的来源路径指向 `app/source_packages/xwb/data/`。原包快照不修改。WTY 路径本身已符合统一布局，保持不变。
+XWB 分组表中的 `artifact_dir` 已改为统一 raw 路径；其他来源路径可能仍引用历史包布局，不能假设全部在当前交付中可用。旧 `app/source_packages/` 快照已移除。WTY 证据路径按统一布局保留。
 
 ## 统计约束
 
 正式、历史、预实验、补测、修复和辅助记录不能无条件合并。修复轮次本已属于主体表的子集，不应再把 `repair_rounds.json` 加到主体记录数。`null` 不填零或 false；Token 口径、计时范围和通道不同，不能直接作为同预算比较。主观评分不是官方榜单成绩。
 
-详细字段定义保留在 [WTY 字典](../app/source_packages/wty/data/data_dictionary.md) 与 [XWB 字典](../app/source_packages/xwb/data/data_dictionary.md)。采集限制、隐私和实验设计见原包说明。
+## 前端指标表
+
+由 [导出脚本](../app/dashboard/scripts/export-data.mjs) 生成 `app/dashboard/public/analysis-data.json`，包含数据集定义、指标记录和排除阶段计数。只输出白名单字段，不含提示词、回答或原始证据路径。
+
+| 字段 | 含义 |
+| --- | --- |
+| `id` | 来源、source_id、run_id 组合标识 |
+| `dataset/model/effort` | 数据集、精确模型名、原始深度，不将 max 改为 ultra |
+| `task/type/phase/status` | 任务编号、类型、阶段、执行状态 |
+| `score` | 0–10 原始分，或布尔判定折算的 0/100；缺失为 null |
+| `seconds` | WTY elapsed_seconds / XWB duration_seconds |
+| `input/output/reasoning/total` | 输入、输出、推理、总 Token；输出已包含推理 |
+| `timestamp` | XWB start_time；WTY 索引没有时间戳，保留 null |
+
+正式数据取 WTY `formal` 与 XWB `initial`，两个预实验独立标记。当前候选池 1,825 条，页面按方向进一步筛选。柱图对同题重复先取均值再按题等权；null 不参与评分均值，不作失败处理。

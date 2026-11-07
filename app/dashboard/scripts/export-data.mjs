@@ -1,0 +1,83 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+export const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+export const models = ['gpt-6.1-sol', 'gpt-6-luna', 'deepseek-flash'];
+export const definitions = [
+  { id: 'subjective_60', name: '主观评分 60 题', kind: '开放任务', metric: '主观质量分', max: 10, note: 'MT-Bench / BiGGen 混合集；同题重复回答分别保留，主图先按题目取均值。模型裁判评分存在天花板效应。' },
+  { id: 'wildbench', name: 'WildBench', kind: '开放任务', metric: '主观质量分', max: 10, note: 'v2-hard 20 题，自定义模型裁判评分，不是官方榜单成绩。' },
+  { id: 'hss', name: 'HSS 多模态', kind: '多模态', metric: '准则得分', max: 10, note: '按满足准则比例折算到 10 分；DeepSeek 无有效结果时显示缺测。' },
+  { id: 'humanevalplus', name: 'HumanEval+', kind: '代码任务', metric: '通过率', max: 100, note: '只纳入正式首轮；Base 与 Plus 都通过才记为通过。max 不等同于 ultra，不进行替换。' },
+  { id: 'alfworld', name: 'ALFWorld', kind: '交互任务', metric: '成功率', max: 100, note: '只纳入正式首轮，按官方环境结果判定；模型通道与控制器不同。max 不等同于 ultra。' },
+  { id: 'gsm8k', name: 'GSM8K 预实验', kind: '预实验', metric: '正确率', max: 100, note: '每档仅 5 道题、单次运行，样本过小；不据此推断总体能力。' },
+  { id: 'mt_bench', name: 'MT-Bench 预实验', kind: '预实验', metric: '主观质量分', max: 10, note: '仅 4 道题，当前指标索引未提供评分；只能分析耗时与 Token，评分图保持空白。' },
+];
+
+export function numeric(value) {
+  return typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value : null;
+}
+
+export function normalize(row, definition, source) {
+  const code = source === 'xwb';
+  const passed = code ? row.task_success : row.passed;
+  const score = definition.max === 100
+    ? (typeof passed === 'boolean' ? Number(passed) * 100 : null)
+    : numeric(row.score_10);
+  return {
+    id: `${source}:${row.source_id ?? ''}:${row.run_id}`,
+    dataset: definition.id,
+    model: row.model,
+    effort: (code ? row.reasoning_effort : row.effort) ?? 'unknown',
+    task: String(row.task_id),
+    type: row.task_type ?? '未分类',
+    phase: row.phase,
+    score: score !== null && score <= definition.max ? score : null,
+    seconds: numeric(code ? row.duration_seconds : row.elapsed_seconds),
+    input: numeric(code ? row.input_tokens : row.token_usage?.inputTokens),
+    output: numeric(code ? row.output_tokens : row.token_usage?.outputTokens),
+    reasoning: numeric(code ? row.reasoning_tokens : row.token_usage?.reasoningOutputTokens),
+    total: numeric(code ? row.total_tokens : row.token_usage?.totalTokens),
+    timestamp: code ? (row.start_time ?? null) : null,
+    status: (code ? row.execution_status : row.status) ?? 'unknown',
+  };
+}
+
+export function exportData(dataRoot) {
+  const rows = [];
+  const seen = new Set();
+  const excluded = {};
+  for (const definition of definitions) {
+    for (const model of models) {
+      const directory = path.join(dataRoot, definition.id, model);
+      const code = ['humanevalplus', 'alfworld'].includes(definition.id);
+      const file = path.join(directory, code ? 'runs.json' : 'wty_results.jsonl');
+      if (!fs.existsSync(file)) continue;
+      const text = fs.readFileSync(file, 'utf8');
+      const records = code ? JSON.parse(text) : text.trim().split('\n').filter(Boolean).map(line => JSON.parse(line));
+      for (const row of records) {
+        const accepted = code ? row.phase === 'initial' : (definition.kind === '预实验' || row.phase === 'formal');
+        if (!accepted) {
+          const key = `${definition.id}/${row.phase}`;
+          excluded[key] = (excluded[key] ?? 0) + 1;
+          continue;
+        }
+        const record = normalize(row, definition, code ? 'xwb' : 'wty');
+        if (seen.has(record.id)) throw new Error(`Duplicate identity: ${record.id}`);
+        seen.add(record.id);
+        rows.push(record);
+      }
+    }
+  }
+  return { datasets: definitions, rows, excluded };
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const data = exportData(path.resolve(appRoot, '../../data/processed'));
+  fs.mkdirSync(path.join(appRoot, 'public'), { recursive: true });
+  fs.writeFileSync(path.join(appRoot, 'public/analysis-data.json'), JSON.stringify(data));
+  console.log(`Exported ${data.rows.length} metric-only records across ${data.datasets.length} datasets.`);
+  for (const dataset of definitions) {
+    console.log(dataset.id, data.rows.filter(row => row.dataset === dataset.id).length);
+  }
+}
