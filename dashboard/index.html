@@ -92,6 +92,9 @@
 
     .repair-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .repair-panel .chart { height: 260px; }
+    .repair-detail-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 16px; align-items: start; margin-top: 12px; }
+    .repair-detail-grid .repair-grid { grid-template-columns: 1fr; }
+    .repair-detail { position: sticky; top: 12px; display: flex; flex-direction: column; gap: 16px; }
 
     .tool-list { max-height: 360px; overflow: auto; border: 1px solid var(--border); border-radius: 8px; }
     .tool-item { display: grid; grid-template-columns: 52px 78px 1fr 110px; gap: 8px; padding: 7px 10px; border-bottom: 1px solid var(--grid); font-size: 12.5px; align-items: baseline; }
@@ -127,7 +130,7 @@
     footer a { color: var(--series-1); text-decoration: none; }
 
     @media (max-width: 980px) {
-      .cols-2, .repair-grid, .code-grid { grid-template-columns: 1fr; }
+      .cols-2, .repair-grid, .code-grid, .repair-detail-grid { grid-template-columns: 1fr; }
       .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 560px) {
@@ -312,7 +315,20 @@
         <div class="kpi-grid" id="repairsKpi"></div>
       </section>
       <div class="legend-status" id="repairRepLegend"></div>
-      <div class="repair-grid" id="repairRepGrid"></div>
+      <div class="repair-detail-grid">
+        <div class="repair-grid" id="repairRepGrid"></div>
+        <div class="repair-detail">
+          <div class="card">
+            <h3 id="repairDetailTitle">工具动作序列</h3>
+            <p class="src">点击左侧修复轨迹的圆点查看该轮的工具与代码</p>
+            <div class="tool-list" id="repairToolList"><div class="empty">点击左侧圆点查看</div></div>
+          </div>
+          <div class="card">
+            <h3>候选代码</h3>
+            <div class="code-box"><pre id="repairCode"></pre></div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="exp-wildbench" style="display:none">

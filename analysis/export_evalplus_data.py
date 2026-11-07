@@ -324,6 +324,7 @@ def build_repairs(root):
     summary = json.loads((root / "data" / "repair_summary.json").read_text(encoding="utf-8"))
     rounds = json.loads((root / "data" / "repair_rounds.json").read_text(encoding="utf-8"))
     norm = []
+    code = {}
     for r in rounds:
         norm.append({
             "run_id": r.get("run_id"), "task_id": r.get("task_id"), "model_group": r.get("model_group"),
@@ -333,8 +334,22 @@ def build_repairs(root):
             "duration_seconds": r.get("duration_seconds"), "total_tokens": r.get("total_tokens"),
             "output_tokens": r.get("output_tokens"), "input_tokens": r.get("input_tokens"),
             "tool_call_count": r.get("tool_call_count"), "test_execution_count": r.get("test_execution_count"),
+            "artifact_dir": r.get("artifact_dir"),
         })
-    return {"summary": summary, "rounds": norm}
+        ad = r.get("artifact_dir")
+        if ad:
+            fp = root / ad / "final_code.py"
+            if fp.exists():
+                code[r["run_id"]] = fp.read_text(encoding="utf-8", errors="replace")
+    tool_actions = []
+    for r in load_csv(root / "data" / "tool_calls.csv"):
+        tool_actions.append({
+            "run_id": r.get("run_id"), "model_group": r.get("model_group"),
+            "task_id": r.get("task_id"), "repair_round": num(r.get("repair_round")),
+            "tool_index": num(r.get("tool_index")), "tool_name": r.get("tool_name"),
+            "is_error": b(r.get("is_error")), "duration_seconds": num(r.get("duration_seconds")),
+        })
+    return {"summary": summary, "rounds": norm, "tool_actions": tool_actions, "code": code}
 
 
 def main():

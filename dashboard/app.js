@@ -959,6 +959,7 @@
   function renderRepairs() {
     renderRepairsKpi();
     renderRepairRepGrid();
+    renderRepairDetail(null);
     document.getElementById("repairRepLegend").innerHTML = [
       '<span class="item"><span class="sw" style="background:' + STATUS.pass.color + '"></span>通过</span>',
       '<span class="item"><span class="sw" style="background:' + STATUS.fail.color + '"></span>未通过</span>',
@@ -1018,7 +1019,34 @@
     }, true);
     var c = chart(id);
     c.off("click");
-    c.on("click", function (pr) { if (pr.data) { state.task = tid; state.run = pr.data.run_id || null; onSelect(); } });
+    c.on("click", function (pr) { if (pr.data) { state.task = tid; state.run = pr.data.run_id || null; renderRepairDetail(state.run); } });
+  }
+  function renderRepairDetail(runId) {
+    var box = document.getElementById("repairToolList");
+    var codeBox = document.getElementById("repairCode");
+    var title = document.getElementById("repairDetailTitle");
+    if (!runId) {
+      title.textContent = "工具动作序列";
+      box.innerHTML = '<div class="empty">点击左侧圆点查看</div>';
+      codeBox.textContent = "";
+      return;
+    }
+    title.textContent = "工具动作序列 · " + runId;
+    var acts = DATA.repairs.tool_actions.filter(function (a) { return a.run_id === runId; }).sort(function (a, b) { return (a.tool_index || 0) - (b.tool_index || 0); });
+    box.innerHTML = "";
+    if (!acts.length) { box.innerHTML = '<div class="empty">该轮无工具记录</div>'; }
+    acts.forEach(function (a) {
+      var row = document.createElement("div"); row.className = "tool-item";
+      var i = document.createElement("span"); i.className = "t"; i.textContent = "#" + a.tool_index;
+      var n = document.createElement("span"); n.className = "cat"; n.textContent = a.tool_name || "";
+      var d = document.createElement("span");
+      var f = document.createElement("span");
+      if (a.is_error) { f.className = "err"; f.textContent = "错误"; } else { f.className = "t"; f.textContent = a.duration_seconds != null ? a.duration_seconds.toFixed(2) + "s" : ""; }
+      row.appendChild(i); row.appendChild(n); row.appendChild(d); row.appendChild(f);
+      box.appendChild(row);
+    });
+    var code = DATA.repairs.code[runId];
+    codeBox.textContent = code != null ? code : "（该轮无候选代码）";
   }
   function resizeRepairs() {
     REPAIR_TASKS.forEach(function (tid) { var id = "chartRepairRep_" + tid; if (charts[id]) charts[id].resize(); });
