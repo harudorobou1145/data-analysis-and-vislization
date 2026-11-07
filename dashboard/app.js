@@ -44,6 +44,7 @@
   var CASE_TASKS = ["EP015", "EP032", "EP099", "EP122", "EP132"];
   var SUBJ_EFFORTS = ["low", "high", "ultra"];
   var SUBJ_LABEL = { low: "Low", high: "High", ultra: "Ultra" };
+  var EFFORT_EN = { low: "Low", medium: "Medium", high: "High", max: "Max", ultra: "Ultra" };
   var SUBJ_TYPE_LABEL = { writing: "写作表达", analysis: "分析论证", planning: "方案设计" };
   var LUNADS_BENCH = ["humaneval100", "alfworld60"];
   var LUNADS_BENCH_LABEL = { humaneval100: "HumanEval 100", alfworld60: "ALFWorld 60" };
@@ -56,9 +57,9 @@
   var REPAIR_TASKS = ["EP015", "EP032", "EP099", "EP132", "EP047", "EP116", "EP145"];
   var REPAIR_MODEL_LABEL = { luna: "Luna", deepseek: "DeepSeek" };
 
-  var state = { exp: "model", metric: "status", onlyFailed: false, compare: "mh", task: null, run: null, tab: "tab-primary" };
+  var state = { exp: "effort", metric: "status", onlyFailed: false, compare: "mh", task: null, run: null, tab: "tab-primary" };
   var charts = {};
-  var renderedRepair = false, renderedSubj = false, renderedLunads = false, renderedWb = false, renderedFlash = false;
+  var renderedRepair = false, renderedModel = false;
   var pairedByTask = {};
 
   function isDark() { return document.documentElement.getAttribute("data-theme") === "dark"; }
@@ -107,17 +108,85 @@
   function renderAll() {
     buildIndex();
     renderBanner();
+    renderEffort();
+    if (renderedModel) renderModel();
+  }
+
+  function renderEffort() {
     renderMatrix();
     renderDiffBox();
     renderDiffScatter();
-    if (renderedRepair) renderRepair();
+    renderRepair();
     updateSelbar();
     renderToolAndCode();
-    if (renderedSubj) renderSubjective();
-    if (renderedLunads) renderLunads();
-    if (renderedWb) renderWb();
-    if (renderedFlash) renderFlash();
+    renderEffortAlf();
+    renderEffortSubj();
+    renderEffortWb();
+  }
+
+  function renderModel() {
     renderModelCompare();
+    renderRepairs();
+  }
+
+  // ---- 推理强度：Sol 多档 ----
+  function effortBar(id, efforts, getVal, name, unit, isInt, ymin, ymax) {
+    var p = pal();
+    chart(id).setOption({
+      backgroundColor: "transparent", textStyle: { color: p.text2 },
+      title: { text: name, left: 0, top: 0, textStyle: { color: p.text1, fontSize: 12.5, fontWeight: 600 } },
+      grid: { left: 115, right: 8, top: 30, bottom: 20, containLabel: true },
+      xAxis: Object.assign(axisCategory(p), { data: efforts.map(function (e) { return EFFORT_EN[e]; }), axisLabel: { fontSize: 10, interval: 0 } }),
+      yAxis: Object.assign(axisValue(p), { name: unit, min: ymin, max: ymax }),
+      series: [{
+        type: "bar", barWidth: 20,
+        data: efforts.map(function (e, i) { return { value: getVal(e), itemStyle: { color: p.seq[i], borderRadius: [4, 4, 0, 0] } }; }),
+        label: { show: true, position: "top", color: p.text1, fontSize: 10, formatter: function (pr) { return pr.value == null ? "" : (isInt ? fmt(pr.value) : fmt1(pr.value)); } },
+      }],
+      tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
+    }, true);
+  }
+  function solAlfSummary(e) {
+    return DATA.solalfworld.summary.find(function (s) { return s.reasoning_effort === e; }) || null;
+  }
+  function renderEffortAlf() {
+    var efforts = ["low", "high", "max"];
+    effortBar("chartEffortAlfSteps", efforts, function (e) { var s = solAlfSummary(e); return s ? s.environment_steps_mean : null; }, "平均步数", "步", true, 0, null);
+    effortBar("chartEffortAlfTime", efforts, function (e) { var s = solAlfSummary(e); return s ? s.duration_seconds_mean : null; }, "平均耗时", "秒", false, 0, null);
+  }
+  function renderEffortSubj() {
+    var efforts = ["low", "high", "ultra"];
+    effortBar("chartEffortSubjScore", efforts, function (e) { var g = subjCondGroup("sol_" + e); return g ? g.mean_score_10 : null; }, "质量分 /10", "/10", false, 0, 10);
+    effortBar("chartEffortSubjTime", efforts, function (e) { var g = subjCondGroup("sol_" + e); return g ? g.elapsed_median : null; }, "耗时中位数", "秒", false, 0, null);
+    effortBar("chartEffortSubjReason", efforts, function (e) { var g = subjCondGroup("sol_" + e); return g ? g.reasoning_tokens_mean : null; }, "平均推理 Token", "Token", true, 0, null);
+    renderEffortSubjHist();
+  }
+  function renderEffortSubjHist() {
+    var p = pal();
+    var scores = DATA.subjective.primary_rows.map(function (r) { return r.score_10; }).filter(function (v) { return v != null; });
+    var edges = [8.5, 8.75, 9.0, 9.25, 9.5, 9.75, 10.0];
+    var counts = edges.map(function (e, i) {
+      if (i === edges.length - 1) return scores.filter(function (v) { return v >= e; }).length;
+      return scores.filter(function (v) { return v >= e && v < edges[i + 1]; }).length;
+    });
+    var labels = edges.map(function (e, i) { return i === edges.length - 1 ? "10.0" : e.toFixed(2); });
+    chart("chartEffortSubjHist").setOption({
+      backgroundColor: "transparent", textStyle: { color: p.text2 },
+      grid: { left: 115, right: 16, top: 20, bottom: 30, containLabel: true },
+      xAxis: Object.assign(axisCategory(p), { data: labels, axisLabel: { color: p.text2, fontSize: 10 } }),
+      yAxis: Object.assign(axisValue(p), { name: "回答数" }),
+      series: [{ type: "bar", barWidth: "60%", data: counts.map(function (c, i) { return { value: c, itemStyle: { color: i === counts.length - 1 ? STATUS.pass.color : p.series[0] } }; }), label: { show: true, position: "top", color: p.text1 } }],
+      tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
+    }, true);
+  }
+  function renderEffortWb() {
+    var efforts = ["low", "high", "ultra"];
+    effortBar("chartEffortWbScore", efforts, function (e) { var g = wbGroup("sol_" + e); return g ? g.mean_score_10 : null; }, "质量分 /10", "/10", false, 0, 10);
+    effortBar("chartEffortWbTime", efforts, function (e) { var g = wbGroup("sol_" + e); return g ? g.elapsed_median : null; }, "耗时中位数", "秒", false, 0, null);
+  }
+  function resizeEffort() {
+    ["chartMatrix", "chartDiffBox", "chartDiffScatter", "chartEffortAlfSteps", "chartEffortAlfTime", "chartEffortSubjScore", "chartEffortSubjTime", "chartEffortSubjReason", "chartEffortSubjHist", "chartEffortWbScore", "chartEffortWbTime"].forEach(function (id) { if (charts[id]) charts[id].resize(); });
+    CASE_TASKS.forEach(function (tid) { var id = "chartRepair_" + tid; if (charts[id]) charts[id].resize(); });
   }
 
   function renderBanner() {
@@ -947,6 +1016,7 @@
   }
   function resizeModel() {
     ["chartModelCodeSucc", "chartModelCodeTime", "chartModelCodeOut", "chartModelAlfSucc", "chartModelAlfSteps", "chartModelSubjScore", "chartModelWbScore"].forEach(function (id) { if (charts[id]) charts[id].resize(); });
+    resizeRepairs();
   }
 
   // ---------- 修复（Luna vs DeepSeek） ----------
@@ -1069,13 +1139,14 @@
     document.documentElement.setAttribute("data-theme", dark ? "light" : "dark");
     localStorage.setItem("codedepth-theme", dark ? "light" : "dark");
     renderAll();
-    resizePanel(state.tab);
+    resizeEffort();
+    if (renderedModel) resizeModel();
   });
   document.getElementById("matrixMetric").addEventListener("change", function (e) { state.metric = e.target.value; renderMatrix(); });
   document.getElementById("onlyFailed").addEventListener("change", function (e) { state.onlyFailed = e.target.checked; renderMatrix(); });
   document.getElementById("diffCompare").addEventListener("change", function (e) { state.compare = e.target.value; renderDiffScatter(); });
 
-  var EXP_IDS = { model: "exp-model", coding: "exp-coding", lunads: "exp-lunads", subjective: "exp-subjective", wildbench: "exp-wildbench" };
+  var EXP_IDS = { effort: "exp-effort", model: "exp-model" };
   document.querySelectorAll(".exp-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
       document.querySelectorAll(".exp-btn").forEach(function (x) { x.classList.remove("active"); });
@@ -1084,20 +1155,11 @@
       Object.keys(EXP_IDS).forEach(function (k) {
         document.getElementById(EXP_IDS[k]).style.display = state.exp === k ? "" : "none";
       });
-      if (state.exp === "subjective") {
-        if (!renderedSubj) { renderedSubj = true; renderSubjective(); }
-        else setTimeout(resizeSubj, 0);
+      if (state.exp === "effort") setTimeout(resizeEffort, 0);
+      if (state.exp === "model") {
+        if (!renderedModel) { renderedModel = true; renderModel(); }
+        else setTimeout(resizeModel, 0);
       }
-      if (state.exp === "lunads") {
-        if (!renderedLunads) { renderedLunads = true; renderLunads(); }
-        else setTimeout(resizeLunads, 0);
-      }
-      if (state.exp === "wildbench") {
-        if (!renderedWb) { renderedWb = true; renderWb(); }
-        else setTimeout(resizeWb, 0);
-      }
-      if (state.exp === "model") setTimeout(resizeModel, 0);
-      if (state.exp === "coding") setTimeout(function () { resizePanel(state.tab); }, 0);
     });
   });
 
@@ -1122,5 +1184,5 @@
 
   initTheme();
   renderAll();
-  resizePanel(state.tab);
+  resizeEffort();
 })();

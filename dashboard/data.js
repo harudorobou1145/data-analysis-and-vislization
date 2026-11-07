@@ -3,7 +3,7 @@
 window.CODEDEPTH_DATA = {
  "kind": "real",
  "source": "CodeDepth 四档 + 主观评分 + Luna/DeepSeek + WildBench",
- "generatedAt": "2026-11-07T18:43:41.141854+08:00",
+ "generatedAt": "2026-11-07T19:18:01.581763+08:00",
  "note": "四个子实验合并。reasoning_effort 未经独立验证；相关≠因果；不同实验口径不合并。",
  "efforts": [
   "low",
@@ -65021,6 +65021,564 @@ window.CODEDEPTH_DATA = {
    "dsrepair_0e32211e98ef4309883fe552f13557e7_r7": "from math import isfinite\n\n\n\n\n\ndef closest_integer(value):\n\n    '''\n\n    Create a function that takes a value (string) representing a number\n\n    and returns the closest integer to it. If the number is equidistant\n\n    from two integers, round it away from zero.\n\n\n\n    Examples\n\n    >>> closest_integer(\"10\")\n\n    10\n\n    >>> closest_integer(\"15.3\")\n\n    15\n\n\n\n    Note:\n\n    Rounding away from zero means that if the given number is equidistant\n\n    from two integers, the one you should return is the one that is the\n\n    farthest from zero. For example closest_integer(\"14.5\") should\n\n    return 15 and closest_integer(\"-14.5\") should return -15.\n\n    '''\n\n    if not isinstance(value, str):\n\n        raise TypeError(\"value must be a string\")\n\n\n\n    try:\n\n        number = float(value.strip())\n\n    except ValueError as error:\n\n        raise ValueError(\"invalid number: {!r}\".format(value)) from error\n\n\n\n    if not isfinite(number):\n\n        raise ValueError(\"value must be a finite number: {!r}\".format(value))\n\n\n\n    if number < 0:\n\n        return int(number - 0.5)\n\n    return int(number + 0.5)\n\n",
    "dsrepair_3a9776d2edde42e48e450d2d1dfd1bd3_r1": "def is_nested(string):\n\n    '''\n\n    Create a function that takes a string as input which contains only square brackets.\n\n    The function should return True if and only if there is a valid subsequence of brackets \n\n    where at least one bracket in the subsequence is nested.\n\n\n\n    is_nested('[[]]') ➞ True\n\n    is_nested('[]]]]]]][[[[[]') ➞ False\n\n    is_nested('[][]') ➞ False\n\n    is_nested('[]') ➞ False\n\n    is_nested('[[][]]') ➞ True\n\n    is_nested('[[]][[') ➞ True\n\n    '''\n\n    balance = 0\n\n\n\n    for bracket in string:\n\n        if bracket == '[':\n\n            balance += 1\n\n        elif bracket == ']':\n\n            balance -= 1\n\n\n\n        # More than one unmatched opening bracket means that one opening\n\n        # bracket is nested inside another.\n\n        if balance > 1:\n\n            return True\n\n\n\n    return False\n\n",
    "dsrepair_3a9776d2edde42e48e450d2d1dfd1bd3_r2": "def is_nested(string):\n\n    '''\n\n    Create a function that takes a string as input which contains only square brackets.\n\n    The function should return True if and only if there is a valid subsequence of brackets \n\n    where at least one bracket in the subsequence is nested.\n\n\n\n    is_nested('[[]]') ➞ True\n\n    is_nested('[]]]]]]][[[[[]') ➞ False\n\n    is_nested('[][]') ➞ False\n\n    is_nested('[]') ➞ False\n\n    is_nested('[[][]]') ➞ True\n\n    is_nested('[[]][[') ➞ True\n\n    '''\n\n    nested_opening = string.find('[[')\n\n    if nested_opening == -1:\n\n        return False\n\n\n\n    # The nested bracket pair must also be closed before it can form part of\n\n    # a valid bracket sequence.\n\n    return string.find(']]', nested_opening + 2) != -1\n\n"
+  }
+ },
+ "solalfworld": {
+  "summary": [
+   {
+    "reasoning_effort": "low",
+    "runs": 60,
+    "success": 60,
+    "success_rate": 1.0,
+    "duration_seconds_mean": 65.0359223900016,
+    "duration_seconds_n": 60,
+    "duration_seconds_sum": 3902.155343400096,
+    "environment_steps_mean": 7.8,
+    "environment_steps_n": 60,
+    "environment_steps_sum": 468,
+    "tool_call_count_mean": 8.8,
+    "tool_call_count_n": 60,
+    "tool_call_count_sum": 528,
+    "invalid_action_count_mean": 0.0,
+    "invalid_action_count_n": 60,
+    "invalid_action_count_sum": 0,
+    "repeated_action_count_mean": 0.6166666666666667,
+    "repeated_action_count_n": 60,
+    "repeated_action_count_sum": 37,
+    "tool_error_count_mean": 0.0,
+    "tool_error_count_n": 60,
+    "tool_error_count_sum": 0,
+    "input_tokens_mean": 90291.98305084746,
+    "input_tokens_n": 59,
+    "input_tokens_sum": null,
+    "output_tokens_mean": 341.52542372881356,
+    "output_tokens_n": 59,
+    "output_tokens_sum": null,
+    "reasoning_tokens_mean": 0.0,
+    "reasoning_tokens_n": 59,
+    "reasoning_tokens_sum": null
+   },
+   {
+    "reasoning_effort": "high",
+    "runs": 60,
+    "success": 60,
+    "success_rate": 1.0,
+    "duration_seconds_mean": 66.2670054699988,
+    "duration_seconds_n": 60,
+    "duration_seconds_sum": 3976.0203281999275,
+    "environment_steps_mean": 7.283333333333333,
+    "environment_steps_n": 60,
+    "environment_steps_sum": 437,
+    "tool_call_count_mean": 8.283333333333333,
+    "tool_call_count_n": 60,
+    "tool_call_count_sum": 497,
+    "invalid_action_count_mean": 0.0,
+    "invalid_action_count_n": 60,
+    "invalid_action_count_sum": 0,
+    "repeated_action_count_mean": 0.5666666666666667,
+    "repeated_action_count_n": 60,
+    "repeated_action_count_sum": 34,
+    "tool_error_count_mean": 0.0,
+    "tool_error_count_n": 60,
+    "tool_error_count_sum": 0,
+    "input_tokens_mean": 97406.46666666666,
+    "input_tokens_n": 60,
+    "input_tokens_sum": 5844388,
+    "output_tokens_mean": 350.28333333333336,
+    "output_tokens_n": 60,
+    "output_tokens_sum": 21017,
+    "reasoning_tokens_mean": 2.65,
+    "reasoning_tokens_n": 60,
+    "reasoning_tokens_sum": 159
+   },
+   {
+    "reasoning_effort": "max",
+    "runs": 60,
+    "success": 60,
+    "success_rate": 1.0,
+    "duration_seconds_mean": 62.46735829500006,
+    "duration_seconds_n": 60,
+    "duration_seconds_sum": 3748.0414977000037,
+    "environment_steps_mean": 7.5,
+    "environment_steps_n": 60,
+    "environment_steps_sum": 450,
+    "tool_call_count_mean": 8.5,
+    "tool_call_count_n": 60,
+    "tool_call_count_sum": 510,
+    "invalid_action_count_mean": 0.0,
+    "invalid_action_count_n": 60,
+    "invalid_action_count_sum": 0,
+    "repeated_action_count_mean": 0.6,
+    "repeated_action_count_n": 60,
+    "repeated_action_count_sum": 36,
+    "tool_error_count_mean": 0.0,
+    "tool_error_count_n": 60,
+    "tool_error_count_sum": 0,
+    "input_tokens_mean": 97833.0,
+    "input_tokens_n": 60,
+    "input_tokens_sum": 5869980,
+    "output_tokens_mean": 376.8,
+    "output_tokens_n": 60,
+    "output_tokens_sum": 22608,
+    "reasoning_tokens_mean": 15.483333333333333,
+    "reasoning_tokens_n": 60,
+    "reasoning_tokens_sum": 929
+   }
+  ],
+  "high": {
+   "reasoning_effort": "high",
+   "runs": 60,
+   "success": 60,
+   "success_rate": 1.0,
+   "duration_seconds_mean": 66.2670054699988,
+   "duration_seconds_n": 60,
+   "duration_seconds_sum": 3976.0203281999275,
+   "environment_steps_mean": 7.283333333333333,
+   "environment_steps_n": 60,
+   "environment_steps_sum": 437,
+   "tool_call_count_mean": 8.283333333333333,
+   "tool_call_count_n": 60,
+   "tool_call_count_sum": 497,
+   "invalid_action_count_mean": 0.0,
+   "invalid_action_count_n": 60,
+   "invalid_action_count_sum": 0,
+   "repeated_action_count_mean": 0.5666666666666667,
+   "repeated_action_count_n": 60,
+   "repeated_action_count_sum": 34,
+   "tool_error_count_mean": 0.0,
+   "tool_error_count_n": 60,
+   "tool_error_count_sum": 0,
+   "input_tokens_mean": 97406.46666666666,
+   "input_tokens_n": 60,
+   "input_tokens_sum": 5844388,
+   "output_tokens_mean": 350.28333333333336,
+   "output_tokens_n": 60,
+   "output_tokens_sum": 21017,
+   "reasoning_tokens_mean": 2.65,
+   "reasoning_tokens_n": 60,
+   "reasoning_tokens_sum": 159
+  },
+  "per_task": {
+   "AW000": {
+    "success": true,
+    "duration": 94.04473639999924,
+    "steps": 16,
+    "tool_calls": 17,
+    "output_tokens": 526
+   },
+   "AW001": {
+    "success": true,
+    "duration": 59.0392439999996,
+    "steps": 6,
+    "tool_calls": 7,
+    "output_tokens": 217
+   },
+   "AW002": {
+    "success": true,
+    "duration": 42.669948299997486,
+    "steps": 5,
+    "tool_calls": 6,
+    "output_tokens": 254
+   },
+   "AW003": {
+    "success": true,
+    "duration": 50.7205615999992,
+    "steps": 6,
+    "tool_calls": 7,
+    "output_tokens": 284
+   },
+   "AW004": {
+    "success": true,
+    "duration": 93.03374650000478,
+    "steps": 14,
+    "tool_calls": 15,
+    "output_tokens": 475
+   },
+   "AW005": {
+    "success": true,
+    "duration": 53.47999130000244,
+    "steps": 7,
+    "tool_calls": 8,
+    "output_tokens": 282
+   },
+   "AW006": {
+    "success": true,
+    "duration": 51.13535499999125,
+    "steps": 7,
+    "tool_calls": 8,
+    "output_tokens": 273
+   },
+   "AW007": {
+    "success": true,
+    "duration": 50.56856429998879,
+    "steps": 6,
+    "tool_calls": 7,
+    "output_tokens": 227
+   },
+   "AW008": {
+    "success": true,
+    "duration": 40.792378400001326,
+    "steps": 6,
+    "tool_calls": 7,
+    "output_tokens": 229
+   },
+   "AW009": {
+    "success": true,
+    "duration": 59.854665599996224,
+    "steps": 7,
+    "tool_calls": 8,
+    "output_tokens": 284
+   },
+   "AW010": {
+    "success": true,
+    "duration": 90.61796269999468,
+    "steps": 16,
+    "tool_calls": 17,
+    "output_tokens": 534
+   },
+   "AW011": {
+    "success": true,
+    "duration": 55.76759750000201,
+    "steps": 8,
+    "tool_calls": 9,
+    "output_tokens": 316
+   },
+   "AW012": {
+    "success": true,
+    "duration": 31.766388500022003,
+    "steps": 4,
+    "tool_calls": 5,
+    "output_tokens": 188
+   },
+   "AW013": {
+    "success": true,
+    "duration": 41.338102800014894,
+    "steps": 4,
+    "tool_calls": 5,
+    "output_tokens": 189
+   },
+   "AW014": {
+    "success": true,
+    "duration": 46.7364993999945,
+    "steps": 7,
+    "tool_calls": 8,
+    "output_tokens": 277
+   },
+   "AW015": {
+    "success": true,
+    "duration": 126.41185940001742,
+    "steps": 5,
+    "tool_calls": 6,
+    "output_tokens": 218
+   },
+   "AW016": {
+    "success": true,
+    "duration": 109.22872320000897,
+    "steps": 5,
+    "tool_calls": 6,
+    "output_tokens": 222
+   },
+   "AW017": {
+    "success": true,
+    "duration": 32.28554419998545,
+    "steps": 5,
+    "tool_calls": 6,
+    "output_tokens": 193
+   },
+   "AW018": {
+    "success": true,
+    "duration": 41.653733299986925,
+    "steps": 6,
+    "tool_calls": 7,
+    "output_tokens": 216
+   },
+   "AW019": {
+    "success": true,
+    "duration": 46.63471990000107,
+    "steps": 8,
+    "tool_calls": 9,
+    "output_tokens": 278
+   },
+   "AW020": {
+    "success": true,
+    "duration": 32.50335279997671,
+    "steps": 5,
+    "tool_calls": 6,
+    "output_tokens": 197
+   },
+   "AW021": {
+    "success": true,
+    "duration": 35.28548900000169,
+    "steps": 5,
+    "tool_calls": 6,
+    "output_tokens": 187
+   },
+   "AW022": {
+    "success": true,
+    "duration": 33.67855069998768,
+    "steps": 3,
+    "tool_calls": 4,
+    "output_tokens": 131
+   },
+   "AW023": {
+    "success": true,
+    "duration": 28.099654199992074,
+    "steps": 3,
+    "tool_calls": 4,
+    "output_tokens": 165
+   },
+   "AW024": {
+    "success": true,
+    "duration": 103.32139220001409,
+    "steps": 5,
+    "tool_calls": 6,
+    "output_tokens": 224
+   },
+   "AW025": {
+    "success": true,
+    "duration": 59.41535429999931,
+    "steps": 3,
+    "tool_calls": 4,
+    "output_tokens": 167
+   },
+   "AW026": {
+    "success": true,
+    "duration": 109.02552830000059,
+    "steps": 5,
+    "tool_calls": 6,
+    "output_tokens": 217
+   },
+   "AW027": {
+    "success": true,
+    "duration": 28.63256339999498,
+    "steps": 3,
+    "tool_calls": 4,
+    "output_tokens": 166
+   },
+   "AW028": {
+    "success": true,
+    "duration": 101.91311369999312,
+    "steps": 7,
+    "tool_calls": 8,
+    "output_tokens": 295
+   },
+   "AW029": {
+    "success": true,
+    "duration": 75.81297830000403,
+    "steps": 6,
+    "tool_calls": 7,
+    "output_tokens": 252
+   },
+   "AW030": {
+    "success": true,
+    "duration": 50.284998799994355,
+    "steps": 8,
+    "tool_calls": 9,
+    "output_tokens": 312
+   },
+   "AW031": {
+    "success": true,
+    "duration": 48.59044219998759,
+    "steps": 7,
+    "tool_calls": 8,
+    "output_tokens": 290
+   },
+   "AW032": {
+    "success": true,
+    "duration": 64.79463739998755,
+    "steps": 7,
+    "tool_calls": 8,
+    "output_tokens": 287
+   },
+   "AW033": {
+    "success": true,
+    "duration": 34.150633499986725,
+    "steps": 4,
+    "tool_calls": 5,
+    "output_tokens": 201
+   },
+   "AW034": {
+    "success": true,
+    "duration": 49.71336860000156,
+    "steps": 8,
+    "tool_calls": 9,
+    "output_tokens": 311
+   },
+   "AW035": {
+    "success": true,
+    "duration": 53.31801680001081,
+    "steps": 8,
+    "tool_calls": 9,
+    "output_tokens": 320
+   },
+   "AW036": {
+    "success": true,
+    "duration": 53.08367230001022,
+    "steps": 8,
+    "tool_calls": 9,
+    "output_tokens": 305
+   },
+   "AW037": {
+    "success": true,
+    "duration": 33.97404720002669,
+    "steps": 4,
+    "tool_calls": 5,
+    "output_tokens": 188
+   },
+   "AW038": {
+    "success": true,
+    "duration": 49.50459959998261,
+    "steps": 7,
+    "tool_calls": 8,
+    "output_tokens": 278
+   },
+   "AW039": {
+    "success": true,
+    "duration": 50.56569180000224,
+    "steps": 8,
+    "tool_calls": 9,
+    "output_tokens": 306
+   },
+   "AW040": {
+    "success": true,
+    "duration": 59.405059999990044,
+    "steps": 8,
+    "tool_calls": 9,
+    "output_tokens": 304
+   },
+   "AW041": {
+    "success": true,
+    "duration": 65.93099320001784,
+    "steps": 11,
+    "tool_calls": 12,
+    "output_tokens": 388
+   },
+   "AW042": {
+    "success": true,
+    "duration": 60.81181529999594,
+    "steps": 10,
+    "tool_calls": 11,
+    "output_tokens": 366
+   },
+   "AW043": {
+    "success": true,
+    "duration": 128.93739529998857,
+    "steps": 10,
+    "tool_calls": 11,
+    "output_tokens": 357
+   },
+   "AW044": {
+    "success": true,
+    "duration": 261.0641768000205,
+    "steps": 8,
+    "tool_calls": 9,
+    "output_tokens": 304
+   },
+   "AW045": {
+    "success": true,
+    "duration": 158.44519930001115,
+    "steps": 8,
+    "tool_calls": 9,
+    "output_tokens": 312
+   },
+   "AW046": {
+    "success": true,
+    "duration": 56.177131499978714,
+    "steps": 6,
+    "tool_calls": 7,
+    "output_tokens": 255
+   },
+   "AW047": {
+    "success": true,
+    "duration": 47.885449499997776,
+    "steps": 6,
+    "tool_calls": 7,
+    "output_tokens": 590
+   },
+   "AW048": {
+    "success": true,
+    "duration": 42.15585660000215,
+    "steps": 6,
+    "tool_calls": 7,
+    "output_tokens": 231
+   },
+   "AW049": {
+    "success": true,
+    "duration": 40.21102950000204,
+    "steps": 6,
+    "tool_calls": 7,
+    "output_tokens": 226
+   },
+   "AW050": {
+    "success": true,
+    "duration": 62.06291979999514,
+    "steps": 7,
+    "tool_calls": 8,
+    "output_tokens": 644
+   },
+   "AW051": {
+    "success": true,
+    "duration": 61.62610530000529,
+    "steps": 8,
+    "tool_calls": 9,
+    "output_tokens": 725
+   },
+   "AW052": {
+    "success": true,
+    "duration": 82.51990299997851,
+    "steps": 10,
+    "tool_calls": 11,
+    "output_tokens": 920
+   },
+   "AW053": {
+    "success": true,
+    "duration": 77.42493259999901,
+    "steps": 11,
+    "tool_calls": 12,
+    "output_tokens": 1101
+   },
+   "AW054": {
+    "success": true,
+    "duration": 71.37830529999337,
+    "steps": 10,
+    "tool_calls": 11,
+    "output_tokens": 935
+   },
+   "AW055": {
+    "success": true,
+    "duration": 60.81545669998741,
+    "steps": 9,
+    "tool_calls": 10,
+    "output_tokens": 332
+   },
+   "AW056": {
+    "success": true,
+    "duration": 67.64565520000178,
+    "steps": 11,
+    "tool_calls": 12,
+    "output_tokens": 398
+   },
+   "AW057": {
+    "success": true,
+    "duration": 89.89206959999865,
+    "steps": 10,
+    "tool_calls": 11,
+    "output_tokens": 881
+   },
+   "AW058": {
+    "success": true,
+    "duration": 97.21957180000027,
+    "steps": 10,
+    "tool_calls": 11,
+    "output_tokens": 901
+   },
+   "AW059": {
+    "success": true,
+    "duration": 70.9628945000004,
+    "steps": 10,
+    "tool_calls": 11,
+    "output_tokens": 366
+   }
   }
  }
 };

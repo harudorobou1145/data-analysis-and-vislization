@@ -494,6 +494,7 @@ def main():
         "flash": flash,
         "model_compare": model_compare,
         "repairs": repairs,
+        "solalfworld": solalf,
     }
 
     header = (
