@@ -319,6 +319,24 @@ def build_solalfworld(root):
     return {"summary": summary, "high": high, "per_task": per_task}
 
 
+def build_repairs(root):
+    root = Path(root)
+    summary = json.loads((root / "data" / "repair_summary.json").read_text(encoding="utf-8"))
+    rounds = json.loads((root / "data" / "repair_rounds.json").read_text(encoding="utf-8"))
+    norm = []
+    for r in rounds:
+        norm.append({
+            "run_id": r.get("run_id"), "task_id": r.get("task_id"), "model_group": r.get("model_group"),
+            "chain_id": r.get("chain_id"), "repair_round": r.get("repair_round"),
+            "task_success": r.get("task_success"), "base_status": r.get("base_status"), "plus_status": r.get("plus_status"),
+            "execution_status": r.get("execution_status"),
+            "duration_seconds": r.get("duration_seconds"), "total_tokens": r.get("total_tokens"),
+            "output_tokens": r.get("output_tokens"), "input_tokens": r.get("input_tokens"),
+            "tool_call_count": r.get("tool_call_count"), "test_execution_count": r.get("test_execution_count"),
+        })
+    return {"summary": summary, "rounds": norm}
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("bundle", help="完整交接包根目录")
@@ -327,6 +345,7 @@ def main():
     ap.add_argument("--wildbench", default=None, help="WildBench 四组实验包根目录（可选）")
     ap.add_argument("--flash", default=None, help="DeepSeek Flash 补充实验包根目录（可选）")
     ap.add_argument("--solalfworld", default=None, help="Sol ALFWorld 补充实验包根目录（可选）")
+    ap.add_argument("--repairs", default=None, help="Luna vs DeepSeek 修复实验包根目录（可选）")
     ap.add_argument("-o", "--output", default="dashboard/data.js")
     a = ap.parse_args()
     b = Path(a.bundle)
@@ -347,6 +366,7 @@ def main():
     wildbench = build_wildbench(a.wildbench) if a.wildbench else None
     flash = build_flash(a.flash) if a.flash else None
     solalf = build_solalfworld(a.solalfworld) if a.solalfworld else None
+    repairs = build_repairs(a.repairs) if a.repairs else None
 
     # 把 DeepSeek Flash 补充合并进两个主观实验
     if wildbench and flash:
@@ -458,6 +478,7 @@ def main():
         "wildbench": wildbench,
         "flash": flash,
         "model_compare": model_compare,
+        "repairs": repairs,
     }
 
     header = (

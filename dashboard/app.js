@@ -53,10 +53,12 @@
   var FLASH_LABEL = { sol_low: "Sol Low", sol_high: "Sol High", sol_ultra: "Sol Ultra", luna_high: "Luna High", deepseek_high: "DeepSeek" };
   var MODEL_ORDER = ["sol", "luna", "deepseek"];
   var MODEL_LABEL = { sol: "Sol", luna: "Luna", deepseek: "DeepSeek" };
+  var REPAIR_TASKS = ["EP015", "EP032", "EP099", "EP132", "EP047", "EP116", "EP145"];
+  var REPAIR_MODEL_LABEL = { luna: "Luna", deepseek: "DeepSeek" };
 
   var state = { exp: "model", metric: "status", onlyFailed: false, compare: "mh", task: null, run: null, tab: "tab-primary" };
   var charts = {};
-  var renderedRepair = false, renderedSubj = false, renderedLunads = false, renderedWb = false, renderedFlash = false;
+  var renderedRepair = false, renderedSubj = false, renderedLunads = false, renderedWb = false, renderedFlash = false, renderedRepairs = false;
   var pairedByTask = {};
 
   function isDark() { return document.documentElement.getAttribute("data-theme") === "dark"; }
@@ -115,6 +117,7 @@
     if (renderedLunads) renderLunads();
     if (renderedWb) renderWb();
     if (renderedFlash) renderFlash();
+    if (renderedRepairs) renderRepairs();
     renderModelCompare();
   }
 
@@ -945,6 +948,81 @@
     ["chartModelCodeSucc", "chartModelCodeTime", "chartModelCodeOut", "chartModelAlfSucc", "chartModelAlfSteps", "chartModelSubjScore", "chartModelWbScore"].forEach(function (id) { if (charts[id]) charts[id].resize(); });
   }
 
+  // ---------- 修复（Luna vs DeepSeek） ----------
+  function repairSummaryOf(model, task) {
+    return DATA.repairs.summary.find(function (s) { return s.model_group === model && s.task_id === task; }) || null;
+  }
+  function repairRoundsOf(model, task) {
+    return DATA.repairs.rounds.filter(function (r) { return r.model_group === model && r.task_id === task; });
+  }
+  function renderRepairs() {
+    renderRepairsKpi();
+    renderRepairRepGrid();
+    document.getElementById("repairRepLegend").innerHTML = [
+      '<span class="item"><span class="sw" style="background:' + STATUS.pass.color + '"></span>通过</span>',
+      '<span class="item"><span class="sw" style="background:' + STATUS.fail.color + '"></span>未通过</span>',
+      '<span class="item"><span class="sw" style="background:' + STATUS.interrupted.color + '"></span>未完整结束</span>',
+      '<span class="item">◆ 首次通过</span>',
+    ].join("");
+  }
+  function renderRepairsKpi() {
+    var box = document.getElementById("repairsKpi");
+    box.innerHTML = "";
+    [["Luna 修复成功率", "luna"], ["DeepSeek 修复成功率", "deepseek"]].forEach(function (d) {
+      var chains = DATA.repairs.summary.filter(function (s) { return s.model_group === d[1]; });
+      var solved = chains.filter(function (s) { return s.status === "solved"; }).length;
+      box.appendChild(statTile(d[0], solved + "/" + chains.length, (solved / chains.length * 100).toFixed(0) + "% 修复"));
+    });
+  }
+  function renderRepairRepGrid() {
+    var grid = document.getElementById("repairRepGrid");
+    grid.innerHTML = "";
+    REPAIR_TASKS.forEach(function (tid) {
+      var card = document.createElement("div"); card.className = "card repair-panel";
+      var h = document.createElement("h3"); h.textContent = tid + " 修复轨迹";
+      var src = document.createElement("p"); src.className = "src"; src.textContent = "横轴=追加轮次（0=原失败）；圆点=结果，菱形=首次通过";
+      var div = document.createElement("div"); div.className = "chart"; div.id = "chartRepairRep_" + tid; div.style.height = "220px";
+      card.appendChild(h); card.appendChild(src); card.appendChild(div);
+      grid.appendChild(card);
+      renderRepairRepPanel(tid);
+    });
+  }
+  function renderRepairRepPanel(tid) {
+    var p = pal();
+    var id = "chartRepairRep_" + tid;
+    var models = ["luna", "deepseek"].filter(function (m) { return repairSummaryOf(m, tid) !== null; });
+    var series = [];
+    models.forEach(function (m, li) {
+      var grp = repairSummaryOf(m, tid);
+      var pts = [{ value: [0, li], round: 0, outcome: "fail", first: false, model: m }];
+      repairRoundsOf(m, tid).forEach(function (r) {
+        var rd = r.repair_round == null ? 0 : r.repair_round;
+        var out = r.task_success === true ? "pass" : (r.task_success === false ? "fail" : "incomplete");
+        var first = grp && grp.first_success_additional_round === rd;
+        pts.push({ value: [rd, li], round: rd, outcome: out, first: first, model: m, run_id: r.run_id });
+      });
+      series.push({
+        name: REPAIR_MODEL_LABEL[m], type: "scatter", data: pts, symbolSize: 12,
+        itemStyle: { color: function (pr) { return pr.data.outcome === "pass" ? STATUS.pass.color : (pr.data.outcome === "incomplete" ? STATUS.interrupted.color : STATUS.fail.color); }, opacity: 0.9, borderColor: p.surface, borderWidth: 1.5 },
+        symbol: function (v, pr) { return pr.data.first ? "diamond" : "circle"; },
+      });
+    });
+    chart(id).setOption({
+      backgroundColor: "transparent", textStyle: { color: p.text2 },
+      tooltip: { trigger: "item", formatter: function (pr) { var d = pr.data; var res = d.outcome === "pass" ? "通过" : (d.outcome === "incomplete" ? "未完整结束" : "未通过"); return "<strong>" + REPAIR_MODEL_LABEL[d.model] + " · " + tid + "</strong><br/>追加轮次 " + d.round + "<br/>结果: " + res + (d.first ? "（首次通过）" : ""); } },
+      grid: { left: 8, right: 16, top: 16, bottom: 24, containLabel: true },
+      xAxis: Object.assign(axisValue(p), { minInterval: 1, name: "追加轮次", nameTextStyle: { color: p.muted } }),
+      yAxis: Object.assign(axisCategory(p), { data: models.map(function (m) { return REPAIR_MODEL_LABEL[m]; }) }),
+      series: series,
+    }, true);
+    var c = chart(id);
+    c.off("click");
+    c.on("click", function (pr) { if (pr.data) { state.task = tid; state.run = pr.data.run_id || null; onSelect(); } });
+  }
+  function resizeRepairs() {
+    REPAIR_TASKS.forEach(function (tid) { var id = "chartRepairRep_" + tid; if (charts[id]) charts[id].resize(); });
+  }
+
   // ---------- 主题 / 标签 / 事件 ----------
   function initTheme() {
     var saved = localStorage.getItem("codedepth-theme");
@@ -968,7 +1046,7 @@
   document.getElementById("onlyFailed").addEventListener("change", function (e) { state.onlyFailed = e.target.checked; renderMatrix(); });
   document.getElementById("diffCompare").addEventListener("change", function (e) { state.compare = e.target.value; renderDiffScatter(); });
 
-  var EXP_IDS = { model: "exp-model", coding: "exp-coding", lunads: "exp-lunads", subjective: "exp-subjective", wildbench: "exp-wildbench" };
+  var EXP_IDS = { model: "exp-model", coding: "exp-coding", lunads: "exp-lunads", repairs: "exp-repairs", subjective: "exp-subjective", wildbench: "exp-wildbench" };
   document.querySelectorAll(".exp-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
       document.querySelectorAll(".exp-btn").forEach(function (x) { x.classList.remove("active"); });
@@ -988,6 +1066,10 @@
       if (state.exp === "wildbench") {
         if (!renderedWb) { renderedWb = true; renderWb(); }
         else setTimeout(resizeWb, 0);
+      }
+      if (state.exp === "repairs") {
+        if (!renderedRepairs) { renderedRepairs = true; renderRepairs(); }
+        else setTimeout(resizeRepairs, 0);
       }
       if (state.exp === "model") setTimeout(resizeModel, 0);
       if (state.exp === "coding") setTimeout(function () { resizePanel(state.tab); }, 0);
