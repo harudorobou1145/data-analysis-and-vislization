@@ -1,0 +1,117 @@
+{
+  "experiment_id": "subjective_luna_high_60_20261102",
+  "run_id": "writing_18__high__r1",
+  "task_id": "writing_18",
+  "task_type": "writing",
+  "effort": "high",
+  "repeat_id": 1,
+  "prompt_hash": "713cd8c1ec7d33f0dd8a35550f4b4571403430c11f08636061da1c1179c4495a",
+  "spec_hash": "bc4a598073ceafe472d0aeadcc605ff1a5a4a087ae731df5d2514c29edc1a366",
+  "attempt_id": "writing_18__high__r1__a01",
+  "attempt_number": 1,
+  "started_at": "2026-11-02T06:59:18.634413+00:00",
+  "status": "error",
+  "request_id": "7d3b4232-3690-4ea1-a988-82be175dd4eb",
+  "request_kind": "generation",
+  "parent_run_id": "writing_18__high__r1",
+  "model_requested": "gpt-6-luna",
+  "effort_requested": "high",
+  "prior_messages": 0,
+  "system_hash": "fa4d012e57fdef0fe321d25f36b7236e7040615b599b7af2347cfcc400d7ef59",
+  "prompt": "Role and task instructions:\nYou are a helpful, and informative assistant.\n\nUser request:\nDemystify the potential of gene editing using CRISPR technology, by portraying it as a discussion in a wizard's council meeting.",
+  "answer": "",
+  "ttft_seconds": null,
+  "tpot_seconds": null,
+  "provider_transport": "python_https_relay",
+  "codex_client": "subjective_formal/0.166.0-alpha.5.1 (Windows 10.0.26200; x86_64) vscode/1.144.0 (subjective_formal; 1.0)",
+  "thread_id": "01a19b0e-2e3c-7093-92a7-93cf453be456",
+  "model_configured": "gpt-6-luna",
+  "effort_configured": "high",
+  "instruction_sources": [],
+  "turn_id": "01a19b0e-2e9a-7ae2-aad0-82c6a1fb7673",
+  "client_elapsed_seconds": 1.71803,
+  "token_usage": null,
+  "tool_events": [],
+  "model_reroutes": [],
+  "observed_user_message_count": 1,
+  "runtime_warnings": [],
+  "notification_counts": {
+    "remoteControl/status/changed": 1,
+    "thread/started": 1,
+    "thread/status/changed": 2,
+    "turn/started": 1,
+    "item/started": 1,
+    "item/completed": 1,
+    "error": 1
+  },
+  "runtime_errors": [
+    {
+      "observed_seconds": 1.717868,
+      "willRetry": false,
+      "message": "unexpected status 503 Service Unavailable: Service temporarily unavailable, url: [ENDPOINT] request id: fa12d30d-e464-416b-a5d3-c8d5fee0456f",
+      "code": {
+        "httpConnectionFailed": {
+          "httpStatusCode": 503
+        }
+      },
+      "error": {
+        "message": "unexpected status 503 Service Unavailable: Service temporarily unavailable, url: [ENDPOINT] request id: fa12d30d-e464-416b-a5d3-c8d5fee0456f",
+        "codexErrorInfo": {
+          "httpConnectionFailed": {
+            "httpStatusCode": 503
+          }
+        },
+        "additionalDetails": null,
+        "misalignment": null
+      },
+      "params": {
+        "error": {
+          "message": "unexpected status 503 Service Unavailable: Service temporarily unavailable, url: [ENDPOINT] request id: fa12d30d-e464-416b-a5d3-c8d5fee0456f",
+          "codexErrorInfo": {
+            "httpConnectionFailed": {
+              "httpStatusCode": 503
+            }
+          },
+          "additionalDetails": null,
+          "misalignment": null
+        },
+        "willRetry": false,
+        "threadId": "01a19b0e-2e3c-7093-92a7-93cf453be456",
+        "turnId": "01a19b0e-2e9a-7ae2-aad0-82c6a1fb7673"
+      }
+    }
+  ],
+  "runtime_reported_model": null,
+  "runtime_reported_effort": null,
+  "client_first_answer_delta_seconds": null,
+  "answer_stream_span_seconds": null,
+  "partial_answer": "",
+  "stderr_tail": [],
+  "https_relay": {
+    "transport": "codex_loopback_python_verified_https_v1",
+    "bind_scope": "loopback_only",
+    "upstream_tls_verified": true,
+    "redirects_followed": false,
+    "requests": [
+      {
+        "sequence": 1,
+        "request_bytes": 30973,
+        "request_sha256": "c35f9df63ced18e5e05f65f9696e4e3940b94b0d4c47668c389b3a41e5692580",
+        "response_bytes": 74,
+        "response_sha256": "431c90b418e751fbeba9f41c2f9246ca70fbb194510618789ff1e161e3a17c3a",
+        "upstream_status": 503,
+        "completed": true,
+        "duration_seconds": 1.65494
+      }
+    ]
+  },
+  "error": "unexpected status 503 Service Unavailable: Service temporarily unavailable, url: [ENDPOINT] request id: fa12d30d-e464-416b-a5d3-c8d5fee0456f",
+  "error_type": "ProviderConnectionError",
+  "retryable": false,
+  "batch_fatal": true,
+  "error_category": "provider_connection",
+  "finished_at": "2026-11-02T06:59:22.184553+00:00",
+  "wall_seconds": 3.548729,
+  "answer_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "selected_attempt_id": "writing_18__high__r1__a01"
+}

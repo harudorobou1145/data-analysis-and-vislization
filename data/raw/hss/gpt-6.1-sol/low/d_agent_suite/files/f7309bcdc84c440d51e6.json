@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6a8a70c429b7eb6658839d6c__sol_low",
+  "task_id": "6a8a70c429b7eb6658839d6c",
+  "condition": "sol_low",
+  "request_kind": "generation",
+  "attempt_id": "6a8a70c429b7eb6658839d6c__sol_low__a01",
+  "started_at": "2026-11-06T08:30:07.525489+00:00",
+  "status": "completed",
+  "prompt_hash": "899a8afe9281843cd22f86f7e6b142a18a47629f632284a90a1c2dc5828bd3b1",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "005a4b13-e7ac-48a1-92f4-521eba0cebf5",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6a8a70c429b7eb6658839d6c__sol_low",
+      "attempt_id": "6a8a70c429b7eb6658839d6c__sol_low__a01",
+      "request_kind": "generation",
+      "task_id": "6a8a70c429b7eb6658839d6c"
+    },
+    "started_at": "2026-11-06T08:30:07.526492+00:00",
+    "model_requested": "gpt-6.1-sol",
+    "effort_requested": "low",
+    "prompt": "If the stands were to suddenly collapse, which of the players on the field would the spectators in the stands fall on top of?",
+    "prompt_hash": "899a8afe9281843cd22f86f7e6b142a18a47629f632284a90a1c2dc5828bd3b1",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "The players closest to the stands, particularly those in the scrum near the sideline.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a8a70c429b7eb6658839d6c.png",
+        "sha256": "b9beefb6092745fac7c64c7cabb31a1f5369bb43a46a5b6a65c8c03fcd7a6189",
+        "bytes": 1279273
+      }
+    ],
+    "effort_ui_requested": "low",
+    "effort_wire_expected": "low",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Fast responses with lighter reasoning",
+    "thread_id": "01a1affa-bf0e-70c3-a6b4-677f5c52f608",
+    "model_configured": "gpt-6.1-sol",
+    "effort_configured": "low",
+    "instruction_sources": [],
+    "turn_id": "01a1affa-bf5c-7300-9b79-0912e7f1cbf9",
+    "client_elapsed_seconds": 5.732703,
+    "turn_status": "completed",
+    "elapsed_seconds": 5.695,
+    "wire_efforts_observed": [
+      "low"
+    ],
+    "token_usage": {
+      "totalTokens": 11152,
+      "inputTokens": 11131,
+      "cachedInputTokens": 4096,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 21,
+      "reasoningOutputTokens": 0
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 5.545734,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 2,
+      "item/completed": 2,
+      "item/agentMessage/delta": 17,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1affa-bf88-75f2-b9e0-c83d47b1d256",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "If the stands were to suddenly collapse, which of the players on the field would the spectators in the stands fall on top of?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a8a70c429b7eb6658839d6c.png"
+          }
+        ],
+        "startedAtMs": 1793953808269,
+        "completedAtMs": 1793953808269
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_04ad15b05db85215016aed9014623487d19cddf40851d7ce7f",
+        "text": "The players closest to the stands, particularly those in the scrum near the sideline.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793953813749,
+        "completedAtMs": 1793953813803
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 1736850,
+          "request_sha256": "4ad7cbae5a31bd699d9345c44e037da94165d25c33c3cc508ca28482c8b1cbb8",
+          "response_bytes": 146599,
+          "response_sha256": "ee62e2142abd4086c376ba4f9c7ba700df03188b6093af595694f7fb978686ba",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 5.655602
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6.1-sol",
+        "reasoning": {
+          "effort": "low",
+          "context": "all_turns"
+        },
+        "request_sha256": "4ad7cbae5a31bd699d9345c44e037da94165d25c33c3cc508ca28482c8b1cbb8",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "231033ebb9dbd98233674f5dd9b0e6f650add7a620372285d9b3b76d07e60c74"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "b9beefb6092745fac7c64c7cabb31a1f5369bb43a46a5b6a65c8c03fcd7a6189",
+            "bytes": 1279273,
+            "width": 1023,
+            "height": 767,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:30:14.069170+00:00",
+    "total_client_seconds": 6.539147,
+    "answer_hash": "c43e9082bf51438edb40b9d43b0bb5e8ffa56c73fe23d20e62c19d5ad4750bb4"
+  },
+  "answer": "The players closest to the stands, particularly those in the scrum near the sideline.",
+  "answer_hash": "c43e9082bf51438edb40b9d43b0bb5e8ffa56c73fe23d20e62c19d5ad4750bb4",
+  "image_sha256": "b9beefb6092745fac7c64c7cabb31a1f5369bb43a46a5b6a65c8c03fcd7a6189",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "finished_at": "2026-11-06T08:30:14.069170+00:00"
+}

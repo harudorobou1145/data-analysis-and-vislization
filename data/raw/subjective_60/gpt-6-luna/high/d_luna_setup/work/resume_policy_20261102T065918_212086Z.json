@@ -1,0 +1,33 @@
+{
+  "created_at": "2026-11-02T06:59:18.212086+00:00",
+  "experiment_id": "subjective_luna_high_60_20261102",
+  "supervisor_pid": 25016,
+  "manifest_file_sha256": "fbc281a22ef665288657a5daed2eeedbaae72ed9b4cbe718be823d3ab06fcea9",
+  "policy_deviation": "Original policy permits manual restart only. This supervisor adds at most five automatic restarts, only after a fresh local-relay URLError with no upstream response. Frozen requests and scoring are unchanged.",
+  "initial_reason": {
+    "reason": null,
+    "halted": null,
+    "stage": null,
+    "updated_at": null
+  },
+  "cooldown_seconds": [
+    30,
+    60,
+    120,
+    240,
+    300
+  ],
+  "max_restarts": 5,
+  "attempts": [
+    {
+      "cycle": 0,
+      "started_at": "2026-11-02T06:59:18.215868+00:00",
+      "process_id": 17400,
+      "exit_code": 2,
+      "finished_at": "2026-11-02T06:59:22.462098+00:00"
+    }
+  ],
+  "status": "stopped",
+  "updated_at": "2026-11-02T06:59:22.465630+00:00",
+  "last_reason": "No fresh eligible local-relay connection failure; no automatic retry"
+}

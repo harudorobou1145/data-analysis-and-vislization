@@ -1,0 +1,550 @@
+{
+  "created_at": "2026-11-05T11:39:11.293116+00:00",
+  "experiment_id": "wildbench_20_four_conditions_20261105",
+  "manifest_hash": "ddc632da953d50dfd914cebbec0a323875a29b820c618efc462a6678a4ab2c0e",
+  "status": "partial",
+  "counts": {
+    "planned_answers": 160,
+    "completed_answers": 4,
+    "missing_answers": 156,
+    "planned_primary_scores": 160,
+    "completed_primary_scores": 3,
+    "missing_or_invalid_primary_scores": 157,
+    "planned_repeat_scores": 16,
+    "completed_repeat_scores": 0,
+    "missing_repeat_scores": 16
+  },
+  "groups": [
+    {
+      "condition_id": "sol_low",
+      "model": "gpt-6.1-sol",
+      "effort": "low",
+      "planned_answers": 40,
+      "completed_answers": 1,
+      "completed_primary_scores": 1,
+      "missing_answers": 39,
+      "missing_or_invalid_primary_scores": 39,
+      "complete_tasks": 0,
+      "planned_tasks": 20,
+      "mean_score_10": null,
+      "answer_level_mean_score_10": 8,
+      "mean_wb_score": null,
+      "full_score_answers": 0,
+      "full_score_rate": 0.0,
+      "score_distribution": [
+        {
+          "score_10": 8,
+          "answers": 1
+        }
+      ],
+      "timing": {
+        "elapsed_seconds": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 24.131,
+          "median": 24.131,
+          "minimum": 24.131,
+          "maximum": 24.131
+        },
+        "client_elapsed_seconds": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 24.214755,
+          "median": 24.214755,
+          "minimum": 24.214755,
+          "maximum": 24.214755
+        },
+        "wall_seconds": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 27.038959,
+          "median": 27.038959,
+          "minimum": 27.038959,
+          "maximum": 27.038959
+        },
+        "client_first_answer_delta_seconds": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 6.781633,
+          "median": 6.781633,
+          "minimum": 6.781633,
+          "maximum": 6.781633
+        },
+        "ttft_seconds": {
+          "non_null": 0,
+          "missing": 1,
+          "mean": null,
+          "median": null,
+          "minimum": null,
+          "maximum": null
+        },
+        "tpot_seconds": {
+          "non_null": 0,
+          "missing": 1,
+          "mean": null,
+          "median": null,
+          "minimum": null,
+          "maximum": null
+        }
+      },
+      "tokens": {
+        "inputTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 10387,
+          "median": 10387,
+          "minimum": 10387,
+          "maximum": 10387
+        },
+        "cachedInputTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 8448,
+          "median": 8448,
+          "minimum": 8448,
+          "maximum": 8448
+        },
+        "outputTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 605,
+          "median": 605,
+          "minimum": 605,
+          "maximum": 605
+        },
+        "reasoningOutputTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 65,
+          "median": 65,
+          "minimum": 65,
+          "maximum": 65
+        },
+        "totalTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 10992,
+          "median": 10992,
+          "minimum": 10992,
+          "maximum": 10992
+        }
+      },
+      "task_means": []
+    },
+    {
+      "condition_id": "sol_high",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "planned_answers": 40,
+      "completed_answers": 1,
+      "completed_primary_scores": 0,
+      "missing_answers": 39,
+      "missing_or_invalid_primary_scores": 40,
+      "complete_tasks": 0,
+      "planned_tasks": 20,
+      "mean_score_10": null,
+      "answer_level_mean_score_10": null,
+      "mean_wb_score": null,
+      "full_score_answers": 0,
+      "full_score_rate": null,
+      "score_distribution": [],
+      "timing": {
+        "elapsed_seconds": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 35.979,
+          "median": 35.979,
+          "minimum": 35.979,
+          "maximum": 35.979
+        },
+        "client_elapsed_seconds": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 36.07043,
+          "median": 36.07043,
+          "minimum": 36.07043,
+          "maximum": 36.07043
+        },
+        "wall_seconds": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 47.72837,
+          "median": 47.72837,
+          "minimum": 47.72837,
+          "maximum": 47.72837
+        },
+        "client_first_answer_delta_seconds": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 25.364168,
+          "median": 25.364168,
+          "minimum": 25.364168,
+          "maximum": 25.364168
+        },
+        "ttft_seconds": {
+          "non_null": 0,
+          "missing": 1,
+          "mean": null,
+          "median": null,
+          "minimum": null,
+          "maximum": null
+        },
+        "tpot_seconds": {
+          "non_null": 0,
+          "missing": 1,
+          "mean": null,
+          "median": null,
+          "minimum": null,
+          "maximum": null
+        }
+      },
+      "tokens": {
+        "inputTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 10389,
+          "median": 10389,
+          "minimum": 10389,
+          "maximum": 10389
+        },
+        "cachedInputTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 8448,
+          "median": 8448,
+          "minimum": 8448,
+          "maximum": 8448
+        },
+        "outputTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 939,
+          "median": 939,
+          "minimum": 939,
+          "maximum": 939
+        },
+        "reasoningOutputTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 508,
+          "median": 508,
+          "minimum": 508,
+          "maximum": 508
+        },
+        "totalTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 11328,
+          "median": 11328,
+          "minimum": 11328,
+          "maximum": 11328
+        }
+      },
+      "task_means": []
+    },
+    {
+      "condition_id": "sol_ultra",
+      "model": "gpt-6.1-sol",
+      "effort": "ultra",
+      "planned_answers": 40,
+      "completed_answers": 1,
+      "completed_primary_scores": 1,
+      "missing_answers": 39,
+      "missing_or_invalid_primary_scores": 39,
+      "complete_tasks": 0,
+      "planned_tasks": 20,
+      "mean_score_10": null,
+      "answer_level_mean_score_10": 9,
+      "mean_wb_score": null,
+      "full_score_answers": 0,
+      "full_score_rate": 0.0,
+      "score_distribution": [
+        {
+          "score_10": 9,
+          "answers": 1
+        }
+      ],
+      "timing": {
+        "elapsed_seconds": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 69.025,
+          "median": 69.025,
+          "minimum": 69.025,
+          "maximum": 69.025
+        },
+        "client_elapsed_seconds": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 69.115838,
+          "median": 69.115838,
+          "minimum": 69.115838,
+          "maximum": 69.115838
+        },
+        "wall_seconds": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 93.044006,
+          "median": 93.044006,
+          "minimum": 93.044006,
+          "maximum": 93.044006
+        },
+        "client_first_answer_delta_seconds": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 60.099577,
+          "median": 60.099577,
+          "minimum": 60.099577,
+          "maximum": 60.099577
+        },
+        "ttft_seconds": {
+          "non_null": 0,
+          "missing": 1,
+          "mean": null,
+          "median": null,
+          "minimum": null,
+          "maximum": null
+        },
+        "tpot_seconds": {
+          "non_null": 0,
+          "missing": 1,
+          "mean": null,
+          "median": null,
+          "minimum": null,
+          "maximum": null
+        }
+      },
+      "tokens": {
+        "inputTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 10435,
+          "median": 10435,
+          "minimum": 10435,
+          "maximum": 10435
+        },
+        "cachedInputTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 8448,
+          "median": 8448,
+          "minimum": 8448,
+          "maximum": 8448
+        },
+        "outputTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 1882,
+          "median": 1882,
+          "minimum": 1882,
+          "maximum": 1882
+        },
+        "reasoningOutputTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 1552,
+          "median": 1552,
+          "minimum": 1552,
+          "maximum": 1552
+        },
+        "totalTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 12317,
+          "median": 12317,
+          "minimum": 12317,
+          "maximum": 12317
+        }
+      },
+      "task_means": []
+    },
+    {
+      "condition_id": "luna_high",
+      "model": "gpt-6-luna",
+      "effort": "high",
+      "planned_answers": 40,
+      "completed_answers": 1,
+      "completed_primary_scores": 1,
+      "missing_answers": 39,
+      "missing_or_invalid_primary_scores": 39,
+      "complete_tasks": 0,
+      "planned_tasks": 20,
+      "mean_score_10": null,
+      "answer_level_mean_score_10": 5,
+      "mean_wb_score": null,
+      "full_score_answers": 0,
+      "full_score_rate": 0.0,
+      "score_distribution": [
+        {
+          "score_10": 5,
+          "answers": 1
+        }
+      ],
+      "timing": {
+        "elapsed_seconds": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 8.617,
+          "median": 8.617,
+          "minimum": 8.617,
+          "maximum": 8.617
+        },
+        "client_elapsed_seconds": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 8.702259,
+          "median": 8.702259,
+          "minimum": 8.702259,
+          "maximum": 8.702259
+        },
+        "wall_seconds": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 10.685351,
+          "median": 10.685351,
+          "minimum": 10.685351,
+          "maximum": 10.685351
+        },
+        "client_first_answer_delta_seconds": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 2.926271,
+          "median": 2.926271,
+          "minimum": 2.926271,
+          "maximum": 2.926271
+        },
+        "ttft_seconds": {
+          "non_null": 0,
+          "missing": 1,
+          "mean": null,
+          "median": null,
+          "minimum": null,
+          "maximum": null
+        },
+        "tpot_seconds": {
+          "non_null": 0,
+          "missing": 1,
+          "mean": null,
+          "median": null,
+          "minimum": null,
+          "maximum": null
+        }
+      },
+      "tokens": {
+        "inputTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 10551,
+          "median": 10551,
+          "minimum": 10551,
+          "maximum": 10551
+        },
+        "cachedInputTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 4224,
+          "median": 4224,
+          "minimum": 4224,
+          "maximum": 4224
+        },
+        "outputTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 288,
+          "median": 288,
+          "minimum": 288,
+          "maximum": 288
+        },
+        "reasoningOutputTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 0,
+          "median": 0,
+          "minimum": 0,
+          "maximum": 0
+        },
+        "totalTokens": {
+          "non_null": 1,
+          "missing": 0,
+          "mean": 10839,
+          "median": 10839,
+          "minimum": 10839,
+          "maximum": 10839
+        }
+      },
+      "task_means": []
+    }
+  ],
+  "paired_task_comparisons": [
+    {
+      "condition_id": "sol_low",
+      "reference_condition_id": "sol_high",
+      "paired_tasks": 0,
+      "mean_difference": null,
+      "higher": 0,
+      "tied": 0,
+      "lower": 0,
+      "task_pairs": []
+    },
+    {
+      "condition_id": "sol_ultra",
+      "reference_condition_id": "sol_high",
+      "paired_tasks": 0,
+      "mean_difference": null,
+      "higher": 0,
+      "tied": 0,
+      "lower": 0,
+      "task_pairs": []
+    },
+    {
+      "condition_id": "luna_high",
+      "reference_condition_id": "sol_high",
+      "paired_tasks": 0,
+      "mean_difference": null,
+      "higher": 0,
+      "tied": 0,
+      "lower": 0,
+      "task_pairs": []
+    }
+  ],
+  "repeat_judge_agreement": [
+    {
+      "condition_id": "sol_low",
+      "repeat_pairs": 0,
+      "mean_absolute_score_difference": null,
+      "maximum_absolute_score_difference": null,
+      "exact_agreement_rate": null
+    },
+    {
+      "condition_id": "sol_high",
+      "repeat_pairs": 0,
+      "mean_absolute_score_difference": null,
+      "maximum_absolute_score_difference": null,
+      "exact_agreement_rate": null
+    },
+    {
+      "condition_id": "sol_ultra",
+      "repeat_pairs": 0,
+      "mean_absolute_score_difference": null,
+      "maximum_absolute_score_difference": null,
+      "exact_agreement_rate": null
+    },
+    {
+      "condition_id": "luna_high",
+      "repeat_pairs": 0,
+      "mean_absolute_score_difference": null,
+      "maximum_absolute_score_difference": null,
+      "exact_agreement_rate": null
+    }
+  ],
+  "quality_unit": "Task mean across all planned independent generations; incomplete task means excluded",
+  "timing_unit": "Successful candidate requests only; judge timing excluded",
+  "limitations": [
+    "20 filtered tasks are a pilot, not an official WildBench leaderboard run.",
+    "Scores are 1 through 10 and WB-Score=(score-5)*2; subjective scores are not accuracy.",
+    "Different model-family judge preference and verbosity effects remain possible.",
+    "Configured model/effort may not be independently confirmed by upstream telemetry.",
+    "TTFT and TPOT remain null unless the runtime supplies their actual measurements.",
+    "First visible answer text wait is a separate observation, not TTFT."
+  ]
+}

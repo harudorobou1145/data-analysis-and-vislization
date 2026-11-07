@@ -1,0 +1,35 @@
+run_id,message_id,turn_id,role,content,timestamp,message_type
+exp_19e8875069ebff433a5eff50_ff211f9506a4,prompt,1,user,"Complete solution.py according to its function specification. Preserve its entry point and required imports. Return the complete source.
+
+
+TOOLS MODE: solution.py is in the isolated /workspace container. Use ONLY the codedepth_workspace MCP tools to read files, write code, and run Python/pytest checks. Tool file paths are relative POSIX paths such as solution.py. The host current directory is not your workspace. Preserve solution.py as the final full source file. You may create your own temporary tests; official hidden tests are unavailable. Do not merely return code: use write_file or a container command to save your changes, then explain your result.
+",,task_prompt
+exp_19e8875069ebff433a5eff50_ff211f9506a4,item_0,1,assistant,"I’ll read `solution.py`, implement its specification, and run focused checks before returning the full source.
+",2026-10-31T17:44:46.130547+00:00,agent_message
+exp_19e8875069ebff433a5eff50_ff211f9506a4,item_2,1,assistant,"The example treats a negative number’s leading digit as negative: `-12` has a score of `-1 + 2 = 1`. I’ll use that rule and preserve the original order when scores tie.
+",2026-10-31T17:44:56.506723+00:00,agent_message
+exp_19e8875069ebff433a5eff50_ff211f9506a4,item_7,1,assistant,"Saved `solution.py` with stable sorting by digit sum, treating negative numbers’ leading digits as negative. Passed 2 doctests, 4 edge cases, and 500 randomized checks.
+
+```python
+def order_by_points(nums):
+    """"""
+    Write a function which sorts the given list of integers
+    in ascending order according to the sum of their digits.
+    Note: if there are several items with similar sum of their digits,
+    order them based on their index in original list.
+
+    For example:
+    >>> order_by_points([1, 11, -1, -11, -12]) == [-1, -11, 1, -12, 11]
+    True
+    >>> order_by_points([]) == []
+    True
+    """"""
+    def digit_sum(number):
+        digits = str(abs(number))
+        total = sum(int(digit) for digit in digits)
+        if number < 0:
+            total -= 2 * int(digits[0])
+        return total
+
+    return sorted(nums, key=digit_sum)
+```",2026-10-31T17:45:25.109760+00:00,agent_message

@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6a8133db31a691b790551e08__luna_high",
+  "task_id": "6a8133db31a691b790551e08",
+  "condition": "luna_high",
+  "request_kind": "generation",
+  "attempt_id": "6a8133db31a691b790551e08__luna_high__a01",
+  "started_at": "2026-11-06T08:33:46.269006+00:00",
+  "status": "completed",
+  "prompt_hash": "d5664f9bc7ecdb9e7008e7b1549a1275c07add95e6f7d44c1b4515bb27a3a764",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "d628026b-334e-4c1c-afa9-35daab682564",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6a8133db31a691b790551e08__luna_high",
+      "attempt_id": "6a8133db31a691b790551e08__luna_high__a01",
+      "request_kind": "generation",
+      "task_id": "6a8133db31a691b790551e08"
+    },
+    "started_at": "2026-11-06T08:33:46.269509+00:00",
+    "model_requested": "gpt-6-luna",
+    "effort_requested": "high",
+    "prompt": "Focus on the white board. If it were to fall straight down vertically, would it land on the woman's head who's standing next to it, wearing black and grey?",
+    "prompt_hash": "d5664f9bc7ecdb9e7008e7b1549a1275c07add95e6f7d44c1b4515bb27a3a764",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "Yes. The woman in black and grey is standing directly in front of the whiteboard, so if it fell straight down, it would likely hit her head.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a8133db31a691b790551e08.png",
+        "sha256": "d047cfa84512f4130d947969fe29078e24a31b8c5043fb2e09980783c9901f3a",
+        "bytes": 555524
+      }
+    ],
+    "effort_ui_requested": "high",
+    "effort_wire_expected": "high",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Greater reasoning depth for complex problems",
+    "thread_id": "01a1affe-14db-7121-b687-2e104ae52d8d",
+    "model_configured": "gpt-6-luna",
+    "effort_configured": "high",
+    "instruction_sources": [],
+    "turn_id": "01a1affe-151c-7e30-bc3e-a981ae0a9d1e",
+    "client_elapsed_seconds": 3.76873,
+    "turn_status": "completed",
+    "elapsed_seconds": 3.741,
+    "wire_efforts_observed": [
+      "high"
+    ],
+    "token_usage": {
+      "totalTokens": 11257,
+      "inputTokens": 11221,
+      "cachedInputTokens": 8704,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 36,
+      "reasoningOutputTokens": 0
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 3.499613,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 2,
+      "item/completed": 2,
+      "item/agentMessage/delta": 32,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1affe-1537-76a0-8bf3-63cdb10e39a5",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "Focus on the white board. If it were to fall straight down vertically, would it land on the woman's head who's standing next to it, wearing black and grey?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a8133db31a691b790551e08.png"
+          }
+        ],
+        "startedAtMs": 1793954026808,
+        "completedAtMs": 1793954026808
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_022c10ab1885cbe7016aed90ece8b087d0a2a994528f610e53",
+        "text": "Yes. The woman in black and grey is standing directly in front of the whiteboard, so if it fell straight down, it would likely hit her head.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793954030268,
+        "completedAtMs": 1793954030478
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 771881,
+          "request_sha256": "da4b4c8d69c819a5f99fe3a3deec561e241797aa0f292f37236af0e332f9d508",
+          "response_bytes": 148720,
+          "response_sha256": "2e64dee3c6048fdcb88836c2d0af70d97329092711aa0106247d16a875a38860",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 3.718422
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6-luna",
+        "reasoning": {
+          "effort": "high",
+          "context": "all_turns"
+        },
+        "request_sha256": "da4b4c8d69c819a5f99fe3a3deec561e241797aa0f292f37236af0e332f9d508",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "0561cef9c830bcb3e621360ab3b30d7e4945a552a8f7e45d7dab8de77c08dabe"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "d047cfa84512f4130d947969fe29078e24a31b8c5043fb2e09980783c9901f3a",
+            "bytes": 555524,
+            "width": 1024,
+            "height": 683,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:33:50.723991+00:00",
+    "total_client_seconds": 4.452115,
+    "answer_hash": "e89b7f9d9d3e90df99c7c59b997288d5d7fb61f3285af0b76f766aef0b84e53d"
+  },
+  "answer": "Yes. The woman in black and grey is standing directly in front of the whiteboard, so if it fell straight down, it would likely hit her head.",
+  "answer_hash": "e89b7f9d9d3e90df99c7c59b997288d5d7fb61f3285af0b76f766aef0b84e53d",
+  "image_sha256": "d047cfa84512f4130d947969fe29078e24a31b8c5043fb2e09980783c9901f3a",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "finished_at": "2026-11-06T08:33:50.723991+00:00"
+}

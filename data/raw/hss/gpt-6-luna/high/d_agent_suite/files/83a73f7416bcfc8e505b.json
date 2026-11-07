@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6a9e06bce6e80e99fcf1f5de__luna_high",
+  "task_id": "6a9e06bce6e80e99fcf1f5de",
+  "condition": "luna_high",
+  "request_kind": "generation",
+  "attempt_id": "6a9e06bce6e80e99fcf1f5de__luna_high__a01",
+  "started_at": "2026-11-06T08:43:54.062464+00:00",
+  "status": "completed",
+  "prompt_hash": "08ff03a34e7cf1519423cad5f9488a8017390ff33d95326308021c4d257b1d73",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "beedd7ad-a74f-41c5-bf0a-462c8127b96c",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6a9e06bce6e80e99fcf1f5de__luna_high",
+      "attempt_id": "6a9e06bce6e80e99fcf1f5de__luna_high__a01",
+      "request_kind": "generation",
+      "task_id": "6a9e06bce6e80e99fcf1f5de"
+    },
+    "started_at": "2026-11-06T08:43:54.063514+00:00",
+    "model_requested": "gpt-6-luna",
+    "effort_requested": "high",
+    "prompt": "In the image scene, does it appear that all the visible cars are being checked at the same time, or does any one of them look more like it's not being attended to yet? What evidence supports your claim?",
+    "prompt_hash": "08ff03a34e7cf1519423cad5f9488a8017390ff33d95326308021c4d257b1d73",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "Not all the visible cars appear to be attended to at once. Two workers are visibly inspecting the foreground car, with its hood raised. A car behind it also has its hood open, but no one is clearly working on it, so it looks like it may be waiting to be checked.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a9e06bce6e80e99fcf1f5de.png",
+        "sha256": "481f472b97f733d067215b2d698bb275acba6b6574a63f27e182628c264ae14f",
+        "bytes": 963072
+      }
+    ],
+    "effort_ui_requested": "high",
+    "effort_wire_expected": "high",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Greater reasoning depth for complex problems",
+    "thread_id": "01a1b007-5b35-7f03-916e-738f3853c4d0",
+    "model_configured": "gpt-6-luna",
+    "effort_configured": "high",
+    "instruction_sources": [],
+    "turn_id": "01a1b007-5b7b-7521-a587-0c56401fdce3",
+    "client_elapsed_seconds": 5.437185,
+    "turn_status": "completed",
+    "elapsed_seconds": 5.409,
+    "wire_efforts_observed": [
+      "high"
+    ],
+    "token_usage": {
+      "totalTokens": 11300,
+      "inputTokens": 11238,
+      "cachedInputTokens": 8704,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 62,
+      "reasoningOutputTokens": 0
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 4.684969,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 2,
+      "item/completed": 2,
+      "item/agentMessage/delta": 58,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1b007-5b99-72e3-9abe-be5171093471",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "In the image scene, does it appear that all the visible cars are being checked at the same time, or does any one of them look more like it's not being attended to yet? What evidence supports your claim?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a9e06bce6e80e99fcf1f5de.png"
+          }
+        ],
+        "startedAtMs": 1793954634651,
+        "completedAtMs": 1793954634651
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_0466348908f14b6e016aed934dec8487d0811fc2e3bfb883d2",
+        "text": "Not all the visible cars appear to be attended to at once. Two workers are visibly inspecting the foreground car, with its hood raised. A car behind it also has its hood open, but no one is clearly working on it, so it looks like it may be waiting to be checked.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793954639292,
+        "completedAtMs": 1793954639996
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 1315324,
+          "request_sha256": "e79a7a473fd8db3c8675ec90a0b3a0e3cecc9e3fe521387c10c9de81895505db",
+          "response_bytes": 155968,
+          "response_sha256": "02a284ca6f3cd3b18300060523a58fe206c3207e101280fc50743c19ba48d3d6",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 5.383607
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6-luna",
+        "reasoning": {
+          "effort": "high",
+          "context": "all_turns"
+        },
+        "request_sha256": "e79a7a473fd8db3c8675ec90a0b3a0e3cecc9e3fe521387c10c9de81895505db",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "239be2e0041122ad6459d220f444851c6ed2822cd8c1905f52505702c05bcb1b"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "481f472b97f733d067215b2d698bb275acba6b6574a63f27e182628c264ae14f",
+            "bytes": 963072,
+            "width": 1024,
+            "height": 690,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:44:00.122274+00:00",
+    "total_client_seconds": 6.056686,
+    "answer_hash": "914197eda8f9cde0b9c384c10cc6e170df6b065cdc8c0a6d316b3edf5dc9de74"
+  },
+  "answer": "Not all the visible cars appear to be attended to at once. Two workers are visibly inspecting the foreground car, with its hood raised. A car behind it also has its hood open, but no one is clearly working on it, so it looks like it may be waiting to be checked.",
+  "answer_hash": "914197eda8f9cde0b9c384c10cc6e170df6b065cdc8c0a6d316b3edf5dc9de74",
+  "image_sha256": "481f472b97f733d067215b2d698bb275acba6b6574a63f27e182628c264ae14f",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "finished_at": "2026-11-06T08:44:00.123285+00:00"
+}

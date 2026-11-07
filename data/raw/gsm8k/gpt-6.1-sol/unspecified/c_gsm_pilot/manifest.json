@@ -1,0 +1,50 @@
+{
+  "model": "gpt-6.1-sol",
+  "efforts": [
+    "low",
+    "medium",
+    "high",
+    "xhigh",
+    "ultra"
+  ],
+  "seed": 20261030,
+  "sample_indices": [
+    450,
+    683,
+    843,
+    1116,
+    1147
+  ],
+  "planned_runs": 25,
+  "workers": 2,
+  "base_instructions": "You are answering one standalone arithmetic word problem in a controlled evaluation. Use only the problem supplied in this turn. Work independently. Do not call tools, browse, execute code, access files, delegate, or spawn agents. Give a concise checkable solution and end with exactly one line in the form: FINAL_ANSWER: <number>. Do not include units or other text on that final line.",
+  "schedule": [
+    "gsm8k_test_0683__medium",
+    "gsm8k_test_1147__high",
+    "gsm8k_test_1116__low",
+    "gsm8k_test_1116__ultra",
+    "gsm8k_test_1147__medium",
+    "gsm8k_test_0683__high",
+    "gsm8k_test_0683__low",
+    "gsm8k_test_0843__medium",
+    "gsm8k_test_0450__ultra",
+    "gsm8k_test_0450__low",
+    "gsm8k_test_1147__ultra",
+    "gsm8k_test_0843__high",
+    "gsm8k_test_0843__ultra",
+    "gsm8k_test_1116__high",
+    "gsm8k_test_0450__high",
+    "gsm8k_test_0843__xhigh",
+    "gsm8k_test_0683__ultra",
+    "gsm8k_test_0843__low",
+    "gsm8k_test_0450__xhigh",
+    "gsm8k_test_1147__low",
+    "gsm8k_test_0683__xhigh",
+    "gsm8k_test_1116__xhigh",
+    "gsm8k_test_1116__medium",
+    "gsm8k_test_1147__xhigh",
+    "gsm8k_test_0450__medium"
+  ],
+  "dataset_sha256": "3730d312f6e3440559ace48831e51066acaca737f6eabec99bccb9e4b3c39d14",
+  "isolation": "new process, temporary CODEX_HOME, ephemeral new thread per run"
+}

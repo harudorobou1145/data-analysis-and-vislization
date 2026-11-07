@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6a8507babd79f7aa9aabe2c1__sol_ultra",
+  "task_id": "6a8507babd79f7aa9aabe2c1",
+  "condition": "sol_ultra",
+  "request_kind": "generation",
+  "attempt_id": "6a8507babd79f7aa9aabe2c1__sol_ultra__a01",
+  "started_at": "2026-11-06T08:35:53.647913+00:00",
+  "status": "completed",
+  "prompt_hash": "635b899fa583d0446c3e59b55780f1617c253a4421b3ba9447f62d94a0ddb5e9",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "a1890bec-5626-4051-820d-ff471a9d978e",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6a8507babd79f7aa9aabe2c1__sol_ultra",
+      "attempt_id": "6a8507babd79f7aa9aabe2c1__sol_ultra__a01",
+      "request_kind": "generation",
+      "task_id": "6a8507babd79f7aa9aabe2c1"
+    },
+    "started_at": "2026-11-06T08:35:53.649005+00:00",
+    "model_requested": "gpt-6.1-sol",
+    "effort_requested": "ultra",
+    "prompt": "Can the white truck in the image back up farther and why?",
+    "prompt_hash": "635b899fa583d0446c3e59b55780f1617c253a4421b3ba9447f62d94a0ddb5e9",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "Yes. There is a large clear gap between the truck’s rear and the purple car, so it has room to back up farther.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a8507babd79f7aa9aabe2c1.png",
+        "sha256": "0f99d2783ae3089f39678a27a55ff3a17ce59a0bef0e6d4c62ee00be3344ad0b",
+        "bytes": 1526963
+      }
+    ],
+    "effort_ui_requested": "ultra",
+    "effort_wire_expected": "xhigh",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Maximum reasoning with automatic task delegation",
+    "thread_id": "01a1b000-06ab-79c1-a9cc-f041efccdd49",
+    "model_configured": "gpt-6.1-sol",
+    "effort_configured": "ultra",
+    "instruction_sources": [],
+    "turn_id": "01a1b000-06f5-7d73-8789-b2d5a091cac1",
+    "client_elapsed_seconds": 12.149883,
+    "turn_status": "completed",
+    "elapsed_seconds": 12.118,
+    "wire_efforts_observed": [
+      "xhigh"
+    ],
+    "token_usage": {
+      "totalTokens": 11351,
+      "inputTokens": 11086,
+      "cachedInputTokens": 4096,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 265,
+      "reasoningOutputTokens": 232
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 11.48095,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 3,
+      "item/completed": 3,
+      "item/agentMessage/delta": 27,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1b000-0718-7753-a3b0-f3297a5789d2",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "Can the white truck in the image back up farther and why?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a8507babd79f7aa9aabe2c1.png"
+          }
+        ],
+        "startedAtMs": 1793954154268,
+        "completedAtMs": 1793954154268
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_0dc6ff4db641c497016aed9174411c87d09747890d9cbe06f0",
+        "text": "Yes. There is a large clear gap between the truck’s rear and the purple car, so it has room to back up farther.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793954165697,
+        "completedAtMs": 1793954166118
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 2067289,
+          "request_sha256": "fcc0389e712273a5c756097c9e6f1df2fd6a8a818253a99ecafafd7d7a0de7a9",
+          "response_bytes": 164636,
+          "response_sha256": "fa6818dac46e4e31f4306b0fefc9c394da644674adda59ab78b7edce64a03851",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 12.082722
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6.1-sol",
+        "reasoning": {
+          "effort": "xhigh",
+          "context": "all_turns"
+        },
+        "request_sha256": "fcc0389e712273a5c756097c9e6f1df2fd6a8a818253a99ecafafd7d7a0de7a9",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "57c67841ecebab3147eca05b3dd312b06746e66003fabd98632c7ef553e77f2e"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "0f99d2783ae3089f39678a27a55ff3a17ce59a0bef0e6d4c62ee00be3344ad0b",
+            "bytes": 1526963,
+            "width": 1024,
+            "height": 678,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:36:06.580203+00:00",
+    "total_client_seconds": 12.927494,
+    "answer_hash": "81b173f958ea1944832ef1153b8cb6a22da122d665cbdb253a788a12545c34fe"
+  },
+  "answer": "Yes. There is a large clear gap between the truck’s rear and the purple car, so it has room to back up farther.",
+  "answer_hash": "81b173f958ea1944832ef1153b8cb6a22da122d665cbdb253a788a12545c34fe",
+  "image_sha256": "0f99d2783ae3089f39678a27a55ff3a17ce59a0bef0e6d4c62ee00be3344ad0b",
+  "model": "gpt-6.1-sol",
+  "effort": "ultra",
+  "finished_at": "2026-11-06T08:36:06.581214+00:00"
+}

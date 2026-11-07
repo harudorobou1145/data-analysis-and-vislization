@@ -1,0 +1,117 @@
+{
+  "experiment_id": "subjective_luna_high_60_20261102",
+  "run_id": "planning_07__high__r1",
+  "task_id": "planning_07",
+  "task_type": "planning",
+  "effort": "high",
+  "repeat_id": 1,
+  "prompt_hash": "a6ea613b07d88040ccad70fbd84bde72b815d0d82ed063689691c2a01be81875",
+  "spec_hash": "6132f54538ea3af14d52a31bed1909a25ef9956b2d891c680fed2afcb6d31f36",
+  "attempt_id": "planning_07__high__r1__a01",
+  "attempt_number": 1,
+  "started_at": "2026-11-02T06:59:18.636932+00:00",
+  "status": "error",
+  "request_id": "38df00d5-5d17-417b-9a67-2f2519e9c1e9",
+  "request_kind": "generation",
+  "parent_run_id": "planning_07__high__r1",
+  "model_requested": "gpt-6-luna",
+  "effort_requested": "high",
+  "prior_messages": 0,
+  "system_hash": "fa4d012e57fdef0fe321d25f36b7236e7040615b599b7af2347cfcc400d7ef59",
+  "prompt": "Vega is considering a 1.8-kilometer crossing of the Vegona River in a seismically active area. Prepare a preliminary decision plan for the city council, not a construction-ready engineering design. Include two plausible bridge-system options and tradeoffs, site investigations needed before choosing, staged design/review workflow, major seismic and foundation risks, and next-stage decision criteria. Geotechnical data, clearance requirements and budget estimates are unavailable. State what cannot yet be determined; do not invent exact costs or guarantee safety. Keep the memo under 650 words.",
+  "answer": "",
+  "ttft_seconds": null,
+  "tpot_seconds": null,
+  "provider_transport": "python_https_relay",
+  "codex_client": "subjective_formal/0.166.0-alpha.5.1 (Windows 10.0.26200; x86_64) vscode/1.144.0 (subjective_formal; 1.0)",
+  "thread_id": "01a19b0e-2e38-7760-9d97-0cf33ab8eda7",
+  "model_configured": "gpt-6-luna",
+  "effort_configured": "high",
+  "instruction_sources": [],
+  "turn_id": "01a19b0e-2eb5-7d91-9ef2-ba2abc20f14c",
+  "client_elapsed_seconds": 1.7471,
+  "token_usage": null,
+  "tool_events": [],
+  "model_reroutes": [],
+  "observed_user_message_count": 1,
+  "runtime_warnings": [],
+  "notification_counts": {
+    "remoteControl/status/changed": 1,
+    "thread/started": 1,
+    "thread/status/changed": 2,
+    "turn/started": 1,
+    "item/started": 1,
+    "item/completed": 1,
+    "error": 1
+  },
+  "runtime_errors": [
+    {
+      "observed_seconds": 1.746568,
+      "willRetry": false,
+      "message": "unexpected status 503 Service Unavailable: Service temporarily unavailable, url: [ENDPOINT] request id: 0f613900-8c89-4d8c-9dc2-4d0573640edc",
+      "code": {
+        "httpConnectionFailed": {
+          "httpStatusCode": 503
+        }
+      },
+      "error": {
+        "message": "unexpected status 503 Service Unavailable: Service temporarily unavailable, url: [ENDPOINT] request id: 0f613900-8c89-4d8c-9dc2-4d0573640edc",
+        "codexErrorInfo": {
+          "httpConnectionFailed": {
+            "httpStatusCode": 503
+          }
+        },
+        "additionalDetails": null,
+        "misalignment": null
+      },
+      "params": {
+        "error": {
+          "message": "unexpected status 503 Service Unavailable: Service temporarily unavailable, url: [ENDPOINT] request id: 0f613900-8c89-4d8c-9dc2-4d0573640edc",
+          "codexErrorInfo": {
+            "httpConnectionFailed": {
+              "httpStatusCode": 503
+            }
+          },
+          "additionalDetails": null,
+          "misalignment": null
+        },
+        "willRetry": false,
+        "threadId": "01a19b0e-2e38-7760-9d97-0cf33ab8eda7",
+        "turnId": "01a19b0e-2eb5-7d91-9ef2-ba2abc20f14c"
+      }
+    }
+  ],
+  "runtime_reported_model": null,
+  "runtime_reported_effort": null,
+  "client_first_answer_delta_seconds": null,
+  "answer_stream_span_seconds": null,
+  "partial_answer": "",
+  "stderr_tail": [],
+  "https_relay": {
+    "transport": "codex_loopback_python_verified_https_v1",
+    "bind_scope": "loopback_only",
+    "upstream_tls_verified": true,
+    "redirects_followed": false,
+    "requests": [
+      {
+        "sequence": 1,
+        "request_bytes": 31348,
+        "request_sha256": "c763875b2be3680ac09540ba4ff12ed538515b747e61c2891680ab8fbe4fda37",
+        "response_bytes": 74,
+        "response_sha256": "431c90b418e751fbeba9f41c2f9246ca70fbb194510618789ff1e161e3a17c3a",
+        "upstream_status": 503,
+        "completed": true,
+        "duration_seconds": 1.696293
+      }
+    ]
+  },
+  "error": "unexpected status 503 Service Unavailable: Service temporarily unavailable, url: [ENDPOINT] request id: 0f613900-8c89-4d8c-9dc2-4d0573640edc",
+  "error_type": "ProviderConnectionError",
+  "retryable": false,
+  "batch_fatal": true,
+  "error_category": "provider_connection",
+  "finished_at": "2026-11-02T06:59:22.299205+00:00",
+  "wall_seconds": 3.662117,
+  "answer_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "selected_attempt_id": "planning_07__high__r1__a01"
+}

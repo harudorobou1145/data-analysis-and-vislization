@@ -1,0 +1,32 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error,tool_server,tool_input,tool_output,behavior_category,is_test_execution,measurement_source
+max100_bad52fe5f98ffc5a5abe2f8a_bf20e0b221,1,2026-11-01T06:44:27.856064+00:00,1.2722185000311583,thread.started,,,,,,,,,,,,,,
+max100_bad52fe5f98ffc5a5abe2f8a_bf20e0b221,2,2026-11-01T06:44:27.936912+00:00,1.3530620000092313,turn.started,,,,,,,,,,,,,,
+max100_bad52fe5f98ffc5a5abe2f8a_bf20e0b221,3,2026-11-01T06:44:31.847066+00:00,5.263211900019087,item.completed,item_0,agent_message,,,,,,,,,,message,False,native_item
+max100_bad52fe5f98ffc5a5abe2f8a_bf20e0b221,4,2026-11-01T06:44:31.894354+00:00,5.3105080999666825,item.started,item_1,mcp_tool_call,read_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py""}",,file_read,False,native_item
+max100_bad52fe5f98ffc5a5abe2f8a_bf20e0b221,5,2026-11-01T06:44:32.557490+00:00,5.973646400030702,item.completed,item_1,mcp_tool_call,read_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""content\"": \""\\n\\ndef add(x: int, y: int):\\n    \\\""\\\""\\\""Add two numbers x and y\\n    >>> add(2, 3)\\n    5\\n    >>> add(5, 7)\\n    12\\n    \\\""\\\""\\\""\\n    pass\\n\""}""}], ""structured_content"": null}",file_read,False,workspace_tool_result
+max100_bad52fe5f98ffc5a5abe2f8a_bf20e0b221,6,2026-11-01T06:44:39.339533+00:00,12.755677100038156,item.started,item_2,mcp_tool_call,write_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def add(x: int, y: int):\n    \""\""\""Add two numbers x and y\n    >>> add(2, 3)\n    5\n    >>> add(5, 7)\n    12\n    \""\""\""\n    return x + y\n""}",,file_write,False,native_item
+max100_bad52fe5f98ffc5a5abe2f8a_bf20e0b221,7,2026-11-01T06:44:40.446613+00:00,13.862757600029,item.completed,item_2,mcp_tool_call,write_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def add(x: int, y: int):\n    \""\""\""Add two numbers x and y\n    >>> add(2, 3)\n    5\n    >>> add(5, 7)\n    12\n    \""\""\""\n    return x + y\n""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""before_sha256\"": \""cb00ac2954b738cd8c181c1c83d619c4130a626dbf4a63555b48269288266393\"", \""after_sha256\"": \""2c5bce8b989da9381db9cb0e83ed276e43c2625a1575e7597fd8559d61baa86a\"", \""changed\"": true}""}], ""structured_content"": null}",file_write,False,workspace_tool_result
+max100_bad52fe5f98ffc5a5abe2f8a_bf20e0b221,8,2026-11-01T06:44:46.742910+00:00,20.159054600051604,item.started,item_3,mcp_tool_call,run_command,in_progress,,,"python - <<'PY'
+import doctest
+import solution
+
+result = doctest.testmod(solution)
+assert result.failed == 0
+cases = [(0, 0, 0), (-5, -7, -12), (-5, 7, 2), (10**100, 1, 10**100 + 1)]
+for x, y, expected in cases:
+    assert solution.add(x, y) == expected
+print(f'Passed {result.attempted} doctests and {len(cases)} additional checks.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nimport doctest\nimport solution\n\nresult = doctest.testmod(solution)\nassert result.failed == 0\ncases = [(0, 0, 0), (-5, -7, -12), (-5, 7, 2), (10**100, 1, 10**100 + 1)]\nfor x, y, expected in cases:\n    assert solution.add(x, y) == expected\nprint(f'Passed {result.attempted} doctests and {len(cases)} additional checks.')\nPY""}",,command_execution,True,native_item
+max100_bad52fe5f98ffc5a5abe2f8a_bf20e0b221,9,2026-11-01T06:44:48.029948+00:00,21.4460923000006,item.completed,item_3,mcp_tool_call,run_command,completed,0,0.4059694370080251,"python - <<'PY'
+import doctest
+import solution
+
+result = doctest.testmod(solution)
+assert result.failed == 0
+cases = [(0, 0, 0), (-5, -7, -12), (-5, 7, 2), (10**100, 1, 10**100 + 1)]
+for x, y, expected in cases:
+    assert solution.add(x, y) == expected
+print(f'Passed {result.attempted} doctests and {len(cases)} additional checks.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nimport doctest\nimport solution\n\nresult = doctest.testmod(solution)\nassert result.failed == 0\ncases = [(0, 0, 0), (-5, -7, -12), (-5, 7, 2), (10**100, 1, 10**100 + 1)]\nfor x, y, expected in cases:\n    assert solution.add(x, y) == expected\nprint(f'Passed {result.attempted} doctests and {len(cases)} additional checks.')\nPY""}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python - <<'PY'\\nimport doctest\\nimport solution\\n\\nresult = doctest.testmod(solution)\\nassert result.failed == 0\\ncases = [(0, 0, 0), (-5, -7, -12), (-5, 7, 2), (10**100, 1, 10**100 + 1)]\\nfor x, y, expected in cases:\\n    assert solution.add(x, y) == expected\\nprint(f'Passed {result.attempted} doctests and {len(cases)} additional checks.')\\nPY\"", \""exit_code\"": 0, \""stdout\"": \""Passed 2 doctests and 4 additional checks.\\n\"", \""stderr\"": \""\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.4059694370080251, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+max100_bad52fe5f98ffc5a5abe2f8a_bf20e0b221,10,2026-11-01T06:44:53.414279+00:00,26.83042600005865,item.completed,item_4,agent_message,,,,,,,,,,message,False,native_item
+max100_bad52fe5f98ffc5a5abe2f8a_bf20e0b221,11,2026-11-01T06:44:53.468263+00:00,26.88441599998623,turn.completed,,,,,,,,,,,,,,

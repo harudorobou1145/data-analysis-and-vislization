@@ -1,0 +1,28 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error,tool_server,tool_input,tool_output,behavior_category,is_test_execution,measurement_source
+20261031T135736_T001_low_8a9ec7b288ce,1,2026-10-31T13:57:38.661294+00:00,0.44299529993440956,thread.started,,,,,,,,,,,,,,
+20261031T135736_T001_low_8a9ec7b288ce,2,2026-10-31T13:57:38.687452+00:00,0.46915419993456453,turn.started,,,,,,,,,,,,,,
+20261031T135736_T001_low_8a9ec7b288ce,3,2026-10-31T13:57:42.876407+00:00,4.658108099945821,item.completed,item_0,agent_message,,,,,,,,,,message,False,native_item
+20261031T135736_T001_low_8a9ec7b288ce,4,2026-10-31T13:57:43.038282+00:00,4.81998599995859,item.started,item_1,mcp_tool_call,read_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py""}",,file_read,False,native_item
+20261031T135736_T001_low_8a9ec7b288ce,5,2026-10-31T13:57:43.382798+00:00,5.164498599944636,item.completed,item_1,mcp_tool_call,read_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""content\"": \""def average(numbers):\\n    return sum(numbers) / len(numbers)\\n\""}""}], ""structured_content"": null}",file_read,False,workspace_tool_result
+20261031T135736_T001_low_8a9ec7b288ce,6,2026-10-31T13:57:47.598619+00:00,9.380319599993527,item.started,item_2,mcp_tool_call,write_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def average(numbers):\n    if not numbers:\n        return 0\n    return sum(numbers) / len(numbers)\n""}",,file_write,False,native_item
+20261031T135736_T001_low_8a9ec7b288ce,7,2026-10-31T13:57:47.943383+00:00,9.725083200028166,item.completed,item_2,mcp_tool_call,write_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def average(numbers):\n    if not numbers:\n        return 0\n    return sum(numbers) / len(numbers)\n""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""before_sha256\"": \""140a76ba7aa6ef120fd550594c3761fa130182db081a6b3f1b6fc8b6107216a8\"", \""after_sha256\"": \""a598de9996461b7a904f76f4dbf58197b0e1d25fdb89e93db55652924937171f\"", \""changed\"": true}""}], ""structured_content"": null}",file_write,False,workspace_tool_result
+20261031T135736_T001_low_8a9ec7b288ce,8,2026-10-31T13:57:54.565561+00:00,16.347265999997035,item.started,item_3,mcp_tool_call,run_command,in_progress,,,"python -B - <<'PY'
+from solution import average
+from math import isclose
+cases = [([], 0), ([1, 2, 3], 2), ([-5, -2], -3.5), ([0.1, 0.2, 0.3], 0.2), ([-1.5, 2.5], 0.5), ([7], 7), ([0, 0], 0)]
+for numbers, expected in cases:
+    actual = average(numbers)
+    assert isclose(actual, expected), (numbers, actual, expected)
+print('7 tests passed')
+PY",,codedepth_workspace,"{""command"": ""python -B - <<'PY'\nfrom solution import average\nfrom math import isclose\ncases = [([], 0), ([1, 2, 3], 2), ([-5, -2], -3.5), ([0.1, 0.2, 0.3], 0.2), ([-1.5, 2.5], 0.5), ([7], 7), ([0, 0], 0)]\nfor numbers, expected in cases:\n    actual = average(numbers)\n    assert isclose(actual, expected), (numbers, actual, expected)\nprint('7 tests passed')\nPY""}",,command_execution,True,native_item
+20261031T135736_T001_low_8a9ec7b288ce,9,2026-10-31T13:57:54.943650+00:00,16.725349799962714,item.completed,item_3,mcp_tool_call,run_command,completed,0,0.03305182799886097,"python -B - <<'PY'
+from solution import average
+from math import isclose
+cases = [([], 0), ([1, 2, 3], 2), ([-5, -2], -3.5), ([0.1, 0.2, 0.3], 0.2), ([-1.5, 2.5], 0.5), ([7], 7), ([0, 0], 0)]
+for numbers, expected in cases:
+    actual = average(numbers)
+    assert isclose(actual, expected), (numbers, actual, expected)
+print('7 tests passed')
+PY",,codedepth_workspace,"{""command"": ""python -B - <<'PY'\nfrom solution import average\nfrom math import isclose\ncases = [([], 0), ([1, 2, 3], 2), ([-5, -2], -3.5), ([0.1, 0.2, 0.3], 0.2), ([-1.5, 2.5], 0.5), ([7], 7), ([0, 0], 0)]\nfor numbers, expected in cases:\n    actual = average(numbers)\n    assert isclose(actual, expected), (numbers, actual, expected)\nprint('7 tests passed')\nPY""}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python -B - <<'PY'\\nfrom solution import average\\nfrom math import isclose\\ncases = [([], 0), ([1, 2, 3], 2), ([-5, -2], -3.5), ([0.1, 0.2, 0.3], 0.2), ([-1.5, 2.5], 0.5), ([7], 7), ([0, 0], 0)]\\nfor numbers, expected in cases:\\n    actual = average(numbers)\\n    assert isclose(actual, expected), (numbers, actual, expected)\\nprint('7 tests passed')\\nPY\"", \""exit_code\"": 0, \""stdout\"": \""7 tests passed\\n\"", \""stderr\"": \""\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.03305182799886097, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+20261031T135736_T001_low_8a9ec7b288ce,10,2026-10-31T13:57:58.972296+00:00,20.75399719993584,item.completed,item_4,agent_message,,,,,,,,,,message,False,native_item
+20261031T135736_T001_low_8a9ec7b288ce,11,2026-10-31T13:57:59.004830+00:00,20.786534299957566,turn.completed,,,,,,,,,,,,,,

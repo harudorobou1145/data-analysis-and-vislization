@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6ab1a689e786d8e66facfbf4__sol_ultra",
+  "task_id": "6ab1a689e786d8e66facfbf4",
+  "condition": "sol_ultra",
+  "request_kind": "generation",
+  "attempt_id": "6ab1a689e786d8e66facfbf4__sol_ultra__a01",
+  "started_at": "2026-11-06T08:40:43.920646+00:00",
+  "status": "completed",
+  "prompt_hash": "a9125dc2a11706c706458944da1f9c6cd3df2624d677e592fa00bb43beb17986",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "77c3d594-dd2b-4fce-8021-fc4a8845c6f0",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6ab1a689e786d8e66facfbf4__sol_ultra",
+      "attempt_id": "6ab1a689e786d8e66facfbf4__sol_ultra__a01",
+      "request_kind": "generation",
+      "task_id": "6ab1a689e786d8e66facfbf4"
+    },
+    "started_at": "2026-11-06T08:40:43.922998+00:00",
+    "model_requested": "gpt-6.1-sol",
+    "effort_requested": "ultra",
+    "prompt": "There is a person walking by himself on the right side of the image. What car on the left appears to belong to that person?",
+    "prompt_hash": "a9125dc2a11706c706458944da1f9c6cd3df2624d677e592fa00bb43beb17986",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "The silver minivan parked in the left foreground.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6ab1a689e786d8e66facfbf4.png",
+        "sha256": "e16e1d872bdfe727a38e633a9f47b97939ef7937682b632b309fecb334c97868",
+        "bytes": 322705
+      }
+    ],
+    "effort_ui_requested": "ultra",
+    "effort_wire_expected": "xhigh",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Maximum reasoning with automatic task delegation",
+    "thread_id": "01a1b004-74bf-72e0-8dee-5df5bf9c6f18",
+    "model_configured": "gpt-6.1-sol",
+    "effort_configured": "ultra",
+    "instruction_sources": [],
+    "turn_id": "01a1b004-7517-7552-a816-ffa3d2328299",
+    "client_elapsed_seconds": 12.914692,
+    "turn_status": "completed",
+    "elapsed_seconds": 12.87,
+    "wire_efforts_observed": [
+      "xhigh"
+    ],
+    "token_usage": {
+      "totalTokens": 10738,
+      "inputTokens": 10561,
+      "cachedInputTokens": 4096,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 177,
+      "reasoningOutputTokens": 161
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 12.879328,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 3,
+      "item/completed": 3,
+      "item/agentMessage/delta": 10,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1b004-7546-7041-8a03-6c8bb8f20011",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "There is a person walking by himself on the right side of the image. What car on the left appears to belong to that person?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6ab1a689e786d8e66facfbf4.png"
+          }
+        ],
+        "startedAtMs": 1793954444616,
+        "completedAtMs": 1793954444616
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_0431df629f639f61016aed92979bf487d0ad5d87f913c8a923",
+        "text": "The silver minivan parked in the left foreground.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793954457429,
+        "completedAtMs": 1793954457433
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 461679,
+          "request_sha256": "d3d51b2c3dc1a73194d440b36118494adc539d54250e0ec99846114e30d1700b",
+          "response_bytes": 156655,
+          "response_sha256": "7d7322d1e52a2c63e092fb902d459757eff08a85bf814166eaf6de61336bc7fd",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 12.832331
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6.1-sol",
+        "reasoning": {
+          "effort": "xhigh",
+          "context": "all_turns"
+        },
+        "request_sha256": "d3d51b2c3dc1a73194d440b36118494adc539d54250e0ec99846114e30d1700b",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "964839327d8f1dceb01d0cd3eae8098310391cb2d5692af52e0f0deb3946eceb"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "e16e1d872bdfe727a38e633a9f47b97939ef7937682b632b309fecb334c97868",
+            "bytes": 322705,
+            "width": 500,
+            "height": 500,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:40:57.554861+00:00",
+    "total_client_seconds": 13.630504,
+    "answer_hash": "a5d2e3b004a77b6d42e3f488027003daec9b93480ef6b0b308a968ecf2f61cbc"
+  },
+  "answer": "The silver minivan parked in the left foreground.",
+  "answer_hash": "a5d2e3b004a77b6d42e3f488027003daec9b93480ef6b0b308a968ecf2f61cbc",
+  "image_sha256": "e16e1d872bdfe727a38e633a9f47b97939ef7937682b632b309fecb334c97868",
+  "model": "gpt-6.1-sol",
+  "effort": "ultra",
+  "finished_at": "2026-11-06T08:40:57.556365+00:00"
+}

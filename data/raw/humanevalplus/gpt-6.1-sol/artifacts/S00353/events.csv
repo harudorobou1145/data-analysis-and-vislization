@@ -1,0 +1,110 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error,tool_server,tool_input,tool_output,behavior_category,is_test_execution,measurement_source
+max100_bb4284d5c4f54d88cd0a8aee_fab297574f,1,2026-11-01T08:10:16.521586+00:00,0.417637200000172,thread.started,,,,,,,,,,,,,,
+max100_bb4284d5c4f54d88cd0a8aee_fab297574f,2,2026-11-01T08:10:16.545764+00:00,0.4418203000000176,turn.started,,,,,,,,,,,,,,
+max100_bb4284d5c4f54d88cd0a8aee_fab297574f,3,2026-11-01T08:10:20.511629+00:00,4.407933800000137,item.completed,item_0,agent_message,,,,,,,,,,message,False,native_item
+max100_bb4284d5c4f54d88cd0a8aee_fab297574f,4,2026-11-01T08:10:20.553175+00:00,4.4492253000003075,item.started,item_1,mcp_tool_call,read_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py""}",,file_read,False,native_item
+max100_bb4284d5c4f54d88cd0a8aee_fab297574f,5,2026-11-01T08:10:20.866568+00:00,4.762621500000023,item.completed,item_1,mcp_tool_call,read_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""content\"": \""\\ndef is_nested(string):\\n    '''\\n    Create a function that takes a string as input which contains only square brackets.\\n    The function should return True if and only if there is a valid subsequence of brackets \\n    where at least one bracket in the subsequence is nested.\\n\\n    is_nested('[[]]') ➞ True\\n    is_nested('[]]]]]]][[[[[]') ➞ False\\n    is_nested('[][]') ➞ False\\n    is_nested('[]') ➞ False\\n    is_nested('[[][]]') ➞ True\\n    is_nested('[[]][[') ➞ True\\n    '''\\n    pass\\n\""}""}], ""structured_content"": null}",file_read,False,workspace_tool_result
+max100_bb4284d5c4f54d88cd0a8aee_fab297574f,6,2026-11-01T08:10:44.948993+00:00,28.84504650000008,item.started,item_2,mcp_tool_call,write_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def is_nested(string):\n    '''\n    Create a function that takes a string as input which contains only square brackets.\n    The function should return True if and only if there is a valid subsequence of brackets \n    where at least one bracket in the subsequence is nested.\n\n    is_nested('[[]]') ➞ True\n    is_nested('[]]]]]]][[[[[]') ➞ False\n    is_nested('[][]') ➞ False\n    is_nested('[]') ➞ False\n    is_nested('[[][]]') ➞ True\n    is_nested('[[]][[') ➞ True\n    '''\n    # Any nested valid subsequence contains two opens followed by two closes.\n    target = '[[]]'\n    matched = 0\n    for bracket in string:\n        if bracket == target[matched]:\n            matched += 1\n            if matched == len(target):\n                return True\n    return False\n""}",,file_write,False,native_item
+max100_bb4284d5c4f54d88cd0a8aee_fab297574f,7,2026-11-01T08:10:45.292816+00:00,29.18886939999993,item.completed,item_2,mcp_tool_call,write_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def is_nested(string):\n    '''\n    Create a function that takes a string as input which contains only square brackets.\n    The function should return True if and only if there is a valid subsequence of brackets \n    where at least one bracket in the subsequence is nested.\n\n    is_nested('[[]]') ➞ True\n    is_nested('[]]]]]]][[[[[]') ➞ False\n    is_nested('[][]') ➞ False\n    is_nested('[]') ➞ False\n    is_nested('[[][]]') ➞ True\n    is_nested('[[]][[') ➞ True\n    '''\n    # Any nested valid subsequence contains two opens followed by two closes.\n    target = '[[]]'\n    matched = 0\n    for bracket in string:\n        if bracket == target[matched]:\n            matched += 1\n            if matched == len(target):\n                return True\n    return False\n""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""before_sha256\"": \""978f2d7f8a3e5c64d7e253eb7c50e47660e50099ffe5be96f1da9647e22ea864\"", \""after_sha256\"": \""ce89261b2ead20449fc16e410fdc4d55e4d1ce8e29a75b29bed5054fdf997f5b\"", \""changed\"": true}""}], ""structured_content"": null}",file_write,False,workspace_tool_result
+max100_bb4284d5c4f54d88cd0a8aee_fab297574f,8,2026-11-01T08:10:54.830325+00:00,38.72637900000018,item.started,item_3,mcp_tool_call,run_command,in_progress,,,"python - <<'PY'
+from itertools import product
+from solution import is_nested
+
+examples = [
+    ('[[]]', True),
+    ('[]]]]]]][[[[[]', False),
+    ('[][]', False),
+    ('[]', False),
+    ('[[][]]', True),
+    ('[[]][[', True),
+    ('', False),
+    ('[[[[', False),
+    (']]]]', False),
+    (']][[]][[', True),
+    ('[[[]', False),
+    ('[[]', False),
+]
+for string, expected in examples:
+    assert is_nested(string) is expected, (string, expected)
+
+def brute_force(string):
+    for mask in range(1 << len(string)):
+        depth = 0
+        nested = False
+        for index, bracket in enumerate(string):
+            if not mask & (1 << index):
+                continue
+            depth += 1 if bracket == '[' else -1
+            if depth < 0:
+                break
+            nested |= depth >= 2
+        else:
+            if depth == 0 and nested:
+                return True
+    return False
+
+checked = 0
+for length in range(11):
+    for brackets in product('[]', repeat=length):
+        string = ''.join(brackets)
+        expected = brute_force(string)
+        assert is_nested(string) is expected, (string, expected)
+        checked += 1
+
+assert is_nested('[' * 100000 + ']]') is True
+assert is_nested('[]' * 100000) is True
+assert is_nested(']' * 100000 + '[' * 100000 + ']') is False
+print(f'Passed {len(examples)} examples/edge cases, {checked} exhaustive cases, and 3 large-input checks.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nfrom itertools import product\nfrom solution import is_nested\n\nexamples = [\n    ('[[]]', True),\n    ('[]]]]]]][[[[[]', False),\n    ('[][]', False),\n    ('[]', False),\n    ('[[][]]', True),\n    ('[[]][[', True),\n    ('', False),\n    ('[[[[', False),\n    (']]]]', False),\n    (']][[]][[', True),\n    ('[[[]', False),\n    ('[[]', False),\n]\nfor string, expected in examples:\n    assert is_nested(string) is expected, (string, expected)\n\ndef brute_force(string):\n    for mask in range(1 << len(string)):\n        depth = 0\n        nested = False\n        for index, bracket in enumerate(string):\n            if not mask & (1 << index):\n                continue\n            depth += 1 if bracket == '[' else -1\n            if depth < 0:\n                break\n            nested |= depth >= 2\n        else:\n            if depth == 0 and nested:\n                return True\n    return False\n\nchecked = 0\nfor length in range(11):\n    for brackets in product('[]', repeat=length):\n        string = ''.join(brackets)\n        expected = brute_force(string)\n        assert is_nested(string) is expected, (string, expected)\n        checked += 1\n\nassert is_nested('[' * 100000 + ']]') is True\nassert is_nested('[]' * 100000) is True\nassert is_nested(']' * 100000 + '[' * 100000 + ']') is False\nprint(f'Passed {len(examples)} examples/edge cases, {checked} exhaustive cases, and 3 large-input checks.')\nPY"", ""timeout_seconds"": 30}",,command_execution,True,native_item
+max100_bb4284d5c4f54d88cd0a8aee_fab297574f,9,2026-11-01T08:10:55.297445+00:00,39.19350029999987,item.completed,item_3,mcp_tool_call,run_command,completed,0,0.15275874700000713,"python - <<'PY'
+from itertools import product
+from solution import is_nested
+
+examples = [
+    ('[[]]', True),
+    ('[]]]]]]][[[[[]', False),
+    ('[][]', False),
+    ('[]', False),
+    ('[[][]]', True),
+    ('[[]][[', True),
+    ('', False),
+    ('[[[[', False),
+    (']]]]', False),
+    (']][[]][[', True),
+    ('[[[]', False),
+    ('[[]', False),
+]
+for string, expected in examples:
+    assert is_nested(string) is expected, (string, expected)
+
+def brute_force(string):
+    for mask in range(1 << len(string)):
+        depth = 0
+        nested = False
+        for index, bracket in enumerate(string):
+            if not mask & (1 << index):
+                continue
+            depth += 1 if bracket == '[' else -1
+            if depth < 0:
+                break
+            nested |= depth >= 2
+        else:
+            if depth == 0 and nested:
+                return True
+    return False
+
+checked = 0
+for length in range(11):
+    for brackets in product('[]', repeat=length):
+        string = ''.join(brackets)
+        expected = brute_force(string)
+        assert is_nested(string) is expected, (string, expected)
+        checked += 1
+
+assert is_nested('[' * 100000 + ']]') is True
+assert is_nested('[]' * 100000) is True
+assert is_nested(']' * 100000 + '[' * 100000 + ']') is False
+print(f'Passed {len(examples)} examples/edge cases, {checked} exhaustive cases, and 3 large-input checks.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nfrom itertools import product\nfrom solution import is_nested\n\nexamples = [\n    ('[[]]', True),\n    ('[]]]]]]][[[[[]', False),\n    ('[][]', False),\n    ('[]', False),\n    ('[[][]]', True),\n    ('[[]][[', True),\n    ('', False),\n    ('[[[[', False),\n    (']]]]', False),\n    (']][[]][[', True),\n    ('[[[]', False),\n    ('[[]', False),\n]\nfor string, expected in examples:\n    assert is_nested(string) is expected, (string, expected)\n\ndef brute_force(string):\n    for mask in range(1 << len(string)):\n        depth = 0\n        nested = False\n        for index, bracket in enumerate(string):\n            if not mask & (1 << index):\n                continue\n            depth += 1 if bracket == '[' else -1\n            if depth < 0:\n                break\n            nested |= depth >= 2\n        else:\n            if depth == 0 and nested:\n                return True\n    return False\n\nchecked = 0\nfor length in range(11):\n    for brackets in product('[]', repeat=length):\n        string = ''.join(brackets)\n        expected = brute_force(string)\n        assert is_nested(string) is expected, (string, expected)\n        checked += 1\n\nassert is_nested('[' * 100000 + ']]') is True\nassert is_nested('[]' * 100000) is True\nassert is_nested(']' * 100000 + '[' * 100000 + ']') is False\nprint(f'Passed {len(examples)} examples/edge cases, {checked} exhaustive cases, and 3 large-input checks.')\nPY"", ""timeout_seconds"": 30}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python - <<'PY'\\nfrom itertools import product\\nfrom solution import is_nested\\n\\nexamples = [\\n    ('[[]]', True),\\n    ('[]]]]]]][[[[[]', False),\\n    ('[][]', False),\\n    ('[]', False),\\n    ('[[][]]', True),\\n    ('[[]][[', True),\\n    ('', False),\\n    ('[[[[', False),\\n    (']]]]', False),\\n    (']][[]][[', True),\\n    ('[[[]', False),\\n    ('[[]', False),\\n]\\nfor string, expected in examples:\\n    assert is_nested(string) is expected, (string, expected)\\n\\ndef brute_force(string):\\n    for mask in range(1 << len(string)):\\n        depth = 0\\n        nested = False\\n        for index, bracket in enumerate(string):\\n            if not mask & (1 << index):\\n                continue\\n            depth += 1 if bracket == '[' else -1\\n            if depth < 0:\\n                break\\n            nested |= depth >= 2\\n        else:\\n            if depth == 0 and nested:\\n                return True\\n    return False\\n\\nchecked = 0\\nfor length in range(11):\\n    for brackets in product('[]', repeat=length):\\n        string = ''.join(brackets)\\n        expected = brute_force(string)\\n        assert is_nested(string) is expected, (string, expected)\\n        checked += 1\\n\\nassert is_nested('[' * 100000 + ']]') is True\\nassert is_nested('[]' * 100000) is True\\nassert is_nested(']' * 100000 + '[' * 100000 + ']') is False\\nprint(f'Passed {len(examples)} examples/edge cases, {checked} exhaustive cases, and 3 large-input checks.')\\nPY\"", \""exit_code\"": 0, \""stdout\"": \""Passed 12 examples/edge cases, 2047 exhaustive cases, and 3 large-input checks.\\n\"", \""stderr\"": \""\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.15275874700000713, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+max100_bb4284d5c4f54d88cd0a8aee_fab297574f,10,2026-11-01T08:11:03.157735+00:00,47.05378770000016,item.completed,item_4,agent_message,,,,,,,,,,message,False,native_item
+max100_bb4284d5c4f54d88cd0a8aee_fab297574f,11,2026-11-01T08:11:03.215176+00:00,47.11123550000002,turn.completed,,,,,,,,,,,,,,

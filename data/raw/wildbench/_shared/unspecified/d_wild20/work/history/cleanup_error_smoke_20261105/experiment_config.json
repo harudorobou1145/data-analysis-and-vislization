@@ -1,0 +1,14 @@
+{
+  "experiment_id": "wildbench_20_four_conditions_20261105",
+  "result_dir": "result/wildbench_20",
+  "tasks_file": "dataset/tasks_20.json",
+  "provider_transport": "python_https_relay",
+  "judge_model": "gpt-6.1-sol",
+  "judge_effort": "high",
+  "conditions": [
+    {"condition_id": "sol_low", "model": "gpt-6.1-sol", "effort": "low"},
+    {"condition_id": "sol_high", "model": "gpt-6.1-sol", "effort": "high"},
+    {"condition_id": "sol_ultra", "model": "gpt-6.1-sol", "effort": "ultra"},
+    {"condition_id": "luna_high", "model": "gpt-6-luna", "effort": "high"}
+  ]
+}

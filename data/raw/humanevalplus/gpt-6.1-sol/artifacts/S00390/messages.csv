@@ -1,0 +1,28 @@
+run_id,message_id,turn_id,role,content,timestamp,message_type
+max100_946368c237851b7d231d4591_83cbf28c2e,prompt,1,user,"Complete solution.py according to its function specification. Preserve its entry point and required imports. Return the complete source.
+
+
+TOOLS MODE: solution.py is in the isolated /workspace container. Use ONLY the codedepth_workspace MCP tools to read files, write code, and run Python/pytest checks. Tool file paths are relative POSIX paths such as solution.py. The host current directory is not your workspace. Preserve solution.py as the final full source file. You may create your own temporary tests; official hidden tests are unavailable. Do not merely return code: use write_file or a container command to save your changes, then explain your result.
+",,task_prompt
+max100_946368c237851b7d231d4591_83cbf28c2e,item_0,1,assistant,"I’ll read `solution.py`, implement the function, and run checks against its specification.
+",2026-11-01T08:36:35.117757+00:00,agent_message
+max100_946368c237851b7d231d4591_83cbf28c2e,item_4,1,assistant,"Saved `solution.py` with numeric word sorting. Passed 1 doctest, 6 edge cases, and 100 number-pair checks.
+
+```python
+from typing import List
+
+
+def sort_numbers(numbers: str) -> str:
+    """""" Input is a space-delimited string of numberals from 'zero' to 'nine'.
+    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.
+    Return the string with numbers sorted from smallest to largest
+    >>> sort_numbers('three one five')
+    'one three five'
+    """"""
+    number_words: List[str] = [
+        'zero', 'one', 'two', 'three', 'four',
+        'five', 'six', 'seven', 'eight', 'nine',
+    ]
+    order = {word: value for value, word in enumerate(number_words)}
+    return ' '.join(sorted(numbers.split(), key=order.__getitem__))
+```",2026-11-01T08:37:02.415942+00:00,agent_message

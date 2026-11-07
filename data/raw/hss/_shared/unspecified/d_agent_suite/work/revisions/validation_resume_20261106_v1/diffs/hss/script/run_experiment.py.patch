@@ -1,0 +1,25 @@
+--- original/hss/script/run_experiment.py
++++ corrected/hss/script/run_experiment.py
+@@ -19,6 +19,8 @@
+ from scoring import GENERATION_SYSTEM, JUDGE_SYSTEM, judge_prompt, judge_schema, parse_grade
+ 
+ ROOT = Path(__file__).resolve().parents[1]
++sys.path.insert(0,str(ROOT.parent))
++from common.protocol_amendment import compare_manifest
+ CONFIGURATIONS = (
+     {'id':'sol_low','model':'gpt-6.1-sol','effort':'low'},
+     {'id':'sol_high','model':'gpt-6.1-sol','effort':'high'},
+@@ -91,9 +93,10 @@
+     manifest=json.loads(json.dumps(manifest))
+     manifest['manifest_hash']=sha(canonical(manifest))
+     path=out/'manifest.json'
+-    if path.exists() and read(path)!=manifest:
+-        raise RuntimeError('Frozen experiment differs; preserve old records and use a new experiment directory')
+-    if not path.exists():
++    if path.exists():
++        manifest=compare_manifest(read(path),manifest,out/'protocol_amendment.json',
++                                  code_fields=('core_code_hashes','client_code_hashes'))
++    else:
+         save(path,manifest)
+     return tasks,manifest,out
+ 

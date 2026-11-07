@@ -1,0 +1,116 @@
+{
+  "experiment_id": "wildbench_20_four_conditions_20261105_v2",
+  "run_id": "wild_006__sol_ultra__r2",
+  "task_id": "wild_006",
+  "task_type": "Editing",
+  "condition_id": "sol_ultra",
+  "model": "gpt-6.1-sol",
+  "effort": "ultra",
+  "repeat_id": 2,
+  "prompt_hash": "1cb7a31daaf533683af8ea4416840deaee78762b07fa6064e5cda1c2f77fd651",
+  "spec_hash": "33a940fb5d5028faf1881d73c2032b318f5e983564e8c5e13f5d5b7ba3da8d98",
+  "attempt_id": "wild_006__sol_ultra__r2__a01",
+  "attempt_number": 1,
+  "started_at": "2026-11-05T13:31:52.653650+00:00",
+  "status": "error",
+  "request_id": "3f31141d-0adf-44b6-acc6-1d35a044ffb3",
+  "request_kind": "generation",
+  "parent_run_id": "wild_006__sol_ultra__r2",
+  "model_requested": "gpt-6.1-sol",
+  "effort_requested": "ultra",
+  "prior_messages": 0,
+  "system_hash": "fa4d012e57fdef0fe321d25f36b7236e7040615b599b7af2347cfcc400d7ef59",
+  "prompt": "Please mark all the oral continuation phenomena in the following paragraphs：Parachutes are big,heavy and bulky.Typical parachutes wouldn't fit beneath your plane seat.They would take up a lot of real estate on the plane and add to its overall weight.To tackle that,parachutes would be have to be made significantly smaller.Plus there would have to be systems in place to ensure that the parachute opens only when the passenger is ready to deploy it,and that they work seamlessly every time.All of these factors add to the overall cost of a single flight which needless to say the passengers would have to bear.As a result,ticket prices would soar and that's just bad news for the airline businesses.As such,money becomes a major deterrent for having parachutes on     board airplanes.It's important to realize that when the engines of a plane fail mid flight,the plane doesn't just drop out of the sky like a stone,it still has the ability to glide.Something that pilots use to execute an emergency landing when something goes wrong.\nAll in all,it's safe to say that if something goes wrong during a flight,passengers are safer if they remain strapped to their seats while the pilots attempt an emergency landing rather than jumping out of the plane at 40,000 feet.",
+  "answer": "",
+  "ttft_seconds": null,
+  "tpot_seconds": null,
+  "provider_transport": "python_https_relay",
+  "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (wildbench_pilot; 1.0)",
+  "thread_id": "01a1abe8-aa50-79e2-887c-b27bc774c394",
+  "model_configured": "gpt-6.1-sol",
+  "effort_configured": "ultra",
+  "instruction_sources": [],
+  "turn_id": "01a1abe8-ac02-7051-96a6-a624afe30f07",
+  "client_elapsed_seconds": 101.787876,
+  "turn_status": "failed",
+  "elapsed_seconds": 101.683,
+  "final_answer_message_span_seconds": null,
+  "token_usage": null,
+  "tool_events": [],
+  "model_reroutes": [],
+  "observed_user_message_count": 1,
+  "runtime_warnings": [],
+  "notification_counts": {
+    "remoteControl/status/changed": 1,
+    "thread/started": 1,
+    "thread/status/changed": 2,
+    "turn/started": 1,
+    "item/started": 1,
+    "item/completed": 1,
+    "account/rateLimits/updated": 1,
+    "error": 1,
+    "turn/completed": 1
+  },
+  "runtime_errors": [
+    {
+      "observed_seconds": 101.785153,
+      "willRetry": false,
+      "message": "stream disconnected before completion: idle timeout waiting for SSE",
+      "code": "other",
+      "error": {
+        "message": "stream disconnected before completion: idle timeout waiting for SSE",
+        "codexErrorInfo": "other",
+        "additionalDetails": null,
+        "misalignment": null
+      },
+      "params": {
+        "error": {
+          "message": "stream disconnected before completion: idle timeout waiting for SSE",
+          "codexErrorInfo": "other",
+          "additionalDetails": null,
+          "misalignment": null
+        },
+        "willRetry": false,
+        "threadId": "01a1abe8-aa50-79e2-887c-b27bc774c394",
+        "turnId": "01a1abe8-ac02-7051-96a6-a624afe30f07"
+      }
+    }
+  ],
+  "runtime_reported_model": null,
+  "runtime_reported_effort": null,
+  "client_first_answer_delta_seconds": null,
+  "answer_stream_span_seconds": null,
+  "partial_answer": "",
+  "stderr_tail": [
+    "2026-11-05T13:31:54.698054Z  WARN codex_core_plugins::startup_sync: GitHub HTTP sync failed for curated plugin sync; falling back to export archive error=get curated plugins repository from [ENDPOINT] failed with status 403 Forbidden: {\"message\":\"API rate limit exceeded for 31.59.135.171. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"[ENDPOINT]\"}",
+    "backup_archive_api_url=\"[ENDPOINT]\"",
+    "2026-11-05T13:31:59.321625Z  WARN codex_core_plugins::manager: failed to warm featured plugin ids cache error=remote featured plugin request to [ENDPOINT] failed with status 401 Unauthorized: {\"detail\":\"Unauthorized\"}",
+    "2026-11-05T13:32:19.486955Z  WARN codex_core_plugins::manager: failed to sync curated plugins repo: git sync failed for curated plugin sync: no Git executable found in trusted installation directories; GitHub HTTP sync failed for curated plugin sync: get curated plugins repository from [ENDPOINT] failed with status 403 Forbidden: {\"message\":\"API rate limit exceeded for 31.59.135.171. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"[ENDPOINT]\"}",
+    "; export archive sync failed for curated plugin sync: failed to activate curated plugins repo at D:\\code\\visual\\wty_work\\experiments\\wildbench_20_four_models_20261103\\work\\private_runtime\\request_3c9763f78235493ba371e74c349af145\\.tmp/plugins: 拒绝访问。 (os error 5)"
+  ],
+  "https_relay": {
+    "transport": "codex_loopback_python_verified_https_v1",
+    "bind_scope": "loopback_only",
+    "upstream_tls_verified": true,
+    "redirects_followed": false,
+    "requests": [
+      {
+        "sequence": 1,
+        "request_bytes": 32312,
+        "request_sha256": "833f806339231ed5d8f3d7119dbea0d023fe343ab9894d82de1124b2f1b39e35",
+        "response_bytes": 12,
+        "response_sha256": "d2ca4ed9d113554663c426ff4f22534c40da6e1e5e1a37e2ac92d43719b12cdd",
+        "upstream_status": 200,
+        "completed": false
+      }
+    ]
+  },
+  "error": "Turn failed: {\"message\": \"stream disconnected before completion: idle timeout waiting for SSE\", \"codexErrorInfo\": \"other\", \"additionalDetails\": null, \"misalignment\": null}",
+  "error_type": "RuntimeError",
+  "retryable": true,
+  "batch_fatal": false,
+  "finished_at": "2026-11-05T13:33:36.590623+00:00",
+  "wall_seconds": 103.936705,
+  "answer_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "selected_attempt_id": "wild_006__sol_ultra__r2__a01"
+}

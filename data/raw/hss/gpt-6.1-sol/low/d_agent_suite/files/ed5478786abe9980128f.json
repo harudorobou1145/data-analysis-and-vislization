@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6a8507babd79f7aa9aabe2c1__sol_low",
+  "task_id": "6a8507babd79f7aa9aabe2c1",
+  "condition": "sol_low",
+  "request_kind": "generation",
+  "attempt_id": "6a8507babd79f7aa9aabe2c1__sol_low__a01",
+  "started_at": "2026-11-06T08:35:36.210040+00:00",
+  "status": "completed",
+  "prompt_hash": "635b899fa583d0446c3e59b55780f1617c253a4421b3ba9447f62d94a0ddb5e9",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "72e96777-eb5c-4fae-9089-69ed6fc3e641",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6a8507babd79f7aa9aabe2c1__sol_low",
+      "attempt_id": "6a8507babd79f7aa9aabe2c1__sol_low__a01",
+      "request_kind": "generation",
+      "task_id": "6a8507babd79f7aa9aabe2c1"
+    },
+    "started_at": "2026-11-06T08:35:36.212777+00:00",
+    "model_requested": "gpt-6.1-sol",
+    "effort_requested": "low",
+    "prompt": "Can the white truck in the image back up farther and why?",
+    "prompt_hash": "635b899fa583d0446c3e59b55780f1617c253a4421b3ba9447f62d94a0ddb5e9",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "Yes. The truck faces left, so backing up would move it right into the open space behind it, before reaching the parked car.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a8507babd79f7aa9aabe2c1.png",
+        "sha256": "0f99d2783ae3089f39678a27a55ff3a17ce59a0bef0e6d4c62ee00be3344ad0b",
+        "bytes": 1526963
+      }
+    ],
+    "effort_ui_requested": "low",
+    "effort_wire_expected": "low",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Fast responses with lighter reasoning",
+    "thread_id": "01a1afff-c2c8-7be1-8bbe-729885af5d9e",
+    "model_configured": "gpt-6.1-sol",
+    "effort_configured": "low",
+    "instruction_sources": [],
+    "turn_id": "01a1afff-c31b-7db3-91f6-d01a4d7411d1",
+    "client_elapsed_seconds": 7.34027,
+    "turn_status": "completed",
+    "elapsed_seconds": 7.303,
+    "wire_efforts_observed": [
+      "low"
+    ],
+    "token_usage": {
+      "totalTokens": 11072,
+      "inputTokens": 11041,
+      "cachedInputTokens": 8448,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 31,
+      "reasoningOutputTokens": 0
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 6.555234,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 2,
+      "item/completed": 2,
+      "item/agentMessage/delta": 27,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1afff-c343-7a21-b35c-3e0169f1857b",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "Can the white truck in the image back up farther and why?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a8507babd79f7aa9aabe2c1.png"
+          }
+        ],
+        "startedAtMs": 1793954136904,
+        "completedAtMs": 1793954136904
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_0277f9481f4f0a87016aed915d520487d09becd4b039b1ffec",
+        "text": "Yes. The truck faces left, so backing up would move it right into the open space behind it, before reaching the parked car.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793954143401,
+        "completedAtMs": 1793954143991
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 2067034,
+          "request_sha256": "e26f916c59a3adb791acd01cb4b3f0e43c8a4ed68f6423a199bfc951847f7eb0",
+          "response_bytes": 149605,
+          "response_sha256": "fe661afa1e0d6f1d6978c6de45852988dd0425aef8562bc02a4eaed33ba3d216",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 7.26014
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6.1-sol",
+        "reasoning": {
+          "effort": "low",
+          "context": "all_turns"
+        },
+        "request_sha256": "e26f916c59a3adb791acd01cb4b3f0e43c8a4ed68f6423a199bfc951847f7eb0",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "57c67841ecebab3147eca05b3dd312b06746e66003fabd98632c7ef553e77f2e"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "0f99d2783ae3089f39678a27a55ff3a17ce59a0bef0e6d4c62ee00be3344ad0b",
+            "bytes": 1526963,
+            "width": 1024,
+            "height": 678,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:35:44.288651+00:00",
+    "total_client_seconds": 8.064371,
+    "answer_hash": "4448b3e1ea6c526d7cd5cc300c474a38b1429e0a080226b2b41f09c855f2521b"
+  },
+  "answer": "Yes. The truck faces left, so backing up would move it right into the open space behind it, before reaching the parked car.",
+  "answer_hash": "4448b3e1ea6c526d7cd5cc300c474a38b1429e0a080226b2b41f09c855f2521b",
+  "image_sha256": "0f99d2783ae3089f39678a27a55ff3a17ce59a0bef0e6d4c62ee00be3344ad0b",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "finished_at": "2026-11-06T08:35:44.289210+00:00"
+}

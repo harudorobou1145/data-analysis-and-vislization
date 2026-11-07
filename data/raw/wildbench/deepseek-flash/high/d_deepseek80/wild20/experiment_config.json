@@ -1,0 +1,18 @@
+{
+  "experiment_id": "deepseek_flash_high_wild20_20261106",
+  "result_dir": "result/wildbench_20",
+  "tasks_file": "dataset/tasks_20.json",
+  "provider_transport": "python_https_relay",
+  "generation_provider": "deepseek_official_responses",
+  "judge_provider": "existing_codex_provider",
+  "provider_preflight_file": "provider_preflight.json",
+  "judge_model": "gpt-6.1-sol",
+  "judge_effort": "high",
+  "conditions": [
+    {
+      "condition_id": "deepseek_high",
+      "model": "deepseek-flash",
+      "effort": "high"
+    }
+  ]
+}

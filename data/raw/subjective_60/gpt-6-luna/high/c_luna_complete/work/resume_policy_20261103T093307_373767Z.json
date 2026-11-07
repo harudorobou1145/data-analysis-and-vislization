@@ -1,0 +1,47 @@
+{
+  "created_at": "2026-11-03T09:33:07.375769+00:00",
+  "experiment_id": "subjective_luna_high_60_20261103",
+  "supervisor_pid": 4708,
+  "manifest_file_sha256": "8f8adff364435f24b3b06ec0af3499100240a15ad665300110e8356c5ce6b879",
+  "policy_deviation": "Original policy permits manual restart only. This supervisor adds at most five automatic restarts in total, only after fresh local-relay URLError failures with no upstream response or completed upstream HTTP 503 responses with no generated output or usage. Frozen requests and scoring are unchanged.",
+  "supervisor_script_sha256": "b652a6f666a89ed05b39f865e221f87a330166f86276ab975744b73400c43abc",
+  "preflight_run_id": "writing_18__high__r1",
+  "initial_reason": {
+    "reason": "provider_connection",
+    "halted": true,
+    "stage": "score",
+    "updated_at": "2026-11-03T05:50:19.285774+00:00"
+  },
+  "cooldown_seconds": [
+    30,
+    60,
+    120,
+    240,
+    300
+  ],
+  "max_restarts": 5,
+  "attempts": [
+    {
+      "cycle": 0,
+      "started_at": "2026-11-03T09:33:07.378767+00:00",
+      "process_id": 12916,
+      "phase": "preflight",
+      "run_id": "writing_18__high__r1",
+      "exit_code": 0,
+      "finished_at": "2026-11-03T09:33:12.938739+00:00"
+    },
+    {
+      "cycle": 0,
+      "started_at": "2026-11-03T09:33:12.943556+00:00",
+      "process_id": 41616,
+      "phase": "full",
+      "run_id": null,
+      "exit_code": 1,
+      "finished_at": "2026-11-03T09:51:13.430063+00:00"
+    }
+  ],
+  "status": "error",
+  "updated_at": "2026-11-03T09:51:13.439921+00:00",
+  "preflight_verified_at": "2026-11-03T09:33:12.941467+00:00",
+  "last_reason": "Child exited 1; no automatic retry"
+}

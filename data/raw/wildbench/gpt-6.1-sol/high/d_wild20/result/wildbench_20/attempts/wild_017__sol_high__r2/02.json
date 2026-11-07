@@ -1,0 +1,116 @@
+{
+  "experiment_id": "wildbench_20_four_conditions_20261105_v2",
+  "run_id": "wild_017__sol_high__r2",
+  "task_id": "wild_017",
+  "task_type": "Planning",
+  "condition_id": "sol_high",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "repeat_id": 2,
+  "prompt_hash": "e9e02309b05bbf2aea3f6cb99129c0f8ab6421d6e9c126c77d46da6b958df230",
+  "spec_hash": "72981ea981c1c07d452154a005bb49ae19169eeecaab74081a8976ec80593484",
+  "attempt_id": "wild_017__sol_high__r2__a02",
+  "attempt_number": 2,
+  "started_at": "2026-11-05T13:49:01.286417+00:00",
+  "status": "error",
+  "request_id": "10286e34-86f3-44ec-9fab-aa85d20de130",
+  "request_kind": "generation",
+  "parent_run_id": "wild_017__sol_high__r2",
+  "model_requested": "gpt-6.1-sol",
+  "effort_requested": "high",
+  "prior_messages": 0,
+  "system_hash": "fa4d012e57fdef0fe321d25f36b7236e7040615b599b7af2347cfcc400d7ef59",
+  "prompt": "The problem I am having is that my IA lacks depth and specific events with dates, it is not cohesive as it should always link to my thesis \"Batista's weaknesses were the catalyst for the other factors' success\" and always respond to the question \"To what extent were Batista’s weaknesses responsible for Castro’s victory in the Cuban civil war?\" My IA should also have a school of thought that defines it. Make me an IA that fits these characteristics, skip the intro and the conclusion and go right into the body paragraphs. You should speak about these topics: popular support and propaganda, Guerilla warfare tactics, Batista's weaknesses, support from other countries, and united opposition. Give specific examples for each topic and link them to the thesis, research question, and school of thought. Aim for 300 words per paragraph",
+  "answer": "",
+  "ttft_seconds": null,
+  "tpot_seconds": null,
+  "provider_transport": "python_https_relay",
+  "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (wildbench_pilot; 1.0)",
+  "thread_id": "01a1abf8-5867-7b61-a9b4-d4dfeb807d75",
+  "model_configured": "gpt-6.1-sol",
+  "effort_configured": "high",
+  "instruction_sources": [],
+  "turn_id": "01a1abf8-58b0-7aa1-9c6a-4f9dccbca73f",
+  "client_elapsed_seconds": 101.704277,
+  "turn_status": "failed",
+  "elapsed_seconds": 101.67,
+  "final_answer_message_span_seconds": null,
+  "token_usage": null,
+  "tool_events": [],
+  "model_reroutes": [],
+  "observed_user_message_count": 1,
+  "runtime_warnings": [],
+  "notification_counts": {
+    "remoteControl/status/changed": 1,
+    "thread/started": 1,
+    "thread/status/changed": 2,
+    "turn/started": 1,
+    "item/started": 1,
+    "item/completed": 1,
+    "account/rateLimits/updated": 1,
+    "error": 1,
+    "turn/completed": 1
+  },
+  "runtime_errors": [
+    {
+      "observed_seconds": 101.70019,
+      "willRetry": false,
+      "message": "stream disconnected before completion: idle timeout waiting for SSE",
+      "code": "other",
+      "error": {
+        "message": "stream disconnected before completion: idle timeout waiting for SSE",
+        "codexErrorInfo": "other",
+        "additionalDetails": null,
+        "misalignment": null
+      },
+      "params": {
+        "error": {
+          "message": "stream disconnected before completion: idle timeout waiting for SSE",
+          "codexErrorInfo": "other",
+          "additionalDetails": null,
+          "misalignment": null
+        },
+        "willRetry": false,
+        "threadId": "01a1abf8-5867-7b61-a9b4-d4dfeb807d75",
+        "turnId": "01a1abf8-58b0-7aa1-9c6a-4f9dccbca73f"
+      }
+    }
+  ],
+  "runtime_reported_model": null,
+  "runtime_reported_effort": null,
+  "client_first_answer_delta_seconds": null,
+  "answer_stream_span_seconds": null,
+  "partial_answer": "",
+  "stderr_tail": [
+    "2026-11-05T13:49:02.334468Z  WARN codex_core_plugins::startup_sync: GitHub HTTP sync failed for curated plugin sync; falling back to export archive error=get curated plugins repository from [ENDPOINT] failed with status 403 Forbidden: {\"message\":\"API rate limit exceeded for 31.59.135.171. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"[ENDPOINT]\"}",
+    "backup_archive_api_url=\"[ENDPOINT]\"",
+    "2026-11-05T13:49:08.122581Z  WARN codex_core_plugins::manager: failed to warm featured plugin ids cache error=remote featured plugin request to [ENDPOINT] failed with status 401 Unauthorized: {\"detail\":\"Unauthorized\"}",
+    "2026-11-05T13:49:18.935327Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt: prompt must be at most 128 characters path=file:///D:/code/visual/wty_work/experiments/wildbench_20_four_models_20261103/work/private_runtime/request_4b23bc96abac4aa788b16c517273a60c/.tmp/plugins/plugins/build-ios-apps/.codex-plugin/plugin.json",
+    "2026-11-05T13:49:18.945356Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt: maximum of 3 prompts is supported path=file:///D:/code/visual/wty_work/experiments/wildbench_20_four_models_20261103/work/private_runtime/request_4b23bc96abac4aa788b16c517273a60c/.tmp/plugins/plugins/plugin-eval/.codex-plugin/plugin.json"
+  ],
+  "https_relay": {
+    "transport": "codex_loopback_python_verified_https_v1",
+    "bind_scope": "loopback_only",
+    "upstream_tls_verified": true,
+    "redirects_followed": false,
+    "requests": [
+      {
+        "sequence": 1,
+        "request_bytes": 31633,
+        "request_sha256": "6bd2275c507a821274e56ca735b9349e7439303e2e82cb4be091ff1c1f1581e5",
+        "response_bytes": 21,
+        "response_sha256": "934ef8112b16d7a873c613c7d9aebabaec9fefa144e71b26024f64d81fe374e9",
+        "upstream_status": 200,
+        "completed": false
+      }
+    ]
+  },
+  "error": "Turn failed: {\"message\": \"stream disconnected before completion: idle timeout waiting for SSE\", \"codexErrorInfo\": \"other\", \"additionalDetails\": null, \"misalignment\": null}",
+  "error_type": "RuntimeError",
+  "retryable": true,
+  "batch_fatal": false,
+  "finished_at": "2026-11-05T13:50:46.608401+00:00",
+  "wall_seconds": 105.321367,
+  "answer_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "selected_attempt_id": "wild_017__sol_high__r2__a02"
+}

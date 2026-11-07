@@ -1,0 +1,42 @@
+{
+  "created_at": "2026-11-02T05:46:40.260797+00:00",
+  "parent_experiment_id": "subjective_formal_60_v3",
+  "parent_root": "D:\\code\\visual\\wty_work",
+  "new_root": "D:\\code\\visual\\wty_work\\experiments\\luna_high_60_20261102",
+  "candidate_model": "gpt-6-luna",
+  "candidate_effort": "high",
+  "judge_model": "gpt-6.1-sol",
+  "judge_effort": "high",
+  "tasks": 60,
+  "generations_per_task": 2,
+  "answers": 120,
+  "primary_scores": 120,
+  "repeat_scores": 12,
+  "requests_excluding_retries": 252,
+  "parent_sha256": {
+    "experiment_config.json": "dc388e8e59d6fecdf32d20d068ac8f34f7a29916b6718884cfbdc19527102576",
+    "dataset/tasks_60.json": "a61237562ff8dccd170dc41511eae117f6ac6d78840b9cb0ffa8d9e6480086b4",
+    "result/formal_60_v3/manifest.json": "26eb5da42d06d403379780f10a9de370b22fc0b2b50ccdc9910e4de3c4b5f642",
+    "result/formal_60_v3/summary.json": "6c5727e8490e33b66c935c6b2ff8f28b009b60361e12edebf7b7d0c412c5a6a3",
+    "result/formal_60_v3/merged_results.jsonl": "a7ff47cd38e91009befa6156039a9820a52911b8574ab25ab6add5ad3fadac10",
+    "script/run_experiment.py": "23c26038fc8af738ce28e550f81c37eb3a0f86c3798db15161a7a03a7edacc9f",
+    "script/scoring.py": "c738a91c9681cc9da48f383ee16125caf2411268aa2b7250d1288deb1929d512",
+    "script/analyze_results.py": "7decb124870065686ce3d13474e758cf90733707b1e4a878bfc5e3b827fbd7bc",
+    "script/audit_results.py": "6a078d95f07e58fcf4dd10783e5a68c190849dd53723353fd9ce58662c215e2f",
+    "script/codex_transport.py": "9b51c204bcef331aeb720c15660c244cc51ee6ea32a896facb59155ffe9b164e",
+    "script/https_relay.py": "5aeb5ffc98286c095e6bfb3873a18f56005b64395f9f7d6ab7b0ee32a9ec2953"
+  },
+  "comparison_join_key": [
+    "experiment_id",
+    "run_id"
+  ],
+  "preserved_protocol": [
+    "Exact task file",
+    "Generation instructions",
+    "Judge instructions and four-aspect rubric",
+    "Independent ephemeral conversation per request",
+    "Workers=4, timeout=600, max_attempts=2",
+    "Verified HTTPS relay and timing fields"
+  ],
+  "limitation": "Original scoring ceiling is retained for comparability. Runtime metadata does not independently verify the upstream model implementation."
+}

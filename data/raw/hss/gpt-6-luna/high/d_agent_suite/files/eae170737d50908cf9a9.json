@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6a8507babd79f7aa9aabe2c1__luna_high",
+  "task_id": "6a8507babd79f7aa9aabe2c1",
+  "condition": "luna_high",
+  "request_kind": "generation",
+  "attempt_id": "6a8507babd79f7aa9aabe2c1__luna_high__a01",
+  "started_at": "2026-11-06T08:36:06.597732+00:00",
+  "status": "completed",
+  "prompt_hash": "635b899fa583d0446c3e59b55780f1617c253a4421b3ba9447f62d94a0ddb5e9",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "01f1c5ee-df36-4ce2-9207-5e2a14d67866",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6a8507babd79f7aa9aabe2c1__luna_high",
+      "attempt_id": "6a8507babd79f7aa9aabe2c1__luna_high__a01",
+      "request_kind": "generation",
+      "task_id": "6a8507babd79f7aa9aabe2c1"
+    },
+    "started_at": "2026-11-06T08:36:06.600737+00:00",
+    "model_requested": "gpt-6-luna",
+    "effort_requested": "high",
+    "prompt": "Can the white truck in the image back up farther and why?",
+    "prompt_hash": "635b899fa583d0446c3e59b55780f1617c253a4421b3ba9447f62d94a0ddb5e9",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "Probably not. The white truck is already close to the curb and the storefront; backing up farther could make it hit the curb or the building.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a8507babd79f7aa9aabe2c1.png",
+        "sha256": "0f99d2783ae3089f39678a27a55ff3a17ce59a0bef0e6d4c62ee00be3344ad0b",
+        "bytes": 1526963
+      }
+    ],
+    "effort_ui_requested": "high",
+    "effort_wire_expected": "high",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Greater reasoning depth for complex problems",
+    "thread_id": "01a1b000-3e92-7533-ac4f-acd34dc6cddd",
+    "model_configured": "gpt-6-luna",
+    "effort_configured": "high",
+    "instruction_sources": [],
+    "turn_id": "01a1b000-3f5d-70b0-a5d5-6cff0d45f575",
+    "client_elapsed_seconds": 5.229668,
+    "turn_status": "completed",
+    "elapsed_seconds": 5.147,
+    "wire_efforts_observed": [
+      "high"
+    ],
+    "token_usage": {
+      "totalTokens": 11237,
+      "inputTokens": 11204,
+      "cachedInputTokens": 4224,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 33,
+      "reasoningOutputTokens": 0
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 4.837207,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 2,
+      "item/completed": 2,
+      "item/agentMessage/delta": 29,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1b000-3fcc-7f62-b3d7-7039b1f40863",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "Can the white truck in the image back up farther and why?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a8507babd79f7aa9aabe2c1.png"
+          }
+        ],
+        "startedAtMs": 1793954168788,
+        "completedAtMs": 1793954168788
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_0235e5406ff684a8016aed917c1f6c87d08857e48c5d85f90a",
+        "text": "Probably not. The white truck is already close to the curb and the storefront; backing up farther could make it hit the curb or the building.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793954173471,
+        "completedAtMs": 1793954173657
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 2067035,
+          "request_sha256": "53c794fddcd1a3f403971ded18a4fcd029a3cc097bd658a04d80f411bae4ddc5",
+          "response_bytes": 147941,
+          "response_sha256": "aec93bbfa663b317adfd5d49d2be43daff3589659b79796ce2073003dc408385",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 5.034408
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6-luna",
+        "reasoning": {
+          "effort": "high",
+          "context": "all_turns"
+        },
+        "request_sha256": "53c794fddcd1a3f403971ded18a4fcd029a3cc097bd658a04d80f411bae4ddc5",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "57c67841ecebab3147eca05b3dd312b06746e66003fabd98632c7ef553e77f2e"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "0f99d2783ae3089f39678a27a55ff3a17ce59a0bef0e6d4c62ee00be3344ad0b",
+            "bytes": 1526963,
+            "width": 1024,
+            "height": 678,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:36:14.101947+00:00",
+    "total_client_seconds": 7.483132,
+    "answer_hash": "8acb4021793a562bbdc6cc90615c33469fc69f6414e48651f3e476068c5ae1b9"
+  },
+  "answer": "Probably not. The white truck is already close to the curb and the storefront; backing up farther could make it hit the curb or the building.",
+  "answer_hash": "8acb4021793a562bbdc6cc90615c33469fc69f6414e48651f3e476068c5ae1b9",
+  "image_sha256": "0f99d2783ae3089f39678a27a55ff3a17ce59a0bef0e6d4c62ee00be3344ad0b",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "finished_at": "2026-11-06T08:36:14.102953+00:00"
+}

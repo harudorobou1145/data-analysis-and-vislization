@@ -1,0 +1,54 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error,tool_server,tool_input,tool_output,behavior_category,is_test_execution,measurement_source
+exp_282ba51fb6eb131b12b85049_36b36ff8395c,1,2026-10-31T18:03:35.449477+00:00,0.7718856999417767,thread.started,,,,,,,,,,,,,,
+exp_282ba51fb6eb131b12b85049_36b36ff8395c,2,2026-10-31T18:03:35.493664+00:00,0.8160750999813899,turn.started,,,,,,,,,,,,,,
+exp_282ba51fb6eb131b12b85049_36b36ff8395c,3,2026-10-31T18:03:39.515051+00:00,4.837455400032923,item.completed,item_0,agent_message,,,,,,,,,,message,False,native_item
+exp_282ba51fb6eb131b12b85049_36b36ff8395c,4,2026-10-31T18:03:39.521317+00:00,4.843715199967846,item.started,item_1,mcp_tool_call,read_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py""}",,file_read,False,native_item
+exp_282ba51fb6eb131b12b85049_36b36ff8395c,5,2026-10-31T18:03:40.094877+00:00,5.417283099959604,item.completed,item_1,mcp_tool_call,read_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""content\"": \""from typing import List\\n\\n\\ndef mean_absolute_deviation(numbers: List[float]) -> float:\\n    \\\""\\\""\\\"" For a given list of input numbers, calculate Mean Absolute Deviation\\n    around the mean of this dataset.\\n    Mean Absolute Deviation is the average absolute difference between each\\n    element and a centerpoint (mean in this case):\\n    MAD = average | x - x_mean |\\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\\n    1.0\\n    \\\""\\\""\\\""\\n    pass\\n\""}""}], ""structured_content"": null}",file_read,False,workspace_tool_result
+exp_282ba51fb6eb131b12b85049_36b36ff8395c,6,2026-10-31T18:03:44.163963+00:00,9.486366200027987,item.started,item_2,mcp_tool_call,write_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""from typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    \""\""\"" For a given list of input numbers, calculate Mean Absolute Deviation\n    around the mean of this dataset.\n    Mean Absolute Deviation is the average absolute difference between each\n    element and a centerpoint (mean in this case):\n    MAD = average | x - x_mean |\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\n    1.0\n    \""\""\""\n    mean = sum(numbers) / len(numbers)\n    return sum(abs(number - mean) for number in numbers) / len(numbers)\n""}",,file_write,False,native_item
+exp_282ba51fb6eb131b12b85049_36b36ff8395c,7,2026-10-31T18:03:44.747074+00:00,10.06948199996259,item.completed,item_2,mcp_tool_call,write_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""from typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    \""\""\"" For a given list of input numbers, calculate Mean Absolute Deviation\n    around the mean of this dataset.\n    Mean Absolute Deviation is the average absolute difference between each\n    element and a centerpoint (mean in this case):\n    MAD = average | x - x_mean |\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\n    1.0\n    \""\""\""\n    mean = sum(numbers) / len(numbers)\n    return sum(abs(number - mean) for number in numbers) / len(numbers)\n""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""before_sha256\"": \""6ee9e1f9b8c211936f62c86505fd204a8b7167b25b4924d4720ec95b9c88eb75\"", \""after_sha256\"": \""2115be8418b86687f0e9a1676729a988daf2f78a1471d4057d6d5ae7fff825c9\"", \""changed\"": true}""}], ""structured_content"": null}",file_write,False,workspace_tool_result
+exp_282ba51fb6eb131b12b85049_36b36ff8395c,8,2026-10-31T18:03:50.704384+00:00,16.026789200026542,item.started,item_3,mcp_tool_call,run_command,in_progress,,,"python - <<'PY'
+import doctest
+from math import isclose
+import solution
+
+result = doctest.testmod(solution)
+assert result.failed == 0
+cases = [
+    ([1.0, 2.0, 3.0, 4.0], 1.0),
+    ([7.0], 0.0),
+    ([3.0, 3.0, 3.0], 0.0),
+    ([-3.0, -1.0, 1.0, 3.0], 2.0),
+    ([0.0, 0.0, 6.0], 8.0 / 3.0),
+    ([0.1, 0.2, 0.3], 1.0 / 15.0),
+]
+for numbers, expected in cases:
+    original = numbers.copy()
+    actual = solution.mean_absolute_deviation(numbers)
+    assert isclose(actual, expected, rel_tol=1e-12, abs_tol=1e-12), (numbers, actual, expected)
+    assert numbers == original
+print(f'Passed {result.attempted} doctest and {len(cases)} focused cases; inputs unchanged.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nimport doctest\nfrom math import isclose\nimport solution\n\nresult = doctest.testmod(solution)\nassert result.failed == 0\ncases = [\n    ([1.0, 2.0, 3.0, 4.0], 1.0),\n    ([7.0], 0.0),\n    ([3.0, 3.0, 3.0], 0.0),\n    ([-3.0, -1.0, 1.0, 3.0], 2.0),\n    ([0.0, 0.0, 6.0], 8.0 / 3.0),\n    ([0.1, 0.2, 0.3], 1.0 / 15.0),\n]\nfor numbers, expected in cases:\n    original = numbers.copy()\n    actual = solution.mean_absolute_deviation(numbers)\n    assert isclose(actual, expected, rel_tol=1e-12, abs_tol=1e-12), (numbers, actual, expected)\n    assert numbers == original\nprint(f'Passed {result.attempted} doctest and {len(cases)} focused cases; inputs unchanged.')\nPY""}",,command_execution,True,native_item
+exp_282ba51fb6eb131b12b85049_36b36ff8395c,9,2026-10-31T18:03:51.592710+00:00,16.91511249996256,item.completed,item_3,mcp_tool_call,run_command,completed,0,0.3036178669935907,"python - <<'PY'
+import doctest
+from math import isclose
+import solution
+
+result = doctest.testmod(solution)
+assert result.failed == 0
+cases = [
+    ([1.0, 2.0, 3.0, 4.0], 1.0),
+    ([7.0], 0.0),
+    ([3.0, 3.0, 3.0], 0.0),
+    ([-3.0, -1.0, 1.0, 3.0], 2.0),
+    ([0.0, 0.0, 6.0], 8.0 / 3.0),
+    ([0.1, 0.2, 0.3], 1.0 / 15.0),
+]
+for numbers, expected in cases:
+    original = numbers.copy()
+    actual = solution.mean_absolute_deviation(numbers)
+    assert isclose(actual, expected, rel_tol=1e-12, abs_tol=1e-12), (numbers, actual, expected)
+    assert numbers == original
+print(f'Passed {result.attempted} doctest and {len(cases)} focused cases; inputs unchanged.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nimport doctest\nfrom math import isclose\nimport solution\n\nresult = doctest.testmod(solution)\nassert result.failed == 0\ncases = [\n    ([1.0, 2.0, 3.0, 4.0], 1.0),\n    ([7.0], 0.0),\n    ([3.0, 3.0, 3.0], 0.0),\n    ([-3.0, -1.0, 1.0, 3.0], 2.0),\n    ([0.0, 0.0, 6.0], 8.0 / 3.0),\n    ([0.1, 0.2, 0.3], 1.0 / 15.0),\n]\nfor numbers, expected in cases:\n    original = numbers.copy()\n    actual = solution.mean_absolute_deviation(numbers)\n    assert isclose(actual, expected, rel_tol=1e-12, abs_tol=1e-12), (numbers, actual, expected)\n    assert numbers == original\nprint(f'Passed {result.attempted} doctest and {len(cases)} focused cases; inputs unchanged.')\nPY""}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python - <<'PY'\\nimport doctest\\nfrom math import isclose\\nimport solution\\n\\nresult = doctest.testmod(solution)\\nassert result.failed == 0\\ncases = [\\n    ([1.0, 2.0, 3.0, 4.0], 1.0),\\n    ([7.0], 0.0),\\n    ([3.0, 3.0, 3.0], 0.0),\\n    ([-3.0, -1.0, 1.0, 3.0], 2.0),\\n    ([0.0, 0.0, 6.0], 8.0 / 3.0),\\n    ([0.1, 0.2, 0.3], 1.0 / 15.0),\\n]\\nfor numbers, expected in cases:\\n    original = numbers.copy()\\n    actual = solution.mean_absolute_deviation(numbers)\\n    assert isclose(actual, expected, rel_tol=1e-12, abs_tol=1e-12), (numbers, actual, expected)\\n    assert numbers == original\\nprint(f'Passed {result.attempted} doctest and {len(cases)} focused cases; inputs unchanged.')\\nPY\"", \""exit_code\"": 0, \""stdout\"": \""Passed 1 doctest and 6 focused cases; inputs unchanged.\\n\"", \""stderr\"": \""\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.3036178669935907, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+exp_282ba51fb6eb131b12b85049_36b36ff8395c,10,2026-10-31T18:03:56.652500+00:00,21.974905399954878,item.completed,item_4,agent_message,,,,,,,,,,message,False,native_item
+exp_282ba51fb6eb131b12b85049_36b36ff8395c,11,2026-10-31T18:03:56.677456+00:00,21.99986149999313,turn.completed,,,,,,,,,,,,,,

@@ -1,0 +1,29 @@
+run_id,message_id,turn_id,role,content,timestamp,message_type
+max100_be3ef7d9120716d79a7f4266_e4b49a9b0f,prompt,1,user,"Complete solution.py according to its function specification. Preserve its entry point and required imports. Return the complete source.
+
+
+TOOLS MODE: solution.py is in the isolated /workspace container. Use ONLY the codedepth_workspace MCP tools to read files, write code, and run Python/pytest checks. Tool file paths are relative POSIX paths such as solution.py. The host current directory is not your workspace. Preserve solution.py as the final full source file. You may create your own temporary tests; official hidden tests are unavailable. Do not merely return code: use write_file or a container command to save your changes, then explain your result.
+",,task_prompt
+max100_be3ef7d9120716d79a7f4266_e4b49a9b0f,item_3,1,assistant,"Saved `solution.py` with an O(n) rolling maximum implementation. The doctest and 19,531 exhaustive cases passed; inputs remain unchanged.
+
+```python
+from typing import List, Tuple
+
+
+def rolling_max(numbers: List[int]) -> List[int]:
+    """""" From a given list of integers, generate a list of rolling maximum element found until given moment
+    in the sequence.
+    >>> rolling_max([1, 2, 3, 2, 3, 4, 2])
+    [1, 2, 3, 3, 3, 4, 4]
+    """"""
+    if not numbers:
+        return []
+
+    result = []
+    current_max = numbers[0]
+    for number in numbers:
+        if number > current_max:
+            current_max = number
+        result.append(current_max)
+    return result
+```",2026-11-01T08:06:42.834764+00:00,agent_message

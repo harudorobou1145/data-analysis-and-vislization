@@ -1,0 +1,28 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error,tool_server,tool_input,tool_output,behavior_category,is_test_execution,measurement_source
+exp_59c17dc2460f81419f24e28d_0fe74d2a5842,1,2026-10-31T16:48:47.956050+00:00,0.766605900018476,thread.started,,,,,,,,,,,,,,
+exp_59c17dc2460f81419f24e28d_0fe74d2a5842,2,2026-10-31T16:48:48.003438+00:00,0.8139946999726817,turn.started,,,,,,,,,,,,,,
+exp_59c17dc2460f81419f24e28d_0fe74d2a5842,3,2026-10-31T16:48:53.009008+00:00,5.819566400023177,item.completed,item_0,agent_message,,,,,,,,,,message,False,native_item
+exp_59c17dc2460f81419f24e28d_0fe74d2a5842,4,2026-10-31T16:48:53.082028+00:00,5.8925847000209615,item.started,item_1,mcp_tool_call,read_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py""}",,file_read,False,native_item
+exp_59c17dc2460f81419f24e28d_0fe74d2a5842,5,2026-10-31T16:48:53.637318+00:00,6.4478787999833,item.completed,item_1,mcp_tool_call,read_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""content\"": \""\\n\\ndef fib(n: int):\\n    \\\""\\\""\\\""Return n-th Fibonacci number.\\n    >>> fib(10)\\n    55\\n    >>> fib(1)\\n    1\\n    >>> fib(8)\\n    21\\n    \\\""\\\""\\\""\\n    pass\\n\""}""}], ""structured_content"": null}",file_read,False,workspace_tool_result
+exp_59c17dc2460f81419f24e28d_0fe74d2a5842,6,2026-10-31T16:48:59.953078+00:00,12.76363219995983,item.started,item_2,mcp_tool_call,write_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def fib(n: int):\n    \""\""\""Return n-th Fibonacci number.\n    >>> fib(10)\n    55\n    >>> fib(1)\n    1\n    >>> fib(8)\n    21\n    \""\""\""\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n""}",,file_write,False,native_item
+exp_59c17dc2460f81419f24e28d_0fe74d2a5842,7,2026-10-31T16:49:00.567621+00:00,13.3781813000096,item.completed,item_2,mcp_tool_call,write_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def fib(n: int):\n    \""\""\""Return n-th Fibonacci number.\n    >>> fib(10)\n    55\n    >>> fib(1)\n    1\n    >>> fib(8)\n    21\n    \""\""\""\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""before_sha256\"": \""9dc68d11bed5bb69281b5999860a5a8f79066cba4667e09193d01d881de4e877\"", \""after_sha256\"": \""fd5e1214c2b4811139053134fa1392c7b92eb1233133e26fb9eb78379e316ca0\"", \""changed\"": true}""}], ""structured_content"": null}",file_write,False,workspace_tool_result
+exp_59c17dc2460f81419f24e28d_0fe74d2a5842,8,2026-10-31T16:49:04.344297+00:00,17.15485249995254,item.started,item_3,mcp_tool_call,run_command,in_progress,,,"python - <<'PY'
+import doctest
+import solution
+result = doctest.testmod(solution)
+assert result.failed == 0
+for n, expected in [(0, 0), (1, 1), (2, 1), (3, 2), (8, 21), (10, 55), (100, 354224848179261915075)]:
+    assert solution.fib(n) == expected, n
+print(f'{result.attempted} doctests and 7 explicit cases passed.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nimport doctest\nimport solution\nresult = doctest.testmod(solution)\nassert result.failed == 0\nfor n, expected in [(0, 0), (1, 1), (2, 1), (3, 2), (8, 21), (10, 55), (100, 354224848179261915075)]:\n    assert solution.fib(n) == expected, n\nprint(f'{result.attempted} doctests and 7 explicit cases passed.')\nPY""}",,command_execution,True,native_item
+exp_59c17dc2460f81419f24e28d_0fe74d2a5842,9,2026-10-31T16:49:05.224703+00:00,18.035260000033304,item.completed,item_3,mcp_tool_call,run_command,completed,0,0.3068887679983163,"python - <<'PY'
+import doctest
+import solution
+result = doctest.testmod(solution)
+assert result.failed == 0
+for n, expected in [(0, 0), (1, 1), (2, 1), (3, 2), (8, 21), (10, 55), (100, 354224848179261915075)]:
+    assert solution.fib(n) == expected, n
+print(f'{result.attempted} doctests and 7 explicit cases passed.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nimport doctest\nimport solution\nresult = doctest.testmod(solution)\nassert result.failed == 0\nfor n, expected in [(0, 0), (1, 1), (2, 1), (3, 2), (8, 21), (10, 55), (100, 354224848179261915075)]:\n    assert solution.fib(n) == expected, n\nprint(f'{result.attempted} doctests and 7 explicit cases passed.')\nPY""}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python - <<'PY'\\nimport doctest\\nimport solution\\nresult = doctest.testmod(solution)\\nassert result.failed == 0\\nfor n, expected in [(0, 0), (1, 1), (2, 1), (3, 2), (8, 21), (10, 55), (100, 354224848179261915075)]:\\n    assert solution.fib(n) == expected, n\\nprint(f'{result.attempted} doctests and 7 explicit cases passed.')\\nPY\"", \""exit_code\"": 0, \""stdout\"": \""3 doctests and 7 explicit cases passed.\\n\"", \""stderr\"": \""\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.3068887679983163, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+exp_59c17dc2460f81419f24e28d_0fe74d2a5842,10,2026-10-31T16:49:08.641613+00:00,21.452168100047857,item.completed,item_4,agent_message,,,,,,,,,,message,False,native_item
+exp_59c17dc2460f81419f24e28d_0fe74d2a5842,11,2026-10-31T16:49:08.678773+00:00,21.48933060001582,turn.completed,,,,,,,,,,,,,,

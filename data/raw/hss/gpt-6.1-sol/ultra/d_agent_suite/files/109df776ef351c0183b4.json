@@ -1,0 +1,182 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6a84a95e6d0654f769b19d98__sol_ultra",
+  "task_id": "6a84a95e6d0654f769b19d98",
+  "condition": "sol_ultra",
+  "request_kind": "generation",
+  "attempt_id": "6a84a95e6d0654f769b19d98__sol_ultra__a01",
+  "started_at": "2026-11-06T07:39:57.425589+00:00",
+  "status": "error",
+  "prompt_hash": "2ccab65c39ca477280d9ab89490e49e9e2544895863b3c05d77d7d4c223a15c9",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "62a66b02-45d0-48c2-88d4-683ad8044fd9",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6a84a95e6d0654f769b19d98__sol_ultra",
+      "attempt_id": "6a84a95e6d0654f769b19d98__sol_ultra__a01",
+      "request_kind": "generation",
+      "task_id": "6a84a95e6d0654f769b19d98"
+    },
+    "started_at": "2026-11-06T07:39:57.427240+00:00",
+    "model_requested": "gpt-6.1-sol",
+    "effort_requested": "ultra",
+    "prompt": "If the man in the star covered jacket stood upright without moving his feet, could he reach the rope with one hand.",
+    "prompt_hash": "2ccab65c39ca477280d9ab89490e49e9e2544895863b3c05d77d7d4c223a15c9",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "error",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "Yes, he could reach the rope with one hand while keeping his feet in place.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a84a95e6d0654f769b19d98.png",
+        "sha256": "3872c33b3d0325bf544c0e458a149613f2a550fc394fce6d201fa8c2fdab3b17",
+        "bytes": 1327150
+      }
+    ],
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "thread_id": "01a1afcc-d156-7c71-8249-50fa82b1ae04",
+    "model_configured": "gpt-6.1-sol",
+    "effort_configured": "ultra",
+    "instruction_sources": [],
+    "turn_id": "01a1afcc-d1b9-7e03-89c1-4d7ef28e7f57",
+    "client_elapsed_seconds": 15.428194,
+    "turn_status": "completed",
+    "elapsed_seconds": 15.377,
+    "error_type": "RuntimeError",
+    "error": "Actual wire effort differs from requested setting",
+    "token_usage": {
+      "totalTokens": 11347,
+      "inputTokens": 11061,
+      "cachedInputTokens": 4096,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 286,
+      "reasoningOutputTokens": 263
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 15.074509,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 3,
+      "item/completed": 3,
+      "item/agentMessage/delta": 17,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1afcc-d201-7802-a744-e431228b6f3e",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "If the man in the star covered jacket stood upright without moving his feet, could he reach the rope with one hand.",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a84a95e6d0654f769b19d98.png"
+          }
+        ],
+        "startedAtMs": 1793950798340,
+        "completedAtMs": 1793950798340
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_06588aafaa3ef781016aed845bfd3887d2a63229753eb3609e",
+        "text": "Yes, he could reach the rope with one hand while keeping his feet in place.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793950813318,
+        "completedAtMs": 1793950813530
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 1800931,
+          "request_sha256": "aceb4f25b186484f9970a38b6b39920faf307f31df92984268e5bdcef2313cb0",
+          "response_bytes": 162270,
+          "response_sha256": "edc3ad6139fef22fcd1de191cdca29545648bb552af2e129a2dd627704dcd191",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 15.30963
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6.1-sol",
+        "reasoning": {
+          "effort": "xhigh",
+          "context": "all_turns"
+        },
+        "request_sha256": "aceb4f25b186484f9970a38b6b39920faf307f31df92984268e5bdcef2313cb0",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "9744483a8a5cfbb0db84c8084f0c4cf3ed69533ee99c2ca01aaa1cc32347cbe3"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "3872c33b3d0325bf544c0e458a149613f2a550fc394fce6d201fa8c2fdab3b17",
+            "bytes": 1327150,
+            "width": 1024,
+            "height": 668,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null
+      }
+    ],
+    "finished_at": "2026-11-06T07:40:13.857022+00:00",
+    "total_client_seconds": 16.425884,
+    "answer_hash": "45212205fbe266ddf9b346ae2bcf330468e720ef42f87ed7b26b36da66411dae"
+  },
+  "error_type": "ValueError",
+  "finished_at": "2026-11-06T07:40:13.857590+00:00"
+}

@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6a9e06bce6e80e99fcf1f62a__sol_low",
+  "task_id": "6a9e06bce6e80e99fcf1f62a",
+  "condition": "sol_low",
+  "request_kind": "generation",
+  "attempt_id": "6a9e06bce6e80e99fcf1f62a__sol_low__a01",
+  "started_at": "2026-11-06T08:44:00.132265+00:00",
+  "status": "completed",
+  "prompt_hash": "ed22c43a9445726e21ed449e72102dc7c9855358e149e1fadd80ed5bb36547ca",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "cff3a641-9567-41dc-a6c9-6f967d399aa5",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6a9e06bce6e80e99fcf1f62a__sol_low",
+      "attempt_id": "6a9e06bce6e80e99fcf1f62a__sol_low__a01",
+      "request_kind": "generation",
+      "task_id": "6a9e06bce6e80e99fcf1f62a"
+    },
+    "started_at": "2026-11-06T08:44:00.133717+00:00",
+    "model_requested": "gpt-6.1-sol",
+    "effort_requested": "low",
+    "prompt": "What must have occurred prior to this photo for the glass to be filled in the manner it is and how can you tell? Assume that only the items in this image were used.",
+    "prompt_hash": "ed22c43a9445726e21ed449e72102dc7c9855358e149e1fadd80ed5bb36547ca",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "The upright Prosecco bottle must have been uncorked, tilted to pour into the glass, and then set upright again. The loose cork and wire cage lie beside it, and the pale, bubbly liquid in the glass matches sparkling wine. The bottle lying on its side still appears sealed.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a9e06bce6e80e99fcf1f62a.png",
+        "sha256": "8a28b2a76ad199b7c03e9a5e83d0550b688e078066680793000c925851af3287",
+        "bytes": 683309
+      }
+    ],
+    "effort_ui_requested": "low",
+    "effort_wire_expected": "low",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Fast responses with lighter reasoning",
+    "thread_id": "01a1b007-7334-7ea0-ab67-74760cde5600",
+    "model_configured": "gpt-6.1-sol",
+    "effort_configured": "low",
+    "instruction_sources": [],
+    "turn_id": "01a1b007-737c-79e0-ace9-55145b6f5d4d",
+    "client_elapsed_seconds": 11.566338,
+    "turn_status": "completed",
+    "elapsed_seconds": 11.539,
+    "wire_efforts_observed": [
+      "low"
+    ],
+    "token_usage": {
+      "totalTokens": 11183,
+      "inputTokens": 11064,
+      "cachedInputTokens": 4096,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 119,
+      "reasoningOutputTokens": 54
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 9.178042,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 3,
+      "item/completed": 3,
+      "item/agentMessage/delta": 59,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1b007-739a-7d42-8472-1741e5f01578",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "What must have occurred prior to this photo for the glass to be filled in the manner it is and how can you tell? Assume that only the items in this image were used.",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a9e06bce6e80e99fcf1f62a.png"
+          }
+        ],
+        "startedAtMs": 1793954640796,
+        "completedAtMs": 1793954640796
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_02f008b91b66df26016aed935890b087d0a253fe9fd22d1903",
+        "text": "The upright Prosecco bottle must have been uncorked, tilted to pour into the glass, and then set upright again. The loose cork and wire cage lie beside it, and the pale, bubbly liquid in the glass matches sparkling wine. The bottle lying on its side still appears sealed.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793954649932,
+        "completedAtMs": 1793954652251
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 942269,
+          "request_sha256": "01aec9f253ab924750bc476959a6ea018f33aa359ebe285e44e497c0279cec0d",
+          "response_bytes": 167466,
+          "response_sha256": "d260c860451ae329e4ac4a250736d1f9e54a6dc4076721d9c8b11f8d8868b307",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 11.510353
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6.1-sol",
+        "reasoning": {
+          "effort": "low",
+          "context": "all_turns"
+        },
+        "request_sha256": "01aec9f253ab924750bc476959a6ea018f33aa359ebe285e44e497c0279cec0d",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "96ad122df7b18f6ae1a41f3700ff970dc53c1afe686ee66f9a108a67f18f392e"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "8a28b2a76ad199b7c03e9a5e83d0550b688e078066680793000c925851af3287",
+            "bytes": 683309,
+            "width": 1024,
+            "height": 683,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:44:12.388697+00:00",
+    "total_client_seconds": 12.252309,
+    "answer_hash": "6f70f9e8a2359e4122ed075402ed07746c6413d33f7093f074b82a5a4f77f62e"
+  },
+  "answer": "The upright Prosecco bottle must have been uncorked, tilted to pour into the glass, and then set upright again. The loose cork and wire cage lie beside it, and the pale, bubbly liquid in the glass matches sparkling wine. The bottle lying on its side still appears sealed.",
+  "answer_hash": "6f70f9e8a2359e4122ed075402ed07746c6413d33f7093f074b82a5a4f77f62e",
+  "image_sha256": "8a28b2a76ad199b7c03e9a5e83d0550b688e078066680793000c925851af3287",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "finished_at": "2026-11-06T08:44:12.388697+00:00"
+}

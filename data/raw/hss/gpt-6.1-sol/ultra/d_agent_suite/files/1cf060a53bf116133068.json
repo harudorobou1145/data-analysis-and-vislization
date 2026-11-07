@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6a8133db31a691b790551e08__sol_ultra",
+  "task_id": "6a8133db31a691b790551e08",
+  "condition": "sol_ultra",
+  "request_kind": "generation",
+  "attempt_id": "6a8133db31a691b790551e08__sol_ultra__a01",
+  "started_at": "2026-11-06T08:33:23.618092+00:00",
+  "status": "completed",
+  "prompt_hash": "d5664f9bc7ecdb9e7008e7b1549a1275c07add95e6f7d44c1b4515bb27a3a764",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "749830ad-9374-4775-867d-57f4fb8a8355",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6a8133db31a691b790551e08__sol_ultra",
+      "attempt_id": "6a8133db31a691b790551e08__sol_ultra__a01",
+      "request_kind": "generation",
+      "task_id": "6a8133db31a691b790551e08"
+    },
+    "started_at": "2026-11-06T08:33:23.619193+00:00",
+    "model_requested": "gpt-6.1-sol",
+    "effort_requested": "ultra",
+    "prompt": "Focus on the white board. If it were to fall straight down vertically, would it land on the woman's head who's standing next to it, wearing black and grey?",
+    "prompt_hash": "d5664f9bc7ecdb9e7008e7b1549a1275c07add95e6f7d44c1b4515bb27a3a764",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "No. She is standing in front of the whiteboard, so a straight vertical fall would pass behind her.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a8133db31a691b790551e08.png",
+        "sha256": "d047cfa84512f4130d947969fe29078e24a31b8c5043fb2e09980783c9901f3a",
+        "bytes": 555524
+      }
+    ],
+    "effort_ui_requested": "ultra",
+    "effort_wire_expected": "xhigh",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Maximum reasoning with automatic task delegation",
+    "thread_id": "01a1affd-bc6a-7e91-85f8-8c7f9317db5e",
+    "model_configured": "gpt-6.1-sol",
+    "effort_configured": "ultra",
+    "instruction_sources": [],
+    "turn_id": "01a1affd-bcac-7d41-923c-d1176951a4be",
+    "client_elapsed_seconds": 22.045051,
+    "turn_status": "completed",
+    "elapsed_seconds": 22.014,
+    "wire_efforts_observed": [
+      "xhigh"
+    ],
+    "token_usage": {
+      "totalTokens": 11570,
+      "inputTokens": 11103,
+      "cachedInputTokens": 4096,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 467,
+      "reasoningOutputTokens": 439
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 21.64976,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 3,
+      "item/completed": 3,
+      "item/agentMessage/delta": 22,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1affd-bcd7-7dc2-b17a-8cc7434bc574",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "Focus on the white board. If it were to fall straight down vertically, would it land on the woman's head who's standing next to it, wearing black and grey?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a8133db31a691b790551e08.png"
+          }
+        ],
+        "startedAtMs": 1793954004186,
+        "completedAtMs": 1793954004186
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_000f4ec537fb671b016aed90e88d9087d08ab1178d4d78b91b",
+        "text": "No. She is standing in front of the whiteboard, so a straight vertical fall would pass behind her.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793954025771,
+        "completedAtMs": 1793954026105
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 772135,
+          "request_sha256": "9d6d0394685cac919c2ed5d22a54e796745d12b33a7bf0a0b00f201dfbe984d6",
+          "response_bytes": 171244,
+          "response_sha256": "28a2860c70114c2a99a3c01064addca4f7745eb6bfbfd65de69cd3cb1bacaa9b",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 21.973928
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6.1-sol",
+        "reasoning": {
+          "effort": "xhigh",
+          "context": "all_turns"
+        },
+        "request_sha256": "9d6d0394685cac919c2ed5d22a54e796745d12b33a7bf0a0b00f201dfbe984d6",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "0561cef9c830bcb3e621360ab3b30d7e4945a552a8f7e45d7dab8de77c08dabe"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "d047cfa84512f4130d947969fe29078e24a31b8c5043fb2e09980783c9901f3a",
+            "bytes": 555524,
+            "width": 1024,
+            "height": 683,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:33:46.262766+00:00",
+    "total_client_seconds": 22.642094,
+    "answer_hash": "d48ca0f13203b614b86e05b7647c0db56eeb3a16ebb57eb45227ea80a4961d78"
+  },
+  "answer": "No. She is standing in front of the whiteboard, so a straight vertical fall would pass behind her.",
+  "answer_hash": "d48ca0f13203b614b86e05b7647c0db56eeb3a16ebb57eb45227ea80a4961d78",
+  "image_sha256": "d047cfa84512f4130d947969fe29078e24a31b8c5043fb2e09980783c9901f3a",
+  "model": "gpt-6.1-sol",
+  "effort": "ultra",
+  "finished_at": "2026-11-06T08:33:46.263289+00:00"
+}

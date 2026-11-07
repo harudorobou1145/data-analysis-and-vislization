@@ -1,0 +1,132 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error,tool_server,tool_input,tool_output,behavior_category,is_test_execution,measurement_source
+session_e5a01b1de5a64c28be1d80026adb8b14_r2,1,2026-11-01T04:15:59.869116+00:00,0.8129167000297457,thread.started,,,,,,,,,,,,,,
+session_e5a01b1de5a64c28be1d80026adb8b14_r2,2,2026-11-01T04:15:59.932061+00:00,0.8758643000619486,turn.started,,,,,,,,,,,,,,
+session_e5a01b1de5a64c28be1d80026adb8b14_r2,3,2026-11-01T04:16:04.531723+00:00,5.47552670002915,item.completed,item_0,agent_message,,,,,,,,,,message,False,native_item
+session_e5a01b1de5a64c28be1d80026adb8b14_r2,4,2026-11-01T04:16:04.573982+00:00,5.517780700000003,item.started,item_1,mcp_tool_call,read_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py""}",,file_read,False,native_item
+session_e5a01b1de5a64c28be1d80026adb8b14_r2,5,2026-11-01T04:16:05.187734+00:00,6.131536400062032,item.completed,item_1,mcp_tool_call,read_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""content\"": \""def is_nested(string):\\n    '''Return whether the input contains a nested bracket subsequence.\\n\\n    For inputs containing only square brackets, this is equivalent to\\n    finding two opening brackets followed by two closing brackets.\\n    '''\\n    matched = 0\\n    for bracket in string:\\n        is_opening = bracket == '['\\n        if is_opening == (matched < 2):\\n            matched += 1\\n            if matched == 4:\\n                return True\\n    return False\\n\""}""}], ""structured_content"": null}",file_read,False,workspace_tool_result
+session_e5a01b1de5a64c28be1d80026adb8b14_r2,6,2026-11-01T04:16:22.545879+00:00,23.48968060000334,item.completed,item_2,agent_message,,,,,,,,,,message,False,native_item
+session_e5a01b1de5a64c28be1d80026adb8b14_r2,7,2026-11-01T04:16:24.860182+00:00,25.803985200007446,item.started,item_3,mcp_tool_call,write_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def is_nested(string):\n    '''Return True when a matched bracket pair contains another matched pair.\n\n    Unmatched brackets outside a nested group do not invalidate that group.\n    '''\n    # Each open bracket records whether a complete pair has closed inside it.\n    contains_pair = []\n    for bracket in string:\n        if bracket == '[':\n            contains_pair.append(False)\n        elif bracket == ']' and contains_pair:\n            if contains_pair.pop():\n                return True\n            if contains_pair:\n                contains_pair[-1] = True\n    return False\n""}",,file_write,False,native_item
+session_e5a01b1de5a64c28be1d80026adb8b14_r2,8,2026-11-01T04:16:25.478230+00:00,26.422032900038175,item.completed,item_3,mcp_tool_call,write_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def is_nested(string):\n    '''Return True when a matched bracket pair contains another matched pair.\n\n    Unmatched brackets outside a nested group do not invalidate that group.\n    '''\n    # Each open bracket records whether a complete pair has closed inside it.\n    contains_pair = []\n    for bracket in string:\n        if bracket == '[':\n            contains_pair.append(False)\n        elif bracket == ']' and contains_pair:\n            if contains_pair.pop():\n                return True\n            if contains_pair:\n                contains_pair[-1] = True\n    return False\n""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""before_sha256\"": \""7b9196ebb0cca4772f25a2bee5fd7d9d115c1465b9cdea8ca6c7bcdb1b1d90fb\"", \""after_sha256\"": \""b27af610955c0109a744cced672a8c95eecb6b5388d1fcdc949eef2c34e2fa1a\"", \""changed\"": true}""}], ""structured_content"": null}",file_write,False,workspace_tool_result
+session_e5a01b1de5a64c28be1d80026adb8b14_r2,9,2026-11-01T04:16:33.268803+00:00,34.21260570001323,item.started,item_4,mcp_tool_call,run_command,in_progress,,,"python - <<'PY'
+from itertools import product
+from solution import is_nested
+
+def oracle(text):
+    for start in range(len(text)):
+        balance = 0
+        maximum = 0
+        for char in text[start:]:
+            balance += 1 if char == '[' else -1
+            if balance < 0:
+                break
+            maximum = max(maximum, balance)
+            if balance == 0 and maximum >= 2:
+                return True
+    return False
+
+examples = [('[[]]', True), ('[]]]]]]][[[[[]', False), ('[][]', False), ('[]', False), ('[[][]]', True), ('[[]][[', True)]
+regressions = [('', False), ('[[', False), (']]', False), ('[[][]', False), ('[][[]', False), ('[[[]', True), ('][[]][', True), ('[[[][]', True)]
+for text, expected in examples + regressions:
+    assert is_nested(text) == expected, (text, expected)
+count = 0
+for length in range(15):
+    for chars in product('[]', repeat=length):
+        text = ''.join(chars)
+        assert is_nested(text) == oracle(text), text
+        count += 1
+print('Passed all 6 public examples and 8 targeted cases.')
+print(f'Passed {count} exhaustive cases against a balanced-substring oracle (lengths 0–14).')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nfrom itertools import product\nfrom solution import is_nested\n\ndef oracle(text):\n    for start in range(len(text)):\n        balance = 0\n        maximum = 0\n        for char in text[start:]:\n            balance += 1 if char == '[' else -1\n            if balance < 0:\n                break\n            maximum = max(maximum, balance)\n            if balance == 0 and maximum >= 2:\n                return True\n    return False\n\nexamples = [('[[]]', True), ('[]]]]]]][[[[[]', False), ('[][]', False), ('[]', False), ('[[][]]', True), ('[[]][[', True)]\nregressions = [('', False), ('[[', False), (']]', False), ('[[][]', False), ('[][[]', False), ('[[[]', True), ('][[]][', True), ('[[[][]', True)]\nfor text, expected in examples + regressions:\n    assert is_nested(text) == expected, (text, expected)\ncount = 0\nfor length in range(15):\n    for chars in product('[]', repeat=length):\n        text = ''.join(chars)\n        assert is_nested(text) == oracle(text), text\n        count += 1\nprint('Passed all 6 public examples and 8 targeted cases.')\nprint(f'Passed {count} exhaustive cases against a balanced-substring oracle (lengths 0–14).')\nPY"", ""timeout_seconds"": 30}",,command_execution,True,native_item
+session_e5a01b1de5a64c28be1d80026adb8b14_r2,10,2026-11-01T04:16:34.291290+00:00,35.23509540001396,item.completed,item_4,mcp_tool_call,run_command,failed,1,0.03440923300513532,"python - <<'PY'
+from itertools import product
+from solution import is_nested
+
+def oracle(text):
+    for start in range(len(text)):
+        balance = 0
+        maximum = 0
+        for char in text[start:]:
+            balance += 1 if char == '[' else -1
+            if balance < 0:
+                break
+            maximum = max(maximum, balance)
+            if balance == 0 and maximum >= 2:
+                return True
+    return False
+
+examples = [('[[]]', True), ('[]]]]]]][[[[[]', False), ('[][]', False), ('[]', False), ('[[][]]', True), ('[[]][[', True)]
+regressions = [('', False), ('[[', False), (']]', False), ('[[][]', False), ('[][[]', False), ('[[[]', True), ('][[]][', True), ('[[[][]', True)]
+for text, expected in examples + regressions:
+    assert is_nested(text) == expected, (text, expected)
+count = 0
+for length in range(15):
+    for chars in product('[]', repeat=length):
+        text = ''.join(chars)
+        assert is_nested(text) == oracle(text), text
+        count += 1
+print('Passed all 6 public examples and 8 targeted cases.')
+print(f'Passed {count} exhaustive cases against a balanced-substring oracle (lengths 0–14).')
+PY","Traceback (most recent call last):
+  File ""<stdin>"", line 20, in <module>
+AssertionError: ('[[[]', True)
+",codedepth_workspace,"{""command"": ""python - <<'PY'\nfrom itertools import product\nfrom solution import is_nested\n\ndef oracle(text):\n    for start in range(len(text)):\n        balance = 0\n        maximum = 0\n        for char in text[start:]:\n            balance += 1 if char == '[' else -1\n            if balance < 0:\n                break\n            maximum = max(maximum, balance)\n            if balance == 0 and maximum >= 2:\n                return True\n    return False\n\nexamples = [('[[]]', True), ('[]]]]]]][[[[[]', False), ('[][]', False), ('[]', False), ('[[][]]', True), ('[[]][[', True)]\nregressions = [('', False), ('[[', False), (']]', False), ('[[][]', False), ('[][[]', False), ('[[[]', True), ('][[]][', True), ('[[[][]', True)]\nfor text, expected in examples + regressions:\n    assert is_nested(text) == expected, (text, expected)\ncount = 0\nfor length in range(15):\n    for chars in product('[]', repeat=length):\n        text = ''.join(chars)\n        assert is_nested(text) == oracle(text), text\n        count += 1\nprint('Passed all 6 public examples and 8 targeted cases.')\nprint(f'Passed {count} exhaustive cases against a balanced-substring oracle (lengths 0–14).')\nPY"", ""timeout_seconds"": 30}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python - <<'PY'\\nfrom itertools import product\\nfrom solution import is_nested\\n\\ndef oracle(text):\\n    for start in range(len(text)):\\n        balance = 0\\n        maximum = 0\\n        for char in text[start:]:\\n            balance += 1 if char == '[' else -1\\n            if balance < 0:\\n                break\\n            maximum = max(maximum, balance)\\n            if balance == 0 and maximum >= 2:\\n                return True\\n    return False\\n\\nexamples = [('[[]]', True), ('[]]]]]]][[[[[]', False), ('[][]', False), ('[]', False), ('[[][]]', True), ('[[]][[', True)]\\nregressions = [('', False), ('[[', False), (']]', False), ('[[][]', False), ('[][[]', False), ('[[[]', True), ('][[]][', True), ('[[[][]', True)]\\nfor text, expected in examples + regressions:\\n    assert is_nested(text) == expected, (text, expected)\\ncount = 0\\nfor length in range(15):\\n    for chars in product('[]', repeat=length):\\n        text = ''.join(chars)\\n        assert is_nested(text) == oracle(text), text\\n        count += 1\\nprint('Passed all 6 public examples and 8 targeted cases.')\\nprint(f'Passed {count} exhaustive cases against a balanced-substring oracle (lengths 0–14).')\\nPY\"", \""exit_code\"": 1, \""stdout\"": \""\"", \""stderr\"": \""Traceback (most recent call last):\\n  File \\\""<stdin>\\\"", line 20, in <module>\\nAssertionError: ('[[[]', True)\\n\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.03440923300513532, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+session_e5a01b1de5a64c28be1d80026adb8b14_r2,11,2026-11-01T04:16:41.043281+00:00,41.9870818000054,item.started,item_5,mcp_tool_call,run_command,in_progress,,,"python - <<'PY'
+from itertools import product
+from solution import is_nested
+
+def oracle(text):
+    for start in range(len(text)):
+        balance = maximum = 0
+        for char in text[start:]:
+            balance += 1 if char == '[' else -1
+            if balance < 0:
+                break
+            maximum = max(maximum, balance)
+            if balance == 0 and maximum >= 2:
+                return True
+    return False
+
+examples = [('[[]]', True), ('[]]]]]]][[[[[]', False), ('[][]', False), ('[]', False), ('[[][]]', True), ('[[]][[', True)]
+regressions = [('', False), ('[[', False), (']]', False), ('[[][]', False), ('[][[]', False), ('[[[]', False), ('[[[]]', True), ('][[]][', True), ('[[[][]', False)]
+for text, expected in examples + regressions:
+    assert is_nested(text) == expected, (text, expected)
+count = 0
+for length in range(15):
+    for chars in product('[]', repeat=length):
+        text = ''.join(chars)
+        assert is_nested(text) == oracle(text), text
+        count += 1
+print('Passed all 6 public examples and 9 targeted cases.')
+print(f'Passed {count} exhaustive cases against a balanced-substring oracle (lengths 0–14).')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nfrom itertools import product\nfrom solution import is_nested\n\ndef oracle(text):\n    for start in range(len(text)):\n        balance = maximum = 0\n        for char in text[start:]:\n            balance += 1 if char == '[' else -1\n            if balance < 0:\n                break\n            maximum = max(maximum, balance)\n            if balance == 0 and maximum >= 2:\n                return True\n    return False\n\nexamples = [('[[]]', True), ('[]]]]]]][[[[[]', False), ('[][]', False), ('[]', False), ('[[][]]', True), ('[[]][[', True)]\nregressions = [('', False), ('[[', False), (']]', False), ('[[][]', False), ('[][[]', False), ('[[[]', False), ('[[[]]', True), ('][[]][', True), ('[[[][]', False)]\nfor text, expected in examples + regressions:\n    assert is_nested(text) == expected, (text, expected)\ncount = 0\nfor length in range(15):\n    for chars in product('[]', repeat=length):\n        text = ''.join(chars)\n        assert is_nested(text) == oracle(text), text\n        count += 1\nprint('Passed all 6 public examples and 9 targeted cases.')\nprint(f'Passed {count} exhaustive cases against a balanced-substring oracle (lengths 0–14).')\nPY"", ""timeout_seconds"": 30}",,command_execution,True,native_item
+session_e5a01b1de5a64c28be1d80026adb8b14_r2,12,2026-11-01T04:16:41.932852+00:00,42.876650999998674,item.completed,item_5,mcp_tool_call,run_command,completed,0,0.28652073499688413,"python - <<'PY'
+from itertools import product
+from solution import is_nested
+
+def oracle(text):
+    for start in range(len(text)):
+        balance = maximum = 0
+        for char in text[start:]:
+            balance += 1 if char == '[' else -1
+            if balance < 0:
+                break
+            maximum = max(maximum, balance)
+            if balance == 0 and maximum >= 2:
+                return True
+    return False
+
+examples = [('[[]]', True), ('[]]]]]]][[[[[]', False), ('[][]', False), ('[]', False), ('[[][]]', True), ('[[]][[', True)]
+regressions = [('', False), ('[[', False), (']]', False), ('[[][]', False), ('[][[]', False), ('[[[]', False), ('[[[]]', True), ('][[]][', True), ('[[[][]', False)]
+for text, expected in examples + regressions:
+    assert is_nested(text) == expected, (text, expected)
+count = 0
+for length in range(15):
+    for chars in product('[]', repeat=length):
+        text = ''.join(chars)
+        assert is_nested(text) == oracle(text), text
+        count += 1
+print('Passed all 6 public examples and 9 targeted cases.')
+print(f'Passed {count} exhaustive cases against a balanced-substring oracle (lengths 0–14).')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nfrom itertools import product\nfrom solution import is_nested\n\ndef oracle(text):\n    for start in range(len(text)):\n        balance = maximum = 0\n        for char in text[start:]:\n            balance += 1 if char == '[' else -1\n            if balance < 0:\n                break\n            maximum = max(maximum, balance)\n            if balance == 0 and maximum >= 2:\n                return True\n    return False\n\nexamples = [('[[]]', True), ('[]]]]]]][[[[[]', False), ('[][]', False), ('[]', False), ('[[][]]', True), ('[[]][[', True)]\nregressions = [('', False), ('[[', False), (']]', False), ('[[][]', False), ('[][[]', False), ('[[[]', False), ('[[[]]', True), ('][[]][', True), ('[[[][]', False)]\nfor text, expected in examples + regressions:\n    assert is_nested(text) == expected, (text, expected)\ncount = 0\nfor length in range(15):\n    for chars in product('[]', repeat=length):\n        text = ''.join(chars)\n        assert is_nested(text) == oracle(text), text\n        count += 1\nprint('Passed all 6 public examples and 9 targeted cases.')\nprint(f'Passed {count} exhaustive cases against a balanced-substring oracle (lengths 0–14).')\nPY"", ""timeout_seconds"": 30}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python - <<'PY'\\nfrom itertools import product\\nfrom solution import is_nested\\n\\ndef oracle(text):\\n    for start in range(len(text)):\\n        balance = maximum = 0\\n        for char in text[start:]:\\n            balance += 1 if char == '[' else -1\\n            if balance < 0:\\n                break\\n            maximum = max(maximum, balance)\\n            if balance == 0 and maximum >= 2:\\n                return True\\n    return False\\n\\nexamples = [('[[]]', True), ('[]]]]]]][[[[[]', False), ('[][]', False), ('[]', False), ('[[][]]', True), ('[[]][[', True)]\\nregressions = [('', False), ('[[', False), (']]', False), ('[[][]', False), ('[][[]', False), ('[[[]', False), ('[[[]]', True), ('][[]][', True), ('[[[][]', False)]\\nfor text, expected in examples + regressions:\\n    assert is_nested(text) == expected, (text, expected)\\ncount = 0\\nfor length in range(15):\\n    for chars in product('[]', repeat=length):\\n        text = ''.join(chars)\\n        assert is_nested(text) == oracle(text), text\\n        count += 1\\nprint('Passed all 6 public examples and 9 targeted cases.')\\nprint(f'Passed {count} exhaustive cases against a balanced-substring oracle (lengths 0–14).')\\nPY\"", \""exit_code\"": 0, \""stdout\"": \""Passed all 6 public examples and 9 targeted cases.\\nPassed 32767 exhaustive cases against a balanced-substring oracle (lengths 0–14).\\n\"", \""stderr\"": \""\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.28652073499688413, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+session_e5a01b1de5a64c28be1d80026adb8b14_r2,13,2026-11-01T04:16:45.878604+00:00,46.82240730000194,item.completed,item_6,agent_message,,,,,,,,,,message,False,native_item
+session_e5a01b1de5a64c28be1d80026adb8b14_r2,14,2026-11-01T04:16:45.964155+00:00,46.90795560006518,turn.completed,,,,,,,,,,,,,,

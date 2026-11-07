@@ -1,0 +1,54 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error,tool_server,tool_input,tool_output,behavior_category,is_test_execution,measurement_source
+exp_e19162dd303c97e623c28008_dabf998f4d0a,1,2026-10-31T15:56:31.682494+00:00,0.4328351999865845,thread.started,,,,,,,,,,,,,,
+exp_e19162dd303c97e623c28008_dabf998f4d0a,2,2026-10-31T15:56:31.706914+00:00,0.4572443999350071,turn.started,,,,,,,,,,,,,,
+exp_e19162dd303c97e623c28008_dabf998f4d0a,3,2026-10-31T15:56:35.697246+00:00,4.447575700003654,item.completed,item_0,agent_message,,,,,,,,,,message,False,native_item
+exp_e19162dd303c97e623c28008_dabf998f4d0a,4,2026-10-31T15:56:35.698006+00:00,4.448329100036062,item.started,item_1,mcp_tool_call,read_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py""}",,file_read,False,native_item
+exp_e19162dd303c97e623c28008_dabf998f4d0a,5,2026-10-31T15:56:36.050571+00:00,4.800900400034152,item.completed,item_1,mcp_tool_call,read_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""content\"": \""\\ndef check_dict_case(dict):\\n    \\\""\\\""\\\""\\n    Given a dictionary, return True if all keys are strings in lower \\n    case or all keys are strings in upper case, else return False.\\n    The function should return False is the given dictionary is empty.\\n    Examples:\\n    check_dict_case({\\\""a\\\"":\\\""apple\\\"", \\\""b\\\"":\\\""banana\\\""}) should return True.\\n    check_dict_case({\\\""a\\\"":\\\""apple\\\"", \\\""A\\\"":\\\""banana\\\"", \\\""B\\\"":\\\""banana\\\""}) should return False.\\n    check_dict_case({\\\""a\\\"":\\\""apple\\\"", 8:\\\""banana\\\"", \\\""a\\\"":\\\""apple\\\""}) should return False.\\n    check_dict_case({\\\""Name\\\"":\\\""John\\\"", \\\""Age\\\"":\\\""36\\\"", \\\""City\\\"":\\\""Houston\\\""}) should return False.\\n    check_dict_case({\\\""STATE\\\"":\\\""NC\\\"", \\\""ZIP\\\"":\\\""12345\\\"" }) should return True.\\n    \\\""\\\""\\\""\\n    pass\\n\""}""}], ""structured_content"": null}",file_read,False,workspace_tool_result
+exp_e19162dd303c97e623c28008_dabf998f4d0a,6,2026-10-31T15:56:43.193520+00:00,11.943848900031298,item.started,item_2,mcp_tool_call,write_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""\ndef check_dict_case(dict):\n    \""\""\""\n    Given a dictionary, return True if all keys are strings in lower\n    case or all keys are strings in upper case, else return False.\n    The function should return False is the given dictionary is empty.\n    Examples:\n    check_dict_case({\""a\"":\""apple\"", \""b\"":\""banana\""}) should return True.\n    check_dict_case({\""a\"":\""apple\"", \""A\"":\""banana\"", \""B\"":\""banana\""}) should return False.\n    check_dict_case({\""a\"":\""apple\"", 8:\""banana\"", \""a\"":\""apple\""}) should return False.\n    check_dict_case({\""Name\"":\""John\"", \""Age\"":\""36\"", \""City\"":\""Houston\""}) should return False.\n    check_dict_case({\""STATE\"":\""NC\"", \""ZIP\"":\""12345\"" }) should return True.\n    \""\""\""\n    if not dict or not all(isinstance(key, str) for key in dict):\n        return False\n    return all(key.islower() for key in dict) or all(\n        key.isupper() for key in dict\n    )\n""}",,file_write,False,native_item
+exp_e19162dd303c97e623c28008_dabf998f4d0a,7,2026-10-31T15:56:43.525770+00:00,12.276098700007424,item.completed,item_2,mcp_tool_call,write_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""\ndef check_dict_case(dict):\n    \""\""\""\n    Given a dictionary, return True if all keys are strings in lower\n    case or all keys are strings in upper case, else return False.\n    The function should return False is the given dictionary is empty.\n    Examples:\n    check_dict_case({\""a\"":\""apple\"", \""b\"":\""banana\""}) should return True.\n    check_dict_case({\""a\"":\""apple\"", \""A\"":\""banana\"", \""B\"":\""banana\""}) should return False.\n    check_dict_case({\""a\"":\""apple\"", 8:\""banana\"", \""a\"":\""apple\""}) should return False.\n    check_dict_case({\""Name\"":\""John\"", \""Age\"":\""36\"", \""City\"":\""Houston\""}) should return False.\n    check_dict_case({\""STATE\"":\""NC\"", \""ZIP\"":\""12345\"" }) should return True.\n    \""\""\""\n    if not dict or not all(isinstance(key, str) for key in dict):\n        return False\n    return all(key.islower() for key in dict) or all(\n        key.isupper() for key in dict\n    )\n""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""before_sha256\"": \""629de7473bc43c67a0d3d0d11dfb2f964c72f1cc93a7db8fccd5533d15ebae5a\"", \""after_sha256\"": \""e370efe9c52c7e542d545750f046cdfc2552f4642241b33fafe40ce928a9556f\"", \""changed\"": true}""}], ""structured_content"": null}",file_write,False,workspace_tool_result
+exp_e19162dd303c97e623c28008_dabf998f4d0a,8,2026-10-31T15:56:50.640065+00:00,19.390401600045152,item.started,item_3,mcp_tool_call,run_command,in_progress,,,"python - <<'PY'
+from solution import check_dict_case
+cases = [
+    ({'a': 'apple', 'b': 'banana'}, True),
+    ({'a': 'apple', 'A': 'banana', 'B': 'banana'}, False),
+    ({'a': 'apple', 8: 'banana'}, False),
+    ({'Name': 'John', 'Age': '36', 'City': 'Houston'}, False),
+    ({'STATE': 'NC', 'ZIP': '12345'}, True),
+    ({}, False),
+    ({'': 1}, False),
+    ({'123': 1}, False),
+    ({'lower_123': None}, True),
+    ({'UPPER_123': None}, True),
+    ({'lower': 1, 'UPPER': 2}, False),
+    ({None: 1}, False),
+    ({'é': 1, 'ñ': 2}, True),
+]
+for data, expected in cases:
+    actual = check_dict_case(data)
+    assert actual is expected, (data, expected, actual)
+print(f'All {len(cases)} checks passed.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nfrom solution import check_dict_case\ncases = [\n    ({'a': 'apple', 'b': 'banana'}, True),\n    ({'a': 'apple', 'A': 'banana', 'B': 'banana'}, False),\n    ({'a': 'apple', 8: 'banana'}, False),\n    ({'Name': 'John', 'Age': '36', 'City': 'Houston'}, False),\n    ({'STATE': 'NC', 'ZIP': '12345'}, True),\n    ({}, False),\n    ({'': 1}, False),\n    ({'123': 1}, False),\n    ({'lower_123': None}, True),\n    ({'UPPER_123': None}, True),\n    ({'lower': 1, 'UPPER': 2}, False),\n    ({None: 1}, False),\n    ({'é': 1, 'ñ': 2}, True),\n]\nfor data, expected in cases:\n    actual = check_dict_case(data)\n    assert actual is expected, (data, expected, actual)\nprint(f'All {len(cases)} checks passed.')\nPY""}",,command_execution,True,native_item
+exp_e19162dd303c97e623c28008_dabf998f4d0a,9,2026-10-31T15:56:51.021397+00:00,19.771725700004026,item.completed,item_3,mcp_tool_call,run_command,completed,0,0.033003085998643655,"python - <<'PY'
+from solution import check_dict_case
+cases = [
+    ({'a': 'apple', 'b': 'banana'}, True),
+    ({'a': 'apple', 'A': 'banana', 'B': 'banana'}, False),
+    ({'a': 'apple', 8: 'banana'}, False),
+    ({'Name': 'John', 'Age': '36', 'City': 'Houston'}, False),
+    ({'STATE': 'NC', 'ZIP': '12345'}, True),
+    ({}, False),
+    ({'': 1}, False),
+    ({'123': 1}, False),
+    ({'lower_123': None}, True),
+    ({'UPPER_123': None}, True),
+    ({'lower': 1, 'UPPER': 2}, False),
+    ({None: 1}, False),
+    ({'é': 1, 'ñ': 2}, True),
+]
+for data, expected in cases:
+    actual = check_dict_case(data)
+    assert actual is expected, (data, expected, actual)
+print(f'All {len(cases)} checks passed.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nfrom solution import check_dict_case\ncases = [\n    ({'a': 'apple', 'b': 'banana'}, True),\n    ({'a': 'apple', 'A': 'banana', 'B': 'banana'}, False),\n    ({'a': 'apple', 8: 'banana'}, False),\n    ({'Name': 'John', 'Age': '36', 'City': 'Houston'}, False),\n    ({'STATE': 'NC', 'ZIP': '12345'}, True),\n    ({}, False),\n    ({'': 1}, False),\n    ({'123': 1}, False),\n    ({'lower_123': None}, True),\n    ({'UPPER_123': None}, True),\n    ({'lower': 1, 'UPPER': 2}, False),\n    ({None: 1}, False),\n    ({'é': 1, 'ñ': 2}, True),\n]\nfor data, expected in cases:\n    actual = check_dict_case(data)\n    assert actual is expected, (data, expected, actual)\nprint(f'All {len(cases)} checks passed.')\nPY""}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python - <<'PY'\\nfrom solution import check_dict_case\\ncases = [\\n    ({'a': 'apple', 'b': 'banana'}, True),\\n    ({'a': 'apple', 'A': 'banana', 'B': 'banana'}, False),\\n    ({'a': 'apple', 8: 'banana'}, False),\\n    ({'Name': 'John', 'Age': '36', 'City': 'Houston'}, False),\\n    ({'STATE': 'NC', 'ZIP': '12345'}, True),\\n    ({}, False),\\n    ({'': 1}, False),\\n    ({'123': 1}, False),\\n    ({'lower_123': None}, True),\\n    ({'UPPER_123': None}, True),\\n    ({'lower': 1, 'UPPER': 2}, False),\\n    ({None: 1}, False),\\n    ({'é': 1, 'ñ': 2}, True),\\n]\\nfor data, expected in cases:\\n    actual = check_dict_case(data)\\n    assert actual is expected, (data, expected, actual)\\nprint(f'All {len(cases)} checks passed.')\\nPY\"", \""exit_code\"": 0, \""stdout\"": \""All 13 checks passed.\\n\"", \""stderr\"": \""\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.033003085998643655, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+exp_e19162dd303c97e623c28008_dabf998f4d0a,10,2026-10-31T15:56:58.419800+00:00,27.1701303999871,item.completed,item_4,agent_message,,,,,,,,,,message,False,native_item
+exp_e19162dd303c97e623c28008_dabf998f4d0a,11,2026-10-31T15:56:58.429983+00:00,27.180312099982984,turn.completed,,,,,,,,,,,,,,

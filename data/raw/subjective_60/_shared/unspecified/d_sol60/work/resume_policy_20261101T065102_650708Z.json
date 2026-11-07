@@ -1,0 +1,32 @@
+{
+  "created_at": "2026-11-01T06:51:02.651709+00:00",
+  "experiment_id": "subjective_formal_60_v3",
+  "supervisor_pid": 49964,
+  "manifest_file_sha256": "26eb5da42d06d403379780f10a9de370b22fc0b2b50ccdc9910e4de3c4b5f642",
+  "policy_deviation": "Original policy permits manual restart only. This supervisor adds at most five automatic restarts, only after a fresh local-relay URLError with no upstream response. Frozen requests and scoring are unchanged.",
+  "initial_reason": {
+    "reason": "provider_connection",
+    "halted": true,
+    "stage": "generate",
+    "updated_at": "2026-11-01T06:34:49.850171+00:00"
+  },
+  "cooldown_seconds": [
+    30,
+    60,
+    120,
+    240,
+    300
+  ],
+  "max_restarts": 5,
+  "attempts": [
+    {
+      "cycle": 0,
+      "started_at": "2026-11-01T06:51:02.655704+00:00",
+      "process_id": 31812,
+      "exit_code": 0,
+      "finished_at": "2026-11-01T07:30:16.220703+00:00"
+    }
+  ],
+  "status": "completed",
+  "updated_at": "2026-11-01T07:30:16.223706+00:00"
+}

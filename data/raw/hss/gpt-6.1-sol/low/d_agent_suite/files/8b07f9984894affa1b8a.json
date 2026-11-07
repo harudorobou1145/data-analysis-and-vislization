@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6a9529ffc4e2b042ecfd0c88__sol_low",
+  "task_id": "6a9529ffc4e2b042ecfd0c88",
+  "condition": "sol_low",
+  "request_kind": "generation",
+  "attempt_id": "6a9529ffc4e2b042ecfd0c88__sol_low__a01",
+  "started_at": "2026-11-06T08:46:52.626422+00:00",
+  "status": "completed",
+  "prompt_hash": "2a377d9e66a2b5323f9b09ea2eb821cdcb5f57dc7d6f800f39efb521444bc541",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "a975dc12-a9dd-4e6e-8ec4-04378f38a12d",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6a9529ffc4e2b042ecfd0c88__sol_low",
+      "attempt_id": "6a9529ffc4e2b042ecfd0c88__sol_low__a01",
+      "request_kind": "generation",
+      "task_id": "6a9529ffc4e2b042ecfd0c88"
+    },
+    "started_at": "2026-11-06T08:46:52.627873+00:00",
+    "model_requested": "gpt-6.1-sol",
+    "effort_requested": "low",
+    "prompt": "Assuming the white vehicle closest to the camera was moving in the direction it is facing, did it pass in front of or behind the gray light pole, relative to the camera?",
+    "prompt_hash": "2a377d9e66a2b5323f9b09ea2eb821cdcb5f57dc7d6f800f39efb521444bc541",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "It passed behind the gray light pole, relative to the camera.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a9529ffc4e2b042ecfd0c88.png",
+        "sha256": "3c9dfd6b82855121cf285be2187f7e44c832455d96f48bdf0f0cfd76fd6d11e6",
+        "bytes": 1115463
+      }
+    ],
+    "effort_ui_requested": "low",
+    "effort_wire_expected": "low",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Fast responses with lighter reasoning",
+    "thread_id": "01a1b00a-14d5-72d3-81ce-931013805e76",
+    "model_configured": "gpt-6.1-sol",
+    "effort_configured": "low",
+    "instruction_sources": [],
+    "turn_id": "01a1b00a-151c-7d63-b20e-222a4a452b3b",
+    "client_elapsed_seconds": 9.944847,
+    "turn_status": "completed",
+    "elapsed_seconds": 9.913,
+    "wire_efforts_observed": [
+      "low"
+    ],
+    "token_usage": {
+      "totalTokens": 11221,
+      "inputTokens": 11139,
+      "cachedInputTokens": 8448,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 82,
+      "reasoningOutputTokens": 63
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 9.825736,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 3,
+      "item/completed": 3,
+      "item/agentMessage/delta": 13,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1b00a-1546-7df3-bf5b-50c747955fc8",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "Assuming the white vehicle closest to the camera was moving in the direction it is facing, did it pass in front of or behind the gray light pole, relative to the camera?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a9529ffc4e2b042ecfd0c88.png"
+          }
+        ],
+        "startedAtMs": 1793954813257,
+        "completedAtMs": 1793954813257
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_0f8157faa987e343016aed9405a17487d09a4e4be493e3a80b",
+        "text": "It passed behind the gray light pole, relative to the camera.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793954823025,
+        "completedAtMs": 1793954823038
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 1518478,
+          "request_sha256": "eb08751867f12f9006d5c5bb15f5859c2b71ceabc68bc33e6194a881c6054969",
+          "response_bytes": 153709,
+          "response_sha256": "69d5a23506d55fbae64c2f48e3b51ff6d097b9867994e26492642f6c43faddcd",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 9.875671
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6.1-sol",
+        "reasoning": {
+          "effort": "low",
+          "context": "all_turns"
+        },
+        "request_sha256": "eb08751867f12f9006d5c5bb15f5859c2b71ceabc68bc33e6194a881c6054969",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "95115c0333423304cd2362dcb8e144ff28e9e978f19a31c7a8b7fbfa8c35e6ac"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "3c9dfd6b82855121cf285be2187f7e44c832455d96f48bdf0f0cfd76fd6d11e6",
+            "bytes": 1115463,
+            "width": 1024,
+            "height": 768,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:47:03.250947+00:00",
+    "total_client_seconds": 10.620729,
+    "answer_hash": "2de9d9d59f699fcae8c721bbaf703473d3256870bb15d67e024e7f1dc41a3090"
+  },
+  "answer": "It passed behind the gray light pole, relative to the camera.",
+  "answer_hash": "2de9d9d59f699fcae8c721bbaf703473d3256870bb15d67e024e7f1dc41a3090",
+  "image_sha256": "3c9dfd6b82855121cf285be2187f7e44c832455d96f48bdf0f0cfd76fd6d11e6",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "finished_at": "2026-11-06T08:47:03.250947+00:00"
+}

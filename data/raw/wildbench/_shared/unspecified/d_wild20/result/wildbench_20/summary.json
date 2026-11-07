@@ -1,0 +1,1322 @@
+{
+  "created_at": "2026-11-05T14:42:28.519104+00:00",
+  "experiment_id": "wildbench_20_four_conditions_20261105_v2",
+  "manifest_hash": "dbf1229c6c594e519230659db384a3d2c7769be7ab1ab246abca366dee8d962a",
+  "status": "complete_audited",
+  "counts": {
+    "planned_answers": 160,
+    "completed_answers": 160,
+    "missing_answers": 0,
+    "planned_primary_scores": 160,
+    "completed_primary_scores": 160,
+    "missing_or_invalid_primary_scores": 0,
+    "planned_repeat_scores": 16,
+    "completed_repeat_scores": 16,
+    "missing_repeat_scores": 0
+  },
+  "groups": [
+    {
+      "condition_id": "sol_low",
+      "model": "gpt-6.1-sol",
+      "effort": "low",
+      "planned_answers": 40,
+      "completed_answers": 40,
+      "completed_primary_scores": 40,
+      "missing_answers": 0,
+      "missing_or_invalid_primary_scores": 0,
+      "complete_tasks": 20,
+      "planned_tasks": 20,
+      "mean_score_10": 8.225,
+      "answer_level_mean_score_10": 8.225,
+      "mean_wb_score": 6.449999999999999,
+      "full_score_answers": 5,
+      "full_score_rate": 0.125,
+      "score_distribution": [
+        {
+          "score_10": 5,
+          "answers": 1
+        },
+        {
+          "score_10": 6,
+          "answers": 3
+        },
+        {
+          "score_10": 7,
+          "answers": 3
+        },
+        {
+          "score_10": 8,
+          "answers": 17
+        },
+        {
+          "score_10": 9,
+          "answers": 11
+        },
+        {
+          "score_10": 10,
+          "answers": 5
+        }
+      ],
+      "timing": {
+        "elapsed_seconds": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 63.329100000000004,
+          "median": 35.902,
+          "minimum": 4.679,
+          "maximum": 362.064
+        },
+        "client_elapsed_seconds": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 63.4023466,
+          "median": 35.9470275,
+          "minimum": 4.779212,
+          "maximum": 362.096875
+        },
+        "wall_seconds": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 66.625214425,
+          "median": 41.2939705,
+          "minimum": 7.000115,
+          "maximum": 363.332056
+        },
+        "client_first_answer_delta_seconds": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 14.414143150000001,
+          "median": 9.72205,
+          "minimum": 3.084152,
+          "maximum": 71.131352
+        },
+        "ttft_seconds": {
+          "non_null": 0,
+          "missing": 40,
+          "mean": null,
+          "median": null,
+          "minimum": null,
+          "maximum": null
+        },
+        "tpot_seconds": {
+          "non_null": 0,
+          "missing": 40,
+          "mean": null,
+          "median": null,
+          "minimum": null,
+          "maximum": null
+        }
+      },
+      "tokens": {
+        "inputTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 10314,
+          "median": 10265.0,
+          "minimum": 10154,
+          "maximum": 11039
+        },
+        "cachedInputTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 5923.2,
+          "median": 4096.0,
+          "minimum": 4096,
+          "maximum": 8448
+        },
+        "outputTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 1352.075,
+          "median": 914.5,
+          "minimum": 83,
+          "maximum": 6349
+        },
+        "reasoningOutputTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 185.35,
+          "median": 111.5,
+          "minimum": 0,
+          "maximum": 1526
+        },
+        "totalTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 11666.075,
+          "median": 11457.5,
+          "minimum": 10318,
+          "maximum": 16530
+        }
+      },
+      "task_means": [
+        {
+          "task_id": "wild_001",
+          "score_10": 8.5
+        },
+        {
+          "task_id": "wild_002",
+          "score_10": 10
+        },
+        {
+          "task_id": "wild_003",
+          "score_10": 7.5
+        },
+        {
+          "task_id": "wild_004",
+          "score_10": 5.5
+        },
+        {
+          "task_id": "wild_005",
+          "score_10": 8.5
+        },
+        {
+          "task_id": "wild_006",
+          "score_10": 7
+        },
+        {
+          "task_id": "wild_007",
+          "score_10": 8.5
+        },
+        {
+          "task_id": "wild_008",
+          "score_10": 7.5
+        },
+        {
+          "task_id": "wild_009",
+          "score_10": 8
+        },
+        {
+          "task_id": "wild_010",
+          "score_10": 6.5
+        },
+        {
+          "task_id": "wild_011",
+          "score_10": 9
+        },
+        {
+          "task_id": "wild_012",
+          "score_10": 10
+        },
+        {
+          "task_id": "wild_013",
+          "score_10": 8
+        },
+        {
+          "task_id": "wild_014",
+          "score_10": 9
+        },
+        {
+          "task_id": "wild_015",
+          "score_10": 9.5
+        },
+        {
+          "task_id": "wild_016",
+          "score_10": 8.5
+        },
+        {
+          "task_id": "wild_017",
+          "score_10": 8
+        },
+        {
+          "task_id": "wild_018",
+          "score_10": 8
+        },
+        {
+          "task_id": "wild_019",
+          "score_10": 9
+        },
+        {
+          "task_id": "wild_020",
+          "score_10": 8
+        }
+      ]
+    },
+    {
+      "condition_id": "sol_high",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "planned_answers": 40,
+      "completed_answers": 40,
+      "completed_primary_scores": 40,
+      "missing_answers": 0,
+      "missing_or_invalid_primary_scores": 0,
+      "complete_tasks": 20,
+      "planned_tasks": 20,
+      "mean_score_10": 8.675,
+      "answer_level_mean_score_10": 8.675,
+      "mean_wb_score": 7.350000000000001,
+      "full_score_answers": 15,
+      "full_score_rate": 0.375,
+      "score_distribution": [
+        {
+          "score_10": 6,
+          "answers": 3
+        },
+        {
+          "score_10": 7,
+          "answers": 2
+        },
+        {
+          "score_10": 8,
+          "answers": 15
+        },
+        {
+          "score_10": 9,
+          "answers": 5
+        },
+        {
+          "score_10": 10,
+          "answers": 15
+        }
+      ],
+      "timing": {
+        "elapsed_seconds": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 110.913475,
+          "median": 78.3945,
+          "minimum": 11.557,
+          "maximum": 444.749
+        },
+        "client_elapsed_seconds": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 110.969879025,
+          "median": 78.4329955,
+          "minimum": 11.614184,
+          "maximum": 444.781686
+        },
+        "wall_seconds": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 114.0889723,
+          "median": 82.170259,
+          "minimum": 13.605801,
+          "maximum": 447.62871
+        },
+        "client_first_answer_delta_seconds": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 61.229480125,
+          "median": 56.8812075,
+          "minimum": 10.392311,
+          "maximum": 162.700666
+        },
+        "ttft_seconds": {
+          "non_null": 0,
+          "missing": 40,
+          "mean": null,
+          "median": null,
+          "minimum": null,
+          "maximum": null
+        },
+        "tpot_seconds": {
+          "non_null": 0,
+          "missing": 40,
+          "mean": null,
+          "median": null,
+          "minimum": null,
+          "maximum": null
+        }
+      },
+      "tokens": {
+        "inputTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 10314.1,
+          "median": 10266.5,
+          "minimum": 10154,
+          "maximum": 11038
+        },
+        "cachedInputTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 5945.6,
+          "median": 4096.0,
+          "minimum": 4096,
+          "maximum": 8448
+        },
+        "outputTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 2576.7,
+          "median": 2480.5,
+          "minimum": 237,
+          "maximum": 7890
+        },
+        "reasoningOutputTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 1328.25,
+          "median": 1034.0,
+          "minimum": 126,
+          "maximum": 5107
+        },
+        "totalTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 12890.8,
+          "median": 12846.0,
+          "minimum": 10472,
+          "maximum": 18071
+        }
+      },
+      "task_means": [
+        {
+          "task_id": "wild_001",
+          "score_10": 8.5
+        },
+        {
+          "task_id": "wild_002",
+          "score_10": 10
+        },
+        {
+          "task_id": "wild_003",
+          "score_10": 10
+        },
+        {
+          "task_id": "wild_004",
+          "score_10": 6
+        },
+        {
+          "task_id": "wild_005",
+          "score_10": 8
+        },
+        {
+          "task_id": "wild_006",
+          "score_10": 8
+        },
+        {
+          "task_id": "wild_007",
+          "score_10": 10
+        },
+        {
+          "task_id": "wild_008",
+          "score_10": 7.5
+        },
+        {
+          "task_id": "wild_009",
+          "score_10": 8
+        },
+        {
+          "task_id": "wild_010",
+          "score_10": 6.5
+        },
+        {
+          "task_id": "wild_011",
+          "score_10": 10
+        },
+        {
+          "task_id": "wild_012",
+          "score_10": 10
+        },
+        {
+          "task_id": "wild_013",
+          "score_10": 8
+        },
+        {
+          "task_id": "wild_014",
+          "score_10": 9
+        },
+        {
+          "task_id": "wild_015",
+          "score_10": 10
+        },
+        {
+          "task_id": "wild_016",
+          "score_10": 9.5
+        },
+        {
+          "task_id": "wild_017",
+          "score_10": 8.5
+        },
+        {
+          "task_id": "wild_018",
+          "score_10": 8
+        },
+        {
+          "task_id": "wild_019",
+          "score_10": 10
+        },
+        {
+          "task_id": "wild_020",
+          "score_10": 8
+        }
+      ]
+    },
+    {
+      "condition_id": "sol_ultra",
+      "model": "gpt-6.1-sol",
+      "effort": "ultra",
+      "planned_answers": 40,
+      "completed_answers": 40,
+      "completed_primary_scores": 40,
+      "missing_answers": 0,
+      "missing_or_invalid_primary_scores": 0,
+      "complete_tasks": 20,
+      "planned_tasks": 20,
+      "mean_score_10": 8.725,
+      "answer_level_mean_score_10": 8.725,
+      "mean_wb_score": 7.449999999999999,
+      "full_score_answers": 13,
+      "full_score_rate": 0.325,
+      "score_distribution": [
+        {
+          "score_10": 6,
+          "answers": 3
+        },
+        {
+          "score_10": 7,
+          "answers": 4
+        },
+        {
+          "score_10": 8,
+          "answers": 7
+        },
+        {
+          "score_10": 9,
+          "answers": 13
+        },
+        {
+          "score_10": 10,
+          "answers": 13
+        }
+      ],
+      "timing": {
+        "elapsed_seconds": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 206.2072,
+          "median": 168.5405,
+          "minimum": 22.06,
+          "maximum": 596.078
+        },
+        "client_elapsed_seconds": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 206.2633657,
+          "median": 168.600109,
+          "minimum": 22.172159,
+          "maximum": 596.119262
+        },
+        "wall_seconds": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 209.008936925,
+          "median": 170.17970150000002,
+          "minimum": 27.616432,
+          "maximum": 596.884666
+        },
+        "client_first_answer_delta_seconds": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 164.5722147,
+          "median": 133.000637,
+          "minimum": 21.041777,
+          "maximum": 446.19128
+        },
+        "ttft_seconds": {
+          "non_null": 0,
+          "missing": 40,
+          "mean": null,
+          "median": null,
+          "minimum": null,
+          "maximum": null
+        },
+        "tpot_seconds": {
+          "non_null": 0,
+          "missing": 40,
+          "mean": null,
+          "median": null,
+          "minimum": null,
+          "maximum": null
+        }
+      },
+      "tokens": {
+        "inputTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 10360.85,
+          "median": 10313.0,
+          "minimum": 10200,
+          "maximum": 11082
+        },
+        "cachedInputTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 5052.8,
+          "median": 4096.0,
+          "minimum": 4096,
+          "maximum": 10240
+        },
+        "outputTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 5283.65,
+          "median": 4292.0,
+          "minimum": 543,
+          "maximum": 16390
+        },
+        "reasoningOutputTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 4027.85,
+          "median": 3507.0,
+          "minimum": 457,
+          "maximum": 10358
+        },
+        "totalTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 15644.5,
+          "median": 14780.5,
+          "minimum": 10824,
+          "maximum": 26621
+        }
+      },
+      "task_means": [
+        {
+          "task_id": "wild_001",
+          "score_10": 9
+        },
+        {
+          "task_id": "wild_002",
+          "score_10": 10
+        },
+        {
+          "task_id": "wild_003",
+          "score_10": 10
+        },
+        {
+          "task_id": "wild_004",
+          "score_10": 6
+        },
+        {
+          "task_id": "wild_005",
+          "score_10": 8.5
+        },
+        {
+          "task_id": "wild_006",
+          "score_10": 8.5
+        },
+        {
+          "task_id": "wild_007",
+          "score_10": 10
+        },
+        {
+          "task_id": "wild_008",
+          "score_10": 7.5
+        },
+        {
+          "task_id": "wild_009",
+          "score_10": 7
+        },
+        {
+          "task_id": "wild_010",
+          "score_10": 6.5
+        },
+        {
+          "task_id": "wild_011",
+          "score_10": 9.5
+        },
+        {
+          "task_id": "wild_012",
+          "score_10": 10
+        },
+        {
+          "task_id": "wild_013",
+          "score_10": 9
+        },
+        {
+          "task_id": "wild_014",
+          "score_10": 9
+        },
+        {
+          "task_id": "wild_015",
+          "score_10": 9.5
+        },
+        {
+          "task_id": "wild_016",
+          "score_10": 9.5
+        },
+        {
+          "task_id": "wild_017",
+          "score_10": 9
+        },
+        {
+          "task_id": "wild_018",
+          "score_10": 8
+        },
+        {
+          "task_id": "wild_019",
+          "score_10": 10
+        },
+        {
+          "task_id": "wild_020",
+          "score_10": 8
+        }
+      ]
+    },
+    {
+      "condition_id": "luna_high",
+      "model": "gpt-6-luna",
+      "effort": "high",
+      "planned_answers": 40,
+      "completed_answers": 40,
+      "completed_primary_scores": 40,
+      "missing_answers": 0,
+      "missing_or_invalid_primary_scores": 0,
+      "complete_tasks": 20,
+      "planned_tasks": 20,
+      "mean_score_10": 6.375,
+      "answer_level_mean_score_10": 6.375,
+      "mean_wb_score": 2.75,
+      "full_score_answers": 1,
+      "full_score_rate": 0.025,
+      "score_distribution": [
+        {
+          "score_10": 3,
+          "answers": 1
+        },
+        {
+          "score_10": 4,
+          "answers": 2
+        },
+        {
+          "score_10": 5,
+          "answers": 7
+        },
+        {
+          "score_10": 6,
+          "answers": 10
+        },
+        {
+          "score_10": 7,
+          "answers": 14
+        },
+        {
+          "score_10": 8,
+          "answers": 4
+        },
+        {
+          "score_10": 9,
+          "answers": 1
+        },
+        {
+          "score_10": 10,
+          "answers": 1
+        }
+      ],
+      "timing": {
+        "elapsed_seconds": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 27.57595,
+          "median": 15.384,
+          "minimum": 3.396,
+          "maximum": 137.878
+        },
+        "client_elapsed_seconds": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 27.632221725,
+          "median": 15.429352999999999,
+          "minimum": 3.426241,
+          "maximum": 137.926221
+        },
+        "wall_seconds": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 30.106907075,
+          "median": 18.4806655,
+          "minimum": 4.19481,
+          "maximum": 139.761763
+        },
+        "client_first_answer_delta_seconds": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 12.75653325,
+          "median": 3.7056945,
+          "minimum": 2.260801,
+          "maximum": 80.30257
+        },
+        "ttft_seconds": {
+          "non_null": 0,
+          "missing": 40,
+          "mean": null,
+          "median": null,
+          "minimum": null,
+          "maximum": null
+        },
+        "tpot_seconds": {
+          "non_null": 0,
+          "missing": 40,
+          "mean": null,
+          "median": null,
+          "minimum": null,
+          "maximum": null
+        }
+      },
+      "tokens": {
+        "inputTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 10368.625,
+          "median": 10414.5,
+          "minimum": 6174,
+          "maximum": 11200
+        },
+        "cachedInputTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 5574.4,
+          "median": 4224.0,
+          "minimum": 0,
+          "maximum": 8704
+        },
+        "outputTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 1403.5,
+          "median": 726.5,
+          "minimum": 84,
+          "maximum": 7497
+        },
+        "reasoningOutputTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 562.05,
+          "median": 0.0,
+          "minimum": 0,
+          "maximum": 4354
+        },
+        "totalTokens": {
+          "non_null": 40,
+          "missing": 0,
+          "mean": 11772.125,
+          "median": 11216.5,
+          "minimum": 7441,
+          "maximum": 17838
+        }
+      },
+      "task_means": [
+        {
+          "task_id": "wild_001",
+          "score_10": 6.5
+        },
+        {
+          "task_id": "wild_002",
+          "score_10": 6
+        },
+        {
+          "task_id": "wild_003",
+          "score_10": 6.5
+        },
+        {
+          "task_id": "wild_004",
+          "score_10": 4.5
+        },
+        {
+          "task_id": "wild_005",
+          "score_10": 6
+        },
+        {
+          "task_id": "wild_006",
+          "score_10": 3.5
+        },
+        {
+          "task_id": "wild_007",
+          "score_10": 6
+        },
+        {
+          "task_id": "wild_008",
+          "score_10": 8
+        },
+        {
+          "task_id": "wild_009",
+          "score_10": 7
+        },
+        {
+          "task_id": "wild_010",
+          "score_10": 5
+        },
+        {
+          "task_id": "wild_011",
+          "score_10": 6.5
+        },
+        {
+          "task_id": "wild_012",
+          "score_10": 7.5
+        },
+        {
+          "task_id": "wild_013",
+          "score_10": 7.5
+        },
+        {
+          "task_id": "wild_014",
+          "score_10": 6.5
+        },
+        {
+          "task_id": "wild_015",
+          "score_10": 8
+        },
+        {
+          "task_id": "wild_016",
+          "score_10": 6.5
+        },
+        {
+          "task_id": "wild_017",
+          "score_10": 6
+        },
+        {
+          "task_id": "wild_018",
+          "score_10": 6
+        },
+        {
+          "task_id": "wild_019",
+          "score_10": 6.5
+        },
+        {
+          "task_id": "wild_020",
+          "score_10": 7.5
+        }
+      ]
+    }
+  ],
+  "paired_task_comparisons": [
+    {
+      "condition_id": "sol_low",
+      "reference_condition_id": "sol_high",
+      "paired_tasks": 20,
+      "mean_difference": -0.45,
+      "higher": 1,
+      "tied": 10,
+      "lower": 9,
+      "task_pairs": [
+        {
+          "task_id": "wild_001",
+          "condition_score_10": 8.5,
+          "reference_score_10": 8.5,
+          "difference": 0.0
+        },
+        {
+          "task_id": "wild_002",
+          "condition_score_10": 10,
+          "reference_score_10": 10,
+          "difference": 0
+        },
+        {
+          "task_id": "wild_003",
+          "condition_score_10": 7.5,
+          "reference_score_10": 10,
+          "difference": -2.5
+        },
+        {
+          "task_id": "wild_004",
+          "condition_score_10": 5.5,
+          "reference_score_10": 6,
+          "difference": -0.5
+        },
+        {
+          "task_id": "wild_005",
+          "condition_score_10": 8.5,
+          "reference_score_10": 8,
+          "difference": 0.5
+        },
+        {
+          "task_id": "wild_006",
+          "condition_score_10": 7,
+          "reference_score_10": 8,
+          "difference": -1
+        },
+        {
+          "task_id": "wild_007",
+          "condition_score_10": 8.5,
+          "reference_score_10": 10,
+          "difference": -1.5
+        },
+        {
+          "task_id": "wild_008",
+          "condition_score_10": 7.5,
+          "reference_score_10": 7.5,
+          "difference": 0.0
+        },
+        {
+          "task_id": "wild_009",
+          "condition_score_10": 8,
+          "reference_score_10": 8,
+          "difference": 0
+        },
+        {
+          "task_id": "wild_010",
+          "condition_score_10": 6.5,
+          "reference_score_10": 6.5,
+          "difference": 0.0
+        },
+        {
+          "task_id": "wild_011",
+          "condition_score_10": 9,
+          "reference_score_10": 10,
+          "difference": -1
+        },
+        {
+          "task_id": "wild_012",
+          "condition_score_10": 10,
+          "reference_score_10": 10,
+          "difference": 0
+        },
+        {
+          "task_id": "wild_013",
+          "condition_score_10": 8,
+          "reference_score_10": 8,
+          "difference": 0
+        },
+        {
+          "task_id": "wild_014",
+          "condition_score_10": 9,
+          "reference_score_10": 9,
+          "difference": 0
+        },
+        {
+          "task_id": "wild_015",
+          "condition_score_10": 9.5,
+          "reference_score_10": 10,
+          "difference": -0.5
+        },
+        {
+          "task_id": "wild_016",
+          "condition_score_10": 8.5,
+          "reference_score_10": 9.5,
+          "difference": -1.0
+        },
+        {
+          "task_id": "wild_017",
+          "condition_score_10": 8,
+          "reference_score_10": 8.5,
+          "difference": -0.5
+        },
+        {
+          "task_id": "wild_018",
+          "condition_score_10": 8,
+          "reference_score_10": 8,
+          "difference": 0
+        },
+        {
+          "task_id": "wild_019",
+          "condition_score_10": 9,
+          "reference_score_10": 10,
+          "difference": -1
+        },
+        {
+          "task_id": "wild_020",
+          "condition_score_10": 8,
+          "reference_score_10": 8,
+          "difference": 0
+        }
+      ]
+    },
+    {
+      "condition_id": "sol_ultra",
+      "reference_condition_id": "sol_high",
+      "paired_tasks": 20,
+      "mean_difference": 0.05,
+      "higher": 5,
+      "tied": 12,
+      "lower": 3,
+      "task_pairs": [
+        {
+          "task_id": "wild_001",
+          "condition_score_10": 9,
+          "reference_score_10": 8.5,
+          "difference": 0.5
+        },
+        {
+          "task_id": "wild_002",
+          "condition_score_10": 10,
+          "reference_score_10": 10,
+          "difference": 0
+        },
+        {
+          "task_id": "wild_003",
+          "condition_score_10": 10,
+          "reference_score_10": 10,
+          "difference": 0
+        },
+        {
+          "task_id": "wild_004",
+          "condition_score_10": 6,
+          "reference_score_10": 6,
+          "difference": 0
+        },
+        {
+          "task_id": "wild_005",
+          "condition_score_10": 8.5,
+          "reference_score_10": 8,
+          "difference": 0.5
+        },
+        {
+          "task_id": "wild_006",
+          "condition_score_10": 8.5,
+          "reference_score_10": 8,
+          "difference": 0.5
+        },
+        {
+          "task_id": "wild_007",
+          "condition_score_10": 10,
+          "reference_score_10": 10,
+          "difference": 0
+        },
+        {
+          "task_id": "wild_008",
+          "condition_score_10": 7.5,
+          "reference_score_10": 7.5,
+          "difference": 0.0
+        },
+        {
+          "task_id": "wild_009",
+          "condition_score_10": 7,
+          "reference_score_10": 8,
+          "difference": -1
+        },
+        {
+          "task_id": "wild_010",
+          "condition_score_10": 6.5,
+          "reference_score_10": 6.5,
+          "difference": 0.0
+        },
+        {
+          "task_id": "wild_011",
+          "condition_score_10": 9.5,
+          "reference_score_10": 10,
+          "difference": -0.5
+        },
+        {
+          "task_id": "wild_012",
+          "condition_score_10": 10,
+          "reference_score_10": 10,
+          "difference": 0
+        },
+        {
+          "task_id": "wild_013",
+          "condition_score_10": 9,
+          "reference_score_10": 8,
+          "difference": 1
+        },
+        {
+          "task_id": "wild_014",
+          "condition_score_10": 9,
+          "reference_score_10": 9,
+          "difference": 0
+        },
+        {
+          "task_id": "wild_015",
+          "condition_score_10": 9.5,
+          "reference_score_10": 10,
+          "difference": -0.5
+        },
+        {
+          "task_id": "wild_016",
+          "condition_score_10": 9.5,
+          "reference_score_10": 9.5,
+          "difference": 0.0
+        },
+        {
+          "task_id": "wild_017",
+          "condition_score_10": 9,
+          "reference_score_10": 8.5,
+          "difference": 0.5
+        },
+        {
+          "task_id": "wild_018",
+          "condition_score_10": 8,
+          "reference_score_10": 8,
+          "difference": 0
+        },
+        {
+          "task_id": "wild_019",
+          "condition_score_10": 10,
+          "reference_score_10": 10,
+          "difference": 0
+        },
+        {
+          "task_id": "wild_020",
+          "condition_score_10": 8,
+          "reference_score_10": 8,
+          "difference": 0
+        }
+      ]
+    },
+    {
+      "condition_id": "luna_high",
+      "reference_condition_id": "sol_high",
+      "paired_tasks": 20,
+      "mean_difference": -2.3,
+      "higher": 1,
+      "tied": 0,
+      "lower": 19,
+      "task_pairs": [
+        {
+          "task_id": "wild_001",
+          "condition_score_10": 6.5,
+          "reference_score_10": 8.5,
+          "difference": -2.0
+        },
+        {
+          "task_id": "wild_002",
+          "condition_score_10": 6,
+          "reference_score_10": 10,
+          "difference": -4
+        },
+        {
+          "task_id": "wild_003",
+          "condition_score_10": 6.5,
+          "reference_score_10": 10,
+          "difference": -3.5
+        },
+        {
+          "task_id": "wild_004",
+          "condition_score_10": 4.5,
+          "reference_score_10": 6,
+          "difference": -1.5
+        },
+        {
+          "task_id": "wild_005",
+          "condition_score_10": 6,
+          "reference_score_10": 8,
+          "difference": -2
+        },
+        {
+          "task_id": "wild_006",
+          "condition_score_10": 3.5,
+          "reference_score_10": 8,
+          "difference": -4.5
+        },
+        {
+          "task_id": "wild_007",
+          "condition_score_10": 6,
+          "reference_score_10": 10,
+          "difference": -4
+        },
+        {
+          "task_id": "wild_008",
+          "condition_score_10": 8,
+          "reference_score_10": 7.5,
+          "difference": 0.5
+        },
+        {
+          "task_id": "wild_009",
+          "condition_score_10": 7,
+          "reference_score_10": 8,
+          "difference": -1
+        },
+        {
+          "task_id": "wild_010",
+          "condition_score_10": 5,
+          "reference_score_10": 6.5,
+          "difference": -1.5
+        },
+        {
+          "task_id": "wild_011",
+          "condition_score_10": 6.5,
+          "reference_score_10": 10,
+          "difference": -3.5
+        },
+        {
+          "task_id": "wild_012",
+          "condition_score_10": 7.5,
+          "reference_score_10": 10,
+          "difference": -2.5
+        },
+        {
+          "task_id": "wild_013",
+          "condition_score_10": 7.5,
+          "reference_score_10": 8,
+          "difference": -0.5
+        },
+        {
+          "task_id": "wild_014",
+          "condition_score_10": 6.5,
+          "reference_score_10": 9,
+          "difference": -2.5
+        },
+        {
+          "task_id": "wild_015",
+          "condition_score_10": 8,
+          "reference_score_10": 10,
+          "difference": -2
+        },
+        {
+          "task_id": "wild_016",
+          "condition_score_10": 6.5,
+          "reference_score_10": 9.5,
+          "difference": -3.0
+        },
+        {
+          "task_id": "wild_017",
+          "condition_score_10": 6,
+          "reference_score_10": 8.5,
+          "difference": -2.5
+        },
+        {
+          "task_id": "wild_018",
+          "condition_score_10": 6,
+          "reference_score_10": 8,
+          "difference": -2
+        },
+        {
+          "task_id": "wild_019",
+          "condition_score_10": 6.5,
+          "reference_score_10": 10,
+          "difference": -3.5
+        },
+        {
+          "task_id": "wild_020",
+          "condition_score_10": 7.5,
+          "reference_score_10": 8,
+          "difference": -0.5
+        }
+      ]
+    }
+  ],
+  "repeat_judge_agreement": [
+    {
+      "condition_id": "sol_low",
+      "repeat_pairs": 4,
+      "mean_absolute_score_difference": 0,
+      "maximum_absolute_score_difference": 0,
+      "exact_agreement_rate": 1.0
+    },
+    {
+      "condition_id": "sol_high",
+      "repeat_pairs": 4,
+      "mean_absolute_score_difference": 0,
+      "maximum_absolute_score_difference": 0,
+      "exact_agreement_rate": 1.0
+    },
+    {
+      "condition_id": "sol_ultra",
+      "repeat_pairs": 4,
+      "mean_absolute_score_difference": 0,
+      "maximum_absolute_score_difference": 0,
+      "exact_agreement_rate": 1.0
+    },
+    {
+      "condition_id": "luna_high",
+      "repeat_pairs": 4,
+      "mean_absolute_score_difference": 0.5,
+      "maximum_absolute_score_difference": 1,
+      "exact_agreement_rate": 0.5
+    }
+  ],
+  "quality_unit": "Task mean across all planned independent generations; incomplete task means excluded",
+  "timing_unit": "Successful candidate requests only; judge timing excluded",
+  "limitations": [
+    "20 filtered tasks are a pilot, not an official WildBench leaderboard run.",
+    "Scores are 1 through 10 and WB-Score=(score-5)*2; subjective scores are not accuracy.",
+    "Different model-family judge preference and verbosity effects remain possible.",
+    "Configured model/effort may not be independently confirmed by upstream telemetry.",
+    "TTFT and TPOT remain null unless the runtime supplies their actual measurements.",
+    "First visible answer text wait is a separate observation, not TTFT."
+  ]
+}

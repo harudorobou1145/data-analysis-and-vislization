@@ -1,0 +1,64 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error,tool_server,tool_input,tool_output,behavior_category,is_test_execution,measurement_source
+max100_8578ec67a475bf278cc3849d_a5430b0505,1,2026-11-01T08:16:02.192441+00:00,0.42074689999981274,thread.started,,,,,,,,,,,,,,
+max100_8578ec67a475bf278cc3849d_a5430b0505,2,2026-11-01T08:16:02.218186+00:00,0.4464926999999079,turn.started,,,,,,,,,,,,,,
+max100_8578ec67a475bf278cc3849d_a5430b0505,3,2026-11-01T08:16:05.315724+00:00,3.544031299999915,item.completed,item_0,agent_message,,,,,,,,,,message,False,native_item
+max100_8578ec67a475bf278cc3849d_a5430b0505,4,2026-11-01T08:16:05.347883+00:00,3.5761892999998963,item.started,item_1,mcp_tool_call,read_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py""}",,file_read,False,native_item
+max100_8578ec67a475bf278cc3849d_a5430b0505,5,2026-11-01T08:16:05.668903+00:00,3.8972114999996847,item.completed,item_1,mcp_tool_call,read_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""content\"": \""from typing import List\\n\\n\\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\\n    \\\""\\\""\\\"" Given list of numbers (of at least two elements), apply a linear transform to that list,\\n    such that the smallest number will become 0 and the largest will become 1\\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\\n    [0.0, 0.25, 0.5, 0.75, 1.0]\\n    \\\""\\\""\\\""\\n    pass\\n\""}""}], ""structured_content"": null}",file_read,False,workspace_tool_result
+max100_8578ec67a475bf278cc3849d_a5430b0505,6,2026-11-01T08:16:15.563625+00:00,13.791936299999634,item.started,item_2,mcp_tool_call,write_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""from typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \""\""\"" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \""\""\""\n    minimum = min(numbers)\n    span = max(numbers) - minimum\n    return [(number - minimum) / span for number in numbers]\n""}",,file_write,False,native_item
+max100_8578ec67a475bf278cc3849d_a5430b0505,7,2026-11-01T08:16:15.889489+00:00,14.117800199999692,item.completed,item_2,mcp_tool_call,write_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""from typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \""\""\"" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \""\""\""\n    minimum = min(numbers)\n    span = max(numbers) - minimum\n    return [(number - minimum) / span for number in numbers]\n""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""before_sha256\"": \""2601ea61a10ca1d491e51bb48f25c49928f46a6f821b4f7fa4747a3e1a07dac5\"", \""after_sha256\"": \""202c1d7996ddf74a386d3b58a498609a735a2c1803327fdde73292c0ebb58bc6\"", \""changed\"": true}""}], ""structured_content"": null}",file_write,False,workspace_tool_result
+max100_8578ec67a475bf278cc3849d_a5430b0505,8,2026-11-01T08:16:23.952762+00:00,22.181068200000027,item.started,item_3,mcp_tool_call,run_command,in_progress,,,"python - <<'PY'
+import doctest
+import math
+import solution
+
+result = doctest.testmod(solution)
+assert result.failed == 0
+
+cases = [
+    ([1.0, 2.0, 3.0, 4.0, 5.0], [0.0, 0.25, 0.5, 0.75, 1.0]),
+    ([5.0, 1.0, 3.0], [1.0, 0.0, 0.5]),
+    ([-10.0, -5.0, 0.0, 10.0], [0.0, 0.25, 0.5, 1.0]),
+    ([-4.0, -2.0, -3.0], [0.0, 1.0, 0.5]),
+    ([7.0, 2.0], [1.0, 0.0]),
+    ([2.0, 2.0, 4.0, 4.0], [0.0, 0.0, 1.0, 1.0]),
+    ([0.1, 0.2, 0.3], [0.0, 0.5, 1.0]),
+]
+for numbers, expected in cases:
+    original = numbers.copy()
+    actual = solution.rescale_to_unit(numbers)
+    assert len(actual) == len(expected)
+    assert all(math.isclose(a, b, abs_tol=1e-12) for a, b in zip(actual, expected)), (numbers, actual)
+    assert numbers == original, 'Input list was modified'
+    assert min(actual) == 0.0 and max(actual) == 1.0
+
+print(f'Passed {result.attempted} doctest and {len(cases)} cases, including input preservation checks.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nimport doctest\nimport math\nimport solution\n\nresult = doctest.testmod(solution)\nassert result.failed == 0\n\ncases = [\n    ([1.0, 2.0, 3.0, 4.0, 5.0], [0.0, 0.25, 0.5, 0.75, 1.0]),\n    ([5.0, 1.0, 3.0], [1.0, 0.0, 0.5]),\n    ([-10.0, -5.0, 0.0, 10.0], [0.0, 0.25, 0.5, 1.0]),\n    ([-4.0, -2.0, -3.0], [0.0, 1.0, 0.5]),\n    ([7.0, 2.0], [1.0, 0.0]),\n    ([2.0, 2.0, 4.0, 4.0], [0.0, 0.0, 1.0, 1.0]),\n    ([0.1, 0.2, 0.3], [0.0, 0.5, 1.0]),\n]\nfor numbers, expected in cases:\n    original = numbers.copy()\n    actual = solution.rescale_to_unit(numbers)\n    assert len(actual) == len(expected)\n    assert all(math.isclose(a, b, abs_tol=1e-12) for a, b in zip(actual, expected)), (numbers, actual)\n    assert numbers == original, 'Input list was modified'\n    assert min(actual) == 0.0 and max(actual) == 1.0\n\nprint(f'Passed {result.attempted} doctest and {len(cases)} cases, including input preservation checks.')\nPY""}",,command_execution,True,native_item
+max100_8578ec67a475bf278cc3849d_a5430b0505,9,2026-11-01T08:16:24.428879+00:00,22.657191899999816,item.completed,item_3,mcp_tool_call,run_command,completed,0,0.15241990599997735,"python - <<'PY'
+import doctest
+import math
+import solution
+
+result = doctest.testmod(solution)
+assert result.failed == 0
+
+cases = [
+    ([1.0, 2.0, 3.0, 4.0, 5.0], [0.0, 0.25, 0.5, 0.75, 1.0]),
+    ([5.0, 1.0, 3.0], [1.0, 0.0, 0.5]),
+    ([-10.0, -5.0, 0.0, 10.0], [0.0, 0.25, 0.5, 1.0]),
+    ([-4.0, -2.0, -3.0], [0.0, 1.0, 0.5]),
+    ([7.0, 2.0], [1.0, 0.0]),
+    ([2.0, 2.0, 4.0, 4.0], [0.0, 0.0, 1.0, 1.0]),
+    ([0.1, 0.2, 0.3], [0.0, 0.5, 1.0]),
+]
+for numbers, expected in cases:
+    original = numbers.copy()
+    actual = solution.rescale_to_unit(numbers)
+    assert len(actual) == len(expected)
+    assert all(math.isclose(a, b, abs_tol=1e-12) for a, b in zip(actual, expected)), (numbers, actual)
+    assert numbers == original, 'Input list was modified'
+    assert min(actual) == 0.0 and max(actual) == 1.0
+
+print(f'Passed {result.attempted} doctest and {len(cases)} cases, including input preservation checks.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nimport doctest\nimport math\nimport solution\n\nresult = doctest.testmod(solution)\nassert result.failed == 0\n\ncases = [\n    ([1.0, 2.0, 3.0, 4.0, 5.0], [0.0, 0.25, 0.5, 0.75, 1.0]),\n    ([5.0, 1.0, 3.0], [1.0, 0.0, 0.5]),\n    ([-10.0, -5.0, 0.0, 10.0], [0.0, 0.25, 0.5, 1.0]),\n    ([-4.0, -2.0, -3.0], [0.0, 1.0, 0.5]),\n    ([7.0, 2.0], [1.0, 0.0]),\n    ([2.0, 2.0, 4.0, 4.0], [0.0, 0.0, 1.0, 1.0]),\n    ([0.1, 0.2, 0.3], [0.0, 0.5, 1.0]),\n]\nfor numbers, expected in cases:\n    original = numbers.copy()\n    actual = solution.rescale_to_unit(numbers)\n    assert len(actual) == len(expected)\n    assert all(math.isclose(a, b, abs_tol=1e-12) for a, b in zip(actual, expected)), (numbers, actual)\n    assert numbers == original, 'Input list was modified'\n    assert min(actual) == 0.0 and max(actual) == 1.0\n\nprint(f'Passed {result.attempted} doctest and {len(cases)} cases, including input preservation checks.')\nPY""}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python - <<'PY'\\nimport doctest\\nimport math\\nimport solution\\n\\nresult = doctest.testmod(solution)\\nassert result.failed == 0\\n\\ncases = [\\n    ([1.0, 2.0, 3.0, 4.0, 5.0], [0.0, 0.25, 0.5, 0.75, 1.0]),\\n    ([5.0, 1.0, 3.0], [1.0, 0.0, 0.5]),\\n    ([-10.0, -5.0, 0.0, 10.0], [0.0, 0.25, 0.5, 1.0]),\\n    ([-4.0, -2.0, -3.0], [0.0, 1.0, 0.5]),\\n    ([7.0, 2.0], [1.0, 0.0]),\\n    ([2.0, 2.0, 4.0, 4.0], [0.0, 0.0, 1.0, 1.0]),\\n    ([0.1, 0.2, 0.3], [0.0, 0.5, 1.0]),\\n]\\nfor numbers, expected in cases:\\n    original = numbers.copy()\\n    actual = solution.rescale_to_unit(numbers)\\n    assert len(actual) == len(expected)\\n    assert all(math.isclose(a, b, abs_tol=1e-12) for a, b in zip(actual, expected)), (numbers, actual)\\n    assert numbers == original, 'Input list was modified'\\n    assert min(actual) == 0.0 and max(actual) == 1.0\\n\\nprint(f'Passed {result.attempted} doctest and {len(cases)} cases, including input preservation checks.')\\nPY\"", \""exit_code\"": 0, \""stdout\"": \""Passed 1 doctest and 7 cases, including input preservation checks.\\n\"", \""stderr\"": \""\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.15241990599997735, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+max100_8578ec67a475bf278cc3849d_a5430b0505,10,2026-11-01T08:16:34.392523+00:00,32.62082829999963,item.completed,item_4,agent_message,,,,,,,,,,message,False,native_item
+max100_8578ec67a475bf278cc3849d_a5430b0505,11,2026-11-01T08:16:34.456031+00:00,32.684336699999676,turn.completed,,,,,,,,,,,,,,

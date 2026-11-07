@@ -1,0 +1,50 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error,tool_server,tool_input,tool_output,behavior_category,is_test_execution,measurement_source
+exp_cfbe765a09defc765cabb6ac_2a7eceb75a12,1,2026-10-31T14:46:04.945292+00:00,0.5035473000025377,thread.started,,,,,,,,,,,,,,
+exp_cfbe765a09defc765cabb6ac_2a7eceb75a12,2,2026-10-31T14:46:04.977641+00:00,0.5358949000947177,turn.started,,,,,,,,,,,,,,
+exp_cfbe765a09defc765cabb6ac_2a7eceb75a12,3,2026-10-31T14:46:08.983064+00:00,4.541319300071336,item.completed,item_0,agent_message,,,,,,,,,,message,False,native_item
+exp_cfbe765a09defc765cabb6ac_2a7eceb75a12,4,2026-10-31T14:46:08.994481+00:00,4.552737400052138,item.started,item_1,mcp_tool_call,read_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py""}",,file_read,False,native_item
+exp_cfbe765a09defc765cabb6ac_2a7eceb75a12,5,2026-10-31T14:46:09.474414+00:00,5.032675400027074,item.completed,item_1,mcp_tool_call,read_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""content\"": \""\\n\\ndef correct_bracketing(brackets: str):\\n    \\\""\\\""\\\"" brackets is a string of \\\""(\\\"" and \\\"")\\\"".\\n    return True if every opening bracket has a corresponding closing bracket.\\n\\n    >>> correct_bracketing(\\\""(\\\"")\\n    False\\n    >>> correct_bracketing(\\\""()\\\"")\\n    True\\n    >>> correct_bracketing(\\\""(()())\\\"")\\n    True\\n    >>> correct_bracketing(\\\"")(()\\\"")\\n    False\\n    \\\""\\\""\\\""\\n    pass\\n\""}""}], ""structured_content"": null}",file_read,False,workspace_tool_result
+exp_cfbe765a09defc765cabb6ac_2a7eceb75a12,6,2026-10-31T14:46:14.054350+00:00,9.61261180008296,item.started,item_2,mcp_tool_call,write_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""\n\ndef correct_bracketing(brackets: str):\n    \""\""\"" brackets is a string of \""(\"" and \"")\"".\n    return True if every opening bracket has a corresponding closing bracket.\n\n    >>> correct_bracketing(\""(\"")\n    False\n    >>> correct_bracketing(\""()\"")\n    True\n    >>> correct_bracketing(\""(()())\"")\n    True\n    >>> correct_bracketing(\"")(()\"")\n    False\n    \""\""\""\n    balance = 0\n    for bracket in brackets:\n        if bracket == \""(\"":\n            balance += 1\n        else:\n            balance -= 1\n        if balance < 0:\n            return False\n    return balance == 0\n""}",,file_write,False,native_item
+exp_cfbe765a09defc765cabb6ac_2a7eceb75a12,7,2026-10-31T14:46:14.433793+00:00,9.992044800077565,item.completed,item_2,mcp_tool_call,write_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""\n\ndef correct_bracketing(brackets: str):\n    \""\""\"" brackets is a string of \""(\"" and \"")\"".\n    return True if every opening bracket has a corresponding closing bracket.\n\n    >>> correct_bracketing(\""(\"")\n    False\n    >>> correct_bracketing(\""()\"")\n    True\n    >>> correct_bracketing(\""(()())\"")\n    True\n    >>> correct_bracketing(\"")(()\"")\n    False\n    \""\""\""\n    balance = 0\n    for bracket in brackets:\n        if bracket == \""(\"":\n            balance += 1\n        else:\n            balance -= 1\n        if balance < 0:\n            return False\n    return balance == 0\n""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""before_sha256\"": \""74ad48b16b7f9ebb44ec9c8d2b772964a3d40ee1581cc58fd68561bdc53a25c3\"", \""after_sha256\"": \""b758fa521c17642bbcb7c5f8fc58f88bfab2f3898ef73bdcad9b898fbe522d95\"", \""changed\"": true}""}], ""structured_content"": null}",file_write,False,workspace_tool_result
+exp_cfbe765a09defc765cabb6ac_2a7eceb75a12,8,2026-10-31T14:46:20.423718+00:00,15.9819738001097,item.started,item_3,mcp_tool_call,run_command,in_progress,,,"python - <<'PY'
+import doctest
+from itertools import product
+import solution
+
+result = doctest.testmod(solution)
+assert result.failed == 0
+count = 0
+for length in range(13):
+    for chars in product('()', repeat=length):
+        text = ''.join(chars)
+        reduced = text
+        while '()' in reduced:
+            reduced = reduced.replace('()', '')
+        assert solution.correct_bracketing(text) == (reduced == ''), repr(text)
+        count += 1
+assert solution.correct_bracketing('(' * 10000 + ')' * 10000)
+assert not solution.correct_bracketing(')' + '(' * 10000 + ')' * 9999)
+print(f'{result.attempted} doctests and {count} exhaustive cases passed; long-input checks passed.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nimport doctest\nfrom itertools import product\nimport solution\n\nresult = doctest.testmod(solution)\nassert result.failed == 0\ncount = 0\nfor length in range(13):\n    for chars in product('()', repeat=length):\n        text = ''.join(chars)\n        reduced = text\n        while '()' in reduced:\n            reduced = reduced.replace('()', '')\n        assert solution.correct_bracketing(text) == (reduced == ''), repr(text)\n        count += 1\nassert solution.correct_bracketing('(' * 10000 + ')' * 10000)\nassert not solution.correct_bracketing(')' + '(' * 10000 + ')' * 9999)\nprint(f'{result.attempted} doctests and {count} exhaustive cases passed; long-input checks passed.')\nPY""}",,command_execution,True,native_item
+exp_cfbe765a09defc765cabb6ac_2a7eceb75a12,9,2026-10-31T14:46:20.976191+00:00,16.534449800034054,item.completed,item_3,mcp_tool_call,run_command,completed,0,0.18506815299770096,"python - <<'PY'
+import doctest
+from itertools import product
+import solution
+
+result = doctest.testmod(solution)
+assert result.failed == 0
+count = 0
+for length in range(13):
+    for chars in product('()', repeat=length):
+        text = ''.join(chars)
+        reduced = text
+        while '()' in reduced:
+            reduced = reduced.replace('()', '')
+        assert solution.correct_bracketing(text) == (reduced == ''), repr(text)
+        count += 1
+assert solution.correct_bracketing('(' * 10000 + ')' * 10000)
+assert not solution.correct_bracketing(')' + '(' * 10000 + ')' * 9999)
+print(f'{result.attempted} doctests and {count} exhaustive cases passed; long-input checks passed.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nimport doctest\nfrom itertools import product\nimport solution\n\nresult = doctest.testmod(solution)\nassert result.failed == 0\ncount = 0\nfor length in range(13):\n    for chars in product('()', repeat=length):\n        text = ''.join(chars)\n        reduced = text\n        while '()' in reduced:\n            reduced = reduced.replace('()', '')\n        assert solution.correct_bracketing(text) == (reduced == ''), repr(text)\n        count += 1\nassert solution.correct_bracketing('(' * 10000 + ')' * 10000)\nassert not solution.correct_bracketing(')' + '(' * 10000 + ')' * 9999)\nprint(f'{result.attempted} doctests and {count} exhaustive cases passed; long-input checks passed.')\nPY""}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python - <<'PY'\\nimport doctest\\nfrom itertools import product\\nimport solution\\n\\nresult = doctest.testmod(solution)\\nassert result.failed == 0\\ncount = 0\\nfor length in range(13):\\n    for chars in product('()', repeat=length):\\n        text = ''.join(chars)\\n        reduced = text\\n        while '()' in reduced:\\n            reduced = reduced.replace('()', '')\\n        assert solution.correct_bracketing(text) == (reduced == ''), repr(text)\\n        count += 1\\nassert solution.correct_bracketing('(' * 10000 + ')' * 10000)\\nassert not solution.correct_bracketing(')' + '(' * 10000 + ')' * 9999)\\nprint(f'{result.attempted} doctests and {count} exhaustive cases passed; long-input checks passed.')\\nPY\"", \""exit_code\"": 0, \""stdout\"": \""4 doctests and 8191 exhaustive cases passed; long-input checks passed.\\n\"", \""stderr\"": \""\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.18506815299770096, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+exp_cfbe765a09defc765cabb6ac_2a7eceb75a12,10,2026-10-31T14:46:26.903943+00:00,22.462194200023077,item.completed,item_4,agent_message,,,,,,,,,,message,False,native_item
+exp_cfbe765a09defc765cabb6ac_2a7eceb75a12,11,2026-10-31T14:46:26.955722+00:00,22.513976700021885,turn.completed,,,,,,,,,,,,,,

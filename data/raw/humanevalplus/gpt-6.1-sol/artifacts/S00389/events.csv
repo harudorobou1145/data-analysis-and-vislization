@@ -1,0 +1,62 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error,tool_server,tool_input,tool_output,behavior_category,is_test_execution,measurement_source
+max100_7ca1dcebb54ed3d84725aa5c_1210d7d93a,1,2026-11-01T08:35:47.833876+00:00,0.4164861999997811,thread.started,,,,,,,,,,,,,,
+max100_7ca1dcebb54ed3d84725aa5c_1210d7d93a,2,2026-11-01T08:35:47.857835+00:00,0.4404477999996743,turn.started,,,,,,,,,,,,,,
+max100_7ca1dcebb54ed3d84725aa5c_1210d7d93a,3,2026-11-01T08:35:51.585951+00:00,4.168562699999711,item.completed,item_0,agent_message,,,,,,,,,,message,False,native_item
+max100_7ca1dcebb54ed3d84725aa5c_1210d7d93a,4,2026-11-01T08:35:51.610520+00:00,4.19313129999955,item.started,item_1,mcp_tool_call,read_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py""}",,file_read,False,native_item
+max100_7ca1dcebb54ed3d84725aa5c_1210d7d93a,5,2026-11-01T08:35:51.935002+00:00,4.517616299999645,item.completed,item_1,mcp_tool_call,read_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""content\"": \""\\ndef right_angle_triangle(a, b, c):\\n    '''\\n    Given the lengths of the three sides of a triangle. Return True if the three\\n    sides form a right-angled triangle, False otherwise.\\n    A right-angled triangle is a triangle in which one angle is right angle or \\n    90 degree.\\n    Example:\\n    right_angle_triangle(3, 4, 5) == True\\n    right_angle_triangle(1, 2, 3) == False\\n    '''\\n    pass\\n\""}""}], ""structured_content"": null}",file_read,False,workspace_tool_result
+max100_7ca1dcebb54ed3d84725aa5c_1210d7d93a,6,2026-11-01T08:36:10.968290+00:00,23.550902299999507,item.started,item_2,mcp_tool_call,write_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def right_angle_triangle(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return True if the three\n    sides form a right-angled triangle, False otherwise.\n    A right-angled triangle is a triangle in which one angle is right angle or\n    90 degree.\n    Example:\n    right_angle_triangle(3, 4, 5) == True\n    right_angle_triangle(1, 2, 3) == False\n    '''\n    a, b, c = sorted((a, b, c))\n    return a > 0 and a * a + b * b == c * c\n""}",,file_write,False,native_item
+max100_7ca1dcebb54ed3d84725aa5c_1210d7d93a,7,2026-11-01T08:36:11.306837+00:00,23.889451499999268,item.completed,item_2,mcp_tool_call,write_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def right_angle_triangle(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return True if the three\n    sides form a right-angled triangle, False otherwise.\n    A right-angled triangle is a triangle in which one angle is right angle or\n    90 degree.\n    Example:\n    right_angle_triangle(3, 4, 5) == True\n    right_angle_triangle(1, 2, 3) == False\n    '''\n    a, b, c = sorted((a, b, c))\n    return a > 0 and a * a + b * b == c * c\n""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""before_sha256\"": \""354853dfc71026df25fe1b5256019bede7fd03cccc12d1585eaecc1fd38e05cd\"", \""after_sha256\"": \""6730ba8d9398a8764946f22eceb620abf8be9b0e6ea9fc4ee386b8627917357f\"", \""changed\"": true}""}], ""structured_content"": null}",file_write,False,workspace_tool_result
+max100_7ca1dcebb54ed3d84725aa5c_1210d7d93a,8,2026-11-01T08:36:17.679747+00:00,30.262362599999506,item.started,item_3,mcp_tool_call,run_command,in_progress,,,"python - <<'PY'
+from itertools import permutations
+from solution import right_angle_triangle
+
+cases = [
+    ((3, 4, 5), True),
+    ((5, 12, 13), True),
+    ((8, 15, 17), True),
+    ((7, 24, 25), True),
+    ((0.75, 1.0, 1.25), True),
+    ((1, 2, 3), False),
+    ((1, 2, 4), False),
+    ((2, 2, 2), False),
+    ((5, 6, 7), False),
+    ((0, 0, 0), False),
+    ((0, 3, 3), False),
+    ((-3, 4, 5), False),
+]
+checked = 0
+for sides, expected in cases:
+    for ordering in set(permutations(sides)):
+        result = right_angle_triangle(*ordering)
+        assert result is expected, (ordering, expected, result)
+        checked += 1
+print(f'Passed {checked} checks across right triangles, non-right triangles, invalid lengths, and side permutations.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nfrom itertools import permutations\nfrom solution import right_angle_triangle\n\ncases = [\n    ((3, 4, 5), True),\n    ((5, 12, 13), True),\n    ((8, 15, 17), True),\n    ((7, 24, 25), True),\n    ((0.75, 1.0, 1.25), True),\n    ((1, 2, 3), False),\n    ((1, 2, 4), False),\n    ((2, 2, 2), False),\n    ((5, 6, 7), False),\n    ((0, 0, 0), False),\n    ((0, 3, 3), False),\n    ((-3, 4, 5), False),\n]\nchecked = 0\nfor sides, expected in cases:\n    for ordering in set(permutations(sides)):\n        result = right_angle_triangle(*ordering)\n        assert result is expected, (ordering, expected, result)\n        checked += 1\nprint(f'Passed {checked} checks across right triangles, non-right triangles, invalid lengths, and side permutations.')\nPY"", ""timeout_seconds"": 30}",,command_execution,True,native_item
+max100_7ca1dcebb54ed3d84725aa5c_1210d7d93a,9,2026-11-01T08:36:18.010175+00:00,30.5927886999998,item.completed,item_3,mcp_tool_call,run_command,completed,0,0.016664568000123836,"python - <<'PY'
+from itertools import permutations
+from solution import right_angle_triangle
+
+cases = [
+    ((3, 4, 5), True),
+    ((5, 12, 13), True),
+    ((8, 15, 17), True),
+    ((7, 24, 25), True),
+    ((0.75, 1.0, 1.25), True),
+    ((1, 2, 3), False),
+    ((1, 2, 4), False),
+    ((2, 2, 2), False),
+    ((5, 6, 7), False),
+    ((0, 0, 0), False),
+    ((0, 3, 3), False),
+    ((-3, 4, 5), False),
+]
+checked = 0
+for sides, expected in cases:
+    for ordering in set(permutations(sides)):
+        result = right_angle_triangle(*ordering)
+        assert result is expected, (ordering, expected, result)
+        checked += 1
+print(f'Passed {checked} checks across right triangles, non-right triangles, invalid lengths, and side permutations.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nfrom itertools import permutations\nfrom solution import right_angle_triangle\n\ncases = [\n    ((3, 4, 5), True),\n    ((5, 12, 13), True),\n    ((8, 15, 17), True),\n    ((7, 24, 25), True),\n    ((0.75, 1.0, 1.25), True),\n    ((1, 2, 3), False),\n    ((1, 2, 4), False),\n    ((2, 2, 2), False),\n    ((5, 6, 7), False),\n    ((0, 0, 0), False),\n    ((0, 3, 3), False),\n    ((-3, 4, 5), False),\n]\nchecked = 0\nfor sides, expected in cases:\n    for ordering in set(permutations(sides)):\n        result = right_angle_triangle(*ordering)\n        assert result is expected, (ordering, expected, result)\n        checked += 1\nprint(f'Passed {checked} checks across right triangles, non-right triangles, invalid lengths, and side permutations.')\nPY"", ""timeout_seconds"": 30}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python - <<'PY'\\nfrom itertools import permutations\\nfrom solution import right_angle_triangle\\n\\ncases = [\\n    ((3, 4, 5), True),\\n    ((5, 12, 13), True),\\n    ((8, 15, 17), True),\\n    ((7, 24, 25), True),\\n    ((0.75, 1.0, 1.25), True),\\n    ((1, 2, 3), False),\\n    ((1, 2, 4), False),\\n    ((2, 2, 2), False),\\n    ((5, 6, 7), False),\\n    ((0, 0, 0), False),\\n    ((0, 3, 3), False),\\n    ((-3, 4, 5), False),\\n]\\nchecked = 0\\nfor sides, expected in cases:\\n    for ordering in set(permutations(sides)):\\n        result = right_angle_triangle(*ordering)\\n        assert result is expected, (ordering, expected, result)\\n        checked += 1\\nprint(f'Passed {checked} checks across right triangles, non-right triangles, invalid lengths, and side permutations.')\\nPY\"", \""exit_code\"": 0, \""stdout\"": \""Passed 59 checks across right triangles, non-right triangles, invalid lengths, and side permutations.\\n\"", \""stderr\"": \""\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.016664568000123836, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+max100_7ca1dcebb54ed3d84725aa5c_1210d7d93a,10,2026-11-01T08:36:27.492663+00:00,40.07527849999951,item.completed,item_4,agent_message,,,,,,,,,,message,False,native_item
+max100_7ca1dcebb54ed3d84725aa5c_1210d7d93a,11,2026-11-01T08:36:27.553056+00:00,40.135671199999706,turn.completed,,,,,,,,,,,,,,

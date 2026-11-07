@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6a7edf68c08411e3e34b7cdc__sol_low",
+  "task_id": "6a7edf68c08411e3e34b7cdc",
+  "condition": "sol_low",
+  "request_kind": "generation",
+  "attempt_id": "6a7edf68c08411e3e34b7cdc__sol_low__a01",
+  "started_at": "2026-11-06T08:38:18.762929+00:00",
+  "status": "completed",
+  "prompt_hash": "f28e1c66523a74e05ab34267473a9fea0d67ae3f8a4f821bed55d882555cf348",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "ed7a3943-5943-43a2-9d7a-e13681db9bef",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6a7edf68c08411e3e34b7cdc__sol_low",
+      "attempt_id": "6a7edf68c08411e3e34b7cdc__sol_low__a01",
+      "request_kind": "generation",
+      "task_id": "6a7edf68c08411e3e34b7cdc"
+    },
+    "started_at": "2026-11-06T08:38:18.764513+00:00",
+    "model_requested": "gpt-6.1-sol",
+    "effort_requested": "low",
+    "prompt": "If someone were coming down the stairs on the left side of the house with respect to the image, which direction, from the person's perspective, would they look to see the black statue? Upward left or upward right?",
+    "prompt_hash": "f28e1c66523a74e05ab34267473a9fea0d67ae3f8a4f821bed55d882555cf348",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "Upward left.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a7edf68c08411e3e34b7cdc.png",
+        "sha256": "9c2943fd5443a7acf117fd68776f2769f115eba67d5769c57bc9bbded6915a40",
+        "bytes": 9705528
+      }
+    ],
+    "effort_ui_requested": "low",
+    "effort_wire_expected": "low",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Fast responses with lighter reasoning",
+    "thread_id": "01a1b002-3d7e-7c92-aeeb-eaf062f591ae",
+    "model_configured": "gpt-6.1-sol",
+    "effort_configured": "low",
+    "instruction_sources": [],
+    "turn_id": "01a1b002-3dc3-7ad2-b8fa-6d3df16f6c9a",
+    "client_elapsed_seconds": 11.976072,
+    "turn_status": "completed",
+    "elapsed_seconds": 11.949,
+    "wire_efforts_observed": [
+      "low"
+    ],
+    "token_usage": {
+      "totalTokens": 13112,
+      "inputTokens": 13104,
+      "cachedInputTokens": 8448,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 8,
+      "reasoningOutputTokens": 0
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 11.876941,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 2,
+      "item/completed": 2,
+      "item/agentMessage/delta": 4,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1b002-400d-7420-a33f-06696da2274f",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "If someone were coming down the stairs on the left side of the house with respect to the image, which direction, from the person's perspective, would they look to see the black statue? Upward left or upward right?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a7edf68c08411e3e34b7cdc.png"
+          }
+        ],
+        "startedAtMs": 1793954299930,
+        "completedAtMs": 1793954299930
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_04a1f9d11412caad016aed9205c80c87d089f4adc5beca88d0",
+        "text": "Upward left.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793954311196,
+        "completedAtMs": 1793954311203
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 7020098,
+          "request_sha256": "b11d1125d9c92bbccee0f11a6949408f33f6d2a55cd166a1d64c097cf8167d66",
+          "response_bytes": 142603,
+          "response_sha256": "d1fe6c3d37c50e4573642d63353286343250a452866ad7e0e2076c095b58f619",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 11.333449
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6.1-sol",
+        "reasoning": {
+          "effort": "low",
+          "context": "all_turns"
+        },
+        "request_sha256": "b11d1125d9c92bbccee0f11a6949408f33f6d2a55cd166a1d64c097cf8167d66",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "bff0485b5a451c3a3ac4f902058f120a7da41af140ab7eacf0e002794070d133"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "6b30849dacc07093d06ae4c9cc18eee42af0672fee30c208cafdc62f4693e3f5",
+            "bytes": 5241645,
+            "width": 1920,
+            "height": 1280,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:38:31.430559+00:00",
+    "total_client_seconds": 12.65297,
+    "answer_hash": "88b18ea7e40360276cc96ff4e6fe17eaf203623f2a2f03df514b76fce5e887d8"
+  },
+  "answer": "Upward left.",
+  "answer_hash": "88b18ea7e40360276cc96ff4e6fe17eaf203623f2a2f03df514b76fce5e887d8",
+  "image_sha256": "9c2943fd5443a7acf117fd68776f2769f115eba67d5769c57bc9bbded6915a40",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "finished_at": "2026-11-06T08:38:31.430559+00:00"
+}

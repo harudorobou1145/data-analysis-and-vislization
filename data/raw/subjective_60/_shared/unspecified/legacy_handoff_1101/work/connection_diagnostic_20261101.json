@@ -1,0 +1,104 @@
+{
+  "request_id": "e265127d-5361-4c3e-bf67-1bb1226c2a6a",
+  "request_kind": "diagnostic",
+  "parent_run_id": "connection_diagnostic",
+  "attempt_id": "connection_diagnostic_01",
+  "model_requested": "gpt-6.1-sol",
+  "effort_requested": "low",
+  "started_at": "2026-10-31T17:02:53.580842+00:00",
+  "status": "error",
+  "prior_messages": 0,
+  "prompt_hash": "b4d50a67a784a449e0c763c401bb9f95fb37804dff5765d8b4f95fd202eb7d77",
+  "system_hash": "fa4d012e57fdef0fe321d25f36b7236e7040615b599b7af2347cfcc400d7ef59",
+  "prompt": "Reply with exactly OK.",
+  "answer": "",
+  "ttft_seconds": null,
+  "tpot_seconds": null,
+  "codex_client": "Codex Desktop/0.166.0-alpha.5.1 (Windows 10.0.26200; x86_64) dumb (subjective_formal; 1.0)",
+  "thread_id": "01a192ea-0ae7-7313-97c7-74b92206d345",
+  "model_configured": "gpt-6.1-sol",
+  "effort_configured": "low",
+  "instruction_sources": [],
+  "turn_id": "01a192ea-0b1c-7652-ae8c-cad3cffefe4a",
+  "client_elapsed_seconds": 35.038522,
+  "token_usage": null,
+  "tool_events": [],
+  "model_reroutes": [],
+  "observed_user_message_count": 1,
+  "runtime_warnings": [],
+  "notification_counts": {
+    "remoteControl/status/changed": 1,
+    "thread/started": 1,
+    "thread/status/changed": 1,
+    "turn/started": 1,
+    "item/started": 1,
+    "item/completed": 1,
+    "error": 3
+  },
+  "runtime_reported_model": null,
+  "runtime_reported_effort": null,
+  "client_first_answer_delta_seconds": null,
+  "answer_stream_span_seconds": null,
+  "partial_answer": "",
+  "stderr_tail": [
+    "{\"timestamp\":\"2026-10-31T17:02:54.388222Z\",\"level\":\"WARN\",\"fields\":{\"message\":\"GitHub HTTP sync failed for curated plugin sync; falling back to export archive\",\"error\":\"failed to get curated plugins repository from [ENDPOINT] error sending request for url ([ENDPOINT]\",\"backup_archive_api_url\":\"[ENDPOINT]\"},\"target\":\"codex_core_plugins::startup_sync\"}",
+    "{\"timestamp\":\"2026-10-31T17:02:54.518275Z\",\"level\":\"WARN\",\"fields\":{\"message\":\"stream connection failed; waiting to retry\",\"turn_id\":\"01a192ea-0b1c-7652-ae8c-cad3cffefe4a\",\"error\":\"Connection failed: error sending request\",\"retry_delay\":\"5s\"},\"target\":\"codex_core::responses_retry\"}",
+    "{\"timestamp\":\"2026-10-31T17:02:59.777272Z\",\"level\":\"WARN\",\"fields\":{\"message\":\"stream connection failed; waiting to retry\",\"turn_id\":\"01a192ea-0b1c-7652-ae8c-cad3cffefe4a\",\"error\":\"Connection failed: error sending request\",\"retry_delay\":\"10s\"},\"target\":\"codex_core::responses_retry\"}",
+    "{\"timestamp\":\"2026-10-31T17:03:04.156281Z\",\"level\":\"WARN\",\"fields\":{\"message\":\"failed to warm featured plugin ids cache\",\"error\":\"failed to send remote featured plugin request to [ENDPOINT] error sending request for url ([ENDPOINT]\"},\"target\":\"codex_core_plugins::manager\"}",
+    "{\"timestamp\":\"2026-10-31T17:03:10.008450Z\",\"level\":\"WARN\",\"fields\":{\"message\":\"stream connection failed; waiting to retry\",\"turn_id\":\"01a192ea-0b1c-7652-ae8c-cad3cffefe4a\",\"error\":\"Connection failed: error sending request\",\"retry_delay\":\"20s\"},\"target\":\"codex_core::responses_retry\"}",
+    "{\"timestamp\":\"2026-10-31T17:03:15.750166Z\",\"level\":\"WARN\",\"fields\":{\"message\":\"failed to sync curated plugins repo: git sync failed for curated plugin sync: no Git executable found in trusted installation directories; GitHub HTTP sync failed for curated plugin sync: failed to get curated plugins repository from [ENDPOINT] error sending request for url ([ENDPOINT] export archive sync failed for curated plugin sync: failed to get curated plugins export archive metadata from [ENDPOINT] error sending request for url ([ENDPOINT]\"},\"target\":\"codex_core_plugins::manager\"}"
+  ],
+  "error": "Execution exceeded configured timeout",
+  "error_type": "TimeoutError",
+  "retryable": true,
+  "finished_at": "2026-10-31T17:03:29.420543+00:00",
+  "wall_seconds": 35.839755,
+  "answer_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "captured_errors": [
+    {
+      "error": {
+        "message": "Reconnecting... waiting for network",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "Connection failed: error sending request",
+        "misalignment": null
+      },
+      "willRetry": true,
+      "threadId": "01a192ea-0ae7-7313-97c7-74b92206d345",
+      "turnId": "01a192ea-0b1c-7652-ae8c-cad3cffefe4a"
+    },
+    {
+      "error": {
+        "message": "Reconnecting... waiting for network",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "Connection failed: error sending request",
+        "misalignment": null
+      },
+      "willRetry": true,
+      "threadId": "01a192ea-0ae7-7313-97c7-74b92206d345",
+      "turnId": "01a192ea-0b1c-7652-ae8c-cad3cffefe4a"
+    },
+    {
+      "error": {
+        "message": "Reconnecting... waiting for network",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "Connection failed: error sending request",
+        "misalignment": null
+      },
+      "willRetry": true,
+      "threadId": "01a192ea-0ae7-7313-97c7-74b92206d345",
+      "turnId": "01a192ea-0b1c-7652-ae8c-cad3cffefe4a"
+    }
+  ]
+}

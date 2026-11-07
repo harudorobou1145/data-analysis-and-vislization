@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6aae2141289b431548341571__luna_high",
+  "task_id": "6aae2141289b431548341571",
+  "condition": "luna_high",
+  "request_kind": "generation",
+  "attempt_id": "6aae2141289b431548341571__luna_high__a01",
+  "started_at": "2026-11-06T08:40:12.144311+00:00",
+  "status": "completed",
+  "prompt_hash": "da0379dadcc7e481d1658ab84aa3d7e2adb0de8049e11301421150ea0e969608",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "ec4e17bb-04c6-4605-aa68-b978448666e8",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6aae2141289b431548341571__luna_high",
+      "attempt_id": "6aae2141289b431548341571__luna_high__a01",
+      "request_kind": "generation",
+      "task_id": "6aae2141289b431548341571"
+    },
+    "started_at": "2026-11-06T08:40:12.145362+00:00",
+    "model_requested": "gpt-6-luna",
+    "effort_requested": "high",
+    "prompt": "Who in the room seems to be paying the least attention to the meeting?",
+    "prompt_hash": "da0379dadcc7e481d1658ab84aa3d7e2adb0de8049e11301421150ea0e969608",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "The man in the black shirt seated at the back appears to be paying the least attention; he’s leaning back with his hands clasped rather than watching the presenter.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6aae2141289b431548341571.png",
+        "sha256": "32576d917adb3eb14c90c1aee4813ba075217eab258fa849412afa26dffc7ddc",
+        "bytes": 866395
+      }
+    ],
+    "effort_ui_requested": "high",
+    "effort_wire_expected": "high",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Greater reasoning depth for complex problems",
+    "thread_id": "01a1b003-f9bf-7560-a5e9-277c25c58728",
+    "model_configured": "gpt-6-luna",
+    "effort_configured": "high",
+    "instruction_sources": [],
+    "turn_id": "01a1b003-fa4d-7b41-a35c-2ad6d79879d2",
+    "client_elapsed_seconds": 7.151774,
+    "turn_status": "completed",
+    "elapsed_seconds": 7.075,
+    "wire_efforts_observed": [
+      "high"
+    ],
+    "token_usage": {
+      "totalTokens": 11119,
+      "inputTokens": 11082,
+      "cachedInputTokens": 4224,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 37,
+      "reasoningOutputTokens": 0
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 6.789985,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 2,
+      "item/completed": 2,
+      "item/agentMessage/delta": 33,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1b003-fa8e-7f33-b0fa-982aa82c8490",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "Who in the room seems to be paying the least attention to the meeting?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6aae2141289b431548341571.png"
+          }
+        ],
+        "startedAtMs": 1793954413202,
+        "completedAtMs": 1793954413202
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_0ff55477517ad4e9016aed92727fac87d09c2597845fb35a04",
+        "text": "The man in the black shirt seated at the back appears to be paying the least attention; he’s leaning back with his hands clasped rather than watching the presenter.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793954419884,
+        "completedAtMs": 1793954420095
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 1186292,
+          "request_sha256": "14a61035c12aa688ebb5f8d4fef0b6c34ffd68eb3b7f791ed7456d25837c420f",
+          "response_bytes": 149083,
+          "response_sha256": "31a02fd593b35588f8ad8532d5956058b89690c98003e856d2ac406b3bc3143f",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 7.02197
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6-luna",
+        "reasoning": {
+          "effort": "high",
+          "context": "all_turns"
+        },
+        "request_sha256": "14a61035c12aa688ebb5f8d4fef0b6c34ffd68eb3b7f791ed7456d25837c420f",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "ff292512f27a526bb530725c771abaaa1ba78acd961cd7d8c959d443fed9daec"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "32576d917adb3eb14c90c1aee4813ba075217eab258fa849412afa26dffc7ddc",
+            "bytes": 866395,
+            "width": 1023,
+            "height": 597,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:40:20.531096+00:00",
+    "total_client_seconds": 8.383292,
+    "answer_hash": "1866171a9814da110ed91b9b68a381167d789fd6466ccaad94b36f4bbd5327f3"
+  },
+  "answer": "The man in the black shirt seated at the back appears to be paying the least attention; he’s leaning back with his hands clasped rather than watching the presenter.",
+  "answer_hash": "1866171a9814da110ed91b9b68a381167d789fd6466ccaad94b36f4bbd5327f3",
+  "image_sha256": "32576d917adb3eb14c90c1aee4813ba075217eab258fa849412afa26dffc7ddc",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "finished_at": "2026-11-06T08:40:20.531641+00:00"
+}

@@ -1,0 +1,26 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error,tool_server,tool_input,tool_output,behavior_category,is_test_execution,measurement_source
+exp_33867361975eec7224e0bbca_b866c823c839,1,2026-10-31T14:53:19.135637+00:00,0.428423700039275,thread.started,,,,,,,,,,,,,,
+exp_33867361975eec7224e0bbca_b866c823c839,2,2026-10-31T14:53:19.161095+00:00,0.453887699986808,turn.started,,,,,,,,,,,,,,
+exp_33867361975eec7224e0bbca_b866c823c839,3,2026-10-31T14:53:23.082457+00:00,4.375245200004429,item.completed,item_0,agent_message,,,,,,,,,,message,False,native_item
+exp_33867361975eec7224e0bbca_b866c823c839,4,2026-10-31T14:53:23.108072+00:00,4.40085450001061,item.started,item_1,mcp_tool_call,read_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py""}",,file_read,False,native_item
+exp_33867361975eec7224e0bbca_b866c823c839,5,2026-10-31T14:53:23.450456+00:00,4.743243300006725,item.completed,item_1,mcp_tool_call,read_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""content\"": \""\\n\\ndef add(x: int, y: int):\\n    \\\""\\\""\\\""Add two numbers x and y\\n    >>> add(2, 3)\\n    5\\n    >>> add(5, 7)\\n    12\\n    \\\""\\\""\\\""\\n    pass\\n\""}""}], ""structured_content"": null}",file_read,False,workspace_tool_result
+exp_33867361975eec7224e0bbca_b866c823c839,6,2026-10-31T14:53:27.194611+00:00,8.487403100007214,item.started,item_2,mcp_tool_call,write_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def add(x: int, y: int):\n    \""\""\""Add two numbers x and y\n    >>> add(2, 3)\n    5\n    >>> add(5, 7)\n    12\n    \""\""\""\n    return x + y\n""}",,file_write,False,native_item
+exp_33867361975eec7224e0bbca_b866c823c839,7,2026-10-31T14:53:27.532728+00:00,8.82551760005299,item.completed,item_2,mcp_tool_call,write_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def add(x: int, y: int):\n    \""\""\""Add two numbers x and y\n    >>> add(2, 3)\n    5\n    >>> add(5, 7)\n    12\n    \""\""\""\n    return x + y\n""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""before_sha256\"": \""cb00ac2954b738cd8c181c1c83d619c4130a626dbf4a63555b48269288266393\"", \""after_sha256\"": \""2c5bce8b989da9381db9cb0e83ed276e43c2625a1575e7597fd8559d61baa86a\"", \""changed\"": true}""}], ""structured_content"": null}",file_write,False,workspace_tool_result
+exp_33867361975eec7224e0bbca_b866c823c839,8,2026-10-31T14:53:31.926960+00:00,13.219747600029223,item.started,item_3,mcp_tool_call,run_command,in_progress,,,"python -m doctest -v solution.py
+python - <<'PY'
+from solution import add
+cases = [(0, 0, 0), (-2, -3, -5), (-4, 9, 5), (10**100, 1, 10**100 + 1)]
+for x, y, expected in cases:
+    assert add(x, y) == expected
+print('All 4 additional checks passed.')
+PY",,codedepth_workspace,"{""command"": ""python -m doctest -v solution.py\npython - <<'PY'\nfrom solution import add\ncases = [(0, 0, 0), (-2, -3, -5), (-4, 9, 5), (10**100, 1, 10**100 + 1)]\nfor x, y, expected in cases:\n    assert add(x, y) == expected\nprint('All 4 additional checks passed.')\nPY""}",,command_execution,True,native_item
+exp_33867361975eec7224e0bbca_b866c823c839,9,2026-10-31T14:53:32.436101+00:00,13.728888500016183,item.completed,item_3,mcp_tool_call,run_command,completed,0,0.1839896689998568,"python -m doctest -v solution.py
+python - <<'PY'
+from solution import add
+cases = [(0, 0, 0), (-2, -3, -5), (-4, 9, 5), (10**100, 1, 10**100 + 1)]
+for x, y, expected in cases:
+    assert add(x, y) == expected
+print('All 4 additional checks passed.')
+PY",,codedepth_workspace,"{""command"": ""python -m doctest -v solution.py\npython - <<'PY'\nfrom solution import add\ncases = [(0, 0, 0), (-2, -3, -5), (-4, 9, 5), (10**100, 1, 10**100 + 1)]\nfor x, y, expected in cases:\n    assert add(x, y) == expected\nprint('All 4 additional checks passed.')\nPY""}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python -m doctest -v solution.py\\npython - <<'PY'\\nfrom solution import add\\ncases = [(0, 0, 0), (-2, -3, -5), (-4, 9, 5), (10**100, 1, 10**100 + 1)]\\nfor x, y, expected in cases:\\n    assert add(x, y) == expected\\nprint('All 4 additional checks passed.')\\nPY\"", \""exit_code\"": 0, \""stdout\"": \""Trying:\\n    add(2, 3)\\nExpecting:\\n    5\\nok\\nTrying:\\n    add(5, 7)\\nExpecting:\\n    12\\nok\\n1 items had no tests:\\n    solution\\n1 items passed all tests:\\n   2 tests in solution.add\\n2 tests in 2 items.\\n2 passed and 0 failed.\\nTest passed.\\nAll 4 additional checks passed.\\n\"", \""stderr\"": \""\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.1839896689998568, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+exp_33867361975eec7224e0bbca_b866c823c839,10,2026-10-31T14:53:36.069595+00:00,17.362383399973623,item.completed,item_4,agent_message,,,,,,,,,,message,False,native_item
+exp_33867361975eec7224e0bbca_b866c823c839,11,2026-10-31T14:53:36.120722+00:00,17.41350619995501,turn.completed,,,,,,,,,,,,,,

@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6a9e06476699ef3aefe341c8__sol_high",
+  "task_id": "6a9e06476699ef3aefe341c8",
+  "condition": "sol_high",
+  "request_kind": "generation",
+  "attempt_id": "6a9e06476699ef3aefe341c8__sol_high__a01",
+  "started_at": "2026-11-06T08:36:38.318313+00:00",
+  "status": "completed",
+  "prompt_hash": "69742e526001637a02fc2a88c855afee1f0ba1b3c84ed0c1fe17b5d7712a8a6a",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "2e48df90-0f8f-468d-85d5-243cd7a4b5a3",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6a9e06476699ef3aefe341c8__sol_high",
+      "attempt_id": "6a9e06476699ef3aefe341c8__sol_high__a01",
+      "request_kind": "generation",
+      "task_id": "6a9e06476699ef3aefe341c8"
+    },
+    "started_at": "2026-11-06T08:36:38.319321+00:00",
+    "model_requested": "gpt-6.1-sol",
+    "effort_requested": "high",
+    "prompt": "In the foreground, a woman in a black jacket and a brown sling bag is making a specific action with her left hand. Why is she not using her right hand?",
+    "prompt_hash": "69742e526001637a02fc2a88c855afee1f0ba1b3c84ed0c1fe17b5d7712a8a6a",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "Her right hand is holding the hand of the man beside her.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a9e06476699ef3aefe341c8.png",
+        "sha256": "043437f65b29b5fecd083cd0c1a097074352d9f3bea776bde5498749825f6544",
+        "bytes": 1113453
+      }
+    ],
+    "effort_ui_requested": "high",
+    "effort_wire_expected": "high",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Greater reasoning depth for complex problems",
+    "thread_id": "01a1b000-b568-7d30-bae0-799c81fae8d2",
+    "model_configured": "gpt-6.1-sol",
+    "effort_configured": "high",
+    "instruction_sources": [],
+    "turn_id": "01a1b000-b5ba-7262-b3cc-7e640be148b4",
+    "client_elapsed_seconds": 11.404873,
+    "turn_status": "completed",
+    "elapsed_seconds": 11.368,
+    "wire_efforts_observed": [
+      "high"
+    ],
+    "token_usage": {
+      "totalTokens": 11161,
+      "inputTokens": 11058,
+      "cachedInputTokens": 4096,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 103,
+      "reasoningOutputTokens": 84
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 11.306309,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 3,
+      "item/completed": 3,
+      "item/agentMessage/delta": 13,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1b000-b5e4-7f40-a705-18bbf1f04723",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "In the foreground, a woman in a black jacket and a brown sling bag is making a specific action with her left hand. Why is she not using her right hand?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a9e06476699ef3aefe341c8.png"
+          }
+        ],
+        "startedAtMs": 1793954199016,
+        "completedAtMs": 1793954199016
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_09c2874b4af207e6016aed91a0d01c87d2918f17b43deee0a3",
+        "text": "Her right hand is holding the hand of the man beside her.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793954210262,
+        "completedAtMs": 1793954210279
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 1515782,
+          "request_sha256": "dcadded0b2b8b9feb74ddfd7c41d329c4c4be3804c1f2b7e80ff812a7cc0d6ca",
+          "response_bytes": 154463,
+          "response_sha256": "d04a68d44977d55fea6b5c6361e8bc51a3c657b0d4cf2dd93401b799d5d22d6f",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 11.333185
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6.1-sol",
+        "reasoning": {
+          "effort": "high",
+          "context": "all_turns"
+        },
+        "request_sha256": "dcadded0b2b8b9feb74ddfd7c41d329c4c4be3804c1f2b7e80ff812a7cc0d6ca",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "527787dc56e4b242375a934475f3c53228b073ab7b80aa3d8d6177417e7c6637"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "043437f65b29b5fecd083cd0c1a097074352d9f3bea776bde5498749825f6544",
+            "bytes": 1113453,
+            "width": 1023,
+            "height": 676,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:36:50.433616+00:00",
+    "total_client_seconds": 12.11188,
+    "answer_hash": "d9ce0f458855cde8eaa98306678e728d95fb7e51964ede0693f4815dc1d53a1b"
+  },
+  "answer": "Her right hand is holding the hand of the man beside her.",
+  "answer_hash": "d9ce0f458855cde8eaa98306678e728d95fb7e51964ede0693f4815dc1d53a1b",
+  "image_sha256": "043437f65b29b5fecd083cd0c1a097074352d9f3bea776bde5498749825f6544",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "finished_at": "2026-11-06T08:36:50.435119+00:00"
+}

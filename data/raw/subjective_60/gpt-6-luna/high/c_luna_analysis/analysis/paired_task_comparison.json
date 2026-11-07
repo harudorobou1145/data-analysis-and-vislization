@@ -1,0 +1,983 @@
+{
+  "comparison": "gpt-6-luna/high minus gpt-6.1-sol/high",
+  "unit": "task, after averaging the two independent candidate generations",
+  "bootstrap_draws": 5000,
+  "seed": 20261103,
+  "bootstrap_note": "Percentile interval from paired task resampling; it omits systematic judge and provider uncertainty.",
+  "groups": [
+    {
+      "task_type": "all",
+      "paired_tasks": 60,
+      "mean_difference_luna_minus_sol": -0.5979166666666667,
+      "bootstrap_95_ci": [
+        -0.7875,
+        -0.43125
+      ],
+      "luna_higher_tasks": 0,
+      "tied_tasks": 14,
+      "luna_lower_tasks": 46,
+      "dimension_mean_differences": {
+        "completion": -0.325,
+        "logic": -0.2875,
+        "value": -0.4875,
+        "clarity": -0.09583333333333334
+      }
+    },
+    {
+      "task_type": "writing",
+      "paired_tasks": 20,
+      "mean_difference_luna_minus_sol": -0.575,
+      "bootstrap_95_ci": [
+        -0.83125,
+        -0.34375
+      ],
+      "luna_higher_tasks": 0,
+      "tied_tasks": 4,
+      "luna_lower_tasks": 16,
+      "dimension_mean_differences": {
+        "completion": -0.4125,
+        "logic": -0.1,
+        "value": -0.4875,
+        "clarity": -0.15
+      }
+    },
+    {
+      "task_type": "analysis",
+      "paired_tasks": 20,
+      "mean_difference_luna_minus_sol": -0.5875,
+      "bootstrap_95_ci": [
+        -0.81875,
+        -0.36875
+      ],
+      "luna_higher_tasks": 0,
+      "tied_tasks": 3,
+      "luna_lower_tasks": 17,
+      "dimension_mean_differences": {
+        "completion": -0.3,
+        "logic": -0.375,
+        "value": -0.4625,
+        "clarity": -0.0375
+      }
+    },
+    {
+      "task_type": "planning",
+      "paired_tasks": 20,
+      "mean_difference_luna_minus_sol": -0.63125,
+      "bootstrap_95_ci": [
+        -1.1125,
+        -0.2625
+      ],
+      "luna_higher_tasks": 0,
+      "tied_tasks": 7,
+      "luna_lower_tasks": 13,
+      "dimension_mean_differences": {
+        "completion": -0.2625,
+        "logic": -0.3875,
+        "value": -0.5125,
+        "clarity": -0.1
+      }
+    }
+  ],
+  "pairs": [
+    {
+      "task_id": "analysis_01",
+      "task_type": "analysis",
+      "luna_high_score_10": 10.0,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": 0.0,
+      "luna_high_elapsed_seconds_mean": 6.417999999999999,
+      "sol_high_elapsed_seconds_mean": 29.6935,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": 0.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "analysis_02",
+      "task_type": "analysis",
+      "luna_high_score_10": 9.0,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -1.0,
+      "luna_high_elapsed_seconds_mean": 4.3965,
+      "sol_high_elapsed_seconds_mean": 22.6175,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.25,
+        "logic": -0.75,
+        "value": -1.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "analysis_03",
+      "task_type": "analysis",
+      "luna_high_score_10": 9.375,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.625,
+      "luna_high_elapsed_seconds_mean": 13.464500000000001,
+      "sol_high_elapsed_seconds_mean": 84.3825,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": -0.75,
+        "value": -0.25,
+        "clarity": -0.25
+      }
+    },
+    {
+      "task_id": "analysis_04",
+      "task_type": "analysis",
+      "luna_high_score_10": 8.5,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -1.5,
+      "luna_high_elapsed_seconds_mean": 5.9365000000000006,
+      "sol_high_elapsed_seconds_mean": 47.537499999999994,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -1.0,
+        "logic": -1.0,
+        "value": -0.75,
+        "clarity": -0.25
+      }
+    },
+    {
+      "task_id": "analysis_05",
+      "task_type": "analysis",
+      "luna_high_score_10": 9.625,
+      "sol_high_score_10": 9.75,
+      "difference_luna_minus_sol": -0.125,
+      "luna_high_elapsed_seconds_mean": 4.128,
+      "sol_high_elapsed_seconds_mean": 9.668,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": -0.25,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "analysis_06",
+      "task_type": "analysis",
+      "luna_high_score_10": 9.625,
+      "sol_high_score_10": 9.875,
+      "difference_luna_minus_sol": -0.25,
+      "luna_high_elapsed_seconds_mean": 3.2755,
+      "sol_high_elapsed_seconds_mean": 13.782,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.25,
+        "logic": 0.0,
+        "value": -0.25,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "analysis_07",
+      "task_type": "analysis",
+      "luna_high_score_10": 9.75,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.25,
+      "luna_high_elapsed_seconds_mean": 5.211,
+      "sol_high_elapsed_seconds_mean": 23.750999999999998,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": -0.5,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "analysis_08",
+      "task_type": "analysis",
+      "luna_high_score_10": 10.0,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": 0.0,
+      "luna_high_elapsed_seconds_mean": 8.442,
+      "sol_high_elapsed_seconds_mean": 22.9755,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": 0.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "analysis_09",
+      "task_type": "analysis",
+      "luna_high_score_10": 9.625,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.375,
+      "luna_high_elapsed_seconds_mean": 20.0835,
+      "sol_high_elapsed_seconds_mean": 94.996,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.25,
+        "logic": 0.0,
+        "value": -0.5,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "analysis_10",
+      "task_type": "analysis",
+      "luna_high_score_10": 10.0,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": 0.0,
+      "luna_high_elapsed_seconds_mean": 12.9215,
+      "sol_high_elapsed_seconds_mean": 55.302499999999995,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": 0.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "analysis_11",
+      "task_type": "analysis",
+      "luna_high_score_10": 9.875,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.125,
+      "luna_high_elapsed_seconds_mean": 8.384,
+      "sol_high_elapsed_seconds_mean": 35.903000000000006,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": -0.25,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "analysis_12",
+      "task_type": "analysis",
+      "luna_high_score_10": 8.75,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -1.25,
+      "luna_high_elapsed_seconds_mean": 10.918,
+      "sol_high_elapsed_seconds_mean": 136.778,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.75,
+        "logic": -0.75,
+        "value": -0.75,
+        "clarity": -0.25
+      }
+    },
+    {
+      "task_id": "analysis_13",
+      "task_type": "analysis",
+      "luna_high_score_10": 8.75,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -1.25,
+      "luna_high_elapsed_seconds_mean": 8.675,
+      "sol_high_elapsed_seconds_mean": 114.265,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.75,
+        "logic": -1.0,
+        "value": -0.75,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "analysis_14",
+      "task_type": "analysis",
+      "luna_high_score_10": 8.75,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -1.25,
+      "luna_high_elapsed_seconds_mean": 10.3425,
+      "sol_high_elapsed_seconds_mean": 141.7285,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.75,
+        "logic": -1.0,
+        "value": -0.75,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "analysis_15",
+      "task_type": "analysis",
+      "luna_high_score_10": 9.5,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.5,
+      "luna_high_elapsed_seconds_mean": 11.626000000000001,
+      "sol_high_elapsed_seconds_mean": 97.97800000000001,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.25,
+        "logic": -0.25,
+        "value": -0.5,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "analysis_16",
+      "task_type": "analysis",
+      "luna_high_score_10": 8.5,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -1.5,
+      "luna_high_elapsed_seconds_mean": 6.686,
+      "sol_high_elapsed_seconds_mean": 132.824,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -1.0,
+        "logic": -1.0,
+        "value": -1.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "analysis_17",
+      "task_type": "analysis",
+      "luna_high_score_10": 9.625,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.375,
+      "luna_high_elapsed_seconds_mean": 6.6594999999999995,
+      "sol_high_elapsed_seconds_mean": 41.658500000000004,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": -0.5,
+        "value": -0.25,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "analysis_18",
+      "task_type": "analysis",
+      "luna_high_score_10": 9.625,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.375,
+      "luna_high_elapsed_seconds_mean": 6.0275,
+      "sol_high_elapsed_seconds_mean": 31.481499999999997,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": -0.25,
+        "value": -0.5,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "analysis_19",
+      "task_type": "analysis",
+      "luna_high_score_10": 9.125,
+      "sol_high_score_10": 9.875,
+      "difference_luna_minus_sol": -0.75,
+      "luna_high_elapsed_seconds_mean": 3.2565,
+      "sol_high_elapsed_seconds_mean": 7.901,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.5,
+        "logic": -0.25,
+        "value": -0.75,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "analysis_20",
+      "task_type": "analysis",
+      "luna_high_score_10": 9.75,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.25,
+      "luna_high_elapsed_seconds_mean": 3.6734999999999998,
+      "sol_high_elapsed_seconds_mean": 16.131,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.25,
+        "logic": 0.0,
+        "value": -0.25,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "planning_01",
+      "task_type": "planning",
+      "luna_high_score_10": 10.0,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": 0.0,
+      "luna_high_elapsed_seconds_mean": 7.2885,
+      "sol_high_elapsed_seconds_mean": 27.345,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": 0.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "planning_02",
+      "task_type": "planning",
+      "luna_high_score_10": 10.0,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": 0.0,
+      "luna_high_elapsed_seconds_mean": 8.048,
+      "sol_high_elapsed_seconds_mean": 45.2525,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": 0.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "planning_03",
+      "task_type": "planning",
+      "luna_high_score_10": 7.625,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -2.375,
+      "luna_high_elapsed_seconds_mean": 7.0375,
+      "sol_high_elapsed_seconds_mean": 46.806,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.5,
+        "logic": -1.75,
+        "value": -1.75,
+        "clarity": -0.75
+      }
+    },
+    {
+      "task_id": "planning_04",
+      "task_type": "planning",
+      "luna_high_score_10": 9.875,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.125,
+      "luna_high_elapsed_seconds_mean": 7.3815,
+      "sol_high_elapsed_seconds_mean": 37.557,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.25,
+        "logic": 0.0,
+        "value": 0.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "planning_05",
+      "task_type": "planning",
+      "luna_high_score_10": 10.0,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": 0.0,
+      "luna_high_elapsed_seconds_mean": 5.9905,
+      "sol_high_elapsed_seconds_mean": 33.537,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": 0.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "planning_06",
+      "task_type": "planning",
+      "luna_high_score_10": 9.75,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.25,
+      "luna_high_elapsed_seconds_mean": 6.5015,
+      "sol_high_elapsed_seconds_mean": 33.1125,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": -0.5,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "planning_07",
+      "task_type": "planning",
+      "luna_high_score_10": 10.0,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": 0.0,
+      "luna_high_elapsed_seconds_mean": 10.3535,
+      "sol_high_elapsed_seconds_mean": 43.9275,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": 0.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "planning_08",
+      "task_type": "planning",
+      "luna_high_score_10": 10.0,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": 0.0,
+      "luna_high_elapsed_seconds_mean": 7.2475000000000005,
+      "sol_high_elapsed_seconds_mean": 32.195,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": 0.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "planning_09",
+      "task_type": "planning",
+      "luna_high_score_10": 9.125,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.875,
+      "luna_high_elapsed_seconds_mean": 6.1805,
+      "sol_high_elapsed_seconds_mean": 35.2745,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.5,
+        "logic": -0.5,
+        "value": -0.75,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "planning_10",
+      "task_type": "planning",
+      "luna_high_score_10": 8.5,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -1.5,
+      "luna_high_elapsed_seconds_mean": 15.991,
+      "sol_high_elapsed_seconds_mean": 65.4195,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -1.0,
+        "logic": -0.75,
+        "value": -1.0,
+        "clarity": -0.25
+      }
+    },
+    {
+      "task_id": "planning_11",
+      "task_type": "planning",
+      "luna_high_score_10": 9.75,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.25,
+      "luna_high_elapsed_seconds_mean": 4.0435,
+      "sol_high_elapsed_seconds_mean": 21.908,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": -0.25,
+        "value": -0.25,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "planning_12",
+      "task_type": "planning",
+      "luna_high_score_10": 5.875,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -4.125,
+      "luna_high_elapsed_seconds_mean": 4.0985,
+      "sol_high_elapsed_seconds_mean": 18.549,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -2.5,
+        "logic": -2.75,
+        "value": -2.0,
+        "clarity": -1.0
+      }
+    },
+    {
+      "task_id": "planning_13",
+      "task_type": "planning",
+      "luna_high_score_10": 9.375,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.625,
+      "luna_high_elapsed_seconds_mean": 13.293,
+      "sol_high_elapsed_seconds_mean": 91.1405,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.5,
+        "logic": -0.5,
+        "value": -0.25,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "planning_14",
+      "task_type": "planning",
+      "luna_high_score_10": 9.375,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.625,
+      "luna_high_elapsed_seconds_mean": 10.593,
+      "sol_high_elapsed_seconds_mean": 79.7165,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": -0.5,
+        "value": -0.75,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "planning_15",
+      "task_type": "planning",
+      "luna_high_score_10": 9.5,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.5,
+      "luna_high_elapsed_seconds_mean": 14.3895,
+      "sol_high_elapsed_seconds_mean": 90.1705,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": -0.25,
+        "value": -0.75,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "planning_16",
+      "task_type": "planning",
+      "luna_high_score_10": 9.375,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.625,
+      "luna_high_elapsed_seconds_mean": 5.998,
+      "sol_high_elapsed_seconds_mean": 28.925,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": -0.25,
+        "value": -1.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "planning_17",
+      "task_type": "planning",
+      "luna_high_score_10": 9.625,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.375,
+      "luna_high_elapsed_seconds_mean": 8.858,
+      "sol_high_elapsed_seconds_mean": 42.1275,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": -0.25,
+        "value": -0.5,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "planning_18",
+      "task_type": "planning",
+      "luna_high_score_10": 9.625,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.375,
+      "luna_high_elapsed_seconds_mean": 12.997,
+      "sol_high_elapsed_seconds_mean": 63.1115,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": -0.75,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "planning_19",
+      "task_type": "planning",
+      "luna_high_score_10": 10.0,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": 0.0,
+      "luna_high_elapsed_seconds_mean": 5.819,
+      "sol_high_elapsed_seconds_mean": 27.288,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": 0.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "planning_20",
+      "task_type": "planning",
+      "luna_high_score_10": 10.0,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": 0.0,
+      "luna_high_elapsed_seconds_mean": 7.8945,
+      "sol_high_elapsed_seconds_mean": 35.432,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": 0.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "writing_01",
+      "task_type": "writing",
+      "luna_high_score_10": 9.125,
+      "sol_high_score_10": 9.75,
+      "difference_luna_minus_sol": -0.625,
+      "luna_high_elapsed_seconds_mean": 7.3345,
+      "sol_high_elapsed_seconds_mean": 38.793,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.25,
+        "logic": 0.0,
+        "value": -0.5,
+        "clarity": -0.5
+      }
+    },
+    {
+      "task_id": "writing_02",
+      "task_type": "writing",
+      "luna_high_score_10": 10.0,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": 0.0,
+      "luna_high_elapsed_seconds_mean": 2.8415,
+      "sol_high_elapsed_seconds_mean": 4.1935,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": 0.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "writing_03",
+      "task_type": "writing",
+      "luna_high_score_10": 9.0,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -1.0,
+      "luna_high_elapsed_seconds_mean": 3.7359999999999998,
+      "sol_high_elapsed_seconds_mean": 16.377499999999998,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -1.75,
+        "logic": 0.0,
+        "value": -0.25,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "writing_04",
+      "task_type": "writing",
+      "luna_high_score_10": 10.0,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": 0.0,
+      "luna_high_elapsed_seconds_mean": 3.6325000000000003,
+      "sol_high_elapsed_seconds_mean": 11.5135,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": 0.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "writing_05",
+      "task_type": "writing",
+      "luna_high_score_10": 8.625,
+      "sol_high_score_10": 9.875,
+      "difference_luna_minus_sol": -1.25,
+      "luna_high_elapsed_seconds_mean": 5.4365,
+      "sol_high_elapsed_seconds_mean": 57.852,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.5,
+        "logic": -0.25,
+        "value": -1.25,
+        "clarity": -0.5
+      }
+    },
+    {
+      "task_id": "writing_06",
+      "task_type": "writing",
+      "luna_high_score_10": 9.75,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.25,
+      "luna_high_elapsed_seconds_mean": 3.1189999999999998,
+      "sol_high_elapsed_seconds_mean": 23.834,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": 0.0,
+        "clarity": -0.5
+      }
+    },
+    {
+      "task_id": "writing_07",
+      "task_type": "writing",
+      "luna_high_score_10": 8.25,
+      "sol_high_score_10": 9.875,
+      "difference_luna_minus_sol": -1.625,
+      "luna_high_elapsed_seconds_mean": 3.4314999999999998,
+      "sol_high_elapsed_seconds_mean": 13.152,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.75,
+        "logic": -1.25,
+        "value": -1.0,
+        "clarity": -0.25
+      }
+    },
+    {
+      "task_id": "writing_08",
+      "task_type": "writing",
+      "luna_high_score_10": 10.0,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": 0.0,
+      "luna_high_elapsed_seconds_mean": 5.6185,
+      "sol_high_elapsed_seconds_mean": 8.5785,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": 0.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "writing_09",
+      "task_type": "writing",
+      "luna_high_score_10": 9.25,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.75,
+      "luna_high_elapsed_seconds_mean": 9.410499999999999,
+      "sol_high_elapsed_seconds_mean": 61.63,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.5,
+        "logic": -0.25,
+        "value": -0.75,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "writing_10",
+      "task_type": "writing",
+      "luna_high_score_10": 8.375,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -1.625,
+      "luna_high_elapsed_seconds_mean": 5.3095,
+      "sol_high_elapsed_seconds_mean": 34.819,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -1.5,
+        "logic": 0.0,
+        "value": -1.75,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "writing_11",
+      "task_type": "writing",
+      "luna_high_score_10": 8.75,
+      "sol_high_score_10": 9.25,
+      "difference_luna_minus_sol": -0.5,
+      "luna_high_elapsed_seconds_mean": 4.984500000000001,
+      "sol_high_elapsed_seconds_mean": 27.4,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.25,
+        "logic": 0.0,
+        "value": -0.75,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "writing_12",
+      "task_type": "writing",
+      "luna_high_score_10": 9.5,
+      "sol_high_score_10": 9.875,
+      "difference_luna_minus_sol": -0.375,
+      "luna_high_elapsed_seconds_mean": 2.551,
+      "sol_high_elapsed_seconds_mean": 8.3845,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": -0.5,
+        "clarity": -0.25
+      }
+    },
+    {
+      "task_id": "writing_13",
+      "task_type": "writing",
+      "luna_high_score_10": 10.0,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": 0.0,
+      "luna_high_elapsed_seconds_mean": 6.5595,
+      "sol_high_elapsed_seconds_mean": 21.034,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": 0.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "writing_14",
+      "task_type": "writing",
+      "luna_high_score_10": 9.875,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.125,
+      "luna_high_elapsed_seconds_mean": 4.975,
+      "sol_high_elapsed_seconds_mean": 16.762,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": -0.25,
+        "value": 0.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "writing_15",
+      "task_type": "writing",
+      "luna_high_score_10": 8.25,
+      "sol_high_score_10": 9.875,
+      "difference_luna_minus_sol": -1.625,
+      "luna_high_elapsed_seconds_mean": 4.9435,
+      "sol_high_elapsed_seconds_mean": 16.1015,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -1.75,
+        "logic": 0.0,
+        "value": -1.0,
+        "clarity": -0.5
+      }
+    },
+    {
+      "task_id": "writing_16",
+      "task_type": "writing",
+      "luna_high_score_10": 9.125,
+      "sol_high_score_10": 9.75,
+      "difference_luna_minus_sol": -0.625,
+      "luna_high_elapsed_seconds_mean": 3.5725,
+      "sol_high_elapsed_seconds_mean": 20.289,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.75,
+        "logic": 0.0,
+        "value": -0.5,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "writing_17",
+      "task_type": "writing",
+      "luna_high_score_10": 9.375,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.625,
+      "luna_high_elapsed_seconds_mean": 5.4665,
+      "sol_high_elapsed_seconds_mean": 30.456500000000002,
+      "dimension_differences_luna_minus_sol": {
+        "completion": -0.25,
+        "logic": 0.0,
+        "value": -1.0,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "writing_18",
+      "task_type": "writing",
+      "luna_high_score_10": 9.75,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.25,
+      "luna_high_elapsed_seconds_mean": 8.6775,
+      "sol_high_elapsed_seconds_mean": 33.7895,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.0,
+        "value": -0.5,
+        "clarity": 0.0
+      }
+    },
+    {
+      "task_id": "writing_19",
+      "task_type": "writing",
+      "luna_high_score_10": 9.75,
+      "sol_high_score_10": 9.875,
+      "difference_luna_minus_sol": -0.125,
+      "luna_high_elapsed_seconds_mean": 7.498,
+      "sol_high_elapsed_seconds_mean": 20.4125,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": 0.25,
+        "value": 0.0,
+        "clarity": -0.5
+      }
+    },
+    {
+      "task_id": "writing_20",
+      "task_type": "writing",
+      "luna_high_score_10": 9.875,
+      "sol_high_score_10": 10.0,
+      "difference_luna_minus_sol": -0.125,
+      "luna_high_elapsed_seconds_mean": 3.2800000000000002,
+      "sol_high_elapsed_seconds_mean": 5.7625,
+      "dimension_differences_luna_minus_sol": {
+        "completion": 0.0,
+        "logic": -0.25,
+        "value": 0.0,
+        "clarity": 0.0
+      }
+    }
+  ]
+}

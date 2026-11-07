@@ -1,0 +1,71 @@
+{
+  "experiment_id": "subjective_luna_high_60_20261103",
+  "dry_run": false,
+  "original_ordinary_attempt_cap": 2,
+  "additional_ordinary_attempt_cap": 3,
+  "total_ordinary_attempt_cap": 5,
+  "eligible_targets": [
+    {
+      "score_id": "analysis_01__high__r1__primary",
+      "ordinary_attempts_used": 2,
+      "extra_ordinary_attempts_remaining": 3,
+      "reason": "Only exact-quotation validation failures consumed the original budget",
+      "attempt_ids": [
+        "analysis_01__high__r1__primary__a01",
+        "analysis_01__high__r1__primary__a02"
+      ]
+    }
+  ],
+  "excluded_targets": [],
+  "blocking_paths": [],
+  "counts_before": {
+    "completed_primary_scores": 119,
+    "completed_repeat_scores": 12,
+    "remaining_score_count": 1,
+    "failed_keys": [
+      {
+        "score_id": "analysis_01__high__r1__primary",
+        "status": "error",
+        "error_type": "ValueError",
+        "error": "completion.evidence is not an exact candidate quotation"
+      }
+    ]
+  },
+  "created_at": "2026-11-03T09:51:36.680418+00:00",
+  "status": "completed",
+  "process_id": 29396,
+  "policy_deviation": "Ordinary-attempt cap increases from 2 to 5 only for the listed exhausted exact-quotation validation failures. This adds at most 3 ordinary attempts per score key across all invocations. Infrastructure interruptions retain the original runner classification.",
+  "selection_rule": "Eligibility uses failure types and exact error messages only. Scores do not influence retry or selection. The frozen runner reuses the first completed schema-valid assessment.",
+  "target_keys": [
+    "analysis_01__high__r1__primary"
+  ],
+  "all_attempt_history_preserved": true,
+  "questions_unchanged": true,
+  "rubric_unchanged": true,
+  "judge_prompt_unchanged": true,
+  "frozen_file_sha256": {
+    "C:\\Users\\83485\\Documents\\Codex\\2026-10-30\\fe\\work\\luna_high_60_execution_20261103\\result\\formal_luna_high_60\\manifest.json": "8f8adff364435f24b3b06ec0af3499100240a15ad665300110e8356c5ce6b879",
+    "C:\\Users\\83485\\Documents\\Codex\\2026-10-30\\fe\\work\\luna_high_60_execution_20261103\\script\\run_experiment.py": "ea7fdc36cc77ae2fcfa7a9a68ebed9dd08633dd5af2d736c6eef31efb8ecc855",
+    "C:\\Users\\83485\\Documents\\Codex\\2026-10-30\\fe\\work\\luna_high_60_execution_20261103\\script\\scoring.py": "c738a91c9681cc9da48f383ee16125caf2411268aa2b7250d1288deb1929d512"
+  },
+  "original_manifest_sha256": "8f8adff364435f24b3b06ec0af3499100240a15ad665300110e8356c5ce6b879",
+  "runner_sha256": "ea7fdc36cc77ae2fcfa7a9a68ebed9dd08633dd5af2d736c6eef31efb8ecc855",
+  "scoring_sha256": "c738a91c9681cc9da48f383ee16125caf2411268aa2b7250d1288deb1929d512",
+  "wrapper_sha256": "58367bcba4f5fcddef93c9637a99f1d35ba7a7e2dd92ccb289a18445c61850b7",
+  "manifest_arguments_unchanged": {
+    "stage": "score",
+    "workers": 4,
+    "timeout": 600,
+    "max_attempts": 2
+  },
+  "started_at": "2026-11-03T09:51:36.687183+00:00",
+  "runner_exit_code": 0,
+  "counts_after": {
+    "completed_primary_scores": 120,
+    "completed_repeat_scores": 12,
+    "remaining_score_count": 0,
+    "failed_keys": []
+  },
+  "finished_at": "2026-11-03T09:52:29.813492+00:00",
+  "frozen_files_unchanged": true
+}

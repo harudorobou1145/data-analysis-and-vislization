@@ -1,0 +1,31 @@
+{
+  "experiment_id": "subjective_formal_60_v3",
+  "incident_at": "2026-11-01T06:34:48.320747+00:00",
+  "failed_run_id": "writing_09__high__r2",
+  "failed_attempt_id": "writing_09__high__r2__a01",
+  "cause_observed": {
+    "error_category": "provider_connection",
+    "relay_error_type": "URLError",
+    "relay_duration_seconds": 34.569729,
+    "upstream_status": null,
+    "response_bytes": 0,
+    "http_502_origin": "Synthesized by the local relay before any upstream HTTP response",
+    "lower_level_cause": "Unavailable: the frozen relay records exception type without URLError.reason or errno"
+  },
+  "completed_answers_preserved": 340,
+  "failed_answers": 1,
+  "cancelled_in_flight": 3,
+  "unsubmitted_answers": 16,
+  "remaining_answers": 20,
+  "read_only_validation": {
+    "completed_answer_hashes_match": true,
+    "completed_answer_ids_are_planned": true,
+    "frozen_generation_code_matches": true,
+    "frozen_transport_code_matches": true,
+    "frozen_relay_code_matches": true,
+    "frozen_scoring_code_matches": true
+  },
+  "old_stderr_trace": "The summary.json PermissionError traceback was last written at 2026-11-01T06:02:20+00:00 and is unrelated to this incident",
+  "recovery_action": "Add a bounded outer supervisor for documented connection interruptions; reuse successful answers and preserve all attempts",
+  "protocol_note": "Automatic outer restarts depart from the manifest's explicit-manual-restart policy. Record that operational change in a separate timestamped policy file; retain the original manifest and all request/scoring settings."
+}

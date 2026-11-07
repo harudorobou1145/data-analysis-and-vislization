@@ -1,0 +1,45 @@
+run_id,message_id,turn_id,role,content,timestamp,message_type
+max100_b8487428100eaee9a9ea7194_a31cc7c587,prompt,1,user,"Complete solution.py according to its function specification. Preserve its entry point and required imports. Return the complete source.
+
+
+TOOLS MODE: solution.py is in the isolated /workspace container. Use ONLY the codedepth_workspace MCP tools to read files, write code, and run Python/pytest checks. Tool file paths are relative POSIX paths such as solution.py. The host current directory is not your workspace. Preserve solution.py as the final full source file. You may create your own temporary tests; official hidden tests are unavailable. Do not merely return code: use write_file or a container command to save your changes, then explain your result.
+",,task_prompt
+max100_b8487428100eaee9a9ea7194_a31cc7c587,item_1,1,assistant,"I’ll check whether the overlap’s length (`end - start`) is prime, then test the examples and boundary cases.
+",2026-11-01T08:08:18.077591+00:00,agent_message
+max100_b8487428100eaee9a9ea7194_a31cc7c587,item_4,1,assistant,"Saved `solution.py` with overlap-length calculation and primality checking. Passed 13 targeted tests and 4,356 exhaustive interval-pair checks. Hidden tests were unavailable.
+
+```python
+from math import isqrt
+
+
+def intersection(interval1, interval2):
+    """"""You are given two intervals,
+    where each interval is a pair of integers. For example, interval = (start, end) = (1, 2).
+    The given intervals are closed which means that the interval (start, end)
+    includes both start and end.
+    For each given interval, it is assumed that its start is less or equal its end.
+    Your task is to determine whether the length of intersection of these two
+    intervals is a prime number.
+    Example, the intersection of the intervals (1, 3), (2, 4) is (2, 3)
+    which its length is 1, which not a prime number.
+    If the length of the intersection is a prime number, return ""YES"",
+    otherwise, return ""NO"".
+    If the two intervals don't intersect, return ""NO"".
+
+
+    [input/output] samples:
+    intersection((1, 2), (2, 3)) ==> ""NO""
+    intersection((-1, 1), (0, 4)) ==> ""NO""
+    intersection((-3, -1), (-5, 5)) ==> ""YES""
+    """"""
+    length = min(interval1[1], interval2[1]) - max(interval1[0], interval2[0])
+    if length < 2:
+        return ""NO""
+    if length % 2 == 0:
+        return ""YES"" if length == 2 else ""NO""
+
+    for divisor in range(3, isqrt(length) + 1, 2):
+        if length % divisor == 0:
+            return ""NO""
+    return ""YES""
+```",2026-11-01T08:08:37.801602+00:00,agent_message

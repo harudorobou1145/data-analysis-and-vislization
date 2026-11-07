@@ -1,0 +1,72 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error,tool_server,tool_input,tool_output,behavior_category,is_test_execution,measurement_source
+exp_05121de0bc749edc282fb32c_d70f2171b14f,1,2026-10-31T17:27:26.775075+00:00,0.7690252000465989,thread.started,,,,,,,,,,,,,,
+exp_05121de0bc749edc282fb32c_d70f2171b14f,2,2026-10-31T17:27:26.821390+00:00,0.8153538000769913,turn.started,,,,,,,,,,,,,,
+exp_05121de0bc749edc282fb32c_d70f2171b14f,3,2026-10-31T17:27:30.389674+00:00,4.3836247000144795,item.completed,item_0,agent_message,,,,,,,,,,message,False,native_item
+exp_05121de0bc749edc282fb32c_d70f2171b14f,4,2026-10-31T17:27:30.398647+00:00,4.39259669999592,item.started,item_1,mcp_tool_call,read_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py""}",,file_read,False,native_item
+exp_05121de0bc749edc282fb32c_d70f2171b14f,5,2026-10-31T17:27:30.970726+00:00,4.964679400087334,item.completed,item_1,mcp_tool_call,read_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""content\"": \""\\ndef is_sorted(lst):\\n    '''\\n    Given a list of numbers, return whether or not they are sorted\\n    in ascending order. If list has more than 1 duplicate of the same\\n    number, return False. Assume no negative numbers and only integers.\\n\\n    Examples\\n    is_sorted([5]) ➞ True\\n    is_sorted([1, 2, 3, 4, 5]) ➞ True\\n    is_sorted([1, 3, 2, 4, 5]) ➞ False\\n    is_sorted([1, 2, 3, 4, 5, 6]) ➞ True\\n    is_sorted([1, 2, 3, 4, 5, 6, 7]) ➞ True\\n    is_sorted([1, 3, 2, 4, 5, 6, 7]) ➞ False\\n    is_sorted([1, 2, 2, 3, 3, 4]) ➞ True\\n    is_sorted([1, 2, 2, 2, 3, 4]) ➞ False\\n    '''\\n    pass\\n\""}""}], ""structured_content"": null}",file_read,False,workspace_tool_result
+exp_05121de0bc749edc282fb32c_d70f2171b14f,6,2026-10-31T17:27:35.781534+00:00,9.775481900083832,item.started,item_2,mcp_tool_call,write_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def is_sorted(lst):\n    '''\n    Given a list of numbers, return whether or not they are sorted\n    in ascending order. If list has more than 1 duplicate of the same\n    number, return False. Assume no negative numbers and only integers.\n\n    Examples\n    is_sorted([5]) ➞ True\n    is_sorted([1, 2, 3, 4, 5]) ➞ True\n    is_sorted([1, 3, 2, 4, 5]) ➞ False\n    is_sorted([1, 2, 3, 4, 5, 6]) ➞ True\n    is_sorted([1, 2, 3, 4, 5, 6, 7]) ➞ True\n    is_sorted([1, 3, 2, 4, 5, 6, 7]) ➞ False\n    is_sorted([1, 2, 2, 3, 3, 4]) ➞ True\n    is_sorted([1, 2, 2, 2, 3, 4]) ➞ False\n    '''\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i - 1]:\n            return False\n        if i >= 2 and lst[i] == lst[i - 1] == lst[i - 2]:\n            return False\n    return True\n""}",,file_write,False,native_item
+exp_05121de0bc749edc282fb32c_d70f2171b14f,7,2026-10-31T17:27:36.367791+00:00,10.361742999986745,item.completed,item_2,mcp_tool_call,write_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def is_sorted(lst):\n    '''\n    Given a list of numbers, return whether or not they are sorted\n    in ascending order. If list has more than 1 duplicate of the same\n    number, return False. Assume no negative numbers and only integers.\n\n    Examples\n    is_sorted([5]) ➞ True\n    is_sorted([1, 2, 3, 4, 5]) ➞ True\n    is_sorted([1, 3, 2, 4, 5]) ➞ False\n    is_sorted([1, 2, 3, 4, 5, 6]) ➞ True\n    is_sorted([1, 2, 3, 4, 5, 6, 7]) ➞ True\n    is_sorted([1, 3, 2, 4, 5, 6, 7]) ➞ False\n    is_sorted([1, 2, 2, 3, 3, 4]) ➞ True\n    is_sorted([1, 2, 2, 2, 3, 4]) ➞ False\n    '''\n    for i in range(1, len(lst)):\n        if lst[i] < lst[i - 1]:\n            return False\n        if i >= 2 and lst[i] == lst[i - 1] == lst[i - 2]:\n            return False\n    return True\n""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""before_sha256\"": \""c3f9b713313f75664c74f4f18d53d36a37ebe744c383d1f875f85ed7407c4c5b\"", \""after_sha256\"": \""b16981d6603b0f9c085cf4ac8ae1b98c2ffdf6337984dfe9b7c8209fe2b884a0\"", \""changed\"": true}""}], ""structured_content"": null}",file_write,False,workspace_tool_result
+exp_05121de0bc749edc282fb32c_d70f2171b14f,8,2026-10-31T17:27:41.705044+00:00,15.69899190007709,item.started,item_3,mcp_tool_call,run_command,in_progress,,,"python - <<'PY'
+from itertools import product
+from collections import Counter
+from solution import is_sorted
+
+examples = [
+    ([5], True),
+    ([1, 2, 3, 4, 5], True),
+    ([1, 3, 2, 4, 5], False),
+    ([1, 2, 3, 4, 5, 6], True),
+    ([1, 2, 3, 4, 5, 6, 7], True),
+    ([1, 3, 2, 4, 5, 6, 7], False),
+    ([1, 2, 2, 3, 3, 4], True),
+    ([1, 2, 2, 2, 3, 4], False),
+    ([], True),
+    ([0, 0], True),
+    ([0, 0, 0], False),
+]
+for values, expected in examples:
+    original = values[:]
+    assert is_sorted(values) is expected, values
+    assert values == original
+count = 0
+for length in range(8):
+    for values in product(range(4), repeat=length):
+        values = list(values)
+        expected = values == sorted(values) and all(n <= 2 for n in Counter(values).values())
+        assert is_sorted(values) is expected, values
+        count += 1
+print(f'Passed {len(examples)} example/edge checks and {count} exhaustive comparisons.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nfrom itertools import product\nfrom collections import Counter\nfrom solution import is_sorted\n\nexamples = [\n    ([5], True),\n    ([1, 2, 3, 4, 5], True),\n    ([1, 3, 2, 4, 5], False),\n    ([1, 2, 3, 4, 5, 6], True),\n    ([1, 2, 3, 4, 5, 6, 7], True),\n    ([1, 3, 2, 4, 5, 6, 7], False),\n    ([1, 2, 2, 3, 3, 4], True),\n    ([1, 2, 2, 2, 3, 4], False),\n    ([], True),\n    ([0, 0], True),\n    ([0, 0, 0], False),\n]\nfor values, expected in examples:\n    original = values[:]\n    assert is_sorted(values) is expected, values\n    assert values == original\ncount = 0\nfor length in range(8):\n    for values in product(range(4), repeat=length):\n        values = list(values)\n        expected = values == sorted(values) and all(n <= 2 for n in Counter(values).values())\n        assert is_sorted(values) is expected, values\n        count += 1\nprint(f'Passed {len(examples)} example/edge checks and {count} exhaustive comparisons.')\nPY""}",,command_execution,True,native_item
+exp_05121de0bc749edc282fb32c_d70f2171b14f,9,2026-10-31T17:27:42.372380+00:00,16.366331199998967,item.completed,item_3,mcp_tool_call,run_command,completed,0,0.08439191299839877,"python - <<'PY'
+from itertools import product
+from collections import Counter
+from solution import is_sorted
+
+examples = [
+    ([5], True),
+    ([1, 2, 3, 4, 5], True),
+    ([1, 3, 2, 4, 5], False),
+    ([1, 2, 3, 4, 5, 6], True),
+    ([1, 2, 3, 4, 5, 6, 7], True),
+    ([1, 3, 2, 4, 5, 6, 7], False),
+    ([1, 2, 2, 3, 3, 4], True),
+    ([1, 2, 2, 2, 3, 4], False),
+    ([], True),
+    ([0, 0], True),
+    ([0, 0, 0], False),
+]
+for values, expected in examples:
+    original = values[:]
+    assert is_sorted(values) is expected, values
+    assert values == original
+count = 0
+for length in range(8):
+    for values in product(range(4), repeat=length):
+        values = list(values)
+        expected = values == sorted(values) and all(n <= 2 for n in Counter(values).values())
+        assert is_sorted(values) is expected, values
+        count += 1
+print(f'Passed {len(examples)} example/edge checks and {count} exhaustive comparisons.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nfrom itertools import product\nfrom collections import Counter\nfrom solution import is_sorted\n\nexamples = [\n    ([5], True),\n    ([1, 2, 3, 4, 5], True),\n    ([1, 3, 2, 4, 5], False),\n    ([1, 2, 3, 4, 5, 6], True),\n    ([1, 2, 3, 4, 5, 6, 7], True),\n    ([1, 3, 2, 4, 5, 6, 7], False),\n    ([1, 2, 2, 3, 3, 4], True),\n    ([1, 2, 2, 2, 3, 4], False),\n    ([], True),\n    ([0, 0], True),\n    ([0, 0, 0], False),\n]\nfor values, expected in examples:\n    original = values[:]\n    assert is_sorted(values) is expected, values\n    assert values == original\ncount = 0\nfor length in range(8):\n    for values in product(range(4), repeat=length):\n        values = list(values)\n        expected = values == sorted(values) and all(n <= 2 for n in Counter(values).values())\n        assert is_sorted(values) is expected, values\n        count += 1\nprint(f'Passed {len(examples)} example/edge checks and {count} exhaustive comparisons.')\nPY""}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python - <<'PY'\\nfrom itertools import product\\nfrom collections import Counter\\nfrom solution import is_sorted\\n\\nexamples = [\\n    ([5], True),\\n    ([1, 2, 3, 4, 5], True),\\n    ([1, 3, 2, 4, 5], False),\\n    ([1, 2, 3, 4, 5, 6], True),\\n    ([1, 2, 3, 4, 5, 6, 7], True),\\n    ([1, 3, 2, 4, 5, 6, 7], False),\\n    ([1, 2, 2, 3, 3, 4], True),\\n    ([1, 2, 2, 2, 3, 4], False),\\n    ([], True),\\n    ([0, 0], True),\\n    ([0, 0, 0], False),\\n]\\nfor values, expected in examples:\\n    original = values[:]\\n    assert is_sorted(values) is expected, values\\n    assert values == original\\ncount = 0\\nfor length in range(8):\\n    for values in product(range(4), repeat=length):\\n        values = list(values)\\n        expected = values == sorted(values) and all(n <= 2 for n in Counter(values).values())\\n        assert is_sorted(values) is expected, values\\n        count += 1\\nprint(f'Passed {len(examples)} example/edge checks and {count} exhaustive comparisons.')\\nPY\"", \""exit_code\"": 0, \""stdout\"": \""Passed 11 example/edge checks and 21845 exhaustive comparisons.\\n\"", \""stderr\"": \""\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.08439191299839877, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+exp_05121de0bc749edc282fb32c_d70f2171b14f,10,2026-10-31T17:27:47.373028+00:00,21.36697890004143,item.completed,item_4,agent_message,,,,,,,,,,message,False,native_item
+exp_05121de0bc749edc282fb32c_d70f2171b14f,11,2026-10-31T17:27:47.412568+00:00,21.40651910007,turn.completed,,,,,,,,,,,,,,

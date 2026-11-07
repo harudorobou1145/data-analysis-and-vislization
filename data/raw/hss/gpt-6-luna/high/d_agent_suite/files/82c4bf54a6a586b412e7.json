@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6a9e06476699ef3aefe341c8__luna_high",
+  "task_id": "6a9e06476699ef3aefe341c8",
+  "condition": "luna_high",
+  "request_kind": "generation",
+  "attempt_id": "6a9e06476699ef3aefe341c8__luna_high__a01",
+  "started_at": "2026-11-06T08:37:07.385350+00:00",
+  "status": "completed",
+  "prompt_hash": "69742e526001637a02fc2a88c855afee1f0ba1b3c84ed0c1fe17b5d7712a8a6a",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "4c9f9cb1-9e48-4d97-b7ec-176646b346ad",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6a9e06476699ef3aefe341c8__luna_high",
+      "attempt_id": "6a9e06476699ef3aefe341c8__luna_high__a01",
+      "request_kind": "generation",
+      "task_id": "6a9e06476699ef3aefe341c8"
+    },
+    "started_at": "2026-11-06T08:37:07.385854+00:00",
+    "model_requested": "gpt-6-luna",
+    "effort_requested": "high",
+    "prompt": "In the foreground, a woman in a black jacket and a brown sling bag is making a specific action with her left hand. Why is she not using her right hand?",
+    "prompt_hash": "69742e526001637a02fc2a88c855afee1f0ba1b3c84ed0c1fe17b5d7712a8a6a",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "The image doesn’t show why. Her right hand isn’t clearly visible, so it may be occupied or simply out of view.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a9e06476699ef3aefe341c8.png",
+        "sha256": "043437f65b29b5fecd083cd0c1a097074352d9f3bea776bde5498749825f6544",
+        "bytes": 1113453
+      }
+    ],
+    "effort_ui_requested": "high",
+    "effort_wire_expected": "high",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Greater reasoning depth for complex problems",
+    "thread_id": "01a1b001-26c0-7ba0-bc8a-582c03eacc2e",
+    "model_configured": "gpt-6-luna",
+    "effort_configured": "high",
+    "instruction_sources": [],
+    "turn_id": "01a1b001-2705-7b62-a914-49ad8db21f90",
+    "client_elapsed_seconds": 13.013864,
+    "turn_status": "completed",
+    "elapsed_seconds": 12.986,
+    "wire_efforts_observed": [
+      "high"
+    ],
+    "token_usage": {
+      "totalTokens": 11772,
+      "inputTokens": 11224,
+      "cachedInputTokens": 4224,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 548,
+      "reasoningOutputTokens": 516
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 12.852829,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 3,
+      "item/completed": 3,
+      "item/agentMessage/delta": 26,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1b001-2726-7e13-9f21-1c0baf1c57b9",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "In the foreground, a woman in a black jacket and a brown sling bag is making a specific action with her left hand. Why is she not using her right hand?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a9e06476699ef3aefe341c8.png"
+          }
+        ],
+        "startedAtMs": 1793954228009,
+        "completedAtMs": 1793954228009
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_0d84978106fea797016aed91bf629087d082a1e5456f5c1b55",
+        "text": "The image doesn’t show why. Her right hand isn’t clearly visible, so it may be occupied or simply out of view.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793954240815,
+        "completedAtMs": 1793954240876
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 1515781,
+          "request_sha256": "180a6305974a65e6e87bd1a18588e602072e105aa691ee6a685159489680afe5",
+          "response_bytes": 173641,
+          "response_sha256": "6401e18b4a0e669e17688d6d5415497bc739a040223eae2241ec286a61970452",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 12.956418
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6-luna",
+        "reasoning": {
+          "effort": "high",
+          "context": "all_turns"
+        },
+        "request_sha256": "180a6305974a65e6e87bd1a18588e602072e105aa691ee6a685159489680afe5",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "527787dc56e4b242375a934475f3c53228b073ab7b80aa3d8d6177417e7c6637"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "043437f65b29b5fecd083cd0c1a097074352d9f3bea776bde5498749825f6544",
+            "bytes": 1113453,
+            "width": 1023,
+            "height": 676,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:37:21.064195+00:00",
+    "total_client_seconds": 13.675364,
+    "answer_hash": "b809c807efc069bddc3b9bbfa5394b5d6ad195faed44c197b36502fd96d69fbe"
+  },
+  "answer": "The image doesn’t show why. Her right hand isn’t clearly visible, so it may be occupied or simply out of view.",
+  "answer_hash": "b809c807efc069bddc3b9bbfa5394b5d6ad195faed44c197b36502fd96d69fbe",
+  "image_sha256": "043437f65b29b5fecd083cd0c1a097074352d9f3bea776bde5498749825f6544",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "finished_at": "2026-11-06T08:37:21.065505+00:00"
+}

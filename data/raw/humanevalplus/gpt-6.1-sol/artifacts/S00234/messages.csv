@@ -1,0 +1,46 @@
+run_id,message_id,turn_id,role,content,timestamp,message_type
+exp_6bc88de544057fdf087aa204_7745e269f655,prompt,1,user,"Complete solution.py according to its function specification. Preserve its entry point and required imports. Return the complete source.
+
+
+TOOLS MODE: solution.py is in the isolated /workspace container. Use ONLY the codedepth_workspace MCP tools to read files, write code, and run Python/pytest checks. Tool file paths are relative POSIX paths such as solution.py. The host current directory is not your workspace. Preserve solution.py as the final full source file. You may create your own temporary tests; official hidden tests are unavailable. Do not merely return code: use write_file or a container command to save your changes, then explain your result.
+",,task_prompt
+exp_6bc88de544057fdf087aa204_7745e269f655,item_0,1,assistant,"I’ll read the specification in `solution.py`, implement it, and run focused checks before returning the full source.
+",2026-10-31T17:42:07.743780+00:00,agent_message
+exp_6bc88de544057fdf087aa204_7745e269f655,item_4,1,assistant,"Saved `solution.py`. The implementation checks for at most one descent around the circular array in O(n) time and O(1) space. Both examples and 5,914 exhaustive cases passed; inputs remained unchanged.
+
+```python
+def move_one_ball(arr):
+    """"""We have an array 'arr' of N integers arr[1], arr[2], ..., arr[N].The
+    numbers in the array will be randomly ordered. Your task is to determine if
+    it is possible to get an array sorted in non-decreasing order by performing
+    the following operation on the given array:
+        You are allowed to perform right shift operation any number of times.
+
+    One right shift operation means shifting all elements of the array by one
+    position in the right direction. The last element of the array will be moved to
+    the starting position in the array i.e. 0th index.
+
+    If it is possible to obtain the sorted array by performing the above operation
+    then return True else return False.
+    If the given array is empty then return True.
+
+    Note: The given list is guaranteed to have unique elements.
+
+    For Example:
+
+    move_one_ball([3, 4, 5, 1, 2])==>True
+    Explanation: By performin 2 right shift operations, non-decreasing order can
+                 be achieved for the given array.
+    move_one_ball([3, 5, 4, 1, 2])==>False
+    Explanation:It is not possible to get non-decreasing order for the given
+                array by performing any number of right shift operations.
+
+    """"""
+    descents = 0
+    for i in range(len(arr)):
+        if arr[i - 1] > arr[i]:
+            descents += 1
+            if descents > 1:
+                return False
+    return True
+```",2026-10-31T17:42:29.916670+00:00,agent_message

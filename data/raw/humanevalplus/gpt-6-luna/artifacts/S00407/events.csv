@@ -1,0 +1,26 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error,tool_server,tool_input,tool_output,behavior_category,is_test_execution,measurement_source
+plus_luna_a8110340bc2f4566a4620228df597894,1,2026-11-04T13:35:44.156655+00:00,0.5122722000232898,thread.started,,,,,,,,,,,,,,
+plus_luna_a8110340bc2f4566a4620228df597894,2,2026-11-04T13:35:45.125197+00:00,1.4808129000011832,turn.started,,,,,,,,,,,,,,
+plus_luna_a8110340bc2f4566a4620228df597894,3,2026-11-04T13:36:31.126048+00:00,47.48166900000069,error,,,,,,,,,,,,,,
+plus_luna_a8110340bc2f4566a4620228df597894,4,2026-11-04T13:36:46.576946+00:00,62.9325691999984,error,,,,,,,,,,,,,,
+plus_luna_a8110340bc2f4566a4620228df597894,5,2026-11-04T13:37:02.457950+00:00,78.81357050000224,error,,,,,,,,,,,,,,
+plus_luna_a8110340bc2f4566a4620228df597894,6,2026-11-04T13:37:19.193115+00:00,95.54873440001393,error,,,,,,,,,,,,,,
+plus_luna_a8110340bc2f4566a4620228df597894,7,2026-11-04T13:37:37.251840+00:00,113.60745780001162,item.completed,item_0,error,,,,,,,,,,other_tool,False,native_item
+plus_luna_a8110340bc2f4566a4620228df597894,8,2026-11-04T13:37:39.547323+00:00,115.90294699999504,item.started,item_1,mcp_tool_call,read_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py""}",,file_read,False,native_item
+plus_luna_a8110340bc2f4566a4620228df597894,9,2026-11-04T13:37:40.068641+00:00,116.42426170001272,item.completed,item_1,mcp_tool_call,read_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""content\"": \""\\n\\ndef add(x: int, y: int):\\n    \\\""\\\""\\\""Add two numbers x and y\\n    >>> add(2, 3)\\n    5\\n    >>> add(5, 7)\\n    12\\n    \\\""\\\""\\\""\\n    pass\\n\""}""}], ""structured_content"": null}",file_read,False,workspace_tool_result
+plus_luna_a8110340bc2f4566a4620228df597894,10,2026-11-04T13:37:44.309861+00:00,120.66547820001142,item.started,item_2,mcp_tool_call,write_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""\n\ndef add(x: int, y: int):\n    \""\""\""Add two numbers x and y\n    >>> add(2, 3)\n    5\n    >>> add(5, 7)\n    12\n    \""\""\""\n    return x + y\n""}",,file_write,False,native_item
+plus_luna_a8110340bc2f4566a4620228df597894,11,2026-11-04T13:37:44.707954+00:00,121.06356919999234,item.completed,item_2,mcp_tool_call,write_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""\n\ndef add(x: int, y: int):\n    \""\""\""Add two numbers x and y\n    >>> add(2, 3)\n    5\n    >>> add(5, 7)\n    12\n    \""\""\""\n    return x + y\n""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""before_sha256\"": \""cb00ac2954b738cd8c181c1c83d619c4130a626dbf4a63555b48269288266393\"", \""after_sha256\"": \""23393194b0d346cd658b4702214818f23217839ca7e017afb812b5f4e593f6eb\"", \""changed\"": true}""}], ""structured_content"": null}",file_write,False,workspace_tool_result
+plus_luna_a8110340bc2f4566a4620228df597894,12,2026-11-04T13:37:47.723677+00:00,124.07929770002374,item.started,item_3,mcp_tool_call,run_command,in_progress,,,"python - <<'PY'
+import solution
+assert solution.add(2, 3) == 5
+assert solution.add(5, 7) == 12
+print('checks passed')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nimport solution\nassert solution.add(2, 3) == 5\nassert solution.add(5, 7) == 12\nprint('checks passed')\nPY""}",,command_execution,True,native_item
+plus_luna_a8110340bc2f4566a4620228df597894,13,2026-11-04T13:37:48.203861+00:00,124.55949569999939,item.completed,item_3,mcp_tool_call,run_command,completed,0,0.03379598299989084,"python - <<'PY'
+import solution
+assert solution.add(2, 3) == 5
+assert solution.add(5, 7) == 12
+print('checks passed')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nimport solution\nassert solution.add(2, 3) == 5\nassert solution.add(5, 7) == 12\nprint('checks passed')\nPY""}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python - <<'PY'\\nimport solution\\nassert solution.add(2, 3) == 5\\nassert solution.add(5, 7) == 12\\nprint('checks passed')\\nPY\"", \""exit_code\"": 0, \""stdout\"": \""checks passed\\n\"", \""stderr\"": \""\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.03379598299989084, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+plus_luna_a8110340bc2f4566a4620228df597894,14,2026-11-04T13:37:51.197462+00:00,127.55308099999093,item.completed,item_4,agent_message,,,,,,,,,,message,False,native_item
+plus_luna_a8110340bc2f4566a4620228df597894,15,2026-11-04T13:37:51.254450+00:00,127.61007430002792,turn.completed,,,,,,,,,,,,,,

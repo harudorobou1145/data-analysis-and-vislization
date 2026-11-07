@@ -1,0 +1,26 @@
+{
+  "offline_tests_passed": 18,
+  "suite_test_count": 18,
+  "real_model_calls": 0,
+  "protocol_version": "four_aspect_transport_v2",
+  "changed_files": [
+    "codex_transport.py",
+    "run_experiment.py",
+    "test_pipeline.py"
+  ],
+  "checks": [
+    "structured/redacted error notifications",
+    "connection errors stop current batch immediately",
+    "bounded 4-worker submission",
+    "manual restart retries infrastructure interruptions without spending model failure budget",
+    "cooperative STOP_REQUESTED and resume",
+    "judge runtime and request identity preserved",
+    "24/60 complete generation-score-time joins",
+    "pending set closure rebind reviewed: main-thread cell reference, no stale set capture"
+  ],
+  "sha256": {
+    "codex_transport.py": "8d6fbcc764a2aa829f0025da90b8d352f598f6c44113df1f5a5eecf8a72b68e8",
+    "run_experiment.py": "595b6193856b4cba000db64644eca1782b16a6b27f7fa124a4e2afc48e321298",
+    "test_pipeline.py": "a43586016c66b3282e5f20ea0150899e4c0a92f1f9e39e9bb5aeba37cf38c0cb"
+  }
+}

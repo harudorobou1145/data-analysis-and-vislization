@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6a9e06bce6e80e99fcf1f76a__sol_high",
+  "task_id": "6a9e06bce6e80e99fcf1f76a",
+  "condition": "sol_high",
+  "request_kind": "generation",
+  "attempt_id": "6a9e06bce6e80e99fcf1f76a__sol_high__a01",
+  "started_at": "2026-11-06T08:48:25.134339+00:00",
+  "status": "completed",
+  "prompt_hash": "c9763d5c47af20f50b2d2c2af099915bcd097cf6ce4fe7576e1ffe8c9b5f2afb",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "29d1e9d5-89e1-4968-9915-11b0d54fcb6b",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6a9e06bce6e80e99fcf1f76a__sol_high",
+      "attempt_id": "6a9e06bce6e80e99fcf1f76a__sol_high__a01",
+      "request_kind": "generation",
+      "task_id": "6a9e06bce6e80e99fcf1f76a"
+    },
+    "started_at": "2026-11-06T08:48:25.134339+00:00",
+    "model_requested": "gpt-6.1-sol",
+    "effort_requested": "high",
+    "prompt": "Why is the man on the right side of the image unable to hold the stick with his right hand?",
+    "prompt_hash": "c9763d5c47af20f50b2d2c2af099915bcd097cf6ce4fe7576e1ffe8c9b5f2afb",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "He appears to be missing his right hand, so he holds the stick with his left hand.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a9e06bce6e80e99fcf1f76a.png",
+        "sha256": "0da0a7caa375b67a35dcd7dccf46f377e274e8b263307318d0573978649b122f",
+        "bytes": 1101499
+      }
+    ],
+    "effort_ui_requested": "high",
+    "effort_wire_expected": "high",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Greater reasoning depth for complex problems",
+    "thread_id": "01a1b00b-7e8f-7310-84d6-a0917d98d693",
+    "model_configured": "gpt-6.1-sol",
+    "effort_configured": "high",
+    "instruction_sources": [],
+    "turn_id": "01a1b00b-7eec-7682-b26b-79a6134b9e8d",
+    "client_elapsed_seconds": 43.25215,
+    "turn_status": "completed",
+    "elapsed_seconds": 43.217,
+    "wire_efforts_observed": [
+      "high"
+    ],
+    "token_usage": {
+      "totalTokens": 11750,
+      "inputTokens": 11047,
+      "cachedInputTokens": 8448,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 703,
+      "reasoningOutputTokens": 678
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 42.747001,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 4,
+      "item/completed": 4,
+      "item/agentMessage/delta": 19,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1b00b-7f13-7201-87e4-77fe61d009e8",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "Why is the man on the right side of the image unable to hold the stick with his right hand?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a9e06bce6e80e99fcf1f76a.png"
+          }
+        ],
+        "startedAtMs": 1793954905879,
+        "completedAtMs": 1793954905879
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_0507ba78a53ab718016aed948385a087d09bd7c2b7318b56dc",
+        "text": "He appears to be missing his right hand, so he holds the stick with his left hand.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793954948567,
+        "completedAtMs": 1793954948946
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 1499786,
+          "request_sha256": "8dc856d1a1ea5b220ec6c5eb8a80a27128435a16f951bbafdbfb61982d908192",
+          "response_bytes": 184917,
+          "response_sha256": "d3f159d0d72f2a51c40588fb3f63a5eaae69a3d1dc1deea912c8cf940547f7eb",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 43.175488
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6.1-sol",
+        "reasoning": {
+          "effort": "high",
+          "context": "all_turns"
+        },
+        "request_sha256": "8dc856d1a1ea5b220ec6c5eb8a80a27128435a16f951bbafdbfb61982d908192",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "7ea464e523020cbb55744378e53be97b994c40d156c5def376341738df4de45c"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "0da0a7caa375b67a35dcd7dccf46f377e274e8b263307318d0573978649b122f",
+            "bytes": 1101499,
+            "width": 1024,
+            "height": 683,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:49:11.504129+00:00",
+    "total_client_seconds": 46.36655,
+    "answer_hash": "37d00b2db07595d913b0559aa11e0a5119586fa03807ef1225868aba123e4952"
+  },
+  "answer": "He appears to be missing his right hand, so he holds the stick with his left hand.",
+  "answer_hash": "37d00b2db07595d913b0559aa11e0a5119586fa03807ef1225868aba123e4952",
+  "image_sha256": "0da0a7caa375b67a35dcd7dccf46f377e274e8b263307318d0573978649b122f",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "finished_at": "2026-11-06T08:49:11.505174+00:00"
+}

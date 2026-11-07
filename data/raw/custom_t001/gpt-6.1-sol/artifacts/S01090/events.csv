@@ -1,0 +1,30 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error
+20261030T072513_T001_high_23c11acbd437,1,2026-10-30T07:25:15.282106+00:00,2.0008320999331772,thread.started,,,,,,,,
+20261030T072513_T001_high_23c11acbd437,2,2026-10-30T07:25:16.428331+00:00,3.1470557999564335,turn.started,,,,,,,,
+20261030T072513_T001_high_23c11acbd437,3,2026-10-30T07:25:22.248101+00:00,8.966826400021091,item.completed,item_0,agent_message,,,,,,
+20261030T072513_T001_high_23c11acbd437,4,2026-10-30T07:25:24.665250+00:00,11.383980999933556,item.started,item_1,command_execution,command_execution,in_progress,,,"""C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"" -Command 'Get-Content -LiteralPath solution.py'",
+20261030T072513_T001_high_23c11acbd437,5,2026-10-30T07:25:24.731086+00:00,11.449813399929553,item.completed,item_1,command_execution,command_execution,completed,0,,"""C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"" -Command 'Get-Content -LiteralPath solution.py'",
+20261030T072513_T001_high_23c11acbd437,6,2026-10-30T07:25:29.151078+00:00,15.869803000008687,item.started,item_2,file_change,file_change,in_progress,,,,
+20261030T072513_T001_high_23c11acbd437,7,2026-10-30T07:25:30.666251+00:00,17.38497739995364,item.completed,item_2,file_change,file_change,completed,,,,
+20261030T072513_T001_high_23c11acbd437,8,2026-10-30T07:25:40.478138+00:00,27.196885299985297,item.started,item_3,command_execution,command_execution,in_progress,,,"""C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"" -Command ""@'
+import math
+from solution import average
+
+cases = [([], 0), ([7], 7), ([1, 2], 1.5), ([-5, -2, -2], -3), ([1.5, 2.5], 2.0), ([-1.5, 0.5, 2.5], 0.5)]
+for numbers, expected in cases:
+    actual = average(numbers)
+    assert math.isclose(actual, expected), (numbers, actual, expected)
+print('6 cases passed')
+'@ | python -B -""",
+20261030T072513_T001_high_23c11acbd437,9,2026-10-30T07:25:40.570456+00:00,27.289184599998407,item.completed,item_3,command_execution,command_execution,completed,0,,"""C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"" -Command ""@'
+import math
+from solution import average
+
+cases = [([], 0), ([7], 7), ([1, 2], 1.5), ([-5, -2, -2], -3), ([1.5, 2.5], 2.0), ([-1.5, 0.5, 2.5], 0.5)]
+for numbers, expected in cases:
+    actual = average(numbers)
+    assert math.isclose(actual, expected), (numbers, actual, expected)
+print('6 cases passed')
+'@ | python -B -""",
+20261030T072513_T001_high_23c11acbd437,10,2026-10-30T07:25:45.673369+00:00,32.39209849992767,item.completed,item_4,agent_message,,,,,,
+20261030T072513_T001_high_23c11acbd437,11,2026-10-30T07:25:45.835911+00:00,32.55463799997233,turn.completed,,,,,,,,

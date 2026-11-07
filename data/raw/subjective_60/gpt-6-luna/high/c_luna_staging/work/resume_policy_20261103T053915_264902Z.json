@@ -1,0 +1,37 @@
+{
+  "created_at": "2026-11-03T05:39:15.264902+00:00",
+  "experiment_id": "subjective_luna_high_60_20261102",
+  "supervisor_pid": 33404,
+  "manifest_file_sha256": "fbc281a22ef665288657a5daed2eeedbaae72ed9b4cbe718be823d3ab06fcea9",
+  "policy_deviation": "Original policy permits manual restart only. This supervisor adds at most five automatic restarts in total, only after fresh local-relay URLError failures with no upstream response or completed upstream HTTP 503 responses with no generated output or usage. Frozen requests and scoring are unchanged.",
+  "supervisor_script_sha256": "92c87a5bdb18ae396c088992134cbfdff2a4b6e853fec4a3f8e709b5b2b5fa5d",
+  "preflight_run_id": "writing_18__high__r1",
+  "initial_reason": {
+    "reason": null,
+    "halted": null,
+    "stage": null,
+    "updated_at": null
+  },
+  "cooldown_seconds": [
+    30,
+    60,
+    120,
+    240,
+    300
+  ],
+  "max_restarts": 5,
+  "attempts": [
+    {
+      "cycle": 0,
+      "started_at": "2026-11-03T05:39:15.268435+00:00",
+      "process_id": 45996,
+      "phase": "preflight",
+      "run_id": "writing_18__high__r1",
+      "exit_code": 0,
+      "finished_at": "2026-11-03T05:39:41.338763+00:00"
+    }
+  ],
+  "status": "error",
+  "updated_at": "2026-11-03T05:39:41.339762+00:00",
+  "last_reason": "Supervisor stopped: RuntimeError"
+}

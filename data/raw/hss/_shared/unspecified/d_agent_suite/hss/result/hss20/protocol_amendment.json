@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "experiment_id": "hss20_gpt4_20261106",
+  "base_manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "approved_manifest_hash": "5271513241e2bb18637ad5163fc7927aeece577ab838da5a6e3ebeb465f6cd6a",
+  "created_at": "2026-11-06T08:29:06.679026+00:00",
+  "revision": "validation_resume_20261106_v1",
+  "reason": "Validation-only repair: record and strictly verify pinned Codex UI ultra -> wire xhigh with delegation disabled; reject bad wire parameters before forwarding; retain original manifests, successful records, prompts, datasets, tool budgets and scoring. HSS retry allowance 6 restores provider/validation failures only.",
+  "code_fields": [
+    "core_code_hashes",
+    "client_code_hashes"
+  ],
+  "helper_sha256": "daebe44c8977cecd3321e0d64a81e2555594073d23e8d1ad34ee61a2c38934dd",
+  "replacements": [
+    {
+      "field": "core_code_hashes",
+      "path": "run_experiment.py",
+      "before_sha256": "8f49c1b9fe0246fb0afca48505cdda094037b2e31f4628ab28d34ed700e383c6",
+      "after_sha256": "5de7e7be84606aac0b43942851579414566bc75dd02367b7dce3e736c0f28f81"
+    },
+    {
+      "field": "client_code_hashes",
+      "path": "codex_client.py",
+      "before_sha256": "125ba1fd769a54ad03d1dfb34d7258ee79764efc2d5279e84d799f0127ecd07d",
+      "after_sha256": "cd01c6845d13ba8a53a33098b8d31e37a5c426ac9912f0f0cb34d91e45392f97"
+    }
+  ],
+  "compatibility_note": "UI ultra is not an established API ultra reasoning budget; report selected and actual wire efforts separately.",
+  "amendment_hash": "2af6bbaf5f9c747e2a0695493cf8f232d14d01210d73016696c7acfd6e4c1d5a"
+}

@@ -1,0 +1,33 @@
+run_id,message_id,turn_id,role,content,timestamp,message_type
+max_EP132_fc0d3aa3d0c9,prompt,1,user,"Complete solution.py according to its function specification. Preserve its entry point and required imports. Return the complete source.
+
+
+TOOLS MODE: solution.py is in the isolated /workspace container. Use ONLY the codedepth_workspace MCP tools to read files, write code, and run Python/pytest checks. Tool file paths are relative POSIX paths such as solution.py. The host current directory is not your workspace. Preserve solution.py as the final full source file. You may create your own temporary tests; official hidden tests are unavailable. Do not merely return code: use write_file or a container command to save your changes, then explain your result.
+",,task_prompt
+max_EP132_fc0d3aa3d0c9,item_1,1,assistant,"I’ll check for `[[]]` as a subsequence, then test the examples and short bracket strings exhaustively.",2026-11-01T01:52:37.819801+00:00,agent_message
+max_EP132_fc0d3aa3d0c9,item_4,1,assistant,"Saved `solution.py` with an O(n)-time, O(1)-space implementation. Passed 2,047 exhaustive short-string checks, 11 example/edge cases, and 3 long-input checks.
+
+```python
+def is_nested(string):
+    '''
+    Create a function that takes a string as input which contains only square brackets.
+    The function should return True if and only if there is a valid subsequence of brackets
+    where at least one bracket in the subsequence is nested.
+
+    is_nested('[[]]') ➞ True
+    is_nested('[]]]]]]][[[[[]') ➞ False
+    is_nested('[][]') ➞ False
+    is_nested('[]') ➞ False
+    is_nested('[[][]]') ➞ True
+    is_nested('[[]][[') ➞ True
+    '''
+    # Every valid nested subsequence contains the subsequence ""[[]]"".
+    target = ""[[]]""
+    matched = 0
+    for bracket in string:
+        if bracket == target[matched]:
+            matched += 1
+            if matched == len(target):
+                return True
+    return False
+```",2026-11-01T01:53:04.263934+00:00,agent_message

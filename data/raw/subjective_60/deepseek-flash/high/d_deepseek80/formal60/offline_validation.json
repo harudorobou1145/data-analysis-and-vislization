@@ -1,0 +1,29 @@
+{
+  "validated_at": "2026-11-06T03:17:56.760354+00:00",
+  "status": "passed",
+  "tests": 34,
+  "elapsed_seconds": 13.748,
+  "command": "python -X utf8 -m unittest discover -s script -p 'test_*.py'",
+  "model_requests_started": 0,
+  "checks": [
+    "Candidate and judge use separate exact model/provider routes.",
+    "Official catalog and successful wire-model/high inference preflight are required.",
+    "Missing credentials, mismatched models, unsupported judge catalog and preflight errors reject fallback.",
+    "24/60 synthetic profiles preserve full scoring joins, timing and first-success attempts.",
+    "Tampered answer-attempt joins fail complete audit.",
+    "Partial audit failure returns nonzero.",
+    "Recovery, retry preservation, provider failures and long-path cleanup are covered."
+  ],
+  "core_sha256": {
+    "analyze_results.py": "701138af9a388b83f2b4818c8a0d32f0823c4118185601668e8418852043d519",
+    "audit_results.py": "603369da380dadcea9da481e74c2ab946866e84410b0084dd4f5e5c1c02a8eda",
+    "codex_transport.py": "9b51c204bcef331aeb720c15660c244cc51ee6ea32a896facb59155ffe9b164e",
+    "https_relay.py": "5aeb5ffc98286c095e6bfb3873a18f56005b64395f9f7d6ab7b0ee32a9ec2953",
+    "provider_route.py": "1cfdfee3b77d9a3875316784d9b5f604feb4594a47cb9203576fb65b35953f40",
+    "run_experiment.py": "ccaba24fd0caab706476fbc1e3c59d15c90d51a7158116c2bca454f9d1999707",
+    "runtime_directory.py": "698d599d9c962bdb097147593236f3c2b930b54014a98bb59962f554df8b2f37",
+    "scoring.py": "c738a91c9681cc9da48f383ee16125caf2411268aa2b7250d1288deb1929d512"
+  },
+  "tasks_file_sha256": "a61237562ff8dccd170dc41511eae117f6ac6d78840b9cb0ffa8d9e6480086b4",
+  "scoring_code_sha256": "c738a91c9681cc9da48f383ee16125caf2411268aa2b7250d1288deb1929d512"
+}

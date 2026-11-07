@@ -1,0 +1,29 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error,tool_server,tool_input,tool_output,behavior_category,is_test_execution,measurement_source
+max100_9d1b2dd7828fd7fa0ca4829a_dafcbec164,1,2026-11-01T08:05:34.629117+00:00,0.6249711000000389,thread.started,,,,,,,,,,,,,,
+max100_9d1b2dd7828fd7fa0ca4829a_dafcbec164,2,2026-11-01T08:05:34.658750+00:00,0.6546068999996351,turn.started,,,,,,,,,,,,,,
+max100_9d1b2dd7828fd7fa0ca4829a_dafcbec164,3,2026-11-01T08:05:39.652552+00:00,5.648407499999848,item.started,item_0,mcp_tool_call,read_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py""}",,file_read,False,native_item
+max100_9d1b2dd7828fd7fa0ca4829a_dafcbec164,4,2026-11-01T08:05:40.035988+00:00,6.031844299999648,item.completed,item_0,mcp_tool_call,read_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""content\"": \""\\n\\ndef fib(n: int):\\n    \\\""\\\""\\\""Return n-th Fibonacci number.\\n    >>> fib(10)\\n    55\\n    >>> fib(1)\\n    1\\n    >>> fib(8)\\n    21\\n    \\\""\\\""\\\""\\n    pass\\n\""}""}], ""structured_content"": null}",file_read,False,workspace_tool_result
+max100_9d1b2dd7828fd7fa0ca4829a_dafcbec164,5,2026-11-01T08:05:49.622864+00:00,15.618726899999729,item.started,item_1,mcp_tool_call,write_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def fib(n: int):\n    \""\""\""Return n-th Fibonacci number.\n    >>> fib(10)\n    55\n    >>> fib(1)\n    1\n    >>> fib(8)\n    21\n    \""\""\""\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n""}",,file_write,False,native_item
+max100_9d1b2dd7828fd7fa0ca4829a_dafcbec164,6,2026-11-01T08:05:49.983850+00:00,15.979706199999782,item.completed,item_1,mcp_tool_call,write_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def fib(n: int):\n    \""\""\""Return n-th Fibonacci number.\n    >>> fib(10)\n    55\n    >>> fib(1)\n    1\n    >>> fib(8)\n    21\n    \""\""\""\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""before_sha256\"": \""9dc68d11bed5bb69281b5999860a5a8f79066cba4667e09193d01d881de4e877\"", \""after_sha256\"": \""fd5e1214c2b4811139053134fa1392c7b92eb1233133e26fb9eb78379e316ca0\"", \""changed\"": true}""}], ""structured_content"": null}",file_write,False,workspace_tool_result
+max100_9d1b2dd7828fd7fa0ca4829a_dafcbec164,7,2026-11-01T08:05:56.103444+00:00,22.099301599999762,item.started,item_2,mcp_tool_call,run_command,in_progress,,,"python -m doctest -v solution.py && python - <<'PY'
+from solution import fib
+
+expected = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+for n, value in enumerate(expected):
+    assert fib(n) == value, (n, fib(n), value)
+assert fib(50) == 12586269025
+assert fib(100) == 354224848179261915075
+print('All 13 additional Fibonacci assertions passed.')
+PY",,codedepth_workspace,"{""command"": ""python -m doctest -v solution.py && python - <<'PY'\nfrom solution import fib\n\nexpected = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]\nfor n, value in enumerate(expected):\n    assert fib(n) == value, (n, fib(n), value)\nassert fib(50) == 12586269025\nassert fib(100) == 354224848179261915075\nprint('All 13 additional Fibonacci assertions passed.')\nPY""}",,command_execution,True,native_item
+max100_9d1b2dd7828fd7fa0ca4829a_dafcbec164,8,2026-11-01T08:05:56.668942+00:00,22.664800999999898,item.completed,item_2,mcp_tool_call,run_command,completed,0,0.20235409699995444,"python -m doctest -v solution.py && python - <<'PY'
+from solution import fib
+
+expected = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+for n, value in enumerate(expected):
+    assert fib(n) == value, (n, fib(n), value)
+assert fib(50) == 12586269025
+assert fib(100) == 354224848179261915075
+print('All 13 additional Fibonacci assertions passed.')
+PY",,codedepth_workspace,"{""command"": ""python -m doctest -v solution.py && python - <<'PY'\nfrom solution import fib\n\nexpected = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]\nfor n, value in enumerate(expected):\n    assert fib(n) == value, (n, fib(n), value)\nassert fib(50) == 12586269025\nassert fib(100) == 354224848179261915075\nprint('All 13 additional Fibonacci assertions passed.')\nPY""}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python -m doctest -v solution.py && python - <<'PY'\\nfrom solution import fib\\n\\nexpected = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]\\nfor n, value in enumerate(expected):\\n    assert fib(n) == value, (n, fib(n), value)\\nassert fib(50) == 12586269025\\nassert fib(100) == 354224848179261915075\\nprint('All 13 additional Fibonacci assertions passed.')\\nPY\"", \""exit_code\"": 0, \""stdout\"": \""Trying:\\n    fib(10)\\nExpecting:\\n    55\\nok\\nTrying:\\n    fib(1)\\nExpecting:\\n    1\\nok\\nTrying:\\n    fib(8)\\nExpecting:\\n    21\\nok\\n1 items had no tests:\\n    solution\\n1 items passed all tests:\\n   3 tests in solution.fib\\n3 tests in 2 items.\\n3 passed and 0 failed.\\nTest passed.\\nAll 13 additional Fibonacci assertions passed.\\n\"", \""stderr\"": \""\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.20235409699995444, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+max100_9d1b2dd7828fd7fa0ca4829a_dafcbec164,9,2026-11-01T08:06:00.645111+00:00,26.64096619999964,item.completed,item_3,agent_message,,,,,,,,,,message,False,native_item
+max100_9d1b2dd7828fd7fa0ca4829a_dafcbec164,10,2026-11-01T08:06:00.777652+00:00,26.77350869999964,turn.completed,,,,,,,,,,,,,,

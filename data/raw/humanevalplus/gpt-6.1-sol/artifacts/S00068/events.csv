@@ -1,0 +1,48 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error,tool_server,tool_input,tool_output,behavior_category,is_test_execution,measurement_source
+exp_8e3b0102e7840ae953af303d_99bf6586662d,1,2026-10-31T15:35:22.570848+00:00,0.45492389996070415,thread.started,,,,,,,,,,,,,,
+exp_8e3b0102e7840ae953af303d_99bf6586662d,2,2026-10-31T15:35:22.597206+00:00,0.4812876000069082,turn.started,,,,,,,,,,,,,,
+exp_8e3b0102e7840ae953af303d_99bf6586662d,3,2026-10-31T15:35:26.454036+00:00,4.3381103000137955,item.completed,item_0,agent_message,,,,,,,,,,message,False,native_item
+exp_8e3b0102e7840ae953af303d_99bf6586662d,4,2026-10-31T15:35:26.569785+00:00,4.4538643000414595,item.started,item_1,mcp_tool_call,read_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py""}",,file_read,False,native_item
+exp_8e3b0102e7840ae953af303d_99bf6586662d,5,2026-10-31T15:35:26.918087+00:00,4.802168400026858,item.completed,item_1,mcp_tool_call,read_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""content\"": \""\\ndef solve(s):\\n    \\\""\\\""\\\""You are given a string s.\\n    if s[i] is a letter, reverse its case from lower to upper or vise versa, \\n    otherwise keep it as it is.\\n    If the string contains no letters, reverse the string.\\n    The function should return the resulted string.\\n    Examples\\n    solve(\\\""1234\\\"") = \\\""4321\\\""\\n    solve(\\\""ab\\\"") = \\\""AB\\\""\\n    solve(\\\""#a@C\\\"") = \\\""#A@c\\\""\\n    \\\""\\\""\\\""\\n    pass\\n\""}""}], ""structured_content"": null}",file_read,False,workspace_tool_result
+exp_8e3b0102e7840ae953af303d_99bf6586662d,6,2026-10-31T15:35:33.389492+00:00,11.273566499934532,item.started,item_2,mcp_tool_call,write_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""\ndef solve(s):\n    \""\""\""You are given a string s.\n    if s[i] is a letter, reverse its case from lower to upper or vise versa, \n    otherwise keep it as it is.\n    If the string contains no letters, reverse the string.\n    The function should return the resulted string.\n    Examples\n    solve(\""1234\"") = \""4321\""\n    solve(\""ab\"") = \""AB\""\n    solve(\""#a@C\"") = \""#A@c\""\n    \""\""\""\n    if any(char.isalpha() for char in s):\n        return s.swapcase()\n    return s[::-1]\n""}",,file_write,False,native_item
+exp_8e3b0102e7840ae953af303d_99bf6586662d,7,2026-10-31T15:35:33.731568+00:00,11.615640899981372,item.completed,item_2,mcp_tool_call,write_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""\ndef solve(s):\n    \""\""\""You are given a string s.\n    if s[i] is a letter, reverse its case from lower to upper or vise versa, \n    otherwise keep it as it is.\n    If the string contains no letters, reverse the string.\n    The function should return the resulted string.\n    Examples\n    solve(\""1234\"") = \""4321\""\n    solve(\""ab\"") = \""AB\""\n    solve(\""#a@C\"") = \""#A@c\""\n    \""\""\""\n    if any(char.isalpha() for char in s):\n        return s.swapcase()\n    return s[::-1]\n""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""before_sha256\"": \""9b9cc87228c1ca3371bfb49b9a6d5585ff0e683daf35c10469a9bfc2d38562d6\"", \""after_sha256\"": \""7bb06a8f53400a4c3384b9b16772f7fa6431b40b823e1aad5aea9028b5450a38\"", \""changed\"": true}""}], ""structured_content"": null}",file_write,False,workspace_tool_result
+exp_8e3b0102e7840ae953af303d_99bf6586662d,8,2026-10-31T15:35:41.126771+00:00,19.010844000033103,item.started,item_3,mcp_tool_call,run_command,in_progress,,,"python - <<'PY'
+from solution import solve
+
+cases = [
+    ('1234', '4321'),
+    ('ab', 'AB'),
+    ('#a@C', '#A@c'),
+    ('', ''),
+    ('!12 @', '@ 21!'),
+    ('a1B2!', 'A1b2!'),
+    ('Hello World', 'hELLO wORLD'),
+    ('éΩ', 'Éω'),
+    ('中12', '中12'),
+]
+for value, expected in cases:
+    actual = solve(value)
+    assert actual == expected, (value, actual, expected)
+print(f'All {len(cases)} local checks passed.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nfrom solution import solve\n\ncases = [\n    ('1234', '4321'),\n    ('ab', 'AB'),\n    ('#a@C', '#A@c'),\n    ('', ''),\n    ('!12 @', '@ 21!'),\n    ('a1B2!', 'A1b2!'),\n    ('Hello World', 'hELLO wORLD'),\n    ('éΩ', 'Éω'),\n    ('中12', '中12'),\n]\nfor value, expected in cases:\n    actual = solve(value)\n    assert actual == expected, (value, actual, expected)\nprint(f'All {len(cases)} local checks passed.')\nPY""}",,command_execution,True,native_item
+exp_8e3b0102e7840ae953af303d_99bf6586662d,9,2026-10-31T15:35:41.494278+00:00,19.378349800012074,item.completed,item_3,mcp_tool_call,run_command,completed,0,0.017064091000065673,"python - <<'PY'
+from solution import solve
+
+cases = [
+    ('1234', '4321'),
+    ('ab', 'AB'),
+    ('#a@C', '#A@c'),
+    ('', ''),
+    ('!12 @', '@ 21!'),
+    ('a1B2!', 'A1b2!'),
+    ('Hello World', 'hELLO wORLD'),
+    ('éΩ', 'Éω'),
+    ('中12', '中12'),
+]
+for value, expected in cases:
+    actual = solve(value)
+    assert actual == expected, (value, actual, expected)
+print(f'All {len(cases)} local checks passed.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nfrom solution import solve\n\ncases = [\n    ('1234', '4321'),\n    ('ab', 'AB'),\n    ('#a@C', '#A@c'),\n    ('', ''),\n    ('!12 @', '@ 21!'),\n    ('a1B2!', 'A1b2!'),\n    ('Hello World', 'hELLO wORLD'),\n    ('éΩ', 'Éω'),\n    ('中12', '中12'),\n]\nfor value, expected in cases:\n    actual = solve(value)\n    assert actual == expected, (value, actual, expected)\nprint(f'All {len(cases)} local checks passed.')\nPY""}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python - <<'PY'\\nfrom solution import solve\\n\\ncases = [\\n    ('1234', '4321'),\\n    ('ab', 'AB'),\\n    ('#a@C', '#A@c'),\\n    ('', ''),\\n    ('!12 @', '@ 21!'),\\n    ('a1B2!', 'A1b2!'),\\n    ('Hello World', 'hELLO wORLD'),\\n    ('éΩ', 'Éω'),\\n    ('中12', '中12'),\\n]\\nfor value, expected in cases:\\n    actual = solve(value)\\n    assert actual == expected, (value, actual, expected)\\nprint(f'All {len(cases)} local checks passed.')\\nPY\"", \""exit_code\"": 0, \""stdout\"": \""All 9 local checks passed.\\n\"", \""stderr\"": \""\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.017064091000065673, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+exp_8e3b0102e7840ae953af303d_99bf6586662d,10,2026-10-31T15:35:45.843241+00:00,23.727315700030886,item.completed,item_4,agent_message,,,,,,,,,,message,False,native_item
+exp_8e3b0102e7840ae953af303d_99bf6586662d,11,2026-10-31T15:35:45.948688+00:00,23.832762300036848,turn.completed,,,,,,,,,,,,,,

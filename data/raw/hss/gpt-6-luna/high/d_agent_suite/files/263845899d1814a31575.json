@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6a8133db31a691b790551e0c__luna_high",
+  "task_id": "6a8133db31a691b790551e0c",
+  "condition": "luna_high",
+  "request_kind": "generation",
+  "attempt_id": "6a8133db31a691b790551e0c__luna_high__a01",
+  "started_at": "2026-11-06T08:31:48.927339+00:00",
+  "status": "completed",
+  "prompt_hash": "ec8a1a63560263094f5b54aef3c50c9d0267c5d3687771ff7015670d114e8482",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "714c08c1-1228-4488-968c-46bc3d9cfd03",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6a8133db31a691b790551e0c__luna_high",
+      "attempt_id": "6a8133db31a691b790551e0c__luna_high__a01",
+      "request_kind": "generation",
+      "task_id": "6a8133db31a691b790551e0c"
+    },
+    "started_at": "2026-11-06T08:31:48.930340+00:00",
+    "model_requested": "gpt-6-luna",
+    "effort_requested": "high",
+    "prompt": "Focus on the red pot hanging above the green pot. If the red pot were to fall straight down vertically, with no sideways movement, would it land on the white flower closest to us?",
+    "prompt_hash": "ec8a1a63560263094f5b54aef3c50c9d0267c5d3687771ff7015670d114e8482",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "No. The red pot is above and slightly to the right of the nearest white flower, so a straight vertical fall would miss it.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a8133db31a691b790551e0c.png",
+        "sha256": "7fe592225b591c69aae35b1c9395e67e888e921adbdbca3b2a0812e8271d994c",
+        "bytes": 1437305
+      }
+    ],
+    "effort_ui_requested": "high",
+    "effort_wire_expected": "high",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Greater reasoning depth for complex problems",
+    "thread_id": "01a1affc-4d1e-78d0-b70c-3ea20dbb4fbf",
+    "model_configured": "gpt-6-luna",
+    "effort_configured": "high",
+    "instruction_sources": [],
+    "turn_id": "01a1affc-4dea-78a1-a027-55a1ed126994",
+    "client_elapsed_seconds": 5.507183,
+    "turn_status": "completed",
+    "elapsed_seconds": 5.424,
+    "wire_efforts_observed": [
+      "high"
+    ],
+    "token_usage": {
+      "totalTokens": 11336,
+      "inputTokens": 11305,
+      "cachedInputTokens": 4224,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 31,
+      "reasoningOutputTokens": 0
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 5.282889,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 2,
+      "item/completed": 2,
+      "item/agentMessage/delta": 27,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1affc-4e5a-79b3-8095-a2bb970507a3",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "Focus on the red pot hanging above the green pot. If the red pot were to fall straight down vertically, with no sideways movement, would it land on the white flower closest to us?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a8133db31a691b790551e0c.png"
+          }
+        ],
+        "startedAtMs": 1793953910370,
+        "completedAtMs": 1793953910370
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_0eeee87d64e38288016aed907a22a487d2aacd17b167cd5c52",
+        "text": "No. The red pot is above and slightly to the right of the nearest white flower, so a straight vertical fall would miss it.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793953915498,
+        "completedAtMs": 1793953915594
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 1947613,
+          "request_sha256": "c733a7cfe843ee053031fcbe153de1fcaa295ecb6d03c7a7700fd9273e2dc330",
+          "response_bytes": 147346,
+          "response_sha256": "06b5787bfe87a0a4b4ae0c38f44990f00054a262790d94a83e171ed8b4a57846",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 5.292338
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6-luna",
+        "reasoning": {
+          "effort": "high",
+          "context": "all_turns"
+        },
+        "request_sha256": "c733a7cfe843ee053031fcbe153de1fcaa295ecb6d03c7a7700fd9273e2dc330",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "124f6672a4231c76d22e99c93c51f5f26ec995a9a60cad0b46839489c8e090d8"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "7fe592225b591c69aae35b1c9395e67e888e921adbdbca3b2a0812e8271d994c",
+            "bytes": 1437305,
+            "width": 1024,
+            "height": 768,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:31:55.963131+00:00",
+    "total_client_seconds": 7.025357,
+    "answer_hash": "222df60492fe0b0fd65125f3521b45756b937f9df3f5218f84db3a4e1faa5f15"
+  },
+  "answer": "No. The red pot is above and slightly to the right of the nearest white flower, so a straight vertical fall would miss it.",
+  "answer_hash": "222df60492fe0b0fd65125f3521b45756b937f9df3f5218f84db3a4e1faa5f15",
+  "image_sha256": "7fe592225b591c69aae35b1c9395e67e888e921adbdbca3b2a0812e8271d994c",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "finished_at": "2026-11-06T08:31:55.963690+00:00"
+}

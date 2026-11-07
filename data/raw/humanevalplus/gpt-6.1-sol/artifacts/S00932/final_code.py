@@ -1,0 +1,137 @@
+import math
+from decimal import Decimal, localcontext
+
+
+def poly(xs: list, x: float):
+    """Evaluate a polynomial whose coefficients are in ascending order."""
+    return sum(coeff * math.pow(x, i) for i, coeff in enumerate(xs))
+
+
+def find_zero(xs: list):
+    """Return a real zero of an odd-degree polynomial.
+
+    >>> round(find_zero([1, 2]), 2)
+    -0.5
+    >>> round(find_zero([-6, 11, -6, 1]), 2)
+    1.0
+    """
+    coefficients = list(xs)
+    while coefficients and coefficients[-1] == 0:
+        coefficients.pop()
+    if not coefficients or coefficients[0] == 0:
+        return 0.0
+    if len(coefficients) == 1:
+        raise ValueError("A nonconstant polynomial is required")
+
+    degree = len(coefficients) - 1
+    precision = max(80, 20 * degree)
+    exact = [Decimal(c) for c in coefficients]
+
+    def precise_value(x):
+        with localcontext() as context:
+            context.prec = precision
+            point = Decimal(x)
+            value = exact[-1]
+            for coefficient in reversed(exact[:-1]):
+                value = value * point + coefficient
+            return value
+
+    if degree == 1:
+        with localcontext() as context:
+            context.prec = precision
+            return float(-exact[0] / exact[1])
+
+    # Power-of-two scaling is exact unless a coefficient underflows. In that
+    # case use Decimal throughout, retaining even extremely small terms.
+    scale = max(abs(c) for c in coefficients)
+    try:
+        exponent = math.frexp(scale)[1]
+        normalized = [math.ldexp(c, -exponent) for c in coefficients]
+        use_precise = any(c != 0 and (n == 0 or abs(n) < 2.2250738585072014e-308)
+                          for c, n in zip(coefficients, normalized))
+    except (OverflowError, TypeError):
+        normalized = []
+        use_precise = True
+
+    def sign(x):
+        if not use_precise:
+            # Outside the unit interval, evaluate p(x)/x**degree. Reversing
+            # Horner's recurrence avoids overflowing intermediate powers.
+            if abs(x) > 1:
+                point = 1 / x
+                ordered = normalized
+            else:
+                point = x
+                ordered = reversed(normalized)
+            iterator = iter(ordered)
+            value = next(iterator)
+            magnitude = abs(value)
+            for coefficient in iterator:
+                value = value * point + coefficient
+                magnitude = magnitude * abs(point) + abs(coefficient)
+            if abs(value) > magnitude * (degree + 1) * 2e-15:
+                result = 1 if value > 0 else -1
+                if abs(x) > 1 and x < 0 and degree % 2:
+                    result = -result
+                return result
+        # A rounded zero, or a sum dominated by cancellation, cannot safely
+        # determine which half of the bracket contains a root.
+        value = precise_value(x)
+        return (value > 0) - (value < 0)
+
+    def best_float(left, right):
+        candidates = {left, right}
+        for endpoint in (left, right):
+            candidates.add(math.nextafter(endpoint, -math.inf))
+            candidates.add(math.nextafter(endpoint, math.inf))
+        candidates = [x for x in candidates if math.isfinite(x)]
+
+        def residual(x):
+            try:
+                value = abs(poly(coefficients, x))
+                if math.isfinite(value):
+                    return (0, value, abs(precise_value(x)))
+            except OverflowError:
+                pass
+            return (1, abs(precise_value(x)), 0)
+
+        return min(candidates, key=residual)
+
+    def bisect(left, right, left_sign):
+        while True:
+            middle = left / 2 + right / 2
+            if middle == left or middle == right:
+                return best_float(left, right)
+            middle_sign = sign(middle)
+            if middle_sign == 0:
+                return middle
+            if middle_sign == left_sign:
+                left = middle
+            else:
+                right = middle
+
+    # Look near zero first to avoid unnecessarily ill-conditioned large roots.
+    positive = negative = 0.0
+    positive_sign = negative_sign = 1 if coefficients[0] > 0 else -1
+    radius = 1.0
+    while math.isfinite(radius):
+        start = positive
+        for step in range(1, 33):
+            point = start + (radius - start) * (step / 32)
+            for direction in (1, -1):
+                x = direction * point
+                current_sign = sign(x)
+                if current_sign == 0:
+                    return x
+                previous = positive if direction == 1 else negative
+                previous_sign = positive_sign if direction == 1 else negative_sign
+                if current_sign != previous_sign:
+                    return bisect(previous, x, previous_sign)
+                if direction == 1:
+                    positive, positive_sign = x, current_sign
+                else:
+                    negative, negative_sign = x, current_sign
+        if radius == float.fromhex('0x1.fffffffffffffp+1023'):
+            break
+        radius = min(radius * 2, float.fromhex('0x1.fffffffffffffp+1023'))
+    raise ValueError("No real root could be bracketed in the finite float range")

@@ -1,0 +1,194 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6a84a95e6d0654f769b19d98__sol_ultra",
+  "task_id": "6a84a95e6d0654f769b19d98",
+  "condition": "sol_ultra",
+  "request_kind": "generation",
+  "attempt_id": "6a84a95e6d0654f769b19d98__sol_ultra__a03",
+  "started_at": "2026-11-06T07:40:18.717103+00:00",
+  "status": "error",
+  "prompt_hash": "2ccab65c39ca477280d9ab89490e49e9e2544895863b3c05d77d7d4c223a15c9",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "d5f62154-448e-45d7-938f-84ffd6b7b8b6",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6a84a95e6d0654f769b19d98__sol_ultra",
+      "attempt_id": "6a84a95e6d0654f769b19d98__sol_ultra__a03",
+      "request_kind": "generation",
+      "task_id": "6a84a95e6d0654f769b19d98"
+    },
+    "started_at": "2026-11-06T07:40:18.719128+00:00",
+    "model_requested": "gpt-6.1-sol",
+    "effort_requested": "ultra",
+    "prompt": "If the man in the star covered jacket stood upright without moving his feet, could he reach the rope with one hand.",
+    "prompt_hash": "2ccab65c39ca477280d9ab89490e49e9e2544895863b3c05d77d7d4c223a15c9",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "error",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a84a95e6d0654f769b19d98.png",
+        "sha256": "3872c33b3d0325bf544c0e458a149613f2a550fc394fce6d201fa8c2fdab3b17",
+        "bytes": 1327150
+      }
+    ],
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "thread_id": "01a1afcd-248e-7ae2-ac85-cb6a33f5e1e8",
+    "model_configured": "gpt-6.1-sol",
+    "effort_configured": "ultra",
+    "instruction_sources": [],
+    "turn_id": "01a1afcd-24f3-74a0-bf9e-a417cfd3460f",
+    "error_type": "ProviderConnectionError",
+    "error": "unexpected status 403 Forbidden: {\"code\":\"INSUFFICIENT_BALANCE\",\"message\":\"error: code=400 reason=\\\"INSUFFICIENT_BALANCE\\\" message=\\\"Insufficient user balance. Please top up your user balance.\\\" metadata=map[]\"}, url: [ENDPOINT] request id: 6a0a435f-4818-4702-9385-a9ebcf3fda66",
+    "token_usage": null,
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [
+      {
+        "observed_seconds": 4.740666,
+        "willRetry": false,
+        "message": "unexpected status 403 Forbidden: {\"code\":\"INSUFFICIENT_BALANCE\",\"message\":\"error: code=400 reason=\\\"INSUFFICIENT_BALANCE\\\" message=\\\"Insufficient user balance. Please top up your user balance.\\\" metadata=map[]\"}, url: [ENDPOINT] request id: 6a0a435f-4818-4702-9385-a9ebcf3fda66",
+        "code": {
+          "httpConnectionFailed": {
+            "httpStatusCode": 403
+          }
+        },
+        "error": {
+          "message": "unexpected status 403 Forbidden: {\"code\":\"INSUFFICIENT_BALANCE\",\"message\":\"error: code=400 reason=\\\"INSUFFICIENT_BALANCE\\\" message=\\\"Insufficient user balance. Please top up your user balance.\\\" metadata=map[]\"}, url: [ENDPOINT] request id: 6a0a435f-4818-4702-9385-a9ebcf3fda66",
+          "codexErrorInfo": {
+            "httpConnectionFailed": {
+              "httpStatusCode": 403
+            }
+          },
+          "additionalDetails": null,
+          "misalignment": null
+        },
+        "params": {
+          "error": {
+            "message": "unexpected status 403 Forbidden: {\"code\":\"INSUFFICIENT_BALANCE\",\"message\":\"error: code=400 reason=\\\"INSUFFICIENT_BALANCE\\\" message=\\\"Insufficient user balance. Please top up your user balance.\\\" metadata=map[]\"}, url: [ENDPOINT] request id: 6a0a435f-4818-4702-9385-a9ebcf3fda66",
+            "codexErrorInfo": {
+              "httpConnectionFailed": {
+                "httpStatusCode": 403
+              }
+            },
+            "additionalDetails": null,
+            "misalignment": null
+          },
+          "willRetry": false,
+          "threadId": "01a1afcd-248e-7ae2-ac85-cb6a33f5e1e8",
+          "turnId": "01a1afcd-24f3-74a0-bf9e-a417cfd3460f"
+        }
+      }
+    ],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": null,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 1,
+      "item/completed": 1,
+      "error": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1afcd-2535-7260-b1e1-e8a95acc0d96",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "If the man in the star covered jacket stood upright without moving his feet, could he reach the rope with one hand.",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a84a95e6d0654f769b19d98.png"
+          }
+        ],
+        "startedAtMs": 1793950819641,
+        "completedAtMs": 1793950819641
+      }
+    ],
+    "client_elapsed_seconds": 4.741234,
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 1800931,
+          "request_sha256": "815e36aceab4f43900488a7e71591fcf0ef6e47398ee0493a2a9372ea74ee9ec",
+          "response_bytes": 178,
+          "response_sha256": "9b7c41ec1b0962862c0d9b2f669efbc1586805294c76aea67ba96278119524b3",
+          "upstream_status": 403,
+          "completed": true,
+          "duration_seconds": 4.629277
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6.1-sol",
+        "reasoning": {
+          "effort": "xhigh",
+          "context": "all_turns"
+        },
+        "request_sha256": "815e36aceab4f43900488a7e71591fcf0ef6e47398ee0493a2a9372ea74ee9ec",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "9744483a8a5cfbb0db84c8084f0c4cf3ed69533ee99c2ca01aaa1cc32347cbe3"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "3872c33b3d0325bf544c0e458a149613f2a550fc394fce6d201fa8c2fdab3b17",
+            "bytes": 1327150,
+            "width": 1024,
+            "height": 668,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null
+      }
+    ],
+    "finished_at": "2026-11-06T07:40:24.453896+00:00",
+    "total_client_seconds": 5.731099,
+    "answer_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "error_type": "ValueError",
+  "finished_at": "2026-11-06T07:40:24.454894+00:00"
+}

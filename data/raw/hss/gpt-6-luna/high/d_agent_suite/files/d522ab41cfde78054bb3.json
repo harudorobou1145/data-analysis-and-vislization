@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6a8a70c429b7eb6658839d6c__luna_high",
+  "task_id": "6a8a70c429b7eb6658839d6c",
+  "condition": "luna_high",
+  "request_kind": "generation",
+  "attempt_id": "6a8a70c429b7eb6658839d6c__luna_high__a01",
+  "started_at": "2026-11-06T08:31:00.628397+00:00",
+  "status": "completed",
+  "prompt_hash": "899a8afe9281843cd22f86f7e6b142a18a47629f632284a90a1c2dc5828bd3b1",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "feb20b74-c408-46c2-a4a2-3f5d3b32d85b",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6a8a70c429b7eb6658839d6c__luna_high",
+      "attempt_id": "6a8a70c429b7eb6658839d6c__luna_high__a01",
+      "request_kind": "generation",
+      "task_id": "6a8a70c429b7eb6658839d6c"
+    },
+    "started_at": "2026-11-06T08:31:00.629414+00:00",
+    "model_requested": "gpt-6-luna",
+    "effort_requested": "high",
+    "prompt": "If the stands were to suddenly collapse, which of the players on the field would the spectators in the stands fall on top of?",
+    "prompt_hash": "899a8afe9281843cd22f86f7e6b142a18a47629f632284a90a1c2dc5828bd3b1",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "They would fall onto the players in the scrum nearest the stands, along the sideline.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a8a70c429b7eb6658839d6c.png",
+        "sha256": "b9beefb6092745fac7c64c7cabb31a1f5369bb43a46a5b6a65c8c03fcd7a6189",
+        "bytes": 1279273
+      }
+    ],
+    "effort_ui_requested": "high",
+    "effort_wire_expected": "high",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Greater reasoning depth for complex problems",
+    "thread_id": "01a1affb-8e1d-7e30-8bbe-af9971e619bf",
+    "model_configured": "gpt-6-luna",
+    "effort_configured": "high",
+    "instruction_sources": [],
+    "turn_id": "01a1affb-8e63-7b13-be17-92a9509e18ae",
+    "client_elapsed_seconds": 6.394887,
+    "turn_status": "completed",
+    "elapsed_seconds": 6.366,
+    "wire_efforts_observed": [
+      "high"
+    ],
+    "token_usage": {
+      "totalTokens": 11409,
+      "inputTokens": 11296,
+      "cachedInputTokens": 8704,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 113,
+      "reasoningOutputTokens": 89
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 6.220068,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 3,
+      "item/completed": 3,
+      "item/agentMessage/delta": 18,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1affb-8e8c-7191-acc7-2cb44fc037f7",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "If the stands were to suddenly collapse, which of the players on the field would the spectators in the stands fall on top of?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a8a70c429b7eb6658839d6c.png"
+          }
+        ],
+        "startedAtMs": 1793953861262,
+        "completedAtMs": 1793953861262
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_0e5bbf1c2076decf016aed904a0b6c87d1a1eaa78886494969",
+        "text": "They would fall onto the players in the scrum nearest the stands, along the sideline.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793953867428,
+        "completedAtMs": 1793953867430
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 1736851,
+          "request_sha256": "c75a44574da8f0771e6edfd05fc5284ff46d40c5afcf108ecb9a02edb671e02b",
+          "response_bytes": 154209,
+          "response_sha256": "363f45ced1543946bf2c811d809469e49091b1d853d49f735e8516a60cb256d9",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 6.330213
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6-luna",
+        "reasoning": {
+          "effort": "high",
+          "context": "all_turns"
+        },
+        "request_sha256": "c75a44574da8f0771e6edfd05fc5284ff46d40c5afcf108ecb9a02edb671e02b",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "231033ebb9dbd98233674f5dd9b0e6f650add7a620372285d9b3b76d07e60c74"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "b9beefb6092745fac7c64c7cabb31a1f5369bb43a46a5b6a65c8c03fcd7a6189",
+            "bytes": 1279273,
+            "width": 1023,
+            "height": 767,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:31:07.724106+00:00",
+    "total_client_seconds": 7.091316,
+    "answer_hash": "c81ab030760bc7e984470fccbdaf9c3d19f6b73cf3404f6c1747fcc75a392cd8"
+  },
+  "answer": "They would fall onto the players in the scrum nearest the stands, along the sideline.",
+  "answer_hash": "c81ab030760bc7e984470fccbdaf9c3d19f6b73cf3404f6c1747fcc75a392cd8",
+  "image_sha256": "b9beefb6092745fac7c64c7cabb31a1f5369bb43a46a5b6a65c8c03fcd7a6189",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "finished_at": "2026-11-06T08:31:07.725105+00:00"
+}

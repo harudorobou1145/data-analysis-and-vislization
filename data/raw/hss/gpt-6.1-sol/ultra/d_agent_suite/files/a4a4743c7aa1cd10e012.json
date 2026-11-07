@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6aae2141289b431548341571__sol_ultra",
+  "task_id": "6aae2141289b431548341571",
+  "condition": "sol_ultra",
+  "request_kind": "generation",
+  "attempt_id": "6aae2141289b431548341571__sol_ultra__a01",
+  "started_at": "2026-11-06T08:39:52.025246+00:00",
+  "status": "completed",
+  "prompt_hash": "da0379dadcc7e481d1658ab84aa3d7e2adb0de8049e11301421150ea0e969608",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "dd96ff3d-36f2-41b2-bee0-b04d9ddf16f2",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6aae2141289b431548341571__sol_ultra",
+      "attempt_id": "6aae2141289b431548341571__sol_ultra__a01",
+      "request_kind": "generation",
+      "task_id": "6aae2141289b431548341571"
+    },
+    "started_at": "2026-11-06T08:39:52.026336+00:00",
+    "model_requested": "gpt-6.1-sol",
+    "effort_requested": "ultra",
+    "prompt": "Who in the room seems to be paying the least attention to the meeting?",
+    "prompt_hash": "da0379dadcc7e481d1658ab84aa3d7e2adb0de8049e11301421150ea0e969608",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "The man in the front left wearing glasses and a white shirt seems least attentive, as he’s looking toward the camera rather than the speaker.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6aae2141289b431548341571.png",
+        "sha256": "32576d917adb3eb14c90c1aee4813ba075217eab258fa849412afa26dffc7ddc",
+        "bytes": 866395
+      }
+    ],
+    "effort_ui_requested": "ultra",
+    "effort_wire_expected": "xhigh",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Maximum reasoning with automatic task delegation",
+    "thread_id": "01a1b003-a9de-7be3-b008-0ff011d9aec3",
+    "model_configured": "gpt-6.1-sol",
+    "effort_configured": "ultra",
+    "instruction_sources": [],
+    "turn_id": "01a1b003-aa24-7ae1-8530-4b1a85c91dad",
+    "client_elapsed_seconds": 19.40658,
+    "turn_status": "completed",
+    "elapsed_seconds": 19.379,
+    "wire_efforts_observed": [
+      "xhigh"
+    ],
+    "token_usage": {
+      "totalTokens": 11280,
+      "inputTokens": 10968,
+      "cachedInputTokens": 4096,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 312,
+      "reasoningOutputTokens": 278
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 19.256074,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 3,
+      "item/completed": 3,
+      "item/agentMessage/delta": 28,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1b003-aa42-7d81-aa9e-7f9e8dfc0f56",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "Who in the room seems to be paying the least attention to the meeting?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6aae2141289b431548341571.png"
+          }
+        ],
+        "startedAtMs": 1793954392644,
+        "completedAtMs": 1793954392644
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_0ab3c2aee55340d0016aed926a46f487d2bec04eef57d1d67a",
+        "text": "The man in the front left wearing glasses and a white shirt seems least attentive, as he’s looking toward the camera rather than the speaker.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793954411856,
+        "completedAtMs": 1793954411863
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 1186546,
+          "request_sha256": "4d1fa5300b00162575ef9dd6d34f06b2eb5beee222e3a5dac1a2e62781840f53",
+          "response_bytes": 167364,
+          "response_sha256": "3f0a31afb8dfefdf3d3cbec8cbe718f4acdc633f16511c32118b0deaeb0a3ae1",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 19.352681
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6.1-sol",
+        "reasoning": {
+          "effort": "xhigh",
+          "context": "all_turns"
+        },
+        "request_sha256": "4d1fa5300b00162575ef9dd6d34f06b2eb5beee222e3a5dac1a2e62781840f53",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "ff292512f27a526bb530725c771abaaa1ba78acd961cd7d8c959d443fed9daec"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "32576d917adb3eb14c90c1aee4813ba075217eab258fa849412afa26dffc7ddc",
+            "bytes": 866395,
+            "width": 1023,
+            "height": 597,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:40:12.136428+00:00",
+    "total_client_seconds": 20.108009,
+    "answer_hash": "cf762621c79b93c563683ef65673f929f9919ed3babb306cb55dca58134761ed"
+  },
+  "answer": "The man in the front left wearing glasses and a white shirt seems least attentive, as he’s looking toward the camera rather than the speaker.",
+  "answer_hash": "cf762621c79b93c563683ef65673f929f9919ed3babb306cb55dca58134761ed",
+  "image_sha256": "32576d917adb3eb14c90c1aee4813ba075217eab258fa849412afa26dffc7ddc",
+  "model": "gpt-6.1-sol",
+  "effort": "ultra",
+  "finished_at": "2026-11-06T08:40:12.136428+00:00"
+}

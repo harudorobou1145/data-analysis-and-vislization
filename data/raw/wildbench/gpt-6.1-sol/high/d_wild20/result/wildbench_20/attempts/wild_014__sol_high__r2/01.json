@@ -1,0 +1,116 @@
+{
+  "experiment_id": "wildbench_20_four_conditions_20261105_v2",
+  "run_id": "wild_014__sol_high__r2",
+  "task_id": "wild_014",
+  "task_type": "Editing",
+  "condition_id": "sol_high",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "repeat_id": 2,
+  "prompt_hash": "23aacede26170095aa8583f3219b2a51afeaa2f34d49c66eb8e29de7807a0ccb",
+  "spec_hash": "2b071fc13ae2dbb011526ec8584e95dff517543beb54144987aa683ee825c661",
+  "attempt_id": "wild_014__sol_high__r2__a01",
+  "attempt_number": 1,
+  "started_at": "2026-11-05T13:43:39.140679+00:00",
+  "status": "error",
+  "request_id": "65008c4c-6259-412c-bfa8-376c64c03282",
+  "request_kind": "generation",
+  "parent_run_id": "wild_014__sol_high__r2",
+  "model_requested": "gpt-6.1-sol",
+  "effort_requested": "high",
+  "prior_messages": 0,
+  "system_hash": "fa4d012e57fdef0fe321d25f36b7236e7040615b599b7af2347cfcc400d7ef59",
+  "prompt": "Use critical comments of authors and critiques to elaborate in polished academic language in 5000 words\n “Since the publication of Mark Twain’s Adventures of Huckleberry Finn, the use of child narrators in adult literature has expanded to incorporate a diverse range of themes, styles, and perspectives.”\n",
+  "answer": "",
+  "ttft_seconds": null,
+  "tpot_seconds": null,
+  "provider_transport": "python_https_relay",
+  "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (wildbench_pilot; 1.0)",
+  "thread_id": "01a1abf3-6db1-78f2-af5a-52267c6c6dd0",
+  "model_configured": "gpt-6.1-sol",
+  "effort_configured": "high",
+  "instruction_sources": [],
+  "turn_id": "01a1abf3-6dfa-70f3-89a1-88237d3ed26b",
+  "client_elapsed_seconds": 101.584787,
+  "turn_status": "failed",
+  "elapsed_seconds": 101.554,
+  "final_answer_message_span_seconds": null,
+  "token_usage": null,
+  "tool_events": [],
+  "model_reroutes": [],
+  "observed_user_message_count": 1,
+  "runtime_warnings": [],
+  "notification_counts": {
+    "remoteControl/status/changed": 1,
+    "thread/started": 1,
+    "thread/status/changed": 2,
+    "turn/started": 1,
+    "item/started": 1,
+    "item/completed": 1,
+    "account/rateLimits/updated": 1,
+    "error": 1,
+    "turn/completed": 1
+  },
+  "runtime_errors": [
+    {
+      "observed_seconds": 101.583721,
+      "willRetry": false,
+      "message": "stream disconnected before completion: idle timeout waiting for SSE",
+      "code": "other",
+      "error": {
+        "message": "stream disconnected before completion: idle timeout waiting for SSE",
+        "codexErrorInfo": "other",
+        "additionalDetails": null,
+        "misalignment": null
+      },
+      "params": {
+        "error": {
+          "message": "stream disconnected before completion: idle timeout waiting for SSE",
+          "codexErrorInfo": "other",
+          "additionalDetails": null,
+          "misalignment": null
+        },
+        "willRetry": false,
+        "threadId": "01a1abf3-6db1-78f2-af5a-52267c6c6dd0",
+        "turnId": "01a1abf3-6dfa-70f3-89a1-88237d3ed26b"
+      }
+    }
+  ],
+  "runtime_reported_model": null,
+  "runtime_reported_effort": null,
+  "client_first_answer_delta_seconds": null,
+  "answer_stream_span_seconds": null,
+  "partial_answer": "",
+  "stderr_tail": [
+    "2026-11-05T13:43:40.075804Z  WARN codex_core_plugins::startup_sync: GitHub HTTP sync failed for curated plugin sync; falling back to export archive error=get curated plugins repository from [ENDPOINT] failed with status 403 Forbidden: {\"message\":\"API rate limit exceeded for 31.59.135.171. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"[ENDPOINT]\"}",
+    "backup_archive_api_url=\"[ENDPOINT]\"",
+    "2026-11-05T13:43:46.359515Z  WARN codex_core_plugins::manager: failed to warm featured plugin ids cache error=remote featured plugin request to [ENDPOINT] failed with status 401 Unauthorized: {\"detail\":\"Unauthorized\"}",
+    "2026-11-05T13:44:09.912770Z  WARN codex_core_plugins::manager: failed to sync curated plugins repo: git sync failed for curated plugin sync: no Git executable found in trusted installation directories; GitHub HTTP sync failed for curated plugin sync: get curated plugins repository from [ENDPOINT] failed with status 403 Forbidden: {\"message\":\"API rate limit exceeded for 31.59.135.171. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"[ENDPOINT]\"}",
+    "; export archive sync failed for curated plugin sync: failed to activate curated plugins repo at D:\\code\\visual\\wty_work\\experiments\\wildbench_20_four_models_20261103\\work\\private_runtime\\request_24c68406764a453fbde9b0fab4d04a18\\.tmp/plugins: 拒绝访问。 (os error 5)"
+  ],
+  "https_relay": {
+    "transport": "codex_loopback_python_verified_https_v1",
+    "bind_scope": "loopback_only",
+    "upstream_tls_verified": true,
+    "redirects_followed": false,
+    "requests": [
+      {
+        "sequence": 1,
+        "request_bytes": 31102,
+        "request_sha256": "314d81c128d1068017e5cad648d153bf2304e091dc0cdd6276317f5dbf372585",
+        "response_bytes": 21,
+        "response_sha256": "934ef8112b16d7a873c613c7d9aebabaec9fefa144e71b26024f64d81fe374e9",
+        "upstream_status": 200,
+        "completed": false
+      }
+    ]
+  },
+  "error": "Turn failed: {\"message\": \"stream disconnected before completion: idle timeout waiting for SSE\", \"codexErrorInfo\": \"other\", \"additionalDetails\": null, \"misalignment\": null}",
+  "error_type": "RuntimeError",
+  "retryable": true,
+  "batch_fatal": false,
+  "finished_at": "2026-11-05T13:45:21.668244+00:00",
+  "wall_seconds": 102.528222,
+  "answer_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "selected_attempt_id": "wild_014__sol_high__r2__a01"
+}

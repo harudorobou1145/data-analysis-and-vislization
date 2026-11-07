@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6a84a95e6d0654f769b19da8__sol_ultra",
+  "task_id": "6a84a95e6d0654f769b19da8",
+  "condition": "sol_ultra",
+  "request_kind": "generation",
+  "attempt_id": "6a84a95e6d0654f769b19da8__sol_ultra__a01",
+  "started_at": "2026-11-06T08:50:25.574505+00:00",
+  "status": "completed",
+  "prompt_hash": "240e2249428006b8f1bb0744799c579d6e39c392c7fac73c20563c73139706fb",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "9389c3d7-b24c-4ad6-af8c-542105df439b",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6a84a95e6d0654f769b19da8__sol_ultra",
+      "attempt_id": "6a84a95e6d0654f769b19da8__sol_ultra__a01",
+      "request_kind": "generation",
+      "task_id": "6a84a95e6d0654f769b19da8"
+    },
+    "started_at": "2026-11-06T08:50:25.576071+00:00",
+    "model_requested": "gpt-6.1-sol",
+    "effort_requested": "ultra",
+    "prompt": "Based on the positioning of the players and officials around the basket, if that phase of play was a free throw, which team has the ball and has it already been released?",
+    "prompt_hash": "240e2249428006b8f1bb0744799c579d6e39c392c7fac73c20563c73139706fb",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "The team in red appears to be taking the free throw, and the ball has already been released toward the basket.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a84a95e6d0654f769b19da8.png",
+        "sha256": "6aca08adfce2ff6b494b14750f46e171d78d62d2f43ab3948d1b4cc97a279fea",
+        "bytes": 649152
+      }
+    ],
+    "effort_ui_requested": "ultra",
+    "effort_wire_expected": "xhigh",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Maximum reasoning with automatic task delegation",
+    "thread_id": "01a1b00d-5530-7ed2-b841-07a4bc84e874",
+    "model_configured": "gpt-6.1-sol",
+    "effort_configured": "ultra",
+    "instruction_sources": [],
+    "turn_id": "01a1b00d-559d-7242-ace7-40a4700c405d",
+    "client_elapsed_seconds": 29.026022,
+    "turn_status": "completed",
+    "elapsed_seconds": 28.975,
+    "wire_efforts_observed": [
+      "xhigh"
+    ],
+    "token_usage": {
+      "totalTokens": 11503,
+      "inputTokens": 10745,
+      "cachedInputTokens": 4096,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 758,
+      "reasoningOutputTokens": 729
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 28.806259,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 4,
+      "item/completed": 4,
+      "item/agentMessage/delta": 23,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1b00d-55c9-7fb1-845f-a9ea2ec306df",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "Based on the positioning of the players and officials around the basket, if that phase of play was a free throw, which team has the ball and has it already been released?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6a84a95e6d0654f769b19da8.png"
+          }
+        ],
+        "startedAtMs": 1793955026380,
+        "completedAtMs": 1793955026380
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_057060ddf7a3bac9016aed94ee138887d0b9d87e3f9b0f1631",
+        "text": "The team in red appears to be taking the free throw, and the ball has already been released toward the basket.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793955055119,
+        "completedAtMs": 1793955055239
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 896986,
+          "request_sha256": "5b57a0c160965ab1acee33884ce50cfb47aeda6782c21143a8090c41eeffadea",
+          "response_bytes": 186402,
+          "response_sha256": "5e538a439c98460dd53212b648c337187a4acd484ac087122082c3b850f48040",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 28.904138
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6.1-sol",
+        "reasoning": {
+          "effort": "xhigh",
+          "context": "all_turns"
+        },
+        "request_sha256": "5b57a0c160965ab1acee33884ce50cfb47aeda6782c21143a8090c41eeffadea",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "dedf1f1924f4333716fff5ede4113d80da0f69763328023c97ebf056e78fce2c"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "6aca08adfce2ff6b494b14750f46e171d78d62d2f43ab3948d1b4cc97a279fea",
+            "bytes": 649152,
+            "width": 800,
+            "height": 483,
+            "format": "PNG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:50:59.328139+00:00",
+    "total_client_seconds": 33.749474,
+    "answer_hash": "66f6985ef330b7ebb59b3d45b59e2e4b1519339be8fbeb48005dbb28dee7b1bf"
+  },
+  "answer": "The team in red appears to be taking the free throw, and the ball has already been released toward the basket.",
+  "answer_hash": "66f6985ef330b7ebb59b3d45b59e2e4b1519339be8fbeb48005dbb28dee7b1bf",
+  "image_sha256": "6aca08adfce2ff6b494b14750f46e171d78d62d2f43ab3948d1b4cc97a279fea",
+  "model": "gpt-6.1-sol",
+  "effort": "ultra",
+  "finished_at": "2026-11-06T08:50:59.329206+00:00"
+}

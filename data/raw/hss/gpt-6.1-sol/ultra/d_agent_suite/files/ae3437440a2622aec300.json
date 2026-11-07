@@ -1,0 +1,193 @@
+{
+  "experiment_id": "hss20_gpt4_20261106",
+  "manifest_hash": "761cf20cfc96bcbf5d040039bb6df409ae07e91fb6969663ef1956b9766d6e32",
+  "run_id": "6aa4b843d42f7899b8cbf323__sol_ultra",
+  "task_id": "6aa4b843d42f7899b8cbf323",
+  "condition": "sol_ultra",
+  "request_kind": "generation",
+  "attempt_id": "6aa4b843d42f7899b8cbf323__sol_ultra__a01",
+  "started_at": "2026-11-06T08:42:09.081577+00:00",
+  "status": "completed",
+  "prompt_hash": "984c993107197d9f32475f03754a5e398bc55ae1bad04c256405d9d014b621b4",
+  "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+  "runtime": {
+    "request_id": "940cb830-992e-4848-b4bb-74d22c6ea474",
+    "identity": {
+      "experiment_id": "hss20_gpt4_20261106",
+      "run_id": "6aa4b843d42f7899b8cbf323__sol_ultra",
+      "attempt_id": "6aa4b843d42f7899b8cbf323__sol_ultra__a01",
+      "request_kind": "generation",
+      "task_id": "6aa4b843d42f7899b8cbf323"
+    },
+    "started_at": "2026-11-06T08:42:09.082637+00:00",
+    "model_requested": "gpt-6.1-sol",
+    "effort_requested": "ultra",
+    "prompt": "Why is the man who is furthest right in the frame, wearing a blue long-sleeved shirt and a hat, just to the right of the video camera, covering his mouth with both hands? And why is the man to the left of him, wearing a blue jacket with his hand raised, and why he is staring at the man in the hat?",
+    "prompt_hash": "984c993107197d9f32475f03754a5e398bc55ae1bad04c256405d9d014b621b4",
+    "system": "Answer the user question using the supplied original image. Follow the requested language and constraints. Use only the current request, image, and general knowledge. Do not use tools, browse, execute code, access other files, delegate, or spawn agents. Provide only the final answer. Do not identify your model or reasoning configuration.",
+    "system_hash": "f4c96928e7fb0496de804d5668119f611ca11d2eea72bcdc92c26999b95ae01c",
+    "prior_messages": 0,
+    "status": "completed",
+    "ttft_seconds": null,
+    "tpot_seconds": null,
+    "answer": "The man in the hat has his hands near his mouth, but the image doesn’t establish why—he could be covering a cough or resting his hands against his face.\n\nThe man in the blue jacket is likely raising his hand for a vote, since many others are doing the same. He appears to be looking toward the man in the hat, but a still image can’t tell us why or whether he is staring.",
+    "tool_budget": 200,
+    "framework": "codex_app_server",
+    "images": [
+      {
+        "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6aa4b843d42f7899b8cbf323.jpg",
+        "sha256": "ca6a32aa6020f5168ac4544926a0b6590efe8879fbba06b260969d1568734a3f",
+        "bytes": 128474
+      }
+    ],
+    "effort_ui_requested": "ultra",
+    "effort_wire_expected": "xhigh",
+    "effort_mapping_revision": "codex_0166_sol_ultra_xhigh_without_delegation_v1",
+    "delegation_enabled": false,
+    "codex_client": "codex_vscode/0.166.0-alpha.6 (Windows 10.0.26200; x86_64) dumb (agent_bench_50; 1.0)",
+    "catalog_effort_description": "Maximum reasoning with automatic task delegation",
+    "thread_id": "01a1b005-c0eb-73d1-af56-26df115f2c65",
+    "model_configured": "gpt-6.1-sol",
+    "effort_configured": "ultra",
+    "instruction_sources": [],
+    "turn_id": "01a1b005-c131-74d1-b910-939e25226116",
+    "client_elapsed_seconds": 22.189403,
+    "turn_status": "completed",
+    "elapsed_seconds": 22.163,
+    "wire_efforts_observed": [
+      "xhigh"
+    ],
+    "token_usage": {
+      "totalTokens": 11577,
+      "inputTokens": 11111,
+      "cachedInputTokens": 4096,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 466,
+      "reasoningOutputTokens": 376
+    },
+    "tool_events": [],
+    "model_reroutes": [],
+    "runtime_warnings": [],
+    "runtime_errors": [],
+    "runtime_reported_model": null,
+    "runtime_reported_effort": null,
+    "observed_user_message_count": 1,
+    "client_first_answer_delta_seconds": 20.579026,
+    "tool_calls_trace": [],
+    "tool_call_count": 0,
+    "tool_budget_exhausted": false,
+    "notification_counts": {
+      "remoteControl/status/changed": 1,
+      "thread/started": 1,
+      "thread/status/changed": 2,
+      "turn/started": 1,
+      "item/started": 3,
+      "item/completed": 3,
+      "item/agentMessage/delta": 84,
+      "turn/moderationMetadata": 1,
+      "thread/tokenUsage/updated": 1,
+      "account/rateLimits/updated": 1,
+      "turn/completed": 1
+    },
+    "completed_items": [
+      {
+        "type": "userMessage",
+        "id": "01a1b005-c14e-7791-907e-efeab198b4e1",
+        "clientId": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "Why is the man who is furthest right in the frame, wearing a blue long-sleeved shirt and a hat, just to the right of the video camera, covering his mouth with both hands? And why is the man to the left of him, wearing a blue jacket with his hand raised, and why he is staring at the man in the hat?",
+            "text_elements": []
+          },
+          {
+            "type": "localImage",
+            "detail": null,
+            "path": "D:\\code\\visual\\wty_work\\experiments\\agent_bench_50_gpt4_20261106\\hss\\dataset\\media\\images\\6aa4b843d42f7899b8cbf323.jpg"
+          }
+        ],
+        "startedAtMs": 1793954529615,
+        "completedAtMs": 1793954529615
+      },
+      {
+        "type": "agentMessage",
+        "id": "msg_02742c70aad360e5016aed92f491c087d283b68d6b05e86807",
+        "text": "The man in the hat has his hands near his mouth, but the image doesn’t establish why—he could be covering a cough or resting his hands against his face.\n\nThe man in the blue jacket is likely raising his hand for a vote, since many others are doing the same. He appears to be looking toward the man in the hat, but a still image can’t tell us why or whether he is staring.",
+        "phase": "final_answer",
+        "memoryCitation": null,
+        "delivery": null,
+        "questions": null,
+        "startedAtMs": 1793954550154,
+        "completedAtMs": 1793954551697
+      }
+    ],
+    "https_relay": {
+      "transport": "codex_loopback_python_verified_https_v1",
+      "bind_scope": "loopback_only",
+      "upstream_tls_verified": true,
+      "redirects_followed": false,
+      "requests": [
+        {
+          "sequence": 1,
+          "request_bytes": 202879,
+          "request_sha256": "5a5c0768695088007558f092f491950f577ee7749afb52474f89abff4b843081",
+          "response_bytes": 186976,
+          "response_sha256": "df8cfaef6e69596eac7000035dc3ed5d30531ddb3eb28089e5068114e86ec61d",
+          "upstream_status": 200,
+          "completed": true,
+          "duration_seconds": 22.143067
+        }
+      ]
+    },
+    "wire_requests": [
+      {
+        "model": "gpt-6.1-sol",
+        "reasoning": {
+          "effort": "xhigh",
+          "context": "all_turns"
+        },
+        "request_sha256": "5a5c0768695088007558f092f491950f577ee7749afb52474f89abff4b843081",
+        "input_type_counts": {
+          "additional_tools": 1,
+          "namespace": 3,
+          "custom": 1,
+          "grammar": 1,
+          "function": 10,
+          "object": 13,
+          "string": 19,
+          "number": 4,
+          "boolean": 1,
+          "array": 4,
+          "message": 6,
+          "input_text": 10,
+          "input_image": 1
+        },
+        "image_payload_sha256": [
+          "6d609af398e1cc5298fa13907e55afa6eb2e57a5b3c544b1917a61b6c987fd41"
+        ],
+        "encoded_images": [
+          {
+            "detail": null,
+            "sha256": "ca6a32aa6020f5168ac4544926a0b6590efe8879fbba06b260969d1568734a3f",
+            "bytes": 128474,
+            "width": 1000,
+            "height": 667,
+            "format": "JPEG"
+          }
+        ],
+        "tool_definitions": 0,
+        "service_tier": null,
+        "upstream_forwarded": true
+      }
+    ],
+    "finished_at": "2026-11-06T08:42:31.881414+00:00",
+    "total_client_seconds": 22.798612,
+    "answer_hash": "f115d8076f15307e9697624cc13a7343537499a5b9fedcb925451ae53e1235ad"
+  },
+  "answer": "The man in the hat has his hands near his mouth, but the image doesn’t establish why—he could be covering a cough or resting his hands against his face.\n\nThe man in the blue jacket is likely raising his hand for a vote, since many others are doing the same. He appears to be looking toward the man in the hat, but a still image can’t tell us why or whether he is staring.",
+  "answer_hash": "f115d8076f15307e9697624cc13a7343537499a5b9fedcb925451ae53e1235ad",
+  "image_sha256": "ca6a32aa6020f5168ac4544926a0b6590efe8879fbba06b260969d1568734a3f",
+  "model": "gpt-6.1-sol",
+  "effort": "ultra",
+  "finished_at": "2026-11-06T08:42:31.882424+00:00"
+}

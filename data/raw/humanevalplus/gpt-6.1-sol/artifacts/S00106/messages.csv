@@ -1,0 +1,30 @@
+run_id,message_id,turn_id,role,content,timestamp,message_type
+exp_38cbc1b6bbc0176d14d023d8_28ed38978831,prompt,1,user,"Complete solution.py according to its function specification. Preserve its entry point and required imports. Return the complete source.
+
+
+TOOLS MODE: solution.py is in the isolated /workspace container. Use ONLY the codedepth_workspace MCP tools to read files, write code, and run Python/pytest checks. Tool file paths are relative POSIX paths such as solution.py. The host current directory is not your workspace. Preserve solution.py as the final full source file. You may create your own temporary tests; official hidden tests are unavailable. Do not merely return code: use write_file or a container command to save your changes, then explain your result.
+",,task_prompt
+exp_38cbc1b6bbc0176d14d023d8_28ed38978831,item_0,1,assistant,"I’ll read `solution.py`, implement the function, and check it with focused tests before returning the full source.
+",2026-10-31T15:55:39.843242+00:00,agent_message
+exp_38cbc1b6bbc0176d14d023d8_28ed38978831,item_4,1,assistant,"Saved `solution.py` with the entry point preserved. All 14 local checks passed, including the specification examples. Hidden tests were unavailable.
+
+```python
+def check_dict_case(dict):
+    """"""
+    Given a dictionary, return True if all keys are strings in lower
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({""a"":""apple"", ""b"":""banana""}) should return True.
+    check_dict_case({""a"":""apple"", ""A"":""banana"", ""B"":""banana""}) should return False.
+    check_dict_case({""a"":""apple"", 8:""banana"", ""a"":""apple""}) should return False.
+    check_dict_case({""Name"":""John"", ""Age"":""36"", ""City"":""Houston""}) should return False.
+    check_dict_case({""STATE"":""NC"", ""ZIP"":""12345"" }) should return True.
+    """"""
+    if not dict or not all(isinstance(key, str) for key in dict):
+        return False
+
+    return all(key.islower() for key in dict) or all(
+        key.isupper() for key in dict
+    )
+```",2026-10-31T15:55:58.274494+00:00,agent_message

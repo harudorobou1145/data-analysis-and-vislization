@@ -1,0 +1,47 @@
+{
+  "created_at": "2026-11-03T05:43:58.461849+00:00",
+  "experiment_id": "subjective_luna_high_60_20261103",
+  "supervisor_pid": 7612,
+  "manifest_file_sha256": "8f8adff364435f24b3b06ec0af3499100240a15ad665300110e8356c5ce6b879",
+  "policy_deviation": "Original policy permits manual restart only. This supervisor adds at most five automatic restarts in total, only after fresh local-relay URLError failures with no upstream response or completed upstream HTTP 503 responses with no generated output or usage. Frozen requests and scoring are unchanged.",
+  "supervisor_script_sha256": "b652a6f666a89ed05b39f865e221f87a330166f86276ab975744b73400c43abc",
+  "preflight_run_id": "writing_18__high__r1",
+  "initial_reason": {
+    "reason": null,
+    "halted": null,
+    "stage": null,
+    "updated_at": null
+  },
+  "cooldown_seconds": [
+    30,
+    60,
+    120,
+    240,
+    300
+  ],
+  "max_restarts": 5,
+  "attempts": [
+    {
+      "cycle": 0,
+      "started_at": "2026-11-03T05:43:58.465575+00:00",
+      "process_id": 44880,
+      "phase": "preflight",
+      "run_id": "writing_18__high__r1",
+      "exit_code": 0,
+      "finished_at": "2026-11-03T05:44:31.427131+00:00"
+    },
+    {
+      "cycle": 0,
+      "started_at": "2026-11-03T05:44:31.432413+00:00",
+      "process_id": 30800,
+      "phase": "full",
+      "run_id": null,
+      "exit_code": 2,
+      "finished_at": "2026-11-03T05:50:19.712756+00:00"
+    }
+  ],
+  "status": "stopped",
+  "updated_at": "2026-11-03T05:50:19.888541+00:00",
+  "preflight_verified_at": "2026-11-03T05:44:31.429415+00:00",
+  "last_reason": "No fresh eligible URLError or upstream 503 failure; no automatic retry"
+}

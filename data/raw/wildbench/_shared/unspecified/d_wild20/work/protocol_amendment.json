@@ -1,0 +1,23 @@
+{
+  "created_at": "2026-11-05T12:32:55.540958+00:00",
+  "previous_experiment_id": "wildbench_20_four_conditions_20261105",
+  "previous_manifest_hash": "ddc632da953d50dfd914cebbec0a323875a29b820c618efc462a6678a4ab2c0e",
+  "new_experiment_id": "wildbench_20_four_conditions_20261105_v2",
+  "reason": "Windows legacy MAX_PATH caused runtime-directory cleanup to fail after completed judge responses. Use an extended-length spelling of the same verified cleanup target.",
+  "changed_files": [
+    {
+      "path": "script/runtime_directory.py",
+      "before_sha256": "705a0eb7c211f7ad4275d3db434c3d9ba71d9cb7334a1afd78f67a6e760b76bf",
+      "after_sha256": "698d599d9c962bdb097147593236f3c2b930b54014a98bb59962f554df8b2f37"
+    },
+    {
+      "path": "script/test_runtime_directory.py",
+      "before_sha256": "ebd9216d1c7aef400be4013fbbd7c129ac71460d04432cb64e92f7dc9026ee73",
+      "after_sha256": "7952a120a2e8b17e0ff8b86e10b7f570b22e4d0011b157cb33851fa765f2ddcd"
+    }
+  ],
+  "unchanged": "Tasks, prompts, model/effort settings, scoring rubric, transport and request isolation.",
+  "prior_results_reused": false,
+  "prior_smoke_archive": "work/history/cleanup_error_smoke_20261105/result",
+  "regression_validation": "53 offline tests passed, including a real nested path over 300 characters."
+}

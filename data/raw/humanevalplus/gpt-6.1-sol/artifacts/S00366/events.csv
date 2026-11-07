@@ -1,0 +1,51 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error,tool_server,tool_input,tool_output,behavior_category,is_test_execution,measurement_source
+max100_b65a670c3cfa9fea932be48a_bf7c70df67,1,2026-11-01T08:20:02.741544+00:00,0.5361858000005668,thread.started,,,,,,,,,,,,,,
+max100_b65a670c3cfa9fea932be48a_bf7c70df67,2,2026-11-01T08:20:02.767599+00:00,0.5622472000004564,turn.started,,,,,,,,,,,,,,
+max100_b65a670c3cfa9fea932be48a_bf7c70df67,3,2026-11-01T08:20:06.902567+00:00,4.697213600000396,item.started,item_0,mcp_tool_call,read_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py""}",,file_read,False,native_item
+max100_b65a670c3cfa9fea932be48a_bf7c70df67,4,2026-11-01T08:20:07.243866+00:00,5.038512100000844,item.completed,item_0,mcp_tool_call,read_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""content\"": \""\\n\\ndef truncate_number(number: float) -> float:\\n    \\\""\\\""\\\"" Given a positive floating point number, it can be decomposed into\\n    and integer part (largest integer smaller than given number) and decimals\\n    (leftover part always smaller than 1).\\n\\n    Return the decimal part of the number.\\n    >>> truncate_number(3.5)\\n    0.5\\n    \\\""\\\""\\\""\\n    pass\\n\""}""}], ""structured_content"": null}",file_read,False,workspace_tool_result
+max100_b65a670c3cfa9fea932be48a_bf7c70df67,5,2026-11-01T08:20:17.911122+00:00,15.705769600000167,item.started,item_1,mcp_tool_call,write_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def truncate_number(number: float) -> float:\n    \""\""\"" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \""\""\""\n    return number % 1.0\n""}",,file_write,False,native_item
+max100_b65a670c3cfa9fea932be48a_bf7c70df67,6,2026-11-01T08:20:18.239809+00:00,16.03445080000074,item.completed,item_1,mcp_tool_call,write_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def truncate_number(number: float) -> float:\n    \""\""\"" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \""\""\""\n    return number % 1.0\n""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""before_sha256\"": \""f13c5ba09213ac2bc3be3de02d40eb3d9058616b4172ef92718719b5bbe59cef\"", \""after_sha256\"": \""1be6b55d96d63b52f341043e2a0cbc7b2f6f53dc2ee0079c3a77d49def9004fc\"", \""changed\"": true}""}], ""structured_content"": null}",file_write,False,workspace_tool_result
+max100_b65a670c3cfa9fea932be48a_bf7c70df67,7,2026-11-01T08:20:23.550621+00:00,21.345262800000455,item.started,item_2,mcp_tool_call,run_command,in_progress,,,"python -m doctest -v solution.py && python - <<'PY'
+import math
+from solution import truncate_number
+
+cases = [
+    (3.5, 0.5),
+    (1.0, 0.0),
+    (0.125, 0.125),
+    (123.875, 0.875),
+    (12.34, 0.34),
+    (0.0, 0.0),
+    (1e-12, 1e-12),
+    (1000000000000.5, 0.5),
+]
+for number, expected in cases:
+    result = truncate_number(number)
+    assert isinstance(result, float)
+    assert 0.0 <= result < 1.0
+    assert math.isclose(result, expected, rel_tol=1e-12, abs_tol=1e-15), (number, result, expected)
+print(f'{len(cases)} additional checks passed.')
+PY",,codedepth_workspace,"{""command"": ""python -m doctest -v solution.py && python - <<'PY'\nimport math\nfrom solution import truncate_number\n\ncases = [\n    (3.5, 0.5),\n    (1.0, 0.0),\n    (0.125, 0.125),\n    (123.875, 0.875),\n    (12.34, 0.34),\n    (0.0, 0.0),\n    (1e-12, 1e-12),\n    (1000000000000.5, 0.5),\n]\nfor number, expected in cases:\n    result = truncate_number(number)\n    assert isinstance(result, float)\n    assert 0.0 <= result < 1.0\n    assert math.isclose(result, expected, rel_tol=1e-12, abs_tol=1e-15), (number, result, expected)\nprint(f'{len(cases)} additional checks passed.')\nPY"", ""timeout_seconds"": 30}",,command_execution,True,native_item
+max100_b65a670c3cfa9fea932be48a_bf7c70df67,8,2026-11-01T08:20:24.083556+00:00,21.878196900000148,item.completed,item_2,mcp_tool_call,run_command,completed,0,0.2027958959999978,"python -m doctest -v solution.py && python - <<'PY'
+import math
+from solution import truncate_number
+
+cases = [
+    (3.5, 0.5),
+    (1.0, 0.0),
+    (0.125, 0.125),
+    (123.875, 0.875),
+    (12.34, 0.34),
+    (0.0, 0.0),
+    (1e-12, 1e-12),
+    (1000000000000.5, 0.5),
+]
+for number, expected in cases:
+    result = truncate_number(number)
+    assert isinstance(result, float)
+    assert 0.0 <= result < 1.0
+    assert math.isclose(result, expected, rel_tol=1e-12, abs_tol=1e-15), (number, result, expected)
+print(f'{len(cases)} additional checks passed.')
+PY",,codedepth_workspace,"{""command"": ""python -m doctest -v solution.py && python - <<'PY'\nimport math\nfrom solution import truncate_number\n\ncases = [\n    (3.5, 0.5),\n    (1.0, 0.0),\n    (0.125, 0.125),\n    (123.875, 0.875),\n    (12.34, 0.34),\n    (0.0, 0.0),\n    (1e-12, 1e-12),\n    (1000000000000.5, 0.5),\n]\nfor number, expected in cases:\n    result = truncate_number(number)\n    assert isinstance(result, float)\n    assert 0.0 <= result < 1.0\n    assert math.isclose(result, expected, rel_tol=1e-12, abs_tol=1e-15), (number, result, expected)\nprint(f'{len(cases)} additional checks passed.')\nPY"", ""timeout_seconds"": 30}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python -m doctest -v solution.py && python - <<'PY'\\nimport math\\nfrom solution import truncate_number\\n\\ncases = [\\n    (3.5, 0.5),\\n    (1.0, 0.0),\\n    (0.125, 0.125),\\n    (123.875, 0.875),\\n    (12.34, 0.34),\\n    (0.0, 0.0),\\n    (1e-12, 1e-12),\\n    (1000000000000.5, 0.5),\\n]\\nfor number, expected in cases:\\n    result = truncate_number(number)\\n    assert isinstance(result, float)\\n    assert 0.0 <= result < 1.0\\n    assert math.isclose(result, expected, rel_tol=1e-12, abs_tol=1e-15), (number, result, expected)\\nprint(f'{len(cases)} additional checks passed.')\\nPY\"", \""exit_code\"": 0, \""stdout\"": \""Trying:\\n    truncate_number(3.5)\\nExpecting:\\n    0.5\\nok\\n1 items had no tests:\\n    solution\\n1 items passed all tests:\\n   1 tests in solution.truncate_number\\n1 tests in 2 items.\\n1 passed and 0 failed.\\nTest passed.\\n8 additional checks passed.\\n\"", \""stderr\"": \""\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.2027958959999978, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+max100_b65a670c3cfa9fea932be48a_bf7c70df67,9,2026-11-01T08:20:28.125219+00:00,25.91986690000067,item.completed,item_3,agent_message,,,,,,,,,,message,False,native_item
+max100_b65a670c3cfa9fea932be48a_bf7c70df67,10,2026-11-01T08:20:28.212452+00:00,26.007343800000854,turn.completed,,,,,,,,,,,,,,

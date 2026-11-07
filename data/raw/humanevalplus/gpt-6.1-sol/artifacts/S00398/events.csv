@@ -1,0 +1,54 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error,tool_server,tool_input,tool_output,behavior_category,is_test_execution,measurement_source
+max100_08bf78ac2f0b937a083a2a59_397a103ac8,1,2026-11-01T08:42:04.804499+00:00,0.8389871999997922,thread.started,,,,,,,,,,,,,,
+max100_08bf78ac2f0b937a083a2a59_397a103ac8,2,2026-11-01T08:42:04.927819+00:00,0.9623191000000588,turn.started,,,,,,,,,,,,,,
+max100_08bf78ac2f0b937a083a2a59_397a103ac8,3,2026-11-01T08:42:08.219086+00:00,4.253573199999664,item.completed,item_0,agent_message,,,,,,,,,,message,False,native_item
+max100_08bf78ac2f0b937a083a2a59_397a103ac8,4,2026-11-01T08:42:08.259383+00:00,4.293866900000467,item.started,item_1,mcp_tool_call,read_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py""}",,file_read,False,native_item
+max100_08bf78ac2f0b937a083a2a59_397a103ac8,5,2026-11-01T08:42:08.772013+00:00,4.806499700000131,item.completed,item_1,mcp_tool_call,read_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""content\"": \""\\ndef select_words(s, n):\\n    \\\""\\\""\\\""Given a string s and a natural number n, you have been tasked to implement \\n    a function that returns a list of all words from string s that contain exactly \\n    n consonants, in order these words appear in the string s.\\n    If the string s is empty then the function should return an empty list.\\n    Note: you may assume the input string contains only letters and spaces.\\n    Examples:\\n    select_words(\\\""Mary had a little lamb\\\"", 4) ==> [\\\""little\\\""]\\n    select_words(\\\""Mary had a little lamb\\\"", 3) ==> [\\\""Mary\\\"", \\\""lamb\\\""]\\n    select_words(\\\""simple white space\\\"", 2) ==> []\\n    select_words(\\\""Hello world\\\"", 4) ==> [\\\""world\\\""]\\n    select_words(\\\""Uncle sam\\\"", 3) ==> [\\\""Uncle\\\""]\\n    \\\""\\\""\\\""\\n    pass\\n\""}""}], ""structured_content"": null}",file_read,False,workspace_tool_result
+max100_08bf78ac2f0b937a083a2a59_397a103ac8,6,2026-11-01T08:42:17.114596+00:00,13.149086000000352,item.started,item_2,mcp_tool_call,write_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def select_words(s, n):\n    \""\""\""Given a string s and a natural number n, you have been tasked to implement\n    a function that returns a list of all words from string s that contain exactly\n    n consonants, in order these words appear in the string s.\n    If the string s is empty then the function should return an empty list.\n    Note: you may assume the input string contains only letters and spaces.\n    Examples:\n    select_words(\""Mary had a little lamb\"", 4) ==> [\""little\""]\n    select_words(\""Mary had a little lamb\"", 3) ==> [\""Mary\"", \""lamb\""]\n    select_words(\""simple white space\"", 2) ==> []\n    select_words(\""Hello world\"", 4) ==> [\""world\""]\n    select_words(\""Uncle sam\"", 3) ==> [\""Uncle\""]\n    \""\""\""\n    return [\n        word\n        for word in s.split()\n        if sum(letter.lower() not in \""aeiou\"" for letter in word) == n\n    ]\n""}",,file_write,False,native_item
+max100_08bf78ac2f0b937a083a2a59_397a103ac8,7,2026-11-01T08:42:17.635023+00:00,13.669509199999993,item.completed,item_2,mcp_tool_call,write_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def select_words(s, n):\n    \""\""\""Given a string s and a natural number n, you have been tasked to implement\n    a function that returns a list of all words from string s that contain exactly\n    n consonants, in order these words appear in the string s.\n    If the string s is empty then the function should return an empty list.\n    Note: you may assume the input string contains only letters and spaces.\n    Examples:\n    select_words(\""Mary had a little lamb\"", 4) ==> [\""little\""]\n    select_words(\""Mary had a little lamb\"", 3) ==> [\""Mary\"", \""lamb\""]\n    select_words(\""simple white space\"", 2) ==> []\n    select_words(\""Hello world\"", 4) ==> [\""world\""]\n    select_words(\""Uncle sam\"", 3) ==> [\""Uncle\""]\n    \""\""\""\n    return [\n        word\n        for word in s.split()\n        if sum(letter.lower() not in \""aeiou\"" for letter in word) == n\n    ]\n""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""before_sha256\"": \""7188270ce6ae778c35694239b1cf464c12f998329511da25c53faa4e4a63765d\"", \""after_sha256\"": \""3e6cd6dd92f9f706d73d05a0708c193606f3f9b289127c580ff4f51937cda096\"", \""changed\"": true}""}], ""structured_content"": null}",file_write,False,workspace_tool_result
+max100_08bf78ac2f0b937a083a2a59_397a103ac8,8,2026-11-01T08:42:25.082901+00:00,21.117391100000532,item.started,item_3,mcp_tool_call,run_command,in_progress,,,"python - <<'PY'
+from solution import select_words
+
+cases = [
+    (""Mary had a little lamb"", 4, [""little""]),
+    (""Mary had a little lamb"", 3, [""Mary"", ""lamb""]),
+    (""simple white space"", 2, []),
+    (""Hello world"", 4, [""world""]),
+    (""Uncle sam"", 3, [""Uncle""]),
+    ("""", 0, []),
+    (""   "", 2, []),
+    (""AEIOU a I"", 0, [""AEIOU"", ""a"", ""I""]),
+    (""  SKY   sky  Why "", 3, [""SKY"", ""sky"", ""Why""]),
+    (""cat cat dog"", 2, [""cat"", ""cat"", ""dog""]),
+    (""ab Cde fG"", 1, [""ab""]),
+    (""a b"", 10, []),
+]
+for s, n, expected in cases:
+    actual = select_words(s, n)
+    assert actual == expected, (s, n, actual, expected)
+print(f""Passed {len(cases)} test cases."")
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nfrom solution import select_words\n\ncases = [\n    (\""Mary had a little lamb\"", 4, [\""little\""]),\n    (\""Mary had a little lamb\"", 3, [\""Mary\"", \""lamb\""]),\n    (\""simple white space\"", 2, []),\n    (\""Hello world\"", 4, [\""world\""]),\n    (\""Uncle sam\"", 3, [\""Uncle\""]),\n    (\""\"", 0, []),\n    (\""   \"", 2, []),\n    (\""AEIOU a I\"", 0, [\""AEIOU\"", \""a\"", \""I\""]),\n    (\""  SKY   sky  Why \"", 3, [\""SKY\"", \""sky\"", \""Why\""]),\n    (\""cat cat dog\"", 2, [\""cat\"", \""cat\"", \""dog\""]),\n    (\""ab Cde fG\"", 1, [\""ab\""]),\n    (\""a b\"", 10, []),\n]\nfor s, n, expected in cases:\n    actual = select_words(s, n)\n    assert actual == expected, (s, n, actual, expected)\nprint(f\""Passed {len(cases)} test cases.\"")\nPY""}",,command_execution,True,native_item
+max100_08bf78ac2f0b937a083a2a59_397a103ac8,9,2026-11-01T08:42:25.791216+00:00,21.82570450000003,item.completed,item_3,mcp_tool_call,run_command,completed,0,0.0627189689998886,"python - <<'PY'
+from solution import select_words
+
+cases = [
+    (""Mary had a little lamb"", 4, [""little""]),
+    (""Mary had a little lamb"", 3, [""Mary"", ""lamb""]),
+    (""simple white space"", 2, []),
+    (""Hello world"", 4, [""world""]),
+    (""Uncle sam"", 3, [""Uncle""]),
+    ("""", 0, []),
+    (""   "", 2, []),
+    (""AEIOU a I"", 0, [""AEIOU"", ""a"", ""I""]),
+    (""  SKY   sky  Why "", 3, [""SKY"", ""sky"", ""Why""]),
+    (""cat cat dog"", 2, [""cat"", ""cat"", ""dog""]),
+    (""ab Cde fG"", 1, [""ab""]),
+    (""a b"", 10, []),
+]
+for s, n, expected in cases:
+    actual = select_words(s, n)
+    assert actual == expected, (s, n, actual, expected)
+print(f""Passed {len(cases)} test cases."")
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nfrom solution import select_words\n\ncases = [\n    (\""Mary had a little lamb\"", 4, [\""little\""]),\n    (\""Mary had a little lamb\"", 3, [\""Mary\"", \""lamb\""]),\n    (\""simple white space\"", 2, []),\n    (\""Hello world\"", 4, [\""world\""]),\n    (\""Uncle sam\"", 3, [\""Uncle\""]),\n    (\""\"", 0, []),\n    (\""   \"", 2, []),\n    (\""AEIOU a I\"", 0, [\""AEIOU\"", \""a\"", \""I\""]),\n    (\""  SKY   sky  Why \"", 3, [\""SKY\"", \""sky\"", \""Why\""]),\n    (\""cat cat dog\"", 2, [\""cat\"", \""cat\"", \""dog\""]),\n    (\""ab Cde fG\"", 1, [\""ab\""]),\n    (\""a b\"", 10, []),\n]\nfor s, n, expected in cases:\n    actual = select_words(s, n)\n    assert actual == expected, (s, n, actual, expected)\nprint(f\""Passed {len(cases)} test cases.\"")\nPY""}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python - <<'PY'\\nfrom solution import select_words\\n\\ncases = [\\n    (\\\""Mary had a little lamb\\\"", 4, [\\\""little\\\""]),\\n    (\\\""Mary had a little lamb\\\"", 3, [\\\""Mary\\\"", \\\""lamb\\\""]),\\n    (\\\""simple white space\\\"", 2, []),\\n    (\\\""Hello world\\\"", 4, [\\\""world\\\""]),\\n    (\\\""Uncle sam\\\"", 3, [\\\""Uncle\\\""]),\\n    (\\\""\\\"", 0, []),\\n    (\\\""   \\\"", 2, []),\\n    (\\\""AEIOU a I\\\"", 0, [\\\""AEIOU\\\"", \\\""a\\\"", \\\""I\\\""]),\\n    (\\\""  SKY   sky  Why \\\"", 3, [\\\""SKY\\\"", \\\""sky\\\"", \\\""Why\\\""]),\\n    (\\\""cat cat dog\\\"", 2, [\\\""cat\\\"", \\\""cat\\\"", \\\""dog\\\""]),\\n    (\\\""ab Cde fG\\\"", 1, [\\\""ab\\\""]),\\n    (\\\""a b\\\"", 10, []),\\n]\\nfor s, n, expected in cases:\\n    actual = select_words(s, n)\\n    assert actual == expected, (s, n, actual, expected)\\nprint(f\\\""Passed {len(cases)} test cases.\\\"")\\nPY\"", \""exit_code\"": 0, \""stdout\"": \""Passed 12 test cases.\\n\"", \""stderr\"": \""\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.0627189689998886, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+max100_08bf78ac2f0b937a083a2a59_397a103ac8,10,2026-11-01T08:42:32.729011+00:00,28.763498199999958,item.completed,item_4,agent_message,,,,,,,,,,message,False,native_item
+max100_08bf78ac2f0b937a083a2a59_397a103ac8,11,2026-11-01T08:42:32.764241+00:00,28.798728400000073,turn.completed,,,,,,,,,,,,,,

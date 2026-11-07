@@ -1,0 +1,10 @@
+Official independent evaluation: base=pass, plus=fail. Both must pass. Additional repair round 1 of at most 10. solution.py contains your failed candidate from the earlier experiment. Continue improving that implementation, do not restart from the starter. Your previous full API conversation is preserved. The Docker workspace was reconstructed with only solution.py; old scratch files may be missing. Use only read_file, write_file, run_command in the isolated workspace, write the improved solution.py, preserve its entry point, and run your own checks. Your repair conversation and workspace will persist between these rounds. Hidden tests and reference solutions are unavailable. Public specification:
+
+
+def string_sequence(n: int) -> str:
+    """ Return a string containing space-delimited numbers starting from 0 upto n inclusive.
+    >>> string_sequence(0)
+    '0'
+    >>> string_sequence(5)
+    '0 1 2 3 4 5'
+    """

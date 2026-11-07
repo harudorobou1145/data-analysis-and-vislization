@@ -1,0 +1,64 @@
+run_id,message_id,turn_id,role,content,timestamp,message_type
+max_EP032_9013c251dbde,prompt,1,user,"Complete solution.py according to its function specification. Preserve its entry point and required imports. Return the complete source.
+
+
+TOOLS MODE: solution.py is in the isolated /workspace container. Use ONLY the codedepth_workspace MCP tools to read files, write code, and run Python/pytest checks. Tool file paths are relative POSIX paths such as solution.py. The host current directory is not your workspace. Preserve solution.py as the final full source file. You may create your own temporary tests; official hidden tests are unavailable. Do not merely return code: use write_file or a container command to save your changes, then explain your result.
+",,task_prompt
+max_EP032_9013c251dbde,item_0,1,assistant,"I’ll read `solution.py`, complete the function, and run focused checks before returning the full source.
+",2026-11-01T01:48:41.155049+00:00,agent_message
+max_EP032_9013c251dbde,item_3,1,assistant,"The specification guarantees an odd-degree polynomial, so I’ll expand an interval until its endpoints bracket a root, then use bisection. Exact endpoint checks preserve the documented result, and stopping at floating-point precision prevents the search from stalling.
+",2026-11-01T01:49:37.747982+00:00,agent_message
+max_EP032_9013c251dbde,item_6,1,assistant,"Saved `solution.py` with interval expansion and bisection, preserving the entry points and import. Passed 2 doctests, 13 focused cases, and 2,000 randomized checks. Hidden tests were unavailable.
+
+```python
+import math
+
+
+def poly(xs: list, x: float):
+    """"""
+    Evaluates polynomial with coefficients xs at point x.
+    return xs[0] + xs[1] * x + xs[1] * x^2 + .... xs[n] * x^n
+    """"""
+    return sum([coeff * math.pow(x, i) for i, coeff in enumerate(xs)])
+
+
+def find_zero(xs: list):
+    """""" xs are coefficients of a polynomial.
+    find_zero find x such that poly(x) = 0.
+    find_zero returns only only zero point, even if there are many.
+    Moreover, find_zero only takes list xs having even number of coefficients
+    and largest non zero coefficient as it guarantees
+    a solution.
+    >>> round(find_zero([1, 2]), 2) # f(x) = 1 + 2x
+    -0.5
+    >>> round(find_zero([-6, 11, -6, 1]), 2) # (x - 1) * (x - 2) * (x - 3) = -6 + 11x - 6x^2 + x^3
+    1.0
+    """"""
+    left, right = -1.0, 1.0
+    left_value, right_value = poly(xs, left), poly(xs, right)
+
+    # An odd-degree polynomial eventually has opposite signs at the endpoints.
+    while True:
+        if left_value == 0:
+            return left
+        if right_value == 0:
+            return right
+        if (left_value < 0) != (right_value < 0):
+            break
+        left *= 2.0
+        right *= 2.0
+        left_value, right_value = poly(xs, left), poly(xs, right)
+
+    while True:
+        middle = left / 2.0 + right / 2.0
+        # Stop when there is no representable midpoint between the endpoints.
+        if middle == left or middle == right:
+            return left if abs(left_value) <= abs(right_value) else right
+        middle_value = poly(xs, middle)
+        if middle_value == 0:
+            return middle
+        if (middle_value < 0) == (left_value < 0):
+            left, left_value = middle, middle_value
+        else:
+            right, right_value = middle, middle_value
+```",2026-11-01T01:50:20.299540+00:00,agent_message

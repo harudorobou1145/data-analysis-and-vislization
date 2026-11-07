@@ -1,0 +1,32 @@
+run_id,event_index,timestamp,relative_time_seconds,event_type,item_id,item_type,tool_name,status,exit_code,duration_seconds,command,error,tool_server,tool_input,tool_output,behavior_category,is_test_execution,measurement_source
+exp_f3a0eaf552991ca998364242_8cfe225c80a9,1,2026-10-31T15:18:58.822542+00:00,0.435294600087218,thread.started,,,,,,,,,,,,,,
+exp_f3a0eaf552991ca998364242_8cfe225c80a9,2,2026-10-31T15:18:58.849040+00:00,0.46179480000864714,turn.started,,,,,,,,,,,,,,
+exp_f3a0eaf552991ca998364242_8cfe225c80a9,3,2026-10-31T15:19:02.944363+00:00,4.557120900019072,item.completed,item_0,agent_message,,,,,,,,,,message,False,native_item
+exp_f3a0eaf552991ca998364242_8cfe225c80a9,4,2026-10-31T15:19:02.945099+00:00,4.557850699988194,item.started,item_1,mcp_tool_call,read_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py""}",,file_read,False,native_item
+exp_f3a0eaf552991ca998364242_8cfe225c80a9,5,2026-10-31T15:19:03.279176+00:00,4.891929800040089,item.completed,item_1,mcp_tool_call,read_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""content\"": \""\\n\\ndef flip_case(string: str) -> str:\\n    \\\""\\\""\\\"" For a given string, flip lowercase characters to uppercase and uppercase to lowercase.\\n    >>> flip_case('Hello')\\n    'hELLO'\\n    \\\""\\\""\\\""\\n    pass\\n\""}""}], ""structured_content"": null}",file_read,False,workspace_tool_result
+exp_f3a0eaf552991ca998364242_8cfe225c80a9,6,2026-10-31T15:19:07.948936+00:00,9.561697600060143,item.started,item_2,mcp_tool_call,write_file,in_progress,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def flip_case(string: str) -> str:\n    \""\""\"" For a given string, flip lowercase characters to uppercase and uppercase to lowercase.\n    >>> flip_case('Hello')\n    'hELLO'\n    \""\""\""\n    return string.swapcase()\n""}",,file_write,False,native_item
+exp_f3a0eaf552991ca998364242_8cfe225c80a9,7,2026-10-31T15:19:08.272372+00:00,9.88512490002904,item.completed,item_2,mcp_tool_call,write_file,completed,,,,,codedepth_workspace,"{""path"": ""solution.py"", ""content"": ""def flip_case(string: str) -> str:\n    \""\""\"" For a given string, flip lowercase characters to uppercase and uppercase to lowercase.\n    >>> flip_case('Hello')\n    'hELLO'\n    \""\""\""\n    return string.swapcase()\n""}","{""content"": [{""type"": ""text"", ""text"": ""{\""path\"": \""solution.py\"", \""before_sha256\"": \""1b315ac6cb05db6a4dd088f3d3f20879ec0932c24a8260fa05bea36154921b81\"", \""after_sha256\"": \""34ef3c79537275efe1d2bea20ce52cbff38e3616e9cbc9197bb75b0d70429935\"", \""changed\"": true}""}], ""structured_content"": null}",file_write,False,workspace_tool_result
+exp_f3a0eaf552991ca998364242_8cfe225c80a9,8,2026-10-31T15:19:14.941153+00:00,16.553914500051178,item.started,item_3,mcp_tool_call,run_command,in_progress,,,"python - <<'PY'
+import doctest
+import solution
+
+result = doctest.testmod(solution)
+assert result.failed == 0
+cases = [('', ''), ('Hello', 'hELLO'), ('aBc XYZ', 'AbC xyz'), ('123 !?', '123 !?'), ('ÄéΩ', 'äÉω')]
+for value, expected in cases:
+    assert solution.flip_case(value) == expected, (value, expected)
+print(f'Passed {result.attempted} doctest and {len(cases)} explicit cases.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nimport doctest\nimport solution\n\nresult = doctest.testmod(solution)\nassert result.failed == 0\ncases = [('', ''), ('Hello', 'hELLO'), ('aBc XYZ', 'AbC xyz'), ('123 !?', '123 !?'), ('ÄéΩ', 'äÉω')]\nfor value, expected in cases:\n    assert solution.flip_case(value) == expected, (value, expected)\nprint(f'Passed {result.attempted} doctest and {len(cases)} explicit cases.')\nPY""}",,command_execution,True,native_item
+exp_f3a0eaf552991ca998364242_8cfe225c80a9,9,2026-10-31T15:19:15.447019+00:00,17.059771200059913,item.completed,item_3,mcp_tool_call,run_command,completed,0,0.1519643999999971,"python - <<'PY'
+import doctest
+import solution
+
+result = doctest.testmod(solution)
+assert result.failed == 0
+cases = [('', ''), ('Hello', 'hELLO'), ('aBc XYZ', 'AbC xyz'), ('123 !?', '123 !?'), ('ÄéΩ', 'äÉω')]
+for value, expected in cases:
+    assert solution.flip_case(value) == expected, (value, expected)
+print(f'Passed {result.attempted} doctest and {len(cases)} explicit cases.')
+PY",,codedepth_workspace,"{""command"": ""python - <<'PY'\nimport doctest\nimport solution\n\nresult = doctest.testmod(solution)\nassert result.failed == 0\ncases = [('', ''), ('Hello', 'hELLO'), ('aBc XYZ', 'AbC xyz'), ('123 !?', '123 !?'), ('ÄéΩ', 'äÉω')]\nfor value, expected in cases:\n    assert solution.flip_case(value) == expected, (value, expected)\nprint(f'Passed {result.attempted} doctest and {len(cases)} explicit cases.')\nPY""}","{""content"": [{""type"": ""text"", ""text"": ""{\""command\"": \""python - <<'PY'\\nimport doctest\\nimport solution\\n\\nresult = doctest.testmod(solution)\\nassert result.failed == 0\\ncases = [('', ''), ('Hello', 'hELLO'), ('aBc XYZ', 'AbC xyz'), ('123 !?', '123 !?'), ('ÄéΩ', 'äÉω')]\\nfor value, expected in cases:\\n    assert solution.flip_case(value) == expected, (value, expected)\\nprint(f'Passed {result.attempted} doctest and {len(cases)} explicit cases.')\\nPY\"", \""exit_code\"": 0, \""stdout\"": \""Passed 1 doctest and 5 explicit cases.\\n\"", \""stderr\"": \""\"", \""timed_out\"": false, \""output_truncated\"": false, \""duration_seconds\"": 0.1519643999999971, \""files_changed\"": []}""}], ""structured_content"": null}",command_execution,True,workspace_tool_result
+exp_f3a0eaf552991ca998364242_8cfe225c80a9,10,2026-10-31T15:19:19.537435+00:00,21.15019369998481,item.completed,item_4,agent_message,,,,,,,,,,message,False,native_item
+exp_f3a0eaf552991ca998364242_8cfe225c80a9,11,2026-10-31T15:19:19.569284+00:00,21.182037600083277,turn.completed,,,,,,,,,,,,,,
