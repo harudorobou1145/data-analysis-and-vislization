@@ -58,7 +58,7 @@
 
   var state = { exp: "model", metric: "status", onlyFailed: false, compare: "mh", task: null, run: null, tab: "tab-primary" };
   var charts = {};
-  var renderedRepair = false, renderedSubj = false, renderedLunads = false, renderedWb = false, renderedFlash = false, renderedRepairs = false;
+  var renderedRepair = false, renderedSubj = false, renderedLunads = false, renderedWb = false, renderedFlash = false;
   var pairedByTask = {};
 
   function isDark() { return document.documentElement.getAttribute("data-theme") === "dark"; }
@@ -117,7 +117,6 @@
     if (renderedLunads) renderLunads();
     if (renderedWb) renderWb();
     if (renderedFlash) renderFlash();
-    if (renderedRepairs) renderRepairs();
     renderModelCompare();
   }
 
@@ -675,6 +674,7 @@
     renderLunadsTime();
     renderLunadsOut();
     renderLunadsScatter();
+    renderRepairs();
   }
   function renderLunadsKpi() {
     var box = document.getElementById("lunadsKpi");
@@ -731,6 +731,7 @@
   }
   function resizeLunads() {
     ["chartLunadsSucc", "chartLunadsTime", "chartLunadsOut", "chartLunadsScatter"].forEach(function (id) { if (charts[id]) charts[id].resize(); });
+    resizeRepairs();
   }
 
   // ---------- WildBench 四组 ----------
@@ -1046,7 +1047,7 @@
   document.getElementById("onlyFailed").addEventListener("change", function (e) { state.onlyFailed = e.target.checked; renderMatrix(); });
   document.getElementById("diffCompare").addEventListener("change", function (e) { state.compare = e.target.value; renderDiffScatter(); });
 
-  var EXP_IDS = { model: "exp-model", coding: "exp-coding", lunads: "exp-lunads", repairs: "exp-repairs", subjective: "exp-subjective", wildbench: "exp-wildbench" };
+  var EXP_IDS = { model: "exp-model", coding: "exp-coding", lunads: "exp-lunads", subjective: "exp-subjective", wildbench: "exp-wildbench" };
   document.querySelectorAll(".exp-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
       document.querySelectorAll(".exp-btn").forEach(function (x) { x.classList.remove("active"); });
@@ -1066,10 +1067,6 @@
       if (state.exp === "wildbench") {
         if (!renderedWb) { renderedWb = true; renderWb(); }
         else setTimeout(resizeWb, 0);
-      }
-      if (state.exp === "repairs") {
-        if (!renderedRepairs) { renderedRepairs = true; renderRepairs(); }
-        else setTimeout(resizeRepairs, 0);
       }
       if (state.exp === "model") setTimeout(resizeModel, 0);
       if (state.exp === "coding") setTimeout(function () { resizePanel(state.tab); }, 0);

@@ -151,7 +151,6 @@
       <button class="exp-btn active" data-exp="model" type="button">模型对比</button>
       <button class="exp-btn" data-exp="coding" type="button">EvalPlus</button>
       <button class="exp-btn" data-exp="lunads" type="button">代码</button>
-      <button class="exp-btn" data-exp="repairs" type="button">修复</button>
       <button class="exp-btn" data-exp="subjective" type="button">主观评分</button>
       <button class="exp-btn" data-exp="wildbench" type="button">WildBench</button>
     </div>
@@ -306,6 +305,14 @@
         <div class="card"><h3>平均输出 Token</h3><p class="src">DeepSeek 输出更长；output 含 reasoning，勿重复相加</p><div class="chart" id="chartLunadsOut" style="height:300px"></div></div>
         <div class="card"><h3>每题配对：Luna vs DeepSeek 耗时</h3><p class="src">同题散点，颜色=benchmark；越靠近左下角越快</p><div class="chart" id="chartLunadsScatter" style="height:300px"></div></div>
       </div>
+
+      <section style="margin-top:26px">
+        <h2>失败题修复（Luna vs DeepSeek）</h2>
+        <p class="note">首轮失败题反复迭代（最多 10 轮）。共同失败 4 题（EP015 / EP032 / EP099 / EP132）可公平对比；Luna 独有 3 题（EP047 / EP116 / EP145）。High、每轮 600 秒；10 轮未解 = 右删失。</p>
+        <div class="kpi-grid" id="repairsKpi"></div>
+      </section>
+      <div class="legend-status" id="repairRepLegend"></div>
+      <div class="repair-grid" id="repairRepGrid"></div>
     </div>
 
     <div id="exp-wildbench" style="display:none">
@@ -322,16 +329,6 @@
         <div class="card"><h3>配对分差（vs Sol high）</h3><p class="src">同题配对均分差；负 = 低于 Sol high（n=20 题）</p><div class="chart" id="chartWbForest" style="height:300px"></div></div>
         <div class="card"><h3>20 题 × 5 配置 质量矩阵</h3><p class="src">题级均分（同题两次取平均）</p><div class="chart" id="chartWbMatrix" style="height:320px"></div></div>
       </div>
-    </div>
-
-    <div id="exp-repairs" style="display:none">
-      <section>
-        <h2>Luna vs DeepSeek · 失败题修复</h2>
-        <p class="note">首轮失败题反复迭代（最多 10 轮）。共同失败 4 题（EP015 / EP032 / EP099 / EP132）可公平对比；Luna 独有 3 题（EP047 / EP116 / EP145）。High、每轮 600 秒；10 轮未解 = 右删失，不是第 10 轮解出。</p>
-        <div class="kpi-grid" id="repairsKpi"></div>
-      </section>
-      <div class="legend-status" id="repairRepLegend"></div>
-      <div class="repair-grid" id="repairRepGrid"></div>
     </div>
 
     <footer>
