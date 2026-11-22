@@ -1,7 +1,7 @@
 import { useId, useState } from 'react';
 import type { EChartsOption, TooltipComponentOption } from 'echarts';
 import { Box, Dialog, DialogContent, DialogTitle, IconButton, ListItemButton, MenuItem, Pagination, Select, Table, TableBody, TableCell, TableHead, TableRow, ToggleButton, ToggleButtonGroup } from '@mui/material';
-import { BarChart3, Clock3, Grid2X2, Hash, LineChart, X, ZoomIn } from 'lucide-react';
+import { BarChart3, ChevronRight, Clock3, Grid2X2, Hash, LineChart, X, ZoomIn } from 'lucide-react';
 import { Chart } from './Chart';
 import { ResourceWaterfall } from './TimeWaterfall';
 import { format, groupKey, mean, taskMean } from './data';
@@ -9,7 +9,7 @@ import type { Dataset, Group, Mode, Row } from './data';
 
 export type TokenMetric = 'total' | 'output' | 'reasoning';
 type ResourceAxis = 'seconds' | TokenMetric;
-type ChartId = 'score' | 'requests' | 'time' | 'token';
+type ChartId = 'score' | 'requests' | 'time' | 'token' | 'behavior' | 'test-results';
 
 const tokenLabels: Record<TokenMetric, string> = {
   reasoning: '推理 Token',
@@ -22,6 +22,260 @@ const chartBase = {
   tooltip: { trigger: 'axis', confine: true, renderMode: 'richText' },
   grid: { left: 48, right: 24, top: 25, bottom: 48 },
 } satisfies EChartsOption;
+
+function diagnosticAxis(groups: Group[]) {
+  return {
+    type: 'category' as const,
+    data: groups.map(group => group.label.replace(/ (Sol|Luna|Flash)$/, '\n$1')),
+    axisLabel: { interval: 0, fontSize: 11 },
+    axisTick: { show: false },
+  };
+}
+
+const traceStates = {
+  accepted: { label: '环境接受', color: '#118D57', mark: '●' },
+  rejected: { label: '环境拒绝', color: '#B54708', mark: '×' },
+  unknown: { label: '状态未记录', color: '#637381', mark: '○' },
+};
+
+function traceState(value: boolean | null) {
+  return value === true ? traceStates.accepted : value === false ? traceStates.rejected : traceStates.unknown;
+}
+
+const taskTypeLabels: Record<string, string> = {
+  pick_and_place_simple: '取物放置',
+  look_at_obj_in_light: '在光下观察',
+  pick_clean_then_place_in_recep: '清洁后放置',
+  pick_heat_then_place_in_recep: '加热后放置',
+  pick_cool_then_place_in_recep: '冷却后放置',
+  pick_two_obj_and_place: '双物体放置',
+};
+const sectorColors = ['#43819B', '#59865B', '#A55A43', '#9A7031', '#5471A1', '#866187'];
+const stepColors = ['#E8F5F2', '#BFE6DD', '#7CCBBB', '#3D9F93', '#246E67', '#174943'];
+
+function radialPoint(radius: number, angle: number) {
+  return [220 + radius * Math.sin(angle), 220 - radius * Math.cos(angle)] as const;
+}
+
+function ringSector(inner: number, outer: number, start: number, end: number) {
+  const large = Number(end - start > Math.PI);
+  return `M ${radialPoint(outer, start)} A ${outer} ${outer} 0 ${large} 1 ${radialPoint(outer, end)} L ${radialPoint(inner, end)} A ${inner} ${inner} 0 ${large} 0 ${radialPoint(inner, start)} Z`;
+}
+
+function TaskStepRing({ rows, mode, groups, tasks, selected, onSelect }: {
+  rows: Row[]; mode: Mode; groups: Group[]; tasks: string[]; selected: string; onSelect: (task: string) => void;
+}) {
+  const byTask = new Map<string, Row[]>();
+  for (const row of rows) {
+    if (!byTask.has(row.task)) byTask.set(row.task, []);
+    byTask.get(row.task)!.push(row);
+  }
+  const byType = new Map<string, string[]>();
+  for (const task of tasks) {
+    const type = byTask.get(task)?.[0]?.type ?? '未分类';
+    if (!byType.has(type)) byType.set(type, []);
+    byType.get(type)!.push(task);
+  }
+  const gap = 0.085;
+  const pitch = (2 * Math.PI - byType.size * gap) / tasks.length;
+  const band = 30;
+  const inner = 81;
+  const outer = inner + band * groups.length;
+  const max = Math.max(1, ...rows.map(row => row.environmentSteps ?? 0));
+  const ticks = [...byType].map(([type, ids], index) => ({ type, ids, color: sectorColors[index % sectorColors.length] }));
+  let offset = 0;
+  return <Box component="section" aria-label="环境步数环形总览" sx={{ mb: 2.5 }}>
+    <h4>环境步数环形总览</h4>
+    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'minmax(0, 1fr)', md: 'minmax(0, 3fr) minmax(145px, 1fr)' }, gap: { xs: 1, md: 3 }, alignItems: 'center' }}>
+      <Box component="svg" viewBox="0 0 440 440" role="group" aria-label="按任务类型分区的步数热图" sx={{ display: 'block', width: '100%', maxWidth: 500, mx: 'auto', '& [role=button]': { cursor: 'pointer', outline: 'none' }, '& [role=button]:is(:hover, :focus-visible) .task-outline': { stroke: '#111C24', strokeWidth: 2.5 } }}>
+        {ticks.map(({ type, ids, color }, typeIndex) => {
+          const start = offset + gap / 2;
+          const end = start + ids.length * pitch;
+          offset = end + gap / 2;
+          const [labelX, labelY] = radialPoint(outer + 28, (start + end) / 2);
+          return <g key={type}>
+            <path d={ringSector(outer + 6, outer + 11, start, end)} fill={color} />
+            <text x={labelX} y={labelY} textAnchor="middle" dominantBaseline="central" fill={color} fontSize="14" fontWeight="700" aria-hidden="true">{typeIndex + 1}</text>
+            {ids.map((task, taskIndex) => {
+              const left = start + taskIndex * pitch + 0.003;
+              const right = start + (taskIndex + 1) * pitch - 0.003;
+              const cells = groups.map(group => {
+                const records = (byTask.get(task) ?? []).filter(row => groupKey(row, mode) === group.key);
+                const steps = mean(records.map(row => row.environmentSteps ?? null));
+                return { group, steps, failed: records.some(row => row.score === 0) };
+              });
+              const label = `${task}，${taskTypeLabels[type] ?? type}；${cells.map(({ group, steps, failed }) => `${group.label} ${steps === null ? '缺测' : `${format(steps)} 步`}${failed ? '，有未成功记录' : ''}`).join('；')}`;
+              return <g key={task} role="button" tabIndex={task === selected ? 0 : -1} aria-label={label} aria-pressed={task === selected}
+                onClick={() => onSelect(task)} onKeyDown={event => {
+                  if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onSelect(task); }
+                }}>
+                <title>{label}</title>
+                {cells.map(({ group, steps, failed }, ringIndex) => {
+                  const radius = inner + band * ringIndex;
+                  const color = steps === null ? '#E5E8EB' : stepColors[Math.min(stepColors.length - 1, Math.floor(steps / max * stepColors.length))];
+                  const [markX, markY] = radialPoint(radius + band / 2, (left + right) / 2);
+                  return <g key={group.key} aria-hidden="true">
+                    <path d={ringSector(radius, radius + band - 2, left, right)} fill={color} />
+                    {failed && <circle cx={markX} cy={markY} r="3" fill="#9E322F" stroke="#fff" strokeWidth="1" />}
+                  </g>;
+                })}
+                <path className="task-outline" d={ringSector(inner, outer - 2, left, right)} fill="transparent" stroke={task === selected ? '#111C24' : 'none'} strokeWidth="2" />
+              </g>;
+            })}
+          </g>;
+        })}
+        <g aria-hidden="true" textAnchor="middle" fill="#1C252E">
+          <text x="220" y="219" fontSize="26" fontWeight="700">{selected}</text>
+          <text x="220" y="241" fontSize="12" fill="#637381">{tasks.length} 道题</text>
+        </g>
+      </Box>
+      <Box sx={{ fontSize: 12, color: 'text.secondary' }}>
+        <Box component="p" sx={{ mb: 1 }}><strong>内环 → 外环</strong><br />{groups.map(group => group.label).join(' → ')}</Box>
+        <Box component="p" sx={{ mb: 0.5 }}><strong>环境步数</strong></Box>
+        <Box sx={{ display: 'flex', maxWidth: 180 }} aria-hidden="true">{stepColors.map(color => <Box key={color} sx={{ flex: 1, height: 9, bgcolor: color }} />)}</Box>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', maxWidth: 180 }}><span>0</span><span>{max} 步</span></Box>
+        <Box component="p" sx={{ my: 1 }}><span style={{ color: '#9E322F' }}>●</span> 未成功　<span style={{ color: '#AAB2B9' }}>■</span> 缺测</Box>
+        <Box component="ol" sx={{ m: 0, pl: 2.25, columns: { xs: 2, md: 1 }, columnGap: 2 }}>
+          {ticks.map(({ type, ids, color }) => <Box component="li" key={type} sx={{ color, mb: 0.5, breakInside: 'avoid' }}>{taskTypeLabels[type] ?? type} · {ids.length}</Box>)}
+        </Box>
+      </Box>
+    </Box>
+  </Box>;
+}
+
+function TaskActionTrace({ rows, mode, groups }: { rows: Row[]; mode: Mode; groups: Group[] }) {
+  const [selectedTask, setSelectedTask] = useState('AW058');
+  const tasks = [...new Set(rows.filter(row => row.stepTrace?.length).map(row => row.task))]
+    .sort((left, right) => left.localeCompare(right, undefined, { numeric: true }));
+  const task = tasks.includes(selectedTask) ? selectedTask : tasks[0];
+  if (!task) return <p className="chart-empty">当前筛选条件下没有完整的逐步日志。</p>;
+  const records = rows.filter(row => row.task === task);
+  const tracks = groups.flatMap(group => {
+    const matches = records.filter(row => groupKey(row, mode) === group.key);
+    return (matches.length ? matches : [undefined]).map((row, index) => ({
+      key: row?.id ?? group.key,
+      label: matches.length > 1 ? `${group.label} · ${index + 1}` : group.label,
+      row,
+    }));
+  });
+  const maxSteps = Math.max(1, ...tracks.map(({ row }) => row?.stepTrace?.length ?? 0));
+  return <Box component="section" aria-label="同题操作轨迹" sx={{ borderTop: '1px solid #E8ECEF', pt: 2, mt: 1, minWidth: 0 }}>
+    <TaskStepRing rows={rows} mode={mode} groups={groups} tasks={tasks} selected={task} onSelect={setSelectedTask} />
+    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1, flexWrap: 'wrap' }}>
+      <h4>同题操作轨迹</h4>
+      <Select size="small" value={task} onChange={event => setSelectedTask(event.target.value)} inputProps={{ 'aria-label': '轨迹题目' }}>
+        {tasks.map(id => <MenuItem key={id} value={id}>{id}</MenuItem>)}
+      </Select>
+    </Box>
+    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, my: 1.5, fontSize: 12, color: 'text.secondary' }}>
+      {Object.values(traceStates).map(state => <span key={state.label}><span aria-hidden="true" style={{ color: state.color }}>{state.mark}</span> {state.label}</span>)}
+    </Box>
+    <Box sx={{ overflowX: 'auto', maxWidth: '100%' }} tabIndex={0} aria-label={`${task} 逐步操作对照`} role="group">
+      <Box sx={{ display: 'grid', gridTemplateColumns: `128px repeat(${maxSteps}, minmax(25px, 1fr))`, minWidth: 128 + maxSteps * 25, alignItems: 'center', rowGap: 1, py: 0.5 }}>
+        <Box sx={{ gridRow: 1, fontSize: 12, color: 'text.secondary' }}>环境步数</Box>
+        {Array.from({ length: maxSteps }, (_, index) => <Box key={index} sx={{ gridRow: 1, gridColumn: index + 2, textAlign: 'center', fontSize: 11, color: 'text.secondary' }}>
+          {index + 1}
+        </Box>)}
+        {tracks.map(({ key, label, row }, trackIndex) => {
+          const gridRow = trackIndex + 2;
+          const trace = row?.stepTrace;
+          const outcome = row?.score === 100 ? '成功' : row?.score === 0 ? '未成功' : '结果未知';
+          return <Box key={key} sx={{ display: 'contents' }}>
+            <Box sx={{ gridRow, gridColumn: 1, fontSize: 12, lineHeight: 1.45 }}>
+              <strong>{label}</strong><br />
+              <Box component="span" sx={{ color: 'text.secondary' }}>{trace?.length ? `${outcome} · ${trace.length} 步` : '轨迹缺测'}</Box>
+            </Box>
+            {trace?.map((value, index) => {
+              const state = traceState(value);
+              const description = `${label}第 ${index + 1} 步：${state.label}${index === trace.length - 1 ? `，结束（${outcome}）` : ''}`;
+              return <Box key={index} role="img" aria-label={description} title={description} sx={{
+                gridRow, gridColumn: index + 2, textAlign: 'center', lineHeight: '28px', height: 28,
+                fontWeight: 700, color: state.color, bgcolor: `${state.color}12`, borderBlock: '1px solid #E8ECEF',
+                borderRight: index === trace.length - 1 ? '2px solid currentColor' : '1px solid #E8ECEF',
+              }}>{state.mark}</Box>;
+            })}
+          </Box>;
+        })}
+      </Box>
+    </Box>
+    <Box component="p" sx={{ color: 'text.secondary', fontSize: 12, mb: 0 }}>动作被环境接受不代表任务取得进展。不同模型使用的控制器不同，轨迹反映实验配置下的行为差异。</Box>
+  </Box>;
+}
+
+function stepDistribution(rows: Row[], mode: Mode, groups: Group[]): EChartsOption {
+  return {
+    ...chartBase,
+    tooltip: { ...chartBase.tooltip, trigger: 'item' },
+    legend: { top: 0, selectedMode: false },
+    grid: { ...chartBase.grid, top: 48 },
+    xAxis: diagnosticAxis(groups),
+    yAxis: { type: 'value', name: '环境步数', min: 0, minInterval: 1 },
+    series: [{ score: 100, name: '成功', color: '#118D57' }, { score: 0, name: '未成功', color: '#D47716' }].map(result => ({
+      name: result.name, type: 'boxplot', dimensions: ['最少', '第 25 百分位', '中位数', '第 75 百分位', '最多'],
+      itemStyle: { color: `${result.color}33`, borderColor: result.color },
+      data: groups.map(group => {
+        const steps = rows.filter(row => groupKey(row, mode) === group.key && row.score === result.score)
+          .flatMap(row => row.environmentSteps == null ? [] : [row.environmentSteps]).sort((left, right) => left - right);
+        if (!steps.length) return [NaN, NaN, NaN, NaN, NaN];
+        return [0, 0.25, 0.5, 0.75, 1].map(fraction => {
+          const index = fraction * (steps.length - 1);
+          const lower = Math.floor(index);
+          return steps[lower] + (steps[Math.ceil(index)] - steps[lower]) * (index - lower);
+        });
+      }),
+    })),
+  };
+}
+
+function actionShares(rows: Row[], mode: Mode, groups: Group[]): EChartsOption {
+  return {
+    ...chartBase,
+    tooltip: { ...chartBase.tooltip, valueFormatter: value => typeof value === 'number' ? `${format(value)}%` : '缺测' },
+    legend: { top: 0, selectedMode: false },
+    grid: { ...chartBase.grid, top: 48 },
+    xAxis: diagnosticAxis(groups),
+    yAxis: { type: 'value', min: 0, max: 100, axisLabel: { formatter: '{value}%' } },
+    series: [{ key: 'invalidActions', name: '无效动作', color: '#D47716' }, { key: 'repeatedActions', name: '重复动作', color: '#1877F2' }].map(metric => ({
+      name: metric.name, type: 'bar', barMaxWidth: 36, itemStyle: { color: metric.color },
+      data: groups.map(group => {
+        let actions = 0;
+        let steps = 0;
+        for (const row of rows) {
+          const count = row[metric.key as 'invalidActions' | 'repeatedActions'];
+          if (groupKey(row, mode) !== group.key || row.environmentSteps == null || row.environmentSteps <= 0 || count == null || count > row.environmentSteps) continue;
+          actions += count;
+          steps += row.environmentSteps;
+        }
+        return steps ? 100 * actions / steps : null;
+      }),
+      label: { show: true, position: 'top', formatter: point => typeof point.value === 'number' ? `${format(point.value)}%` : '' },
+    })),
+  };
+}
+
+const testOutcomes = [
+  { name: '两项均通过', color: '#118D57', includes: (row: Row) => row.baseStatus === 'pass' && row.plusStatus === 'pass' },
+  { name: '基础通过、加强未过', color: '#D47716', includes: (row: Row) => row.baseStatus === 'pass' && row.plusStatus === 'fail' },
+  { name: '基础未通过', color: '#DF5366', includes: (row: Row) => row.baseStatus === 'fail' },
+];
+
+function testBreakdown(rows: Row[], mode: Mode, groups: Group[]): EChartsOption {
+  return {
+    ...chartBase,
+    legend: { top: 0, selectedMode: false },
+    grid: { ...chartBase.grid, top: 64 },
+    xAxis: diagnosticAxis(groups),
+    yAxis: { type: 'value', min: 0, minInterval: 1, name: '首轮记录数' },
+    series: testOutcomes.map(outcome => ({
+      name: outcome.name, type: 'bar', stack: 'tests', barMaxWidth: 64, itemStyle: { color: outcome.color },
+      data: groups.map(group => {
+        const records = rows.filter(row => groupKey(row, mode) === group.key);
+        return records.length ? records.filter(outcome.includes).length : null;
+      }),
+      label: { show: true, position: 'inside', color: '#fff', formatter: point => typeof point.value === 'number' && point.value >= 4 ? String(point.value) : '' },
+    })),
+  };
+}
 
 export function scoreOption(rows: Row[], dataset: Dataset, mode: Mode, groups: Group[]): EChartsOption {
   return {
@@ -251,10 +505,11 @@ export function DetailCharts({ dataset, mode, groups, rows, hidden, onToggleGrou
   token: TokenMetric;
   onTokenChange: (metric: TokenMetric) => void;
 }) {
-  const [view, setView] = useState<ChartId | 'overview'>('overview');
+  const [selectedView, setView] = useState<ChartId | 'overview'>('overview');
+  const showResourceRelations = dataset.id === 'hss' || dataset.id === 'wildbench';
   const activeGroups = groups.filter(group => !hidden.includes(group.key));
   const scored = (row: Row) => row.score !== null;
-  const views: ChartView[] = [
+  const chartViews: ChartView[] = [
     {
       id: 'score', title: `${dataset.metric}比较`, icon: BarChart3, legendShape: 'bar',
       subtitle: `${dataset.max === 100 ? '0–100%' : '0–10 分'} · 按题等权平均，重复运行先按题取均值`,
@@ -282,6 +537,24 @@ export function DetailCharts({ dataset, mode, groups, rows, hidden, onToggleGrou
       analysis: () => '连线只连接同一道题的结果，缺测处断开。立体图段内按 Token 消耗排列，平面图按图例的条件顺序连接；观察到的差异不代表增加 Token 会提高评分。',
     },
   ];
+  const views = showResourceRelations ? chartViews : chartViews.filter(chart => chart.id !== 'time' && chart.id !== 'token');
+  if (dataset.id === 'alfworld') views.push({
+    id: 'behavior', title: '操作行为', icon: BarChart3, legendShape: 'bar',
+    subtitle: '正式首轮 · 步数按成功状态分组，动作占比按实验条件汇总',
+    includes: row => row.environmentSteps != null,
+    analysis: () => '箱体为第 25 至第 75 百分位，横线为中位数，须线为最少与最多。占比分别用动作次数除以对应有记录的环境步数，两类动作可重叠。模型通道和控制器不同，步数差异不宜仅归因于模型。',
+  });
+  if (dataset.id === 'humanevalplus') views.push({
+    id: 'test-results', title: 'Base／Plus 测试结果', icon: BarChart3, legendShape: 'bar',
+    subtitle: '正式首轮 · Base 为基础测试，Plus 为加强测试 · 缺少任一判定的记录不计入',
+    includes: row => row.baseStatus != null && row.plusStatus != null,
+    option: observations => testBreakdown(observations, mode, activeGroups),
+    analysis: observations => activeGroups.flatMap(group => {
+      const records = observations.filter(row => groupKey(row, mode) === group.key);
+      return records.length ? [`${group.label}：${testOutcomes.map(outcome => `${outcome.name} ${records.filter(outcome.includes).length} 条`).join('，')}`] : [];
+    }).join('；') + '。',
+  });
+  const view = views.some(chart => chart.id === selectedView) ? selectedView : 'overview';
   const overview = view === 'overview';
   const currentViews = overview ? views : views.filter(chart => chart.id === view);
   const navigation = [{ id: 'overview' as const, title: '总览', icon: Grid2X2 }, ...views];
@@ -295,6 +568,7 @@ export function DetailCharts({ dataset, mode, groups, rows, hidden, onToggleGrou
             selected={view === id} aria-pressed={view === id} onClick={() => setView(id)}>
             <Icon size={17} aria-hidden="true" />
             <span>{title}</span>
+            <ChevronRight className="chart-nav-arrow" size={14} aria-hidden="true" />
           </ListItemButton>
         ))}
       </nav>
@@ -305,7 +579,7 @@ export function DetailCharts({ dataset, mode, groups, rows, hidden, onToggleGrou
             const observations = eligible.filter(row => !hidden.includes(groupKey(row, mode)));
             return (
               <section className="panel chart-panel" key={chart.id} aria-labelledby={`chart-${chart.id}-title`}
-                style={chart.id === 'time' || chart.id === 'token' ? { gridColumn: '1 / -1' } : undefined}>
+                style={chart.id !== 'score' && chart.id !== 'requests' ? { gridColumn: '1 / -1' } : undefined}>
                 <div className="panel-heading">
                   <div>
                     <h3 id={`chart-${chart.id}-title`}>{chart.title}</h3>
@@ -332,7 +606,11 @@ export function DetailCharts({ dataset, mode, groups, rows, hidden, onToggleGrou
                   })}
                 </div>
                 {observations.length === 0 ? <p className="chart-empty">当前筛选条件下没有可绘制的记录。</p>
-                  : chart.option ? <Chart option={chart.option(observations)} label={chart.title} height={overview ? 270 : 390} />
+                  : chart.id === 'behavior' ? <>
+                    <Chart option={stepDistribution(observations, mode, activeGroups)} label="成功与未成功的环境步数分布" height={270} />
+                    <Chart option={actionShares(observations, mode, activeGroups)} label="无效动作与重复动作占比" height={270} />
+                    <TaskActionTrace rows={observations} mode={mode} groups={activeGroups} />
+                  </> : chart.option ? <Chart option={chart.option(observations)} label={chart.title} height={overview ? 270 : 390} />
                     : <ResourceSmallMultiples rows={observations} dataset={dataset} mode={mode} groups={activeGroups} axis={chart.id === 'time' ? 'seconds' : token} />}
                 {!overview && (
                   <div className="chart-analysis">

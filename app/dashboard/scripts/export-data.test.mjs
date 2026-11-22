@@ -34,3 +34,20 @@ test('real export excludes repairs and private payloads, keeps formal and pilot 
     assert.ok(row.score === null || Number.isFinite(row.score));
   }
 });
+
+test('ALFWorld exports aligned step states for all 60 shared High tasks', () => {
+  const { rows } = exportData(path.resolve(appRoot, '../../data/processed'));
+  const high = rows.filter(row => row.dataset === 'alfworld' && inMode(row, 'models'));
+  assert.equal(high.length, 180);
+  const tasks = new Map();
+  for (const row of high) {
+    assert.ok(Array.isArray(row.stepTrace), `${row.model}/${row.task} is missing a trace`);
+    assert.equal(row.stepTrace.length, row.environmentSteps);
+    assert.ok(row.stepTrace.every(state => state === null || typeof state === 'boolean'));
+    if (!tasks.has(row.task)) tasks.set(row.task, new Set());
+    tasks.get(row.task).add(row.model);
+  }
+  assert.equal(tasks.size, 60);
+  assert.ok([...tasks.values()].every(models => models.size === 3));
+  assert.ok(rows.filter(row => row.dataset !== 'alfworld').every(row => !('stepTrace' in row)));
+});

@@ -18,6 +18,8 @@ export function numeric(value) {
   return typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value : null;
 }
 
+const testStatus = value => value === 'pass' || value === 'fail' ? value : null;
+
 export function normalize(row, definition, source) {
   const code = source === 'xwb';
   const rawEffort = (code ? row.reasoning_effort : row.effort) ?? 'unknown';
@@ -44,7 +46,28 @@ export function normalize(row, definition, source) {
     total: numeric(code ? row.total_tokens : row.token_usage?.totalTokens),
     timestamp: code ? (row.start_time ?? null) : null,
     status: (code ? row.execution_status : row.status) ?? 'unknown',
+    ...(code && definition.id === 'alfworld' ? {
+      environmentSteps: numeric(row.environment_steps),
+      invalidActions: numeric(row.invalid_action_count),
+      repeatedActions: numeric(row.repeated_action_count),
+    } : {}),
+    ...(code && definition.id === 'humanevalplus' ? {
+      baseStatus: testStatus(row.base_status),
+      plusStatus: testStatus(row.plus_status),
+    } : {}),
   };
+}
+
+function readStepEvents(directory) {
+  const traces = new Map();
+  const file = path.join(directory, 'tool_events.json');
+  if (!fs.existsSync(file)) return traces;
+  for (const event of JSON.parse(fs.readFileSync(file, 'utf8'))) {
+    if (event.phase !== 'initial' || event.tool_name !== 'step' || !Number.isInteger(event.event_index)) continue;
+    if (!traces.has(event.run_id)) traces.set(event.run_id, []);
+    traces.get(event.run_id).push(event);
+  }
+  return traces;
 }
 
 export function exportData(dataRoot) {
@@ -59,6 +82,7 @@ export function exportData(dataRoot) {
       if (!fs.existsSync(file)) continue;
       const text = fs.readFileSync(file, 'utf8');
       const records = code ? JSON.parse(text) : text.trim().split('\n').filter(Boolean).map(line => JSON.parse(line));
+      const traces = definition.id === 'alfworld' ? readStepEvents(directory) : null;
       for (const row of records) {
         const accepted = code ? row.phase === 'initial' : (definition.kind === '预实验' || row.phase === 'formal');
         if (!accepted) {
@@ -67,6 +91,11 @@ export function exportData(dataRoot) {
           continue;
         }
         const record = normalize(row, definition, code ? 'xwb' : 'wty');
+        const steps = traces?.get(row.run_id);
+        if (steps?.length && steps.length === record.environmentSteps && new Set(steps.map(step => step.event_index)).size === steps.length) {
+          record.stepTrace = steps.sort((left, right) => left.event_index - right.event_index)
+            .map(step => typeof step.action_admissible === 'boolean' ? step.action_admissible : null);
+        }
         if (seen.has(record.id)) throw new Error(`Duplicate identity: ${record.id}`);
         seen.add(record.id);
         rows.push(record);
