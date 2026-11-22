@@ -178,15 +178,24 @@ function TaskActionTrace({ rows, mode, groups }: { rows: Row[]; mode: Mode; grou
         {tracks.map(({ key, label, row }, trackIndex) => {
           const gridRow = trackIndex + 2;
           const trace = row?.stepTrace;
-          const outcome = row?.score === 100 ? '成功' : row?.score === 0 ? '未成功' : '结果未知';
+          const outcome = row?.score === 100
+            ? { label: '成功', color: 'success.dark' }
+            : row?.score === 0
+              ? { label: '未成功', color: 'error.dark' }
+              : { label: '结果未知' };
           return <Box key={key} sx={{ display: 'contents' }}>
             <Box sx={{ gridRow, gridColumn: 1, fontSize: 12, lineHeight: 1.45 }}>
               <strong>{label}</strong><br />
-              <Box component="span" sx={{ color: 'text.secondary' }}>{trace?.length ? `${outcome} · ${trace.length} 步` : '轨迹缺测'}</Box>
+              <Box component="span" sx={{ color: 'text.secondary' }}>
+                {trace?.length ? <>
+                  <Box component="span" sx={{ color: outcome.color, fontWeight: outcome.color ? 700 : 400 }}>{outcome.label}</Box>
+                  {` · ${trace.length} 步`}
+                </> : '轨迹缺测'}
+              </Box>
             </Box>
             {trace?.map((value, index) => {
               const state = traceState(value);
-              const description = `${label}第 ${index + 1} 步：${state.label}${index === trace.length - 1 ? `，结束（${outcome}）` : ''}`;
+              const description = `${label}第 ${index + 1} 步：${state.label}${index === trace.length - 1 ? `，结束（${outcome.label}）` : ''}`;
               return <Box key={index} role="img" aria-label={description} title={description} sx={{
                 gridRow, gridColumn: index + 2, textAlign: 'center', lineHeight: '28px', height: 28,
                 fontWeight: 700, color: state.color, bgcolor: `${state.color}12`, borderBlock: '1px solid #E8ECEF',

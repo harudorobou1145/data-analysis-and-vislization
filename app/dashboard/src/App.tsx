@@ -1,12 +1,20 @@
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { Alert, Avatar, Box, Button, Checkbox, Chip, CircularProgress, Collapse, Drawer, FormControlLabel, IconButton, InputAdornment, ListItemButton, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
-import { Activity, ArrowDownToLine, ArrowLeft, ArrowRight, BrainCircuit, ChartNoAxesCombined, ChevronRight, Database, FlaskConical, Layers3, Menu, RotateCcw, Search, SlidersHorizontal, X } from 'lucide-react';
+import { Activity, ArrowDownToLine, ArrowLeft, ArrowRight, BrainCircuit, ChartNoAxesCombined, ChevronRight, ClipboardPenLine, CodeXml, Database, FlaskConical, Layers3, Menu, MessagesSquare, RotateCcw, Route, ScanEye, Search, SlidersHorizontal, X } from 'lucide-react';
 import { Chart } from './Chart';
 import { DetailCharts, scoreOption } from './DetailCharts';
 import type { TokenMetric } from './DetailCharts';
 import { downloadRows, format, groupKey, groupsFor, inMode, matchingTasks, mean, median, modelNames, taskMean } from './data';
 import type { Data, Dataset, Group, Mode, Row } from './data';
+
+const datasetIcons: Partial<Record<string, typeof Database>> = {
+  subjective_60: ClipboardPenLine,
+  wildbench: MessagesSquare,
+  hss: ScanEye,
+  humanevalplus: CodeXml,
+  alfworld: Route,
+};
 
 const datasetDescriptions: Record<string, string> = {
   subjective_60: '从 MT-Bench 和 BiGGen-Bench 选取 60 道开放题，涵盖写作、分析与规划等任务。模型需要按要求给出完整回答，由模型裁判按回答质量评分，同一题的重复作答先取均值。',
@@ -113,7 +121,8 @@ export function App() {
           <div className="dataset-grid">{datasets.map(item => {
             const rows = modeRows.filter(row => row.dataset === item.id);
             const missing = groups.filter(group => !rows.some(row => groupKey(row, mode) === group.key));
-            return <section className="dataset-card" key={item.id}><div className="dataset-card-heading"><div className="dataset-icon"><Database size={20} /></div><div><h3>{item.name}</h3><span>{item.kind} · {item.metric}{item.max === 100 ? ' (%)' : ' / 10'}</span></div><Tooltip title={`查看 ${item.name}`}><IconButton aria-label={`查看 ${item.name}`} onClick={() => navigate(mode, item.id)}><ArrowRight size={19} /></IconButton></Tooltip></div><Chart option={scoreOption(rows, item, mode, groups)} label={`${item.name}评分比较`} height={218} /><div className="dataset-card-footer"><span>{rows.filter(row => row.score !== null).length} 条有效评分 · {new Set(rows.map(row => row.task)).size} 道题</span><span className={missing.length ? 'missing-text' : 'complete-text'}>{missing.length ? `缺测 ${missing.map(group => group.label).join(' / ')}` : '条件齐全'}</span></div></section>;
+            const DatasetIcon = datasetIcons[item.id] ?? Database;
+            return <section className="dataset-card" key={item.id}><div className="dataset-card-heading"><div className="dataset-icon"><DatasetIcon size={20} aria-hidden="true" /></div><div><h3>{item.name}</h3><span>{item.kind} · {item.metric}{item.max === 100 ? ' (%)' : ' / 10'}</span></div><Tooltip title={`查看 ${item.name}`}><IconButton aria-label={`查看 ${item.name}`} onClick={() => navigate(mode, item.id)}><ArrowRight size={19} /></IconButton></Tooltip></div><Chart option={scoreOption(rows, item, mode, groups)} label={`${item.name}评分比较`} height={218} /><div className="dataset-card-footer"><span>{rows.filter(row => row.score !== null).length} 条有效评分 · {new Set(rows.map(row => row.task)).size} 道题</span><span className={missing.length ? 'missing-text' : 'complete-text'}>{missing.length ? `缺测 ${missing.map(group => group.label).join(' / ')}` : '条件齐全'}</span></div></section>;
           })}</div>
           {!datasets.length && <Alert severity="info">没有匹配的数据集。</Alert>}
           <div className="method-note"><FlaskConical size={19} /><div><strong>分析口径</strong><p>正式主图排除历史、补跑、修复及辅助运行。不同数据集不汇总为单一能力分；HumanEval+ 和 ALFWorld 的 Sol 首轮 max 按本次实验口径归入 Ultra。</p></div></div>
