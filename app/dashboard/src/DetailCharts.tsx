@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { EChartsOption } from 'echarts';
 import { ListItemButton, MenuItem, Select } from '@mui/material';
-import { BarChart3, ChevronRight, Clock3, Grid2X2, Hash, LineChart } from 'lucide-react';
+import { BarChart3, Clock3, Grid2X2, Hash, LineChart } from 'lucide-react';
 import { Chart } from './Chart';
 import { format, groupKey, mean, median, taskMean } from './data';
 import type { Dataset, Group, Mode, Row } from './data';
@@ -181,7 +181,6 @@ export function DetailCharts({ dataset, mode, groups, rows, hidden, onToggleGrou
             selected={view === id} aria-pressed={view === id} onClick={() => setView(id)}>
             <Icon size={17} aria-hidden="true" />
             <span>{title}</span>
-            <ChevronRight className="chart-nav-arrow" size={14} aria-hidden="true" />
           </ListItemButton>
         ))}
       </nav>
