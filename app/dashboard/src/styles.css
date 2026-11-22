@@ -15,11 +15,14 @@ h1, h2, h3, p { margin: 0; }
 .live-dot, .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; display: inline-block; flex-shrink: 0; }
 .live-dot { margin-left: auto; }
 .nav-label { padding: 0 14px 12px; color: #919eab; font-size: 11px; font-weight: 700; }
-.nav-item.MuiListItemButton-root { border-radius: 6px; gap: 12px; min-height: 46px; margin-bottom: 4px; font-size: 14px; color: #637381; }
+.nav-item.MuiListItemButton-root { flex: none; height: 46px; border-radius: 6px; gap: 12px; margin-bottom: 4px; font-size: 14px; color: #637381; }
 .nav-item.Mui-selected { background: #1877f214 !important; color: #0c44ae; font-weight: 700; }
 .nav-item span:nth-child(2) { flex: 1; }
-.dataset-label { margin-top: 27px; }
-.dataset-nav.MuiListItemButton-root { min-height: 40px; font-size: 13px; }
+.research-label { display: block; margin-top: 22px; }
+.nav-chevron { transition: transform 180ms ease; }
+.nav-chevron.expanded { transform: rotate(90deg); }
+.dataset-submenu { margin: 0 0 8px 25px; padding-left: 8px; border-left: 1px solid #dfe3e8; }
+.dataset-nav.MuiListItemButton-root { height: 40px; font-size: 13px; }
 .dataset-dot { width: 6px; height: 6px; border-radius: 2px; background: #919eab; margin: 0 6px; flex: none; }
 .dataset-dot.pilot { background: #d47716; }
 .dataset-nav small { color: #919eab; font-size: 10px; }

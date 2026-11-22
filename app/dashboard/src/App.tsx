@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { EChartsOption } from 'echarts';
-import { Alert, Avatar, Box, Button, Checkbox, Chip, CircularProgress, Drawer, FormControlLabel, IconButton, InputAdornment, ListItemButton, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
+import { Alert, Avatar, Box, Button, Checkbox, Chip, CircularProgress, Collapse, Drawer, FormControlLabel, IconButton, InputAdornment, ListItemButton, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
 import { Activity, ArrowDownToLine, ArrowLeft, ArrowRight, BrainCircuit, ChartNoAxesCombined, ChevronRight, Database, FlaskConical, Layers3, Menu, RotateCcw, Search, SlidersHorizontal, X } from 'lucide-react';
 import { Chart } from './Chart';
 import { downloadRows, format, groupKey, groupsFor, inMode, matchingTasks, mean, median, modelNames, taskMean } from './data';
@@ -28,27 +28,33 @@ function Panel({ title, subtitle, children, action }: { title: string; subtitle?
 }
 function AppState() {
   const hash = new URLSearchParams(location.hash.slice(1));
-  return { mode: (hash.get('mode') === 'models' ? 'models' : 'depth') as Mode, dataset: hash.get('dataset') ?? 'overview' };
+  const dataset = hash.get('dataset') ?? 'overview';
+  return { mode: (hash.get('mode') === 'models' ? 'models' : 'depth') as Mode, dataset: ['gsm8k', 'mt_bench'].includes(dataset) ? 'overview' : dataset };
 }
 export function App() {
   const [data, setData] = useState<Data | null>(null);
   const [error, setError] = useState('');
   const [route, setRoute] = useState(AppState);
   const [mobile, setMobile] = useState(false);
-  const [scope, setScope] = useState('formal');
+  const [expandedModes, setExpandedModes] = useState<Mode[]>(() => route.dataset === 'overview' ? [] : [route.mode]);
   const [search, setSearch] = useState('');
   useEffect(() => {
     const abort = new AbortController();
     fetch(`${import.meta.env.BASE_URL}analysis-data.json`, { signal: abort.signal })
       .then(response => { if (!response.ok) throw new Error(`HTTP ${response.status}`); return response.json(); })
       .then(setData).catch(reason => { if (reason.name !== 'AbortError') setError(String(reason)); });
-    const listener = () => setRoute(AppState());
+    const listener = () => {
+      const next = AppState();
+      setRoute(next);
+      if (next.dataset !== 'overview') {
+        setExpandedModes(current => current.includes(next.mode) ? current : [...current, next.mode]);
+      }
+    };
     addEventListener('hashchange', listener);
     return () => { abort.abort(); removeEventListener('hashchange', listener); };
   }, []);
   function navigate(mode: Mode, dataset = 'overview') {
     location.hash = new URLSearchParams({ mode, dataset }).toString();
-    setRoute({ mode, dataset });
     setMobile(false);
     setSearch('');
   }
@@ -56,31 +62,47 @@ export function App() {
   if (!data) return <div className="load-state"><CircularProgress /><p>加载实验指标…</p></div>;
   const { mode, dataset: datasetId } = route;
   const groups = groupsFor(mode);
-  const dataset = data.datasets.find(item => item.id === datasetId);
-  const modeRows = data.rows.filter(row => inMode(row, mode));
-  const datasets = data.datasets.filter(item => (scope === 'all' || item.kind !== '预实验') && (item.name + item.kind).toLowerCase().includes(search.toLowerCase()));
+  const formalDatasets = data.datasets.filter(item => item.kind !== '预实验');
+  const dataset = formalDatasets.find(item => item.id === datasetId);
+  const modeRows = data.rows.filter(row => inMode(row, mode) && formalDatasets.some(item => item.id === row.dataset));
+  const datasets = formalDatasets.filter(item => (item.name + item.kind).toLowerCase().includes(search.toLowerCase()));
   const sidebar = <>
     <a className="brand" href="#mode=depth&dataset=overview" aria-label="CodeDepth 首页"><div className="brand-mark"><Layers3 size={24} /></div><span>CodeDepth<span className="brand-dot">.</span></span></a>
     <div className="workspace-label"><Avatar sx={{ bgcolor: '#E8F2FE', color: '#1877F2', width: 34, height: 34 }}><FlaskConical size={18} /></Avatar><div><strong>AI 对话行为分析</strong><small>实验工作空间</small></div><span className="live-dot" /></div>
-    <span className="nav-label">研究方向</span>
-    <ListItemButton selected={mode === 'depth'} onClick={() => navigate('depth')} className="nav-item"><BrainCircuit size={20} /><span>思考深度</span><ChevronRight size={15} /></ListItemButton>
-    <ListItemButton selected={mode === 'models'} onClick={() => navigate('models')} className="nav-item"><ChartNoAxesCombined size={20} /><span>不同模型</span><ChevronRight size={15} /></ListItemButton>
-    <span className="nav-label dataset-label">数据集</span>
-    <ListItemButton selected={datasetId === 'overview'} onClick={() => navigate(mode)} className="nav-item"><Activity size={18} /><span>比较总览</span></ListItemButton>
-    {data.datasets.map(item => <ListItemButton key={item.id} selected={datasetId === item.id} onClick={() => navigate(mode, item.id)} className="nav-item dataset-nav"><span className={`dataset-dot ${item.kind === '预实验' ? 'pilot' : ''}`} /><span>{item.name}</span>{item.kind === '预实验' && <small>预实验</small>}</ListItemButton>)}
-    <div className="sidebar-bottom"><div className="source-mark"><Database size={17} /> PROCESSED DATA</div><p>{data.rows.length.toLocaleString()} 条指标记录</p><small>正式首轮 / 预实验独立口径</small><a href="https://github.com/minimal-ui-kit/material-kit-react" target="_blank" rel="noreferrer">Material Kit React ↗</a></div>
+    <ListItemButton selected={!dataset} onClick={() => navigate(mode)} className="nav-item"><Activity size={20} /><span>比较总览</span></ListItemButton>
+    <span className="nav-label research-label">研究方向</span>
+    {(['depth', 'models'] as const).map(direction => {
+      const expanded = expandedModes.includes(direction);
+      const label = direction === 'depth' ? '思考深度' : '不同模型';
+      const toggleExpanded = () => {
+        setExpandedModes(current => current.includes(direction)
+          ? current.filter(mode => mode !== direction)
+          : [...current, direction]);
+      };
+      return <div key={direction}>
+        <ListItemButton selected={!!dataset && mode === direction} onClick={toggleExpanded} className="nav-item" aria-expanded={expanded} aria-controls={`datasets-${direction}`}>
+          {direction === 'depth' ? <BrainCircuit size={20} /> : <ChartNoAxesCombined size={20} />}<span>{label}</span><ChevronRight size={15} className={`nav-chevron ${expanded ? 'expanded' : ''}`} />
+        </ListItemButton>
+        <Collapse in={expanded} unmountOnExit>
+          <div id={`datasets-${direction}`} className="dataset-submenu" role="group" aria-label={`${label}数据集`}>
+            {formalDatasets.map(item => <ListItemButton key={item.id} selected={mode === direction && dataset?.id === item.id} onClick={() => navigate(direction, item.id)} className="nav-item dataset-nav"><span className="dataset-dot" /><span>{item.name}</span></ListItemButton>)}
+          </div>
+        </Collapse>
+      </div>;
+    })}
+    <div className="sidebar-bottom"><div className="source-mark"><Database size={17} /> PROCESSED DATA</div><p>{data.rows.filter(row => formalDatasets.some(item => item.id === row.dataset)).length.toLocaleString()} 条指标记录</p><small>正式首轮实验指标</small><a href="https://github.com/minimal-ui-kit/material-kit-react" target="_blank" rel="noreferrer">Material Kit React ↗</a></div>
   </>;
   return <div className="app-shell">
     <aside className="desktop-nav">{sidebar}</aside>
     <Drawer open={mobile} onClose={() => setMobile(false)} slotProps={{ paper: { sx: { width: 270, p: 2.5 } } }}><IconButton aria-label="关闭导航" onClick={() => setMobile(false)} sx={{ alignSelf: 'flex-end' }}><X size={20} /></IconButton>{sidebar}</Drawer>
     <div className="main-shell">
-      <header className="topbar"><div className="breadcrumbs"><IconButton className="mobile-menu" aria-label="打开导航" onClick={() => setMobile(true)}><Menu size={22} /></IconButton><span>工作空间</span><ChevronRight size={14} /><strong>{mode === 'depth' ? '思考深度' : '不同模型'}</strong>{dataset && <><ChevronRight size={14} /><span className="breadcrumb-dataset">{dataset.name}</span></>}</div><div className="topbar-right"><span className="status-dot" />本地实验结果<Avatar sx={{ width: 32, height: 32, bgcolor: '#E8F5EE', color: '#118D57', fontSize: 12, fontWeight: 700 }}>CD</Avatar></div></header>
+      <header className="topbar"><div className="breadcrumbs"><IconButton className="mobile-menu" aria-label="打开导航" onClick={() => setMobile(true)}><Menu size={22} /></IconButton><span>工作空间</span><ChevronRight size={14} /><strong>{dataset ? (mode === 'depth' ? '思考深度' : '不同模型') : '比较总览'}</strong>{dataset && <><ChevronRight size={14} /><span className="breadcrumb-dataset">{dataset.name}</span></>}</div><div className="topbar-right"><span className="status-dot" />本地实验结果<Avatar sx={{ width: 32, height: 32, bgcolor: '#E8F5EE', color: '#118D57', fontSize: 12, fontWeight: 700 }}>CD</Avatar></div></header>
       <main>
-        <div className="page-heading"><div><div className="eyebrow">EXPERIMENT ANALYTICS</div><h1>{dataset?.name ?? (mode === 'depth' ? '思考深度分析' : '模型表现对比')}</h1><p>{mode === 'depth' ? 'GPT 6.1 Sol · Low / High / Ultra' : 'GPT 6.1 Sol / GPT 6 Luna / DeepSeek Flash · High'}</p></div><Button variant="outlined" startIcon={<ArrowDownToLine size={17} />} onClick={() => downloadRows(modeRows.filter(row => !dataset || row.dataset === dataset.id), dataset?.id ?? mode)}>导出数据</Button></div>
-        <ToggleButtonGroup exclusive value={mode} onChange={(_, value: Mode | null) => value && navigate(value, datasetId)} className="direction-tabs" aria-label="研究方向"><ToggleButton value="depth"><BrainCircuit size={18} />思考深度</ToggleButton><ToggleButton value="models"><ChartNoAxesCombined size={18} />不同模型</ToggleButton></ToggleButtonGroup>
+        <div className="page-heading"><div><div className="eyebrow">EXPERIMENT ANALYTICS</div><h1>{dataset?.name ?? '比较总览'}</h1><p>{mode === 'depth' ? 'GPT 6.1 Sol · Low / High / Ultra' : 'GPT 6.1 Sol / GPT 6 Luna / DeepSeek Flash · High'}</p></div><Button variant="outlined" startIcon={<ArrowDownToLine size={17} />} onClick={() => downloadRows(modeRows.filter(row => !dataset || row.dataset === dataset.id), dataset?.id ?? mode)}>导出数据</Button></div>
+        {!dataset && <ToggleButtonGroup exclusive value={mode} onChange={(_, value: Mode | null) => value && navigate(value, datasetId)} className="direction-tabs" aria-label="研究方向"><ToggleButton value="depth"><BrainCircuit size={18} />思考深度</ToggleButton><ToggleButton value="models"><ChartNoAxesCombined size={18} />不同模型</ToggleButton></ToggleButtonGroup>}
         {dataset ? <Detail key={`${mode}-${dataset.id}`} dataset={dataset} data={data} mode={mode} groups={groups} onBack={() => navigate(mode)} /> : <>
-          <div className="summary-strip"><div><span>数据集</span><strong>{data.datasets.filter(item => item.kind !== '预实验').length}<small>正式</small><i>+ 2 预实验</i></strong></div><div><span>当前方向</span><strong>{modeRows.length.toLocaleString()}<small>条请求</small></strong></div><div><span>实验条件</span><strong>3<small>{mode === 'depth' ? '个深度档位' : '个模型 · High'}</small></strong></div><div><span>评分口径</span><strong className="text-stat">按题等权<small>缺失不计零分</small></strong></div></div>
-          <div className="section-toolbar"><div><h2>数据集表现</h2><p>独立评分尺度 · 同题重复先取均值</p></div><div className="toolbar-controls"><TextField size="small" placeholder="查找数据集" aria-label="查找数据集" value={search} onChange={event => setSearch(event.target.value)} slotProps={{ input: { startAdornment: <InputAdornment position="start"><Search size={16} /></InputAdornment> } }} /><Select size="small" value={scope} onChange={event => setScope(event.target.value)} inputProps={{ 'aria-label': '实验范围' }}><MenuItem value="formal">正式实验</MenuItem><MenuItem value="all">包含预实验</MenuItem></Select></div></div>
+          <div className="summary-strip"><div><span>数据集</span><strong>{formalDatasets.length}<small>正式</small></strong></div><div><span>当前方向</span><strong>{modeRows.length.toLocaleString()}<small>条请求</small></strong></div><div><span>实验条件</span><strong>3<small>{mode === 'depth' ? '个深度档位' : '个模型 · High'}</small></strong></div><div><span>评分口径</span><strong className="text-stat">按题等权<small>缺失不计零分</small></strong></div></div>
+          <div className="section-toolbar"><div><h2>数据集表现</h2><p>独立评分尺度 · 同题重复先取均值</p></div><div className="toolbar-controls"><TextField size="small" placeholder="查找数据集" aria-label="查找数据集" value={search} onChange={event => setSearch(event.target.value)} slotProps={{ input: { startAdornment: <InputAdornment position="start"><Search size={16} /></InputAdornment> } }} /></div></div>
           <div className="dataset-grid">{datasets.map(item => {
             const rows = modeRows.filter(row => row.dataset === item.id);
             const missing = groups.filter(group => !rows.some(row => groupKey(row, mode) === group.key));
