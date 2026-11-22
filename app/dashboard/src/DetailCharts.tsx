@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import type { EChartsOption } from 'echarts';
-import { ListItemButton, MenuItem, Select } from '@mui/material';
-import { BarChart3, Clock3, Grid2X2, Hash, LineChart } from 'lucide-react';
+import { Box, Dialog, DialogContent, DialogTitle, IconButton, ListItemButton, MenuItem, Pagination, Select, Table, TableBody, TableCell, TableHead, TableRow, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { BarChart3, Clock3, Grid2X2, Hash, LineChart, X, ZoomIn } from 'lucide-react';
 import { Chart } from './Chart';
-import { format, groupKey, mean, median, taskMean } from './data';
+import { ResourceWaterfall } from './TimeWaterfall';
+import { format, groupKey, mean, taskMean } from './data';
 import type { Dataset, Group, Mode, Row } from './data';
 
 export type TokenMetric = 'total' | 'output' | 'reasoning';
-type ScatterAxis = 'seconds' | TokenMetric;
+type ResourceAxis = 'seconds' | TokenMetric;
 type ChartId = 'score' | 'requests' | 'time' | 'token';
 
 const tokenLabels: Record<TokenMetric, string> = {
@@ -57,29 +58,6 @@ function requestOption(rows: Row[], dataset: Dataset, mode: Mode, groups: Group[
   };
 }
 
-function scatterOption(rows: Row[], dataset: Dataset, mode: Mode, groups: Group[], axis: ScatterAxis, label: string): EChartsOption {
-  return {
-    ...chartBase,
-    tooltip: {
-      trigger: 'item', confine: true, renderMode: 'richText', formatter: parameters => {
-        const item = Array.isArray(parameters) ? parameters[0] : parameters;
-        const values = item.value as [number, number, string];
-        return `${item.seriesName}\n${values[2]}\n${label}：${format(values[0])}\n${dataset.metric}：${format(values[1])}`;
-      },
-    },
-    xAxis: {
-      type: 'value', name: label, nameLocation: 'middle', nameGap: 30, splitLine: { show: false },
-      axisLabel: { formatter: value => value >= 1000 ? `${format(value / 1000, 1)}k` : String(value) },
-    },
-    yAxis: { type: 'value', min: 0, max: dataset.max, splitLine: { lineStyle: { type: 'dashed', color: '#EDEFF2' } } },
-    series: groups.map(group => ({
-      name: group.label, type: 'scatter', symbolSize: 7,
-      itemStyle: { color: group.color, opacity: 0.65 },
-      data: rows.filter(row => groupKey(row, mode) === group.key).map(row => [row[axis], row.score, row.task]),
-    })),
-  };
-}
-
 function scoreAnalysis(rows: Row[], dataset: Dataset, mode: Mode, groups: Group[]) {
   const unit = dataset.max === 100 ? '%' : ' 分';
   const scores = groups.flatMap(group => {
@@ -94,24 +72,119 @@ function scoreAnalysis(rows: Row[], dataset: Dataset, mode: Mode, groups: Group[
   return `按题等权计算，${dataset.metric}为 ${summary}。${scores.length > 1 ? difference : '当前仅一个条件有有效评分，无法比较条件间差异。'}`;
 }
 
+function ResourceSmallMultiples({ rows, dataset, mode, groups, axis }: {
+  rows: Row[]; dataset: Dataset; mode: Mode; groups: Group[]; axis: ResourceAxis;
+}) {
+  const [page, setPage] = useState(1);
+  const [layout, setLayout] = useState<'waterfall' | 'grid'>('waterfall');
+  const [expandedTask, setExpandedTask] = useState<string | null>(null);
+  const dialogTitleId = useId();
+  const resourceLabel = axis === 'seconds' ? '响应耗时（秒）' : tokenLabels[axis];
+  const resourceValue = (value: number) => `${format(value)} ${axis === 'seconds' ? '秒' : 'Token'}`;
+  const resourceTick = (value: number) => value >= 1000 ? `${format(value / 1000, 1)}k` : format(value, 1);
+  const byTask = new Map<string, Map<string, Row[]>>();
+  for (const row of rows) {
+    const conditions = byTask.get(row.task) ?? new Map<string, Row[]>();
+    const key = groupKey(row, mode);
+    const samples = conditions.get(key) ?? [];
+    samples.push(row);
+    conditions.set(key, samples);
+    byTask.set(row.task, conditions);
+  }
+  const tasks = [...byTask].sort(([left], [right]) => left.localeCompare(right, undefined, { numeric: true }))
+    .map(([task, conditions]) => ({ task, points: groups.map(group => {
+      const samples = conditions.get(group.key);
+      return samples ? { group, resource: mean(samples.map(row => row[axis]))!, score: mean(samples.map(row => row.score))!, count: samples.length } : null;
+    }) }));
+  const points = tasks.flatMap(task => task.points.flatMap(point => point ? [point] : []));
+  const peak = Math.max(1, ...points.map(point => point.resource));
+  const step = 10 ** Math.floor(Math.log10(peak / 2));
+  const resourceMax = Math.ceil(peak / (2 * step)) * 2 * step;
+  const binary = dataset.max === 100 && points.every(point => point.score === 0 || point.score === 100);
+  const metric = binary ? '执行结果' : dataset.metric;
+  const scoreLabel = (value: number) => binary ? (value === 100 ? '成功' : '失败') : `${format(value)}${dataset.max === 100 ? '%' : ''}`;
+  const pages = Math.ceil(tasks.length / 20);
+  const currentPage = Math.min(page, pages);
+  const start = (currentPage - 1) * 20;
+  const pageTasks = tasks.slice(start, start + 20);
+  const expanded = tasks.find(item => item.task === expandedTask);
+  const taskOption = (points: (typeof tasks)[number]['points'], large = false): EChartsOption => {
+    const max = large ? Math.max(1, ...points.map(point => point?.resource ?? 0)) * 1.1 : resourceMax;
+    return {
+      ...chartBase,
+      animation: false,
+      grid: large ? { left: 55, right: 28, top: 22, bottom: 52 } : { left: 37, right: 21, top: 9, bottom: 24 },
+      tooltip: { ...chartBase.tooltip, trigger: 'item', formatter: params => {
+        const item = Array.isArray(params) ? params[0] : params;
+        const point = points[item.dataIndex];
+        return point ? points.filter(other => other?.resource === point.resource && other.score === point.score)
+          .map(other => `${other!.group.label}：${resourceValue(other!.resource)} · ${scoreLabel(other!.score)}（${other!.count} 条）`).join('\n') : '';
+      } },
+      xAxis: { type: 'value', min: 0, ...(large ? { max: Math.ceil(max), name: resourceLabel, nameLocation: 'middle', nameGap: 30 } : { max, interval: max / 2 }), axisLabel: { fontSize: large ? 12 : 10, hideOverlap: true, formatter: resourceTick }, splitLine: { show: false } },
+      yAxis: { type: 'value', min: 0, max: dataset.max, interval: binary ? dataset.max : dataset.max / 2, axisLabel: { fontSize: large ? 12 : 10, formatter: scoreLabel }, splitLine: { lineStyle: { color: '#E9EDF1', type: 'dashed' } } },
+      series: [{
+        type: 'line', symbol: 'circle', symbolSize: large ? 11 : 7, connectNulls: false,
+        lineStyle: { color: '#8E9BA8', width: large ? 2 : 1.5 },
+        data: points.map(point => point ? { value: [point.resource, point.score], itemStyle: { color: point.group.color } } : [null, null]),
+      }],
+    };
+  };
+
+  return <>
+    <Box sx={{ display: 'flex', gap: 1, justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', color: 'text.secondary', fontSize: 12, my: 1 }}>
+      <ToggleButtonGroup size="small" exclusive value={layout} aria-label={`${resourceLabel}同题图布局`}
+        onChange={(_, next: typeof layout | null) => { if (next) setLayout(next); }}>
+        <ToggleButton value="waterfall">立体分层</ToggleButton>
+        <ToggleButton value="grid">平面小图</ToggleButton>
+      </ToggleButtonGroup>
+      <span>第 {start + 1}–{Math.min(start + 20, tasks.length)} 题 / 共 {tasks.length} 题</span>
+    </Box>
+    {layout === 'waterfall' ? <ResourceWaterfall tasks={pageTasks} resourceMax={resourceMax} resourceLabel={resourceLabel}
+      resourceValue={resourceValue} resourceTick={resourceTick} scoreMax={dataset.max} metric={metric} binary={binary} scoreLabel={scoreLabel} onOpenTask={setExpandedTask} />
+      : <><Box sx={{ color: 'text.secondary', fontSize: 12, mb: 1 }}>{metric} × {resourceLabel}</Box>
+      <Box role="list" aria-label={axis === 'seconds' ? '同题耗时对比' : '同题 Token 对比'} sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, max(138px, 18%)), 1fr))', columnGap: 1, rowGap: 0.5 }}>
+      {pageTasks.map(({ task, points }) => (
+        <Box role="listitem" key={task} onClick={() => setExpandedTask(task)} sx={{ borderTop: 1, borderColor: 'divider', minWidth: 0, pt: 0.5, cursor: 'zoom-in', '&:hover': { bgcolor: 'action.hover' } }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 0.5 }}>
+            <Box component="h4" title={task} sx={{ m: 0, fontSize: 12, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{task}</Box>
+            <IconButton size="small" aria-label={`放大 ${task}`} title={`放大 ${task}`} aria-haspopup="dialog"><ZoomIn size={14} /></IconButton>
+          </Box>
+          <Chart option={taskOption(points)} label={`${task}：${points.flatMap(point => point ? [`${point.group.label} ${resourceValue(point.resource)}，${scoreLabel(point.score)}`] : []).join('；')}`} height={92} />
+        </Box>
+      ))}
+    </Box></>}
+    {pages > 1 && <Pagination sx={{ display: 'flex', justifyContent: 'center', mt: 1 }} size="small" count={pages} page={currentPage} onChange={(_, next) => setPage(next)} aria-label="题目分页" />}
+    <Dialog open={!!expanded} onClose={() => setExpandedTask(null)} aria-labelledby={dialogTitleId} fullWidth maxWidth="sm">
+      {expanded && <>
+        <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1, overflowWrap: 'anywhere' }}>
+          <span id={dialogTitleId}>题目 {expanded.task}</span>
+          <IconButton autoFocus onClick={() => setExpandedTask(null)} aria-label="关闭单题详情" title="关闭单题详情"><X size={19} /></IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Chart option={taskOption(expanded.points, true)} label={`${expanded.task}：${metric}与${resourceLabel}`} height={250} />
+          <Table size="small" aria-label="各实验条件结果" sx={{ '& td, & th': { px: { xs: 0.5, sm: 1.5 }, whiteSpace: 'normal' } }}>
+            <TableHead><TableRow><TableCell>实验条件</TableCell><TableCell align="right">{resourceLabel}</TableCell><TableCell align="right">{metric}</TableCell><TableCell align="right">样本数</TableCell></TableRow></TableHead>
+            <TableBody>{groups.map((group, index) => {
+              const point = expanded.points[index];
+              return <TableRow key={group.key}>
+                <TableCell component="th" scope="row"><Box component="span" aria-hidden="true" sx={{ display: 'inline-block', width: 8, height: 8, mr: 0.75, borderRadius: '50%', bgcolor: group.color }} />{group.label}</TableCell>
+                <TableCell align="right">{point ? resourceValue(point.resource) : '缺测'}</TableCell>
+                <TableCell align="right">{point ? scoreLabel(point.score) : '—'}</TableCell>
+                <TableCell align="right">{point?.count ?? 0}</TableCell>
+              </TableRow>;
+            })}</TableBody>
+          </Table>
+        </DialogContent>
+      </>}
+    </Dialog>
+  </>;
+}
+
 function requestAnalysis(rows: Row[], dataset: Dataset) {
   const scores = rows.flatMap(row => row.score === null ? [] : [row.score]);
   const atMax = scores.filter(score => score === dataset.max).length;
   const unit = dataset.max === 100 ? '%' : ' 分';
   return `${scores.length} 条有效评分中，有 ${atMax} 条达到满分（${format(atMax / scores.length * 100, 1)}%）。${dataset.metric}落在 ${format(Math.min(...scores))}${unit}至 ${format(Math.max(...scores))}${unit}之间。横轴是各条件内的请求序号，可用来定位低分样本。`;
-}
-
-function scatterAnalysis(rows: Row[], dataset: Dataset, mode: Mode, groups: Group[], axis: ScatterAxis) {
-  const scoreUnit = dataset.max === 100 ? '%' : ' 分';
-  const costUnit = axis === 'seconds' ? ' 秒' : ' Token';
-  const summaries = groups.flatMap(group => {
-    const sample = rows.filter(row => groupKey(row, mode) === group.key);
-    if (sample.length === 0) return [];
-    const cost = median(sample.map(row => row[axis]));
-    const score = mean(sample.map(row => row.score));
-    return [`${group.label}（${sample.length} 条）为 ${format(cost, 1)}${costUnit}、${format(score)}${scoreUnit}`];
-  });
-  return `同时具备评分与${axis === 'seconds' ? '耗时' : tokenLabels[axis]}记录的请求中，各条件的资源消耗中位数与请求平均${dataset.metric}分别是 ${summaries.join('；')}。散点展示的是这些请求的观测关系，不能据此判断增加消耗是否会提高评分。`;
 }
 
 type ChartView = {
@@ -121,7 +194,7 @@ type ChartView = {
   icon: typeof BarChart3;
   legendShape: 'bar' | 'line' | 'dot';
   includes: (row: Row) => boolean;
-  option: (observations: Row[]) => EChartsOption;
+  option?: (observations: Row[]) => EChartsOption;
   analysis: (observations: Row[]) => string;
 };
 
@@ -155,17 +228,15 @@ export function DetailCharts({ dataset, mode, groups, rows, hidden, onToggleGrou
     },
     {
       id: 'time', title: '评分与响应耗时', icon: Clock3, legendShape: 'dot',
-      subtitle: '每个点对应一条请求 · 横轴单位为秒',
+      subtitle: '同一条件下取有效请求的平均耗时和平均分 · 各页刻度一致',
       includes: row => scored(row) && row.seconds !== null,
-      option: observations => scatterOption(observations, dataset, mode, activeGroups, 'seconds', '响应耗时（秒）'),
-      analysis: observations => scatterAnalysis(observations, dataset, mode, activeGroups, 'seconds'),
+      analysis: () => '连线只连接同一道题的结果，缺测处断开。立体图段内按耗时排列，平面图按图例的条件顺序连接；两者都不代表分数随时间连续变化。',
     },
     {
       id: 'token', title: '评分与 Token 消耗', icon: Hash, legendShape: 'dot',
-      subtitle: '每个点对应一条请求 · 输出 Token 已包含推理 Token',
+      subtitle: '同题同条件取有效请求的平均 Token 和平均分 · 输出 Token 已包含推理 Token',
       includes: row => scored(row) && row[token] !== null,
-      option: observations => scatterOption(observations, dataset, mode, activeGroups, token, tokenLabels[token]),
-      analysis: observations => scatterAnalysis(observations, dataset, mode, activeGroups, token),
+      analysis: () => '连线只连接同一道题的结果，缺测处断开。立体图段内按 Token 消耗排列，平面图按图例的条件顺序连接；观察到的差异不代表增加 Token 会提高评分。',
     },
   ];
   const overview = view === 'overview';
@@ -190,7 +261,8 @@ export function DetailCharts({ dataset, mode, groups, rows, hidden, onToggleGrou
             const eligible = rows.filter(chart.includes);
             const observations = eligible.filter(row => !hidden.includes(groupKey(row, mode)));
             return (
-              <section className="panel chart-panel" key={chart.id} aria-labelledby={`chart-${chart.id}-title`}>
+              <section className="panel chart-panel" key={chart.id} aria-labelledby={`chart-${chart.id}-title`}
+                style={chart.id === 'time' || chart.id === 'token' ? { gridColumn: '1 / -1' } : undefined}>
                 <div className="panel-heading">
                   <div>
                     <h3 id={`chart-${chart.id}-title`}>{chart.title}</h3>
@@ -216,9 +288,9 @@ export function DetailCharts({ dataset, mode, groups, rows, hidden, onToggleGrou
                     );
                   })}
                 </div>
-                {observations.length > 0
-                  ? <Chart option={chart.option(observations)} label={chart.title} height={overview ? 270 : 390} />
-                  : <p className="chart-empty">当前筛选条件下没有可绘制的记录。</p>}
+                {observations.length === 0 ? <p className="chart-empty">当前筛选条件下没有可绘制的记录。</p>
+                  : chart.option ? <Chart option={chart.option(observations)} label={chart.title} height={overview ? 270 : 390} />
+                    : <ResourceSmallMultiples rows={observations} dataset={dataset} mode={mode} groups={activeGroups} axis={chart.id === 'time' ? 'seconds' : token} />}
                 {!overview && (
                   <div className="chart-analysis">
                     <h4>图表分析</h4>

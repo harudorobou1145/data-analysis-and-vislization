@@ -8,6 +8,23 @@ import type { TokenMetric } from './DetailCharts';
 import { downloadRows, format, groupKey, groupsFor, inMode, matchingTasks, mean, median, modelNames, taskMean } from './data';
 import type { Data, Dataset, Group, Mode, Row } from './data';
 
+const datasetDescriptions: Record<string, string> = {
+  subjective_60: '从 MT-Bench 和 BiGGen-Bench 选取 60 道开放题，涵盖写作、分析与规划等任务。模型需要按要求给出完整回答，由模型裁判按回答质量评分，同一题的重复作答先取均值。',
+  wildbench: '选取 WildBench v2-hard 中的 20 道真实对话场景难题。模型需要理解用户意图，并在多项约束下给出有用的回答；本实验使用自定义模型裁判，分数不等同于官方榜单成绩。',
+  hss: '使用 20 道图片问答题，考查模型理解图像信息并据此回答问题的能力。每道题有多个判分要点，按满足要点的比例折算成 0–10 分。',
+  humanevalplus: '使用 EvalPlus 的 Python 函数补全任务。模型根据函数签名和题目描述编写实现，评估器执行基础与扩展测试；两套测试均通过才算成功。',
+  alfworld: '使用 ALFWorld 的文本交互任务，模拟家居环境中的找物、搬放和处理物品。模型根据每一步环境反馈决定下一步动作，最终由环境判定目标是否完成。',
+  gsm8k: '小学数学文字题，要求根据题意完成多步计算，再按最终答案判分。',
+  mt_bench: '开放式对话任务，要求模型根据用户指令作答。当前预实验只记录耗时与 Token，没有可用评分。',
+};
+
+function ContextSection({ title, children }: { title: string; children: ReactNode }) {
+  return <Box component="section" aria-label={title} sx={{ py: 2, mb: 3, borderBlock: 1, borderColor: 'divider', color: 'text.secondary', lineHeight: 1.65, '& h2': { mt: 0, mb: 0.75, fontSize: '1.125rem', color: 'text.primary' }, '& p': { m: 0 }, '& p + p': { mt: 0.5 }, '& strong': { color: 'text.primary' } }}>
+    <h2>{title}</h2>
+    {children}
+  </Box>;
+}
+
 function Panel({ title, subtitle, children, action }: { title: string; subtitle?: string; children: ReactNode; action?: ReactNode }) {
   return <section className="panel"><div className="panel-heading"><div><h3>{title}</h3>{subtitle && <p>{subtitle}</p>}</div>{action}</div>{children}</section>;
 }
@@ -86,6 +103,12 @@ export function App() {
         {!dataset && <ToggleButtonGroup exclusive value={mode} onChange={(_, value: Mode | null) => value && navigate(value, datasetId)} className="direction-tabs" aria-label="研究方向"><ToggleButton value="depth"><BrainCircuit size={18} />思考深度</ToggleButton><ToggleButton value="models"><ChartNoAxesCombined size={18} />不同模型</ToggleButton></ToggleButtonGroup>}
         {dataset ? <Detail key={`${mode}-${dataset.id}`} dataset={dataset} data={data} mode={mode} groups={groups} onBack={() => navigate(mode)} /> : <>
           <div className="summary-strip"><div><span>数据集</span><strong>{formalDatasets.length}<small>正式</small></strong></div><div><span>当前方向</span><strong>{modeRows.length.toLocaleString()}<small>条请求</small></strong></div><div><span>实验条件</span><strong>3<small>{mode === 'depth' ? '个深度档位' : '个模型 · High'}</small></strong></div><div><span>评分口径</span><strong className="text-stat">按题等权<small>缺失不计零分</small></strong></div></div>
+          <ContextSection title="实验内容说明">
+            <p>我们用开放问答、图像理解、代码生成和环境交互任务，观察回答质量、响应耗时和 Token 消耗在不同实验条件下如何变化。</p>
+            <p><strong>思考深度：</strong>固定 GPT 6.1 Sol，比较 Low、High、Ultra 三档。</p>
+            <p><strong>不同模型：</strong>固定 High 档，比较 GPT 6.1 Sol、GPT 6 Luna 和 DeepSeek Flash。</p>
+            <p>评分按各数据集的规则分别统计，同题重复作答先取均值，不把不同数据集的得分合成一个总分。</p>
+          </ContextSection>
           <div className="section-toolbar"><div><h2>数据集表现</h2><p>独立评分尺度 · 同题重复先取均值</p></div><div className="toolbar-controls"><TextField size="small" placeholder="查找数据集" aria-label="查找数据集" value={search} onChange={event => setSearch(event.target.value)} slotProps={{ input: { startAdornment: <InputAdornment position="start"><Search size={16} /></InputAdornment> } }} /></div></div>
           <div className="dataset-grid">{datasets.map(item => {
             const rows = modeRows.filter(row => row.dataset === item.id);
@@ -125,6 +148,7 @@ function Detail({ dataset, data, mode, groups, onBack }: { dataset: Dataset; dat
   const reset = () => { setType('all'); setPaired(true); setHidden([]); setQuery(''); setPage(0); setToken('reasoning'); };
   return <>
     <div className="detail-controls"><Button startIcon={<ArrowLeft size={16} />} onClick={onBack}>比较总览</Button><div className="toolbar-controls"><SlidersHorizontal size={17} /><Select value={type} size="small" onChange={event => { setType(event.target.value); setPage(0); }} inputProps={{ 'aria-label': '任务类型' }}><MenuItem value="all">全部任务类型</MenuItem>{types.map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}</Select><FormControlLabel control={<Checkbox size="small" checked={paired} onChange={event => { setPaired(event.target.checked); setPage(0); }} />} label="共同题目" /><Tooltip title="重置筛选"><IconButton aria-label="重置筛选" onClick={reset}><RotateCcw size={17} /></IconButton></Tooltip></div></div>
+    {datasetDescriptions[dataset.id] && <ContextSection title="数据集内容说明"><p>{datasetDescriptions[dataset.id]}</p></ContextSection>}
     <Alert severity={dataset.kind === '预实验' || missing.length ? 'warning' : 'info'} icon={<FlaskConical size={20} />} sx={{ mb: 3 }}>{dataset.note}{missing.length > 0 && ` 当前方向缺测：${missing.map(group => group.label).join('、')}。`}</Alert>
     <div className="summary-strip detail-summary"><div><span>有效评分 / 请求</span><strong>{valid.length}<small>/ {rows.length}</small></strong></div><div><span>共同题目 / 题目总数</span><strong>{new Set(pairedRows.map(row => row.task)).size}<small>/ {new Set(typed.map(row => row.task)).size}</small></strong></div><div><span>响应耗时中位数</span><strong>{format(median(rows.map(row => row.seconds)), 1)}<small>秒</small></strong></div><div><span>平均总 Token</span><strong>{format(mean(rows.map(row => row.total)), 0)}<small>tokens</small></strong></div></div>
     {!rows.length && <Alert severity="info" sx={{ mb: 2 }}>当前筛选没有可比较记录。可调整任务类型、共同题目或图例条件。</Alert>}
