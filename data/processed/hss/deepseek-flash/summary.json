@@ -1,0 +1,34 @@
+{
+  "status": "complete_audited",
+  "groups": [
+    {
+      "condition": "deepseek_high",
+      "tasks": 20,
+      "pass_rate": 0.3,
+      "rubric_score": 0.39166666666666666,
+      "rubric_score_10": 3.9166666666666665,
+      "median_candidate_elapsed_seconds": 23.6229035
+    }
+  ],
+  "audit": {
+    "checked_at": "2026-11-22T10:47:45.728845+00:00",
+    "status": "passed",
+    "require_complete": true,
+    "experiment_id": "hss20_deepseek_high_20261122",
+    "manifest_hash": "7d334222f000ab132ead8987fa4cea7091abd87f875062fbba6946c2422b9300",
+    "answers": 20,
+    "primary_scores": 20,
+    "repeat_scores": 2,
+    "successful_requests": 42,
+    "unique_successful_threads": 42,
+    "attempts_logged": 42,
+    "failed_attempts": 0,
+    "issues": []
+  },
+  "notes": [
+    "Original images and question only enter candidates. Reference/rubric only enter judges.",
+    "Official HSS metrics retained: all-criteria pass and criterion fraction; fraction times ten is a display conversion.",
+    "One generation per task/configuration; official leaderboard uses more attempts. Adapted Sol-high judge.",
+    "DeepSeek official high candidate and currently configured Sol high judge, revision 20261122; Codex 0.167.0-alpha.4.1. Provider and client version differ from the 20261106 GPT batch. HSS requires real image input; unsupported vision must stop, not fabricate a zero."
+  ]
+}

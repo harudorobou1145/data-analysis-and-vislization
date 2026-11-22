@@ -40,11 +40,17 @@ XWB 分组表中的 `artifact_dir` 已改为统一 raw 路径；其他来源路�
 | 字段 | 含义 |
 | --- | --- |
 | `id` | 来源、source_id、run_id 组合标识 |
-| `dataset/model/effort` | 数据集、精确模型名、原始深度，不将 max 改为 ultra |
+| `dataset/model/effort` | 数据集、精确模型名、图表分组档位；HumanEval+ 和 ALFWorld 的 Sol 正式首轮 `max` 按实验口径归入 `ultra` |
+| `rawEffort` | 源记录的档位标签，原始 `max` 保留 |
 | `task/type/phase/status` | 任务编号、类型、阶段、执行状态 |
 | `score` | 0–10 原始分，或布尔判定折算的 0/100；缺失为 null |
 | `seconds` | WTY elapsed_seconds / XWB duration_seconds |
 | `input/output/reasoning/total` | 输入、输出、推理、总 Token；输出已包含推理 |
 | `timestamp` | XWB start_time；WTY 索引没有时间戳，保留 null |
 
-正式数据取 WTY `formal` 与 XWB `initial`，两个预实验独立标记。当前候选池 1,825 条，页面按方向进一步筛选。柱图对同题重复先取均值再按题等权；null 不参与评分均值，不作失败处理。
+正式数据取 WTY `formal` 与 XWB `initial`，两个预实验独立标记。当前候选池 1,845 条，页面按方向进一步筛选。柱图对同题重复先取均值再按题等权；null 不参与评分均值，不作失败处理。
+## HSS补测来源
+
+DeepSeek HSS增加20条formal候选索引，22次裁判请求单独保存在wty_requests中。score_path、answer_hash、answer_attempt_id、judge_request_id关联完整评分与回答；criteria_met/criteria_total保留逐项判分计数。provider_revision、provider_provenance、framework、codex_client、source_revision和image_sha256保留请求与图像来源。原始图片未重复复制，图片原字节和线上编码图片SHA256可在原始runtime中追溯。
+
+补测结果日期2026-11-22，原GPT HSS日期2026-11-06。API/客户端变化与动态模型别名限制在页面数据集说明和补测报告中列明。

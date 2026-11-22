@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import { appRoot, definitions, exportData, normalize, numeric } from './export-data.mjs';
+import { inMode } from '../src/data.ts';
 
 test('missing values remain null and zero remains observed', () => {
   assert.equal(numeric(null), null);
@@ -20,6 +21,11 @@ test('real export excludes repairs and private payloads, keeps formal and pilot 
   assert.equal(data.rows.filter(row => row.dataset === 'alfworld').length, 300);
   assert.equal(data.rows.filter(row => row.dataset === 'gsm8k').length, 25);
   assert.equal(data.rows.filter(row => row.dataset === 'mt_bench').length, 20);
+  const aliased = data.rows.filter(row => row.rawEffort === 'max' && row.effort === 'ultra');
+  assert.equal(aliased.length, 160);
+  assert.equal(aliased.filter(row => row.dataset === 'humanevalplus').length, 100);
+  assert.equal(aliased.filter(row => row.dataset === 'alfworld').length, 60);
+  assert.ok(aliased.every(row => inMode(row, 'depth') && !inMode(row, 'models') && row.phase === 'initial'));
   assert.equal(new Set(data.rows.map(row => row.id)).size, data.rows.length);
   for (const row of data.rows) {
     assert.ok(!['repair', 'auxiliary', 'supplement'].includes(row.phase));

@@ -7,9 +7,9 @@ export const models = ['gpt-6.1-sol', 'gpt-6-luna', 'deepseek-flash'];
 export const definitions = [
   { id: 'subjective_60', name: '主观评分 60 题', kind: '开放任务', metric: '主观质量分', max: 10, note: 'MT-Bench / BiGGen 混合集；同题重复回答分别保留，主图先按题目取均值。模型裁判评分存在天花板效应。' },
   { id: 'wildbench', name: 'WildBench', kind: '开放任务', metric: '主观质量分', max: 10, note: 'v2-hard 20 题，自定义模型裁判评分，不是官方榜单成绩。' },
-  { id: 'hss', name: 'HSS 多模态', kind: '多模态', metric: '准则得分', max: 10, note: '按满足准则比例折算到 10 分；DeepSeek 无有效结果时显示缺测。' },
-  { id: 'humanevalplus', name: 'HumanEval+', kind: '代码任务', metric: '通过率', max: 100, note: '只纳入正式首轮；Base 与 Plus 都通过才记为通过。max 不等同于 ultra，不进行替换。' },
-  { id: 'alfworld', name: 'ALFWorld', kind: '交互任务', metric: '成功率', max: 100, note: '只纳入正式首轮，按官方环境结果判定；模型通道与控制器不同。max 不等同于 ultra。' },
+  { id: 'hss', name: 'HSS 多模态', kind: '多模态', metric: '准则得分', max: 10, note: '按满足准则比例折算到 10 分；DeepSeek high于2026-11-22补测原20题，其余四组来自2026-11-06。API日期、客户端及上游动态模型版本的变化可能影响比较。' },
+  { id: 'humanevalplus', name: 'HumanEval+', kind: '代码任务', metric: '通过率', max: 100, note: '只纳入正式首轮；Base 与 Plus 都通过才记为通过。Sol 的原始 max 按本次实验口径归入 Ultra。' },
+  { id: 'alfworld', name: 'ALFWorld', kind: '交互任务', metric: '成功率', max: 100, note: '只纳入正式首轮，按官方环境结果判定。Sol 的原始 max 按本次实验口径归入 Ultra；模型通道与控制器不同。' },
   { id: 'gsm8k', name: 'GSM8K 预实验', kind: '预实验', metric: '正确率', max: 100, note: '每档仅 5 道题、单次运行，样本过小；不据此推断总体能力。' },
   { id: 'mt_bench', name: 'MT-Bench 预实验', kind: '预实验', metric: '主观质量分', max: 10, note: '仅 4 道题，当前指标索引未提供评分；只能分析耗时与 Token，评分图保持空白。' },
 ];
@@ -20,6 +20,9 @@ export function numeric(value) {
 
 export function normalize(row, definition, source) {
   const code = source === 'xwb';
+  const rawEffort = (code ? row.reasoning_effort : row.effort) ?? 'unknown';
+  const isUltraAlias = code && row.model === 'gpt-6.1-sol' && row.phase === 'initial'
+    && rawEffort === 'max' && ['humanevalplus', 'alfworld'].includes(definition.id);
   const passed = code ? row.task_success : row.passed;
   const score = definition.max === 100
     ? (typeof passed === 'boolean' ? Number(passed) * 100 : null)
@@ -28,7 +31,8 @@ export function normalize(row, definition, source) {
     id: `${source}:${row.source_id ?? ''}:${row.run_id}`,
     dataset: definition.id,
     model: row.model,
-    effort: (code ? row.reasoning_effort : row.effort) ?? 'unknown',
+    effort: isUltraAlias ? 'ultra' : rawEffort,
+    rawEffort,
     task: String(row.task_id),
     type: row.task_type ?? '未分类',
     phase: row.phase,

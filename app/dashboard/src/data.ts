@@ -1,5 +1,5 @@
 export type Row = {
-  id: string; dataset: string; model: string; effort: string; task: string;
+  id: string; dataset: string; model: string; effort: string; rawEffort: string; task: string;
   type: string; phase: string; score: number | null; seconds: number | null;
   input: number | null; output: number | null; reasoning: number | null; total: number | null;
   timestamp: string | null; status: string;
@@ -43,7 +43,7 @@ export function matchingTasks(rows: Row[], mode: Mode, groups: Group[]) {
   return rows.filter(row => present.every(group => tasks.get(row.task)?.has(group.key)));
 }
 export function downloadRows(rows: Row[], name: string) {
-  const keys: (keyof Row)[] = ['dataset', 'model', 'effort', 'task', 'type', 'phase', 'score', 'seconds', 'input', 'output', 'reasoning', 'total', 'timestamp', 'status', 'id'];
+  const keys: (keyof Row)[] = ['dataset', 'model', 'effort', 'rawEffort', 'task', 'type', 'phase', 'score', 'seconds', 'input', 'output', 'reasoning', 'total', 'timestamp', 'status', 'id'];
   const escape = (value: unknown) => '"' + String(value ?? '').replaceAll('"', '""') + '"';
   const csv = '\uFEFF' + [keys.join(','), ...rows.map(row => keys.map(key => escape(row[key])).join(','))].join('\r\n');
   const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));

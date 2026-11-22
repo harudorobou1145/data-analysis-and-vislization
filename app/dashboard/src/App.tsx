@@ -93,7 +93,7 @@ export function App() {
             return <section className="dataset-card" key={item.id}><div className="dataset-card-heading"><div className="dataset-icon"><Database size={20} /></div><div><h3>{item.name}</h3><span>{item.kind} · {item.metric}{item.max === 100 ? ' (%)' : ' / 10'}</span></div><Tooltip title={`查看 ${item.name}`}><IconButton aria-label={`查看 ${item.name}`} onClick={() => navigate(mode, item.id)}><ArrowRight size={19} /></IconButton></Tooltip></div><Chart option={scoreOption(rows, item, mode, groups)} label={`${item.name}评分比较`} height={218} /><div className="dataset-card-footer"><span>{rows.filter(row => row.score !== null).length} 条有效评分 · {new Set(rows.map(row => row.task)).size} 道题</span><span className={missing.length ? 'missing-text' : 'complete-text'}>{missing.length ? `缺测 ${missing.map(group => group.label).join(' / ')}` : '条件齐全'}</span></div></section>;
           })}</div>
           {!datasets.length && <Alert severity="info">没有匹配的数据集。</Alert>}
-          <div className="method-note"><FlaskConical size={19} /><div><strong>分析口径</strong><p>正式主图排除历史、补跑、修复及辅助运行。不同数据集不汇总为单一能力分；代码与交互任务的 max 档位不替代 Ultra。</p></div></div>
+          <div className="method-note"><FlaskConical size={19} /><div><strong>分析口径</strong><p>正式主图排除历史、补跑、修复及辅助运行。不同数据集不汇总为单一能力分；HumanEval+ 和 ALFWorld 的 Sol 首轮 max 按本次实验口径归入 Ultra。</p></div></div>
         </>}
         <footer><span>CodeDepth · AI 对话行为分析</span><span>Material Kit React / Minimal UI</span></footer>
       </main>
