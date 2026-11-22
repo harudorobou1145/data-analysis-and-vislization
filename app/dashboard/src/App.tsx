@@ -1,28 +1,13 @@
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import type { EChartsOption } from 'echarts';
 import { Alert, Avatar, Box, Button, Checkbox, Chip, CircularProgress, Collapse, Drawer, FormControlLabel, IconButton, InputAdornment, ListItemButton, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
 import { Activity, ArrowDownToLine, ArrowLeft, ArrowRight, BrainCircuit, ChartNoAxesCombined, ChevronRight, Database, FlaskConical, Layers3, Menu, RotateCcw, Search, SlidersHorizontal, X } from 'lucide-react';
 import { Chart } from './Chart';
+import { DetailCharts, scoreOption } from './DetailCharts';
+import type { TokenMetric } from './DetailCharts';
 import { downloadRows, format, groupKey, groupsFor, inMode, matchingTasks, mean, median, modelNames, taskMean } from './data';
 import type { Data, Dataset, Group, Mode, Row } from './data';
 
-const chartBase = {
-  textStyle: { fontFamily: 'DM Sans Variable, Microsoft YaHei, sans-serif', color: '#637381' },
-  tooltip: { trigger: 'axis', confine: true, renderMode: 'richText' },
-  grid: { left: 48, right: 24, top: 25, bottom: 48 },
-} satisfies EChartsOption;
-function scoreOption(rows: Row[], dataset: Dataset, mode: Mode, groups: Group[]): EChartsOption {
-  return {
-    ...chartBase,
-    xAxis: { type: 'category', data: groups.map(group => group.label), axisTick: { show: false }, axisLine: { show: false }, axisLabel: { interval: 0, fontSize: 11 } },
-    yAxis: { type: 'value', min: 0, max: dataset.max, splitLine: { lineStyle: { color: '#F0F2F5', type: 'dashed' } } },
-    series: [{ type: 'bar', barWidth: 34, data: groups.map(group => ({
-      value: taskMean(rows.filter(row => groupKey(row, mode) === group.key)),
-      itemStyle: { color: group.color, borderRadius: [5, 5, 0, 0] },
-    })), label: { show: true, position: 'top', color: '#1C252E', formatter: parameters => parameters.value == null ? '' : format(Number(parameters.value)) } }],
-  };
-}
 function Panel({ title, subtitle, children, action }: { title: string; subtitle?: string; children: ReactNode; action?: ReactNode }) {
   return <section className="panel"><div className="panel-heading"><div><h3>{title}</h3>{subtitle && <p>{subtitle}</p>}</div>{action}</div>{children}</section>;
 }
@@ -68,7 +53,6 @@ export function App() {
   const datasets = formalDatasets.filter(item => (item.name + item.kind).toLowerCase().includes(search.toLowerCase()));
   const sidebar = <>
     <a className="brand" href="#mode=depth&dataset=overview" aria-label="CodeDepth 首页"><div className="brand-mark"><Layers3 size={24} /></div><span>CodeDepth<span className="brand-dot">.</span></span></a>
-    <div className="workspace-label"><Avatar sx={{ bgcolor: '#E8F2FE', color: '#1877F2', width: 34, height: 34 }}><FlaskConical size={18} /></Avatar><div><strong>AI 对话行为分析</strong><small>实验工作空间</small></div><span className="live-dot" /></div>
     <ListItemButton selected={!dataset} onClick={() => navigate(mode)} className="nav-item"><Activity size={20} /><span>比较总览</span></ListItemButton>
     <span className="nav-label research-label">研究方向</span>
     {(['depth', 'models'] as const).map(direction => {
@@ -120,7 +104,7 @@ export function App() {
 function Detail({ dataset, data, mode, groups, onBack }: { dataset: Dataset; data: Data; mode: Mode; groups: Group[]; onBack: () => void }) {
   const [type, setType] = useState('all');
   const [paired, setPaired] = useState(() => data.rows.some(row => row.dataset === dataset.id && inMode(row, mode) && row.score !== null));
-  const [token, setToken] = useState<'total' | 'output' | 'reasoning'>('reasoning');
+  const [token, setToken] = useState<TokenMetric>('reasoning');
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(10);
@@ -134,37 +118,18 @@ function Detail({ dataset, data, mode, groups, onBack }: { dataset: Dataset; dat
   const types = [...new Set(all.map(row => row.type))].sort();
   const valid = rows.filter(row => row.score !== null);
   const tableRows = rows.filter(row => `${row.task} ${row.id} ${row.type} ${row.model} ${row.effort}`.toLowerCase().includes(query.toLowerCase()));
-  const line: EChartsOption = {
-    ...chartBase, grid: { left: 48, right: 24, top: 28, bottom: 68 },
-    tooltip: { trigger: 'axis', confine: true, renderMode: 'richText' },
-    xAxis: { type: 'value', name: '请求（样本顺序）', nameLocation: 'middle', nameGap: 32, min: 1, minInterval: 1 },
-    yAxis: { type: 'value', name: dataset.metric, min: 0, max: dataset.max },
-    dataZoom: [{ type: 'inside' }, { type: 'slider', height: 14, bottom: 4 }],
-    series: groups.filter(group => !hidden.includes(group.key)).map(group => {
-      const seriesRows = rows.filter(row => groupKey(row, mode) === group.key).sort((left, right) => left.task.localeCompare(right.task, undefined, { numeric: true }) || left.id.localeCompare(right.id));
-      return { name: group.label, type: 'line', showSymbol: seriesRows.length < 50, symbolSize: 5, connectNulls: false, lineStyle: { width: 1.8 }, itemStyle: { color: group.color }, data: seriesRows.map((row, index) => [index + 1, row.score]) };
-    }),
+  const toggleGroup = (key: string) => {
+    setHidden(current => current.includes(key) ? current.filter(item => item !== key) : [...current, key]);
+    setPage(0);
   };
-  function scatter(axis: 'seconds' | 'total' | 'output' | 'reasoning', label: string): EChartsOption {
-    return {
-      ...chartBase, tooltip: { trigger: 'item', confine: true, renderMode: 'richText', formatter: parameters => {
-        const item = Array.isArray(parameters) ? parameters[0] : parameters;
-        const values = item.value as [number, number, string];
-        return `${item.seriesName}\n${values[2]}\n${label}: ${format(values[0])}\n${dataset.metric}: ${format(values[1])}`;
-      } },
-      xAxis: { type: 'value', name: label, nameLocation: 'middle', nameGap: 30, splitLine: { show: false }, axisLabel: { formatter: value => value >= 1000 ? `${format(value / 1000, 1)}k` : String(value) } },
-      yAxis: { type: 'value', min: 0, max: dataset.max, splitLine: { lineStyle: { type: 'dashed', color: '#EDEFF2' } } },
-      series: groups.filter(group => !hidden.includes(group.key)).map(group => ({ name: group.label, type: 'scatter', symbolSize: 7, itemStyle: { color: group.color, opacity: 0.65 }, data: valid.filter(row => groupKey(row, mode) === group.key && row[axis] !== null).map(row => [row[axis], row.score, row.task]) })),
-    };
-  }
   const reset = () => { setType('all'); setPaired(true); setHidden([]); setQuery(''); setPage(0); setToken('reasoning'); };
   return <>
     <div className="detail-controls"><Button startIcon={<ArrowLeft size={16} />} onClick={onBack}>比较总览</Button><div className="toolbar-controls"><SlidersHorizontal size={17} /><Select value={type} size="small" onChange={event => { setType(event.target.value); setPage(0); }} inputProps={{ 'aria-label': '任务类型' }}><MenuItem value="all">全部任务类型</MenuItem>{types.map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}</Select><FormControlLabel control={<Checkbox size="small" checked={paired} onChange={event => { setPaired(event.target.checked); setPage(0); }} />} label="共同题目" /><Tooltip title="重置筛选"><IconButton aria-label="重置筛选" onClick={reset}><RotateCcw size={17} /></IconButton></Tooltip></div></div>
     <Alert severity={dataset.kind === '预实验' || missing.length ? 'warning' : 'info'} icon={<FlaskConical size={20} />} sx={{ mb: 3 }}>{dataset.note}{missing.length > 0 && ` 当前方向缺测：${missing.map(group => group.label).join('、')}。`}</Alert>
     <div className="summary-strip detail-summary"><div><span>有效评分 / 请求</span><strong>{valid.length}<small>/ {rows.length}</small></strong></div><div><span>共同题目 / 题目总数</span><strong>{new Set(pairedRows.map(row => row.task)).size}<small>/ {new Set(typed.map(row => row.task)).size}</small></strong></div><div><span>响应耗时中位数</span><strong>{format(median(rows.map(row => row.seconds)), 1)}<small>秒</small></strong></div><div><span>平均总 Token</span><strong>{format(mean(rows.map(row => row.total)), 0)}<small>tokens</small></strong></div></div>
-    <div className="legend">{groups.map(group => <button key={group.key} aria-pressed={!hidden.includes(group.key)} className={hidden.includes(group.key) ? 'legend-off' : ''} onClick={() => { setHidden(hidden.includes(group.key) ? hidden.filter(key => key !== group.key) : [...hidden, group.key]); setPage(0); }}><span style={{ background: group.color }} />{group.label}<small>{pairedRows.filter(row => groupKey(row, mode) === group.key).length} 条</small></button>)}</div>
     {!rows.length && <Alert severity="info" sx={{ mb: 2 }}>当前筛选没有可比较记录。可调整任务类型、共同题目或图例条件。</Alert>}
-    <div className="detail-chart-grid"><Panel title={`${dataset.metric}比较`} subtitle={`${dataset.max === 100 ? '0–100%' : '0–10 分'} · 按题等权平均，重复运行先按题取均值`}><Chart option={scoreOption(rows, dataset, mode, groups)} label="平均评分比较" /></Panel><Panel title="逐请求评分" subtitle="按任务编号、运行编号排序；横向序号不代表时间或训练进步"><Chart option={line} label="逐请求评分折线图" /></Panel><Panel title="评分与响应耗时" subtitle={`${valid.filter(row => row.seconds !== null).length} 个有效观测 · 单位：秒`}><Chart option={scatter('seconds', '响应耗时（秒）')} label="评分与耗时散点图" /></Panel><Panel title="评分与 Token 消耗" subtitle={`${valid.filter(row => row[token] !== null).length} 个有效观测 · 输出 Token 已包含推理 Token`} action={<Select size="small" value={token} onChange={event => setToken(event.target.value as typeof token)} inputProps={{ 'aria-label': 'Token 口径' }}><MenuItem value="reasoning">推理 Token</MenuItem><MenuItem value="output">输出 Token</MenuItem><MenuItem value="total">总 Token</MenuItem></Select>}><Chart option={scatter(token, `${token === 'total' ? '总' : token === 'output' ? '输出' : '推理'} Token`)} label="评分与Token散点图" /></Panel></div>
+    <DetailCharts dataset={dataset} mode={mode} groups={groups} rows={pairedRows} hidden={hidden}
+      onToggleGroup={toggleGroup} token={token} onTokenChange={setToken} />
     <Panel title="条件统计" subtitle="空值不参与均值；请求数包含未评分记录。">
       <TableContainer><Table size="small"><TableHead><TableRow>{['实验条件', '请求', '已评分', '题目', dataset.metric, '耗时中位数 (s)', '平均总 Token', '平均推理 Token'].map(item => <TableCell key={item}>{item}</TableCell>)}</TableRow></TableHead><TableBody>{groups.map(group => { const subset = rows.filter(row => groupKey(row, mode) === group.key); return <TableRow key={group.key}><TableCell><span className="table-condition"><i style={{ background: group.color }} />{group.label}</span></TableCell><TableCell>{subset.length}</TableCell><TableCell>{subset.filter(row => row.score !== null).length}</TableCell><TableCell>{new Set(subset.map(row => row.task)).size}</TableCell><TableCell>{format(taskMean(subset))}{dataset.max === 100 && subset.some(row => row.score !== null) ? '%' : ''}</TableCell><TableCell>{format(median(subset.map(row => row.seconds)))}</TableCell><TableCell>{format(mean(subset.map(row => row.total)), 0)}</TableCell><TableCell>{format(mean(subset.map(row => row.reasoning)), 0)}</TableCell></TableRow>; })}</TableBody></Table></TableContainer>
     </Panel>
