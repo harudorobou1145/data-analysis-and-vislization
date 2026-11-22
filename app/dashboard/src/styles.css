@@ -54,7 +54,7 @@ h2 { font-size: 18px; font-weight: 700; }
 .section-toolbar p { font-size: 12px; color: #919eab; margin-top: 6px; }
 .toolbar-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .toolbar-controls .MuiTextField-root { width: 190px; }
-.toolbar-controls .MuiInputBase-root { font-size: 12px; background: #fff; }
+.toolbar-controls .MuiInputBase-root, .resource-task-select.MuiInputBase-root { font-size: 12px; background: #fff; }
 .dataset-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .dataset-card, .panel { background: #fff; border: 1px solid #edf0f3; border-radius: 8px; box-shadow: 0 8px 24px -12px #919eab24; min-width: 0; }
 .dataset-card { animation: appear 350ms ease both; }
@@ -89,7 +89,20 @@ footer { margin-top: 36px; padding: 20px 0; border-top: 1px solid #e8ebee; displ
 .detail-chart-grid.single-chart { grid-template-columns: minmax(0, 1fr); }
 .panel { margin-bottom: 24px; }
 .detail-chart-grid .panel { margin-bottom: 0; }
-.chart-legend { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 12px; padding: 0 20px; }
+.detail-chart-grid:not(.single-chart) .chart-panel > [role="img"] { margin-block-end: 16px; }
+.chart-panel { --chart-inline-inset: 20px; }
+.chart-panel > .panel-heading { padding-inline: var(--chart-inline-inset); }
+.chart-legend { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 12px; padding-inline: var(--chart-inline-inset); }
+.resource-charts { padding-inline: var(--chart-inline-inset); padding-block-end: 12px; }
+.single-chart .resource-charts { padding-block-end: 0; }
+.resource-layout-toggle .MuiToggleButton-root { min-height: 34px; padding: 0 9px; font-size: 12px; line-height: 1.4; background-color: #fff; }
+.resource-layout-toggle .MuiToggleButton-root.Mui-selected { background-color: #e8f2fe; color: #0c44ae; }
+.resource-task-select.MuiInputBase-root { width: 182px; max-width: 100%; }
+.resource-task-menu.MuiPaper-root { overflow-y: auto; overscroll-behavior-y: contain; }
+.resource-chart-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px 12px; }
+@container (max-width: 640px) { .resource-chart-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@container (max-width: 350px) { .resource-chart-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 650px) { .chart-panel { --chart-inline-inset: 16px; } }
 .chart-legend button { display: inline-flex; align-items: center; gap: 5px; padding: 5px 0; border: 0; background: none; font-size: 11px; color: #454f5b; cursor: pointer; }
 .chart-legend button:focus-visible { outline: 2px solid #1877f2; outline-offset: 2px; border-radius: 2px; }
 .chart-legend small { color: #637381; font-size: 10px; }
@@ -98,7 +111,7 @@ footer { margin-top: 36px; padding: 20px 0; border-top: 1px solid #e8ebee; displ
 .legend-mark.bar { width: 7px; height: 10px; border-radius: 2px; }
 .legend-mark.line { width: 12px; height: 3px; border-radius: 2px; }
 .legend-off .legend-mark { opacity: .35; }
-.chart-analysis { margin: 0 20px 20px; padding: 14px 16px; border: 1px solid #e5edf7; border-radius: 6px; background: #f5f8fc; }
+.chart-analysis { margin: 16px var(--chart-inline-inset) 20px; padding: 14px 16px; border: 1px solid #e5edf7; border-radius: 6px; background: #f5f8fc; }
 .chart-analysis h4 { margin: 0 0 6px; font-size: 13px; }
 .chart-analysis p, .chart-empty { font-size: 12px; line-height: 1.8; color: #454f5b; }
 .chart-empty { padding: 32px 20px; color: #637381; }

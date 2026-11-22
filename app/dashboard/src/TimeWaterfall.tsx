@@ -11,6 +11,9 @@ const halfWidth = 3.8;
 const scoreHeight = 2.7;
 const depth = 2.8;
 const defaultAngle = -32;
+const taskMenuMaxHeight = 240;
+const taskMenuGap = 6;
+const taskMenuViewportMargin = 16;
 const cool = new Color('#00869c');
 const warm = new Color('#ef6749');
 
@@ -23,6 +26,30 @@ export function ResourceWaterfall({ tasks, resourceMax, resourceLabel, resourceV
   const [width, setWidth] = useState(760);
   const [angle, setAngle] = useState(defaultAngle);
   const [selection, setSelection] = useState('');
+  const taskSelect = useRef<HTMLDivElement>(null);
+  const [taskMenu, setTaskMenu] = useState<{ above: boolean; height: number; anchorOffset: number } | null>(null);
+  const menuOpen = taskMenu !== null;
+
+  function positionTaskMenu() {
+    const anchor = taskSelect.current?.getBoundingClientRect();
+    if (!anchor) return;
+
+    const inset = taskMenuGap + taskMenuViewportMargin;
+    const spaceBelow = window.innerHeight - anchor.bottom - inset;
+    const spaceAbove = anchor.top - inset;
+    const above = spaceBelow < taskMenuMaxHeight && spaceAbove > spaceBelow;
+    setTaskMenu({
+      above,
+      height: Math.max(0, Math.min(taskMenuMaxHeight, above ? spaceAbove : spaceBelow)),
+      anchorOffset: above ? -taskMenuGap : anchor.height + taskMenuGap,
+    });
+  }
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    window.addEventListener('resize', positionTaskMenu);
+    return () => window.removeEventListener('resize', positionTaskMenu);
+  }, [menuOpen]);
   useEffect(() => {
     const target = frame.current;
     if (!target) return;
@@ -62,8 +89,21 @@ export function ResourceWaterfall({ tasks, resourceMax, resourceLabel, resourceV
 
   return <>
     <Stack direction="row" useFlexGap sx={{ flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 1, mb: 1 }}>
-      <Select size="small" displayEmpty value={selected?.task ?? ''} onChange={event => setSelection(event.target.value)}
-        inputProps={{ 'aria-label': '高亮题目' }} sx={{ maxWidth: '100%', minWidth: 120 }}>
+      <Select
+        ref={taskSelect} size="small" displayEmpty className="resource-task-select"
+        value={selected?.task ?? ''} onChange={event => setSelection(event.target.value)}
+        inputProps={{ 'aria-label': '高亮题目', title: selected?.task }}
+        open={menuOpen} onOpen={positionTaskMenu} onClose={() => setTaskMenu(null)}
+        MenuProps={{
+          marginThreshold: taskMenuViewportMargin,
+          anchorOrigin: { vertical: taskMenu?.anchorOffset ?? 'bottom', horizontal: 'left' },
+          transformOrigin: { vertical: taskMenu?.above ? 'bottom' : 'top', horizontal: 'left' },
+          slotProps: {
+            paper: { className: 'resource-task-menu', style: { maxHeight: taskMenu?.height ?? taskMenuMaxHeight } },
+            list: { dense: true },
+          },
+        }}
+      >
         <MenuItem value="">全部题目</MenuItem>
         {tasks.map(item => <MenuItem key={item.task} value={item.task}>{item.task}</MenuItem>)}
       </Select>

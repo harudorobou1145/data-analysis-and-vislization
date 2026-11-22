@@ -42,7 +42,7 @@ export function scoreOption(rows: Row[], dataset: Dataset, mode: Mode, groups: G
 function requestOption(rows: Row[], dataset: Dataset, mode: Mode, groups: Group[]): EChartsOption {
   return {
     ...chartBase,
-    grid: { left: 48, right: 24, top: 28, bottom: 72 },
+    grid: { left: 48, right: 48, top: 28, bottom: 72 },
     xAxis: { type: 'value', name: '请求（样本顺序）', nameLocation: 'middle', nameGap: 30, min: 1, minInterval: 1 },
     yAxis: { type: 'value', name: dataset.metric, min: 0, max: dataset.max },
     dataZoom: [{ type: 'inside' }, { type: 'slider', height: 14, bottom: 10 }],
@@ -131,29 +131,31 @@ function ResourceSmallMultiples({ rows, dataset, mode, groups, axis }: {
   };
 
   return <>
-    <Box sx={{ display: 'flex', gap: 1, justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', color: 'text.secondary', fontSize: 12, my: 1 }}>
-      <ToggleButtonGroup size="small" exclusive value={layout} aria-label={`${resourceLabel}同题图布局`}
-        onChange={(_, next: typeof layout | null) => { if (next) setLayout(next); }}>
-        <ToggleButton value="waterfall">立体分层</ToggleButton>
-        <ToggleButton value="grid">平面小图</ToggleButton>
-      </ToggleButtonGroup>
-      <span>第 {start + 1}–{Math.min(start + 20, tasks.length)} 题 / 共 {tasks.length} 题</span>
-    </Box>
-    {layout === 'waterfall' ? <ResourceWaterfall tasks={pageTasks} resourceMax={resourceMax} resourceLabel={resourceLabel}
-      resourceValue={resourceValue} resourceTick={resourceTick} scoreMax={dataset.max} metric={metric} binary={binary} scoreLabel={scoreLabel} onOpenTask={setExpandedTask} />
-      : <><Box sx={{ color: 'text.secondary', fontSize: 12, mb: 1 }}>{metric} × {resourceLabel}</Box>
-      <Box role="list" aria-label={axis === 'seconds' ? '同题耗时对比' : '同题 Token 对比'} sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, max(138px, 18%)), 1fr))', columnGap: 1, rowGap: 0.5 }}>
-      {pageTasks.map(({ task, points }) => (
-        <Box role="listitem" key={task} onClick={() => setExpandedTask(task)} sx={{ borderTop: 1, borderColor: 'divider', minWidth: 0, pt: 0.5, cursor: 'zoom-in', '&:hover': { bgcolor: 'action.hover' } }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 0.5 }}>
-            <Box component="h4" title={task} sx={{ m: 0, fontSize: 12, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{task}</Box>
-            <IconButton size="small" aria-label={`放大 ${task}`} title={`放大 ${task}`} aria-haspopup="dialog"><ZoomIn size={14} /></IconButton>
+    <div className="resource-charts">
+      <Box sx={{ display: 'flex', gap: 1, justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', color: 'text.secondary', fontSize: 12, my: 1 }}>
+        <ToggleButtonGroup className="resource-layout-toggle" size="small" exclusive value={layout} aria-label={`${resourceLabel}同题图布局`}
+          onChange={(_, next: typeof layout | null) => { if (next) setLayout(next); }}>
+          <ToggleButton value="waterfall">立体分层</ToggleButton>
+          <ToggleButton value="grid">平面小图</ToggleButton>
+        </ToggleButtonGroup>
+        <span>第 {start + 1}–{Math.min(start + 20, tasks.length)} 题 / 共 {tasks.length} 题</span>
+      </Box>
+      {layout === 'waterfall' ? <ResourceWaterfall tasks={pageTasks} resourceMax={resourceMax} resourceLabel={resourceLabel}
+        resourceValue={resourceValue} resourceTick={resourceTick} scoreMax={dataset.max} metric={metric} binary={binary} scoreLabel={scoreLabel} onOpenTask={setExpandedTask} />
+        : <><Box sx={{ color: 'text.secondary', fontSize: 12, mb: 1 }}>{metric} × {resourceLabel}</Box>
+        <Box role="list" aria-label={axis === 'seconds' ? '同题耗时对比' : '同题 Token 对比'} className="resource-chart-grid">
+        {pageTasks.map(({ task, points }) => (
+          <Box role="listitem" key={task} onClick={() => setExpandedTask(task)} sx={{ borderTop: 1, borderColor: 'divider', minWidth: 0, pt: 0.5, cursor: 'zoom-in', '&:hover': { bgcolor: 'action.hover' } }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 0.5 }}>
+              <Box component="h4" title={task} sx={{ m: 0, fontSize: 12, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{task}</Box>
+              <IconButton size="small" sx={{ flexShrink: 0 }} aria-label={`放大 ${task}`} title={`放大 ${task}`} aria-haspopup="dialog"><ZoomIn size={14} /></IconButton>
+            </Box>
+            <Chart option={taskOption(points)} label={`${task}：${points.flatMap(point => point ? [`${point.group.label} ${resourceValue(point.resource)}，${scoreLabel(point.score)}`] : []).join('；')}`} height={92} />
           </Box>
-          <Chart option={taskOption(points)} label={`${task}：${points.flatMap(point => point ? [`${point.group.label} ${resourceValue(point.resource)}，${scoreLabel(point.score)}`] : []).join('；')}`} height={92} />
-        </Box>
-      ))}
-    </Box></>}
-    {pages > 1 && <Pagination sx={{ display: 'flex', justifyContent: 'center', mt: 1 }} size="small" count={pages} page={currentPage} onChange={(_, next) => setPage(next)} aria-label="题目分页" />}
+        ))}
+      </Box></>}
+      {pages > 1 && <Pagination sx={{ display: 'flex', justifyContent: 'center', mt: 1 }} size="small" count={pages} page={currentPage} onChange={(_, next) => setPage(next)} aria-label="题目分页" />}
+    </div>
     <Dialog open={!!expanded} onClose={() => setExpandedTask(null)} aria-labelledby={dialogTitleId} fullWidth maxWidth="sm">
       {expanded && <>
         <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1, overflowWrap: 'anywhere' }}>
