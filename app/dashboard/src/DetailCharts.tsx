@@ -1,5 +1,5 @@
 import { useId, useState } from 'react';
-import type { EChartsOption } from 'echarts';
+import type { EChartsOption, TooltipComponentOption } from 'echarts';
 import { Box, Dialog, DialogContent, DialogTitle, IconButton, ListItemButton, MenuItem, Pagination, Select, Table, TableBody, TableCell, TableHead, TableRow, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { BarChart3, Clock3, Grid2X2, Hash, LineChart, X, ZoomIn } from 'lucide-react';
 import { Chart } from './Chart';
@@ -72,6 +72,26 @@ function scoreAnalysis(rows: Row[], dataset: Dataset, mode: Mode, groups: Group[
   return `按题等权计算，${dataset.metric}为 ${summary}。${scores.length > 1 ? difference : '当前仅一个条件有有效评分，无法比较条件间差异。'}`;
 }
 
+const positionResourceTooltip: TooltipComponentOption['position'] = (
+  [pointerX, pointerY], _params, tooltip, _rect, { contentSize: [width, height] },
+) => {
+  if (!(tooltip instanceof HTMLElement) || !tooltip.parentElement) return 'top';
+
+  const chart = tooltip.parentElement;
+  const chartBounds = chart.getBoundingClientRect();
+  const panel = chart.closest('.chart-panel, .MuiDialogContent-root') ?? chart;
+  const panelBounds = panel.getBoundingClientRect();
+  const gap = 8;
+  const left = Math.max(0, panelBounds.left) + gap - chartBounds.left;
+  const right = Math.min(window.innerWidth, panelBounds.right) - gap - chartBounds.left;
+  const top = Math.max(0, panelBounds.top) + gap - chartBounds.top;
+  const bottom = Math.min(window.innerHeight, panelBounds.bottom) - gap - chartBounds.top;
+  const x = Math.max(left, Math.min(pointerX + gap, right - width));
+  const preferredY = pointerY - height - gap;
+  const y = preferredY >= top ? preferredY : Math.max(top, Math.min(pointerY + gap, bottom - height));
+  return [x, y];
+};
+
 function ResourceSmallMultiples({ rows, dataset, mode, groups, axis }: {
   rows: Row[]; dataset: Dataset; mode: Mode; groups: Group[]; axis: ResourceAxis;
 }) {
@@ -114,12 +134,33 @@ function ResourceSmallMultiples({ rows, dataset, mode, groups, axis }: {
       ...chartBase,
       animation: false,
       grid: large ? { left: 55, right: 28, top: 22, bottom: 52 } : { left: 37, right: 21, top: 9, bottom: 24 },
-      tooltip: { ...chartBase.tooltip, trigger: 'item', formatter: params => {
-        const item = Array.isArray(params) ? params[0] : params;
-        const point = points[item.dataIndex];
-        return point ? points.filter(other => other?.resource === point.resource && other.score === point.score)
-          .map(other => `${other!.group.label}：${resourceValue(other!.resource)} · ${scoreLabel(other!.score)}（${other!.count} 条）`).join('\n') : '';
-      } },
+      tooltip: {
+        trigger: 'item',
+        renderMode: 'html',
+        confine: false,
+        className: 'resource-point-tooltip',
+        position: positionResourceTooltip,
+        padding: [8, 10],
+        textStyle: { fontSize: 12 },
+        extraCssText: 'max-width: min(218px, calc(100vw - 32px)); white-space: normal; overflow-wrap: anywhere;',
+        formatter: params => {
+          const item = Array.isArray(params) ? params[0] : params;
+          const point = points[item.dataIndex];
+          if (!point) return '';
+
+          return points.flatMap(other => {
+            if (!other || other.resource !== point.resource || other.score !== point.score) return [];
+
+            const details = document.createElement('div');
+            const label = document.createElement('strong');
+            label.textContent = other.group.label;
+            const metrics = document.createElement('div');
+            metrics.textContent = `${resourceValue(other.resource)} · ${metric}：${scoreLabel(other.score)}（${other.count} 条）`;
+            details.append(label, metrics);
+            return [details];
+          });
+        },
+      },
       xAxis: { type: 'value', min: 0, ...(large ? { max: Math.ceil(max), name: resourceLabel, nameLocation: 'middle', nameGap: 30 } : { max, interval: max / 2 }), axisLabel: { fontSize: large ? 12 : 10, hideOverlap: true, formatter: resourceTick }, splitLine: { show: false } },
       yAxis: { type: 'value', min: 0, max: dataset.max, interval: binary ? dataset.max : dataset.max / 2, axisLabel: { fontSize: large ? 12 : 10, formatter: scoreLabel }, splitLine: { lineStyle: { color: '#E9EDF1', type: 'dashed' } } },
       series: [{
