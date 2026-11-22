@@ -169,7 +169,7 @@ function TaskActionTrace({ rows, mode, groups }: { rows: Row[]; mode: Mode; grou
     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, my: 1.5, fontSize: 12, color: 'text.secondary' }}>
       {Object.values(traceStates).map(state => <span key={state.label}><span aria-hidden="true" style={{ color: state.color }}>{state.mark}</span> {state.label}</span>)}
     </Box>
-    <Box sx={{ overflowX: 'auto', maxWidth: '100%' }} tabIndex={0} aria-label={`${task} 逐步操作对照`} role="group">
+    <Box sx={{ overflowX: 'auto', maxWidth: '100%', pb: 1.5 }} tabIndex={0} aria-label={`${task} 逐步操作对照`} role="group">
       <Box sx={{ display: 'grid', gridTemplateColumns: `128px repeat(${maxSteps}, minmax(25px, 1fr))`, minWidth: 128 + maxSteps * 25, alignItems: 'center', rowGap: 1, py: 0.5 }}>
         <Box sx={{ gridRow: 1, fontSize: 12, color: 'text.secondary' }}>环境步数</Box>
         {Array.from({ length: maxSteps }, (_, index) => <Box key={index} sx={{ gridRow: 1, gridColumn: index + 2, textAlign: 'center', fontSize: 11, color: 'text.secondary' }}>
@@ -206,7 +206,7 @@ function TaskActionTrace({ rows, mode, groups }: { rows: Row[]; mode: Mode; grou
         })}
       </Box>
     </Box>
-    <Box component="p" sx={{ color: 'text.secondary', fontSize: 12, mb: 0 }}>动作被环境接受不代表任务取得进展。不同模型使用的控制器不同，轨迹反映实验配置下的行为差异。</Box>
+    <Box component="p" sx={{ color: 'text.secondary', fontSize: 12, mt: 0.75, mb: 0 }}>动作被环境接受不代表任务取得进展。不同模型使用的控制器不同，轨迹反映实验配置下的行为差异。</Box>
   </Box>;
 }
 

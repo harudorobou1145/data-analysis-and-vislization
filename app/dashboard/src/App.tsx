@@ -107,16 +107,28 @@ export function App() {
     <div className="main-shell">
       <header className="topbar"><div className="breadcrumbs"><IconButton className="mobile-menu" aria-label="打开导航" onClick={() => setMobile(true)}><Menu size={22} /></IconButton><span>CodeDepth</span><ChevronRight size={14} /><strong>{dataset ? (mode === 'depth' ? '思考深度' : '不同模型') : '比较总览'}</strong>{dataset && <><ChevronRight size={14} /><span className="breadcrumb-dataset">{dataset.name}</span></>}</div></header>
       <main>
-        <div className="page-heading"><div><div className="eyebrow">EXPERIMENT ANALYTICS</div><h1>{dataset?.name ?? '比较总览'}</h1><p>{mode === 'depth' ? 'GPT 6.1 Sol · Low / High / Ultra' : 'GPT 6.1 Sol / GPT 6 Luna / DeepSeek Flash · High'}</p></div><Button variant="outlined" startIcon={<ArrowDownToLine size={17} />} onClick={() => downloadRows(modeRows.filter(row => !dataset || row.dataset === dataset.id), dataset?.id ?? mode)}>导出数据</Button></div>
-        {!dataset && <ToggleButtonGroup exclusive value={mode} onChange={(_, value: Mode | null) => value && navigate(value, datasetId)} className="direction-tabs" aria-label="研究方向"><ToggleButton value="depth"><BrainCircuit size={18} />思考深度</ToggleButton><ToggleButton value="models"><ChartNoAxesCombined size={18} />不同模型</ToggleButton></ToggleButtonGroup>}
+        <div className="page-heading"><div><div className="eyebrow">EXPERIMENT ANALYTICS</div><h1>{dataset?.name ?? '比较总览'}</h1>{dataset && <p>{mode === 'depth' ? 'GPT 6.1 Sol · Low / High / Ultra' : 'GPT 6.1 Sol / GPT 6 Luna / DeepSeek Flash · High'}</p>}</div><Button variant="outlined" startIcon={<ArrowDownToLine size={17} />} onClick={() => downloadRows(modeRows.filter(row => !dataset || row.dataset === dataset.id), dataset?.id ?? mode)}>导出数据</Button></div>
         {dataset ? <Detail key={`${mode}-${dataset.id}`} dataset={dataset} data={data} mode={mode} groups={groups} onBack={() => navigate(mode)} /> : <>
-          <div className="summary-strip"><div><span>数据集</span><strong>{formalDatasets.length}<small>正式</small></strong></div><div><span>当前方向</span><strong>{modeRows.length.toLocaleString()}<small>条请求</small></strong></div><div><span>实验条件</span><strong>3<small>{mode === 'depth' ? '个深度档位' : '个模型 · High'}</small></strong></div><div><span>评分口径</span><strong className="text-stat">按题等权<small>缺失不计零分</small></strong></div></div>
           <ContextSection title="实验内容说明">
             <p>我们用开放问答、图像理解、代码生成和环境交互任务，观察回答质量、响应耗时和 Token 消耗在不同实验条件下如何变化。</p>
             <p><strong>思考深度：</strong>固定 GPT 6.1 Sol，比较 Low、High、Ultra 三档。</p>
             <p><strong>不同模型：</strong>固定 High 档，比较 GPT 6.1 Sol、GPT 6 Luna 和 DeepSeek Flash。</p>
             <p>评分按各数据集的规则分别统计，同题重复作答先取均值，不把不同数据集的得分合成一个总分。</p>
           </ContextSection>
+          <ToggleButtonGroup exclusive value={mode} onChange={(_, value: Mode | null) => value && navigate(value, datasetId)} className="direction-tabs" aria-label="研究方向"><ToggleButton value="depth"><BrainCircuit size={18} />思考深度</ToggleButton><ToggleButton value="models"><ChartNoAxesCombined size={18} />不同模型</ToggleButton></ToggleButtonGroup>
+          <p className="current-comparison">
+            <strong>当前比较</strong>
+            <span>固定 {mode === 'depth' ? 'GPT 6.1 Sol' : 'High 档'}，比较 {groups.map(group => group.label).join('、')}。</span>
+          </p>
+          <div className="summary-strip">
+            <div><span>数据集</span><strong>{formalDatasets.length}<small>正式</small></strong></div>
+            <div><span>当前方向</span><strong>{modeRows.length.toLocaleString()}<small>条请求</small></strong></div>
+            <div className="experiment-conditions">
+              <span>实验条件</span>
+              <strong>{groups.length}<small>{mode === 'depth' ? '个深度档位' : '个模型'}</small></strong>
+            </div>
+            <div><span>评分口径</span><strong className="text-stat">按题等权<small>缺失不计零分</small></strong></div>
+          </div>
           <div className="section-toolbar"><div><h2>数据集表现</h2><p>独立评分尺度 · 同题重复先取均值</p></div><div className="toolbar-controls"><TextField size="small" placeholder="查找数据集" aria-label="查找数据集" value={search} onChange={event => setSearch(event.target.value)} slotProps={{ input: { startAdornment: <InputAdornment position="start"><Search size={16} /></InputAdornment> } }} /></div></div>
           <div className="dataset-grid">{datasets.map(item => {
             const rows = modeRows.filter(row => row.dataset === item.id);
@@ -156,8 +168,8 @@ function Detail({ dataset, data, mode, groups, onBack }: { dataset: Dataset; dat
   };
   const reset = () => { setType('all'); setPaired(true); setHidden([]); setQuery(''); setPage(0); setToken('reasoning'); };
   return <>
-    <div className="detail-controls"><Button startIcon={<ArrowLeft size={16} />} onClick={onBack}>比较总览</Button><div className="toolbar-controls"><SlidersHorizontal size={17} /><Select value={type} size="small" onChange={event => { setType(event.target.value); setPage(0); }} inputProps={{ 'aria-label': '任务类型' }}><MenuItem value="all">全部任务类型</MenuItem>{types.map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}</Select><FormControlLabel control={<Checkbox size="small" checked={paired} onChange={event => { setPaired(event.target.checked); setPage(0); }} />} label="共同题目" /><Tooltip title="重置筛选"><IconButton aria-label="重置筛选" onClick={reset}><RotateCcw size={17} /></IconButton></Tooltip></div></div>
     {datasetDescriptions[dataset.id] && <ContextSection title="数据集内容说明"><p>{datasetDescriptions[dataset.id]}</p></ContextSection>}
+    <div className="detail-controls"><Button startIcon={<ArrowLeft size={16} />} onClick={onBack}>比较总览</Button><div className="toolbar-controls"><SlidersHorizontal size={17} /><Select value={type} size="small" onChange={event => { setType(event.target.value); setPage(0); }} inputProps={{ 'aria-label': '任务类型' }}><MenuItem value="all">全部任务类型</MenuItem>{types.map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}</Select><FormControlLabel control={<Checkbox size="small" checked={paired} onChange={event => { setPaired(event.target.checked); setPage(0); }} />} label="共同题目" /><Tooltip title="重置筛选"><IconButton aria-label="重置筛选" onClick={reset}><RotateCcw size={17} /></IconButton></Tooltip></div></div>
     <Alert severity={dataset.kind === '预实验' || missing.length ? 'warning' : 'info'} icon={<FlaskConical size={20} />} sx={{ mb: 3 }}>{dataset.note}{missing.length > 0 && ` 当前方向缺测：${missing.map(group => group.label).join('、')}。`}</Alert>
     <div className="summary-strip detail-summary"><div><span>有效评分 / 请求</span><strong>{valid.length}<small>/ {rows.length}</small></strong></div><div><span>共同题目 / 题目总数</span><strong>{new Set(pairedRows.map(row => row.task)).size}<small>/ {new Set(typed.map(row => row.task)).size}</small></strong></div><div><span>响应耗时中位数</span><strong>{format(median(rows.map(row => row.seconds)), 1)}<small>秒</small></strong></div><div><span>平均总 Token</span><strong>{format(mean(rows.map(row => row.total)), 0)}<small>tokens</small></strong></div></div>
     <div className="chart-condition-filter" role="group" aria-labelledby="chart-filter-title">

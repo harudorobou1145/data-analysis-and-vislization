@@ -40,9 +40,12 @@ main { max-width: 1580px; margin: auto; padding: 31px 36px 0; }
 h1 { font-size: 27px; line-height: 1.4; font-weight: 750; }
 .page-heading p { color: #637381; margin-top: 9px; font-size: 13px; }
 .page-heading .MuiButton-root { white-space: nowrap; background: white; border-color: #dfe3e8; color: #1c252e; font-size: 12px; }
-.direction-tabs.MuiToggleButtonGroup-root { border-bottom: 1px solid #dfe3e8; border-radius: 0; width: 100%; gap: 28px; margin-bottom: 28px; }
+.direction-tabs.MuiToggleButtonGroup-root { border-bottom: 1px solid #dfe3e8; border-radius: 0; width: 100%; gap: 28px; }
 .direction-tabs .MuiToggleButton-root { border: none; gap: 9px; color: #637381; padding: 12px 2px; font-size: 13px; border-radius: 0; min-width: 103px; }
 .direction-tabs .MuiToggleButton-root.Mui-selected { background: transparent; color: #1c252e; box-shadow: 0 2px #1877f2; }
+.current-comparison { display: flex; align-items: baseline; gap: 10px; padding: 12px 0 16px; font-size: 13px; line-height: 1.55; color: #637381; }
+.current-comparison strong { flex: none; font-weight: 700; color: #454f5b; }
+.current-comparison span { min-width: 0; overflow-wrap: anywhere; }
 .summary-strip { display: grid; grid-template-columns: repeat(4, 1fr); padding: 21px 0; border-block: 1px solid #e8ebee; margin-bottom: 33px; }
 .summary-strip > div { padding: 0 24px; border-right: 1px solid #e8ebee; }
 .summary-strip > div:first-child { padding-left: 0; }
@@ -96,7 +99,9 @@ footer { margin-top: 36px; padding: 20px 0; border-top: 1px solid #e8ebee; displ
 .chart-panel { --chart-inline-inset: 20px; }
 .chart-panel > .panel-heading { padding-inline: var(--chart-inline-inset); }
 .chart-legend { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 12px; margin: 0; padding: 0 var(--chart-inline-inset); list-style: none; }
-.resource-charts, .behavior-charts { padding-inline: var(--chart-inline-inset); padding-block-end: 12px; }
+.resource-charts, .behavior-charts { padding-inline: var(--chart-inline-inset); }
+.resource-charts { padding-block-end: var(--chart-inline-inset); }
+.behavior-charts { padding-block-end: 12px; }
 .single-chart :is(.resource-charts, .behavior-charts) { padding-block-end: 0; }
 .resource-layout-toggle .MuiToggleButton-root { min-height: 34px; padding: 0 9px; font-size: 12px; line-height: 1.4; background-color: #fff; }
 .resource-layout-toggle .MuiToggleButton-root.Mui-selected { background-color: #e8f2fe; color: #0c44ae; }
