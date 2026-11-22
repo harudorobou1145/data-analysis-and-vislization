@@ -57,7 +57,7 @@ h2 { font-size: 18px; font-weight: 700; }
 .section-toolbar p { font-size: 12px; color: #919eab; margin-top: 6px; }
 .toolbar-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .toolbar-controls .MuiTextField-root { width: 190px; }
-.toolbar-controls .MuiInputBase-root, .resource-task-select.MuiInputBase-root { font-size: 12px; background: #fff; }
+.toolbar-controls .MuiInputBase-root, .chart-task-select.MuiInputBase-root { font-size: 12px; background: #fff; }
 .dataset-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .dataset-card, .panel { background: #fff; border: 1px solid #edf0f3; border-radius: 8px; box-shadow: 0 8px 24px -12px #919eab24; min-width: 0; }
 .dataset-card { animation: appear 350ms ease both; }
@@ -87,7 +87,6 @@ footer { margin-top: 36px; padding: 20px 0; border-top: 1px solid #e8ebee; displ
 .chart-nav-item svg { flex: none; }
 .chart-nav-item span { flex: 1; }
 .chart-nav-item.Mui-selected { background: #e8f2fe; color: #0c44ae; font-weight: 700; }
-.chart-nav-arrow { color: #637381; }
 .chart-results { grid-column: 1; grid-row: 1; min-width: 0; container-type: inline-size; }
 .detail-chart-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 .detail-chart-grid.single-chart { grid-template-columns: minmax(0, 1fr); }
@@ -96,25 +95,28 @@ footer { margin-top: 36px; padding: 20px 0; border-top: 1px solid #e8ebee; displ
 .detail-chart-grid:not(.single-chart) .chart-panel > [role="img"] { margin-block-end: 16px; }
 .chart-panel { --chart-inline-inset: 20px; }
 .chart-panel > .panel-heading { padding-inline: var(--chart-inline-inset); }
-.chart-legend { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 12px; padding-inline: var(--chart-inline-inset); }
-.resource-charts { padding-inline: var(--chart-inline-inset); padding-block-end: 12px; }
-.single-chart .resource-charts { padding-block-end: 0; }
+.chart-legend { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 12px; margin: 0; padding: 0 var(--chart-inline-inset); list-style: none; }
+.resource-charts, .behavior-charts { padding-inline: var(--chart-inline-inset); padding-block-end: 12px; }
+.single-chart :is(.resource-charts, .behavior-charts) { padding-block-end: 0; }
 .resource-layout-toggle .MuiToggleButton-root { min-height: 34px; padding: 0 9px; font-size: 12px; line-height: 1.4; background-color: #fff; }
 .resource-layout-toggle .MuiToggleButton-root.Mui-selected { background-color: #e8f2fe; color: #0c44ae; }
-.resource-task-select.MuiInputBase-root { width: 182px; max-width: 100%; }
-.resource-task-menu.MuiPaper-root { overflow-y: auto; overscroll-behavior-y: contain; }
+.chart-task-select.MuiInputBase-root { width: 182px; max-width: 100%; }
+.behavior-charts .chart-task-select.MuiInputBase-root { width: 88px; }
+.chart-task-menu.MuiPaper-root { overflow-y: auto; overscroll-behavior-y: contain; }
 .resource-chart-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px 12px; }
 @container (max-width: 640px) { .resource-chart-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @container (max-width: 350px) { .resource-chart-grid { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 650px) { .chart-panel { --chart-inline-inset: 16px; } }
-.chart-legend button { display: inline-flex; align-items: center; gap: 5px; padding: 5px 0; border: 0; background: none; font-size: 11px; color: #454f5b; cursor: pointer; }
-.chart-legend button:focus-visible { outline: 2px solid #1877f2; outline-offset: 2px; border-radius: 2px; }
+.chart-legend li { display: inline-flex; align-items: center; gap: 5px; padding-block: 5px; font-size: 11px; color: #454f5b; }
 .chart-legend small { color: #637381; font-size: 10px; }
-.chart-legend .legend-off { color: #637381; text-decoration: line-through; }
+.chart-condition-filter { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 8px; margin-bottom: 16px; }
+.chart-filter-label { font-size: 12px; color: #454f5b; font-weight: 600; margin-inline-end: 2px; }
+.chart-condition-filter label { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; border: 1px solid #dfe3e8; border-radius: 6px; background: #fff; font-size: 12px; line-height: 18px; color: #454f5b; cursor: pointer; }
+.chart-condition-filter label:has(input:checked) { background: #eef1f4; }
+.chart-condition-filter input { width: 14px; height: 14px; flex: none; margin: 0; accent-color: #1877f2; }
 .legend-mark, .table-condition i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
 .legend-mark.bar { width: 7px; height: 10px; border-radius: 2px; }
 .legend-mark.line { width: 12px; height: 3px; border-radius: 2px; }
-.legend-off .legend-mark { opacity: .35; }
 .chart-analysis { margin: 16px var(--chart-inline-inset) 20px; padding: 14px 16px; border: 1px solid #e5edf7; border-radius: 6px; background: #f5f8fc; }
 .chart-analysis h4 { margin: 0 0 6px; font-size: 13px; }
 .chart-analysis p, .chart-empty { font-size: 12px; line-height: 1.8; color: #454f5b; }
@@ -141,7 +143,6 @@ footer { margin-top: 36px; padding: 20px 0; border-top: 1px solid #e8ebee; displ
   .chart-navigation { grid-column: 1; position: static; display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
   .chart-navigation h2 { flex-basis: 100%; margin: 2px 6px 4px; }
   .chart-nav-item.MuiListItemButton-root { width: auto; min-height: 36px; }
-  .chart-nav-arrow { display: none; }
   .chart-results { grid-row: 2; }
 }
 @media (max-width: 650px) { main { padding: 24px 16px 0; } .topbar { padding-inline: 12px; } .topbar-right { font-size: 0; gap: 4px; } .topbar-right .status-dot { display: none; } .breadcrumb-dataset { display: none; } .breadcrumbs { gap: 7px; font-size: 11px; } h1 { font-size: 23px; } .page-heading { align-items: flex-start; } .page-heading p { font-size: 11px; max-width: 230px; line-height: 1.7; } .page-heading .MuiButton-root { min-width: 36px; padding: 8px; font-size: 0; } .page-heading .MuiButton-startIcon { margin: 0; } .summary-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 23px 0; margin-bottom: 25px; } .summary-strip > div { padding-inline: 16px; } .summary-strip > div:nth-child(3) { padding-left: 0; } .summary-strip > div:nth-child(2n) { border: none; } .summary-strip strong { font-size: 26px; } .summary-strip span { font-size: 11px; } .dataset-grid, .detail-chart-grid { grid-template-columns: minmax(0, 1fr); gap: 18px; } .section-toolbar { flex-direction: column; gap: 15px; } .section-toolbar .toolbar-controls { width: 100%; justify-content: flex-start; } .toolbar-controls .MuiTextField-root { width: 174px; } .dataset-card-heading { padding: 19px 18px 4px; } .panel-heading { padding: 18px 16px 8px; } .detail-controls .toolbar-controls { gap: 5px; } .detail-controls .MuiFormControlLabel-root { margin-right: 0; } footer { flex-direction: column; } }

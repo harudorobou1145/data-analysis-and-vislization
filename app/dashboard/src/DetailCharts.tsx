@@ -1,8 +1,9 @@
 import { useId, useState } from 'react';
 import type { EChartsOption, TooltipComponentOption } from 'echarts';
 import { Box, Dialog, DialogContent, DialogTitle, IconButton, ListItemButton, MenuItem, Pagination, Select, Table, TableBody, TableCell, TableHead, TableRow, ToggleButton, ToggleButtonGroup } from '@mui/material';
-import { BarChart3, ChevronRight, Clock3, Grid2X2, Hash, LineChart, X, ZoomIn } from 'lucide-react';
+import { BarChart3, Clock3, Grid2X2, Hash, LineChart, ListChecks, Workflow, X, ZoomIn } from 'lucide-react';
 import { Chart } from './Chart';
+import { ChartTaskSelect } from './ChartTaskSelect';
 import { ResourceWaterfall } from './TimeWaterfall';
 import { format, groupKey, mean, taskMean } from './data';
 import type { Dataset, Group, Mode, Row } from './data';
@@ -163,9 +164,7 @@ function TaskActionTrace({ rows, mode, groups }: { rows: Row[]; mode: Mode; grou
     <TaskStepRing rows={rows} mode={mode} groups={groups} tasks={tasks} selected={task} onSelect={setSelectedTask} />
     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1, flexWrap: 'wrap' }}>
       <h4>同题操作轨迹</h4>
-      <Select size="small" value={task} onChange={event => setSelectedTask(event.target.value)} inputProps={{ 'aria-label': '轨迹题目' }}>
-        {tasks.map(id => <MenuItem key={id} value={id}>{id}</MenuItem>)}
-      </Select>
+      <ChartTaskSelect tasks={tasks} value={task} onChange={setSelectedTask} label="轨迹题目" />
     </Box>
     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, my: 1.5, fontSize: 12, color: 'text.secondary' }}>
       {Object.values(traceStates).map(state => <span key={state.label}><span aria-hidden="true" style={{ color: state.color }}>{state.mark}</span> {state.label}</span>)}
@@ -202,15 +201,24 @@ function TaskActionTrace({ rows, mode, groups }: { rows: Row[]; mode: Mode; grou
   </Box>;
 }
 
+const stepOutcomes = [
+  { score: 100, name: '成功', color: '#118D57' },
+  { score: 0, name: '未成功', color: '#D47716' },
+];
+
+const actionMetrics = [
+  { key: 'invalidActions', name: '无效动作', color: '#D47716' },
+  { key: 'repeatedActions', name: '重复动作', color: '#1877F2' },
+] as const;
+
 function stepDistribution(rows: Row[], mode: Mode, groups: Group[]): EChartsOption {
   return {
     ...chartBase,
     tooltip: { ...chartBase.tooltip, trigger: 'item' },
-    legend: { top: 0, selectedMode: false },
-    grid: { ...chartBase.grid, top: 48 },
+    grid: { ...chartBase.grid, top: 28 },
     xAxis: diagnosticAxis(groups),
     yAxis: { type: 'value', name: '环境步数', min: 0, minInterval: 1 },
-    series: [{ score: 100, name: '成功', color: '#118D57' }, { score: 0, name: '未成功', color: '#D47716' }].map(result => ({
+    series: stepOutcomes.map(result => ({
       name: result.name, type: 'boxplot', dimensions: ['最少', '第 25 百分位', '中位数', '第 75 百分位', '最多'],
       itemStyle: { color: `${result.color}33`, borderColor: result.color },
       data: groups.map(group => {
@@ -231,17 +239,16 @@ function actionShares(rows: Row[], mode: Mode, groups: Group[]): EChartsOption {
   return {
     ...chartBase,
     tooltip: { ...chartBase.tooltip, valueFormatter: value => typeof value === 'number' ? `${format(value)}%` : '缺测' },
-    legend: { top: 0, selectedMode: false },
-    grid: { ...chartBase.grid, top: 48 },
+    grid: { ...chartBase.grid, top: 28 },
     xAxis: diagnosticAxis(groups),
     yAxis: { type: 'value', min: 0, max: 100, axisLabel: { formatter: '{value}%' } },
-    series: [{ key: 'invalidActions', name: '无效动作', color: '#D47716' }, { key: 'repeatedActions', name: '重复动作', color: '#1877F2' }].map(metric => ({
+    series: actionMetrics.map(metric => ({
       name: metric.name, type: 'bar', barMaxWidth: 36, itemStyle: { color: metric.color },
       data: groups.map(group => {
         let actions = 0;
         let steps = 0;
         for (const row of rows) {
-          const count = row[metric.key as 'invalidActions' | 'repeatedActions'];
+          const count = row[metric.key];
           if (groupKey(row, mode) !== group.key || row.environmentSteps == null || row.environmentSteps <= 0 || count == null || count > row.environmentSteps) continue;
           actions += count;
           steps += row.environmentSteps;
@@ -262,8 +269,7 @@ const testOutcomes = [
 function testBreakdown(rows: Row[], mode: Mode, groups: Group[]): EChartsOption {
   return {
     ...chartBase,
-    legend: { top: 0, selectedMode: false },
-    grid: { ...chartBase.grid, top: 64 },
+    grid: { ...chartBase.grid, top: 28 },
     xAxis: diagnosticAxis(groups),
     yAxis: { type: 'value', min: 0, minInterval: 1, name: '首轮记录数' },
     series: testOutcomes.map(outcome => ({
@@ -484,24 +490,44 @@ function requestAnalysis(rows: Row[], dataset: Dataset) {
   return `${scores.length} 条有效评分中，有 ${atMax} 条达到满分（${format(atMax / scores.length * 100, 1)}%）。${dataset.metric}落在 ${format(Math.min(...scores))}${unit}至 ${format(Math.max(...scores))}${unit}之间。横轴是各条件内的请求序号，可用来定位低分样本。`;
 }
 
+type LegendShape = 'bar' | 'line' | 'dot';
+
+function ChartLegend({ title, shape, items }: {
+  title: string;
+  shape: LegendShape;
+  items: readonly { name: string; color: string; count?: number }[];
+}) {
+  if (items.length === 0) return null;
+
+  return (
+    <ul className="chart-legend" aria-label={`${title}图例`}>
+      {items.map(({ name, color, count }) => (
+        <li key={name}>
+          <span className={`legend-mark ${shape}`} style={{ backgroundColor: color }} aria-hidden="true" />
+          {name}{count !== undefined && <small>{count ? `${count} 条` : '缺测'}</small>}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 type ChartView = {
   id: ChartId;
   title: string;
   subtitle: string;
   icon: typeof BarChart3;
-  legendShape: 'bar' | 'line' | 'dot';
+  legendShape?: LegendShape;
   includes: (row: Row) => boolean;
   option?: (observations: Row[]) => EChartsOption;
   analysis: (observations: Row[]) => string;
 };
 
-export function DetailCharts({ dataset, mode, groups, rows, hidden, onToggleGroup, token, onTokenChange }: {
+export function DetailCharts({ dataset, mode, groups, rows, hidden, token, onTokenChange }: {
   dataset: Dataset;
   mode: Mode;
   groups: Group[];
   rows: Row[];
   hidden: string[];
-  onToggleGroup: (key: string) => void;
   token: TokenMetric;
   onTokenChange: (metric: TokenMetric) => void;
 }) {
@@ -539,13 +565,13 @@ export function DetailCharts({ dataset, mode, groups, rows, hidden, onToggleGrou
   ];
   const views = showResourceRelations ? chartViews : chartViews.filter(chart => chart.id !== 'time' && chart.id !== 'token');
   if (dataset.id === 'alfworld') views.push({
-    id: 'behavior', title: '操作行为', icon: BarChart3, legendShape: 'bar',
+    id: 'behavior', title: '操作行为', icon: Workflow,
     subtitle: '正式首轮 · 步数按成功状态分组，动作占比按实验条件汇总',
     includes: row => row.environmentSteps != null,
     analysis: () => '箱体为第 25 至第 75 百分位，横线为中位数，须线为最少与最多。占比分别用动作次数除以对应有记录的环境步数，两类动作可重叠。模型通道和控制器不同，步数差异不宜仅归因于模型。',
   });
   if (dataset.id === 'humanevalplus') views.push({
-    id: 'test-results', title: 'Base／Plus 测试结果', icon: BarChart3, legendShape: 'bar',
+    id: 'test-results', title: 'Base／Plus 测试结果', icon: ListChecks,
     subtitle: '正式首轮 · Base 为基础测试，Plus 为加强测试 · 缺少任一判定的记录不计入',
     includes: row => row.baseStatus != null && row.plusStatus != null,
     option: observations => testBreakdown(observations, mode, activeGroups),
@@ -568,7 +594,6 @@ export function DetailCharts({ dataset, mode, groups, rows, hidden, onToggleGrou
             selected={view === id} aria-pressed={view === id} onClick={() => setView(id)}>
             <Icon size={17} aria-hidden="true" />
             <span>{title}</span>
-            <ChevronRight className="chart-nav-arrow" size={14} aria-hidden="true" />
           </ListItemButton>
         ))}
       </nav>
@@ -592,30 +617,31 @@ export function DetailCharts({ dataset, mode, groups, rows, hidden, onToggleGrou
                     </Select>
                   )}
                 </div>
-                <div className="chart-legend" role="group" aria-label={`${chart.title}图例（筛选当前数据集的实验条件）`}>
-                  {groups.map(group => {
-                    const count = eligible.filter(row => groupKey(row, mode) === group.key).length;
-                    const shown = !hidden.includes(group.key);
-                    return (
-                      <button type="button" key={group.key} aria-pressed={shown} onClick={() => onToggleGroup(group.key)}
-                        className={shown ? '' : 'legend-off'} title="切换此条件在当前数据集中的显示">
-                        <span className={`legend-mark ${chart.legendShape}`} style={{ backgroundColor: group.color }} aria-hidden="true" />
-                        {group.label} <small>{count ? `${count} 条` : '缺测'}</small>
-                      </button>
-                    );
-                  })}
-                </div>
+                {chart.legendShape && (
+                  <ChartLegend title={chart.title} shape={chart.legendShape} items={activeGroups.map(group => ({
+                    name: group.label,
+                    color: group.color,
+                    count: eligible.filter(row => groupKey(row, mode) === group.key).length,
+                  }))} />
+                )}
+                {chart.id === 'test-results' && observations.length > 0 && (
+                  <ChartLegend title={chart.title} shape="bar" items={testOutcomes} />
+                )}
                 {observations.length === 0 ? <p className="chart-empty">当前筛选条件下没有可绘制的记录。</p>
                   : chart.id === 'behavior' ? <>
+                    <ChartLegend title="环境步数分布" shape="bar" items={stepOutcomes} />
                     <Chart option={stepDistribution(observations, mode, activeGroups)} label="成功与未成功的环境步数分布" height={270} />
+                    <ChartLegend title="动作占比" shape="bar" items={actionMetrics} />
                     <Chart option={actionShares(observations, mode, activeGroups)} label="无效动作与重复动作占比" height={270} />
-                    <TaskActionTrace rows={observations} mode={mode} groups={activeGroups} />
+                    <div className="behavior-charts">
+                      <TaskActionTrace rows={observations} mode={mode} groups={activeGroups} />
+                    </div>
                   </> : chart.option ? <Chart option={chart.option(observations)} label={chart.title} height={overview ? 270 : 390} />
                     : <ResourceSmallMultiples rows={observations} dataset={dataset} mode={mode} groups={activeGroups} axis={chart.id === 'time' ? 'seconds' : token} />}
                 {!overview && (
                   <div className="chart-analysis">
                     <h4>图表分析</h4>
-                    <p>{observations.length ? chart.analysis(observations) : '可调整任务类型、共同题目或图例筛选后查看。'}</p>
+                    <p>{observations.length ? chart.analysis(observations) : '可调整任务类型、共同题目或实验条件后查看。'}</p>
                   </div>
                 )}
               </section>

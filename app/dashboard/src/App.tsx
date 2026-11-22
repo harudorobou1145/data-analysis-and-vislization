@@ -151,9 +151,18 @@ function Detail({ dataset, data, mode, groups, onBack }: { dataset: Dataset; dat
     {datasetDescriptions[dataset.id] && <ContextSection title="数据集内容说明"><p>{datasetDescriptions[dataset.id]}</p></ContextSection>}
     <Alert severity={dataset.kind === '预实验' || missing.length ? 'warning' : 'info'} icon={<FlaskConical size={20} />} sx={{ mb: 3 }}>{dataset.note}{missing.length > 0 && ` 当前方向缺测：${missing.map(group => group.label).join('、')}。`}</Alert>
     <div className="summary-strip detail-summary"><div><span>有效评分 / 请求</span><strong>{valid.length}<small>/ {rows.length}</small></strong></div><div><span>共同题目 / 题目总数</span><strong>{new Set(pairedRows.map(row => row.task)).size}<small>/ {new Set(typed.map(row => row.task)).size}</small></strong></div><div><span>响应耗时中位数</span><strong>{format(median(rows.map(row => row.seconds)), 1)}<small>秒</small></strong></div><div><span>平均总 Token</span><strong>{format(mean(rows.map(row => row.total)), 0)}<small>tokens</small></strong></div></div>
-    {!rows.length && <Alert severity="info" sx={{ mb: 2 }}>当前筛选没有可比较记录。可调整任务类型、共同题目或图例条件。</Alert>}
+    <div className="chart-condition-filter" role="group" aria-labelledby="chart-filter-title">
+      <span id="chart-filter-title" className="chart-filter-label">{mode === 'models' ? '模型筛选' : '深度筛选'}</span>
+      {groups.map(group => (
+        <label key={group.key}>
+          <input type="checkbox" checked={!hidden.includes(group.key)} onChange={() => toggleGroup(group.key)} />
+          {group.label}
+        </label>
+      ))}
+    </div>
+    {!rows.length && <Alert severity="info" sx={{ mb: 2 }}>当前筛选没有可比较记录。可调整任务类型、共同题目或实验条件。</Alert>}
     <DetailCharts dataset={dataset} mode={mode} groups={groups} rows={pairedRows} hidden={hidden}
-      onToggleGroup={toggleGroup} token={token} onTokenChange={setToken} />
+      token={token} onTokenChange={setToken} />
     <Panel title="条件统计" subtitle="空值不参与均值；请求数包含未评分记录。">
       <TableContainer><Table size="small"><TableHead><TableRow>{['实验条件', '请求', '已评分', '题目', dataset.metric, '耗时中位数 (s)', '平均总 Token', '平均推理 Token'].map(item => <TableCell key={item}>{item}</TableCell>)}</TableRow></TableHead><TableBody>{groups.map(group => { const subset = rows.filter(row => groupKey(row, mode) === group.key); return <TableRow key={group.key}><TableCell><span className="table-condition"><i style={{ background: group.color }} />{group.label}</span></TableCell><TableCell>{subset.length}</TableCell><TableCell>{subset.filter(row => row.score !== null).length}</TableCell><TableCell>{new Set(subset.map(row => row.task)).size}</TableCell><TableCell>{format(taskMean(subset))}{dataset.max === 100 && subset.some(row => row.score !== null) ? '%' : ''}</TableCell><TableCell>{format(median(subset.map(row => row.seconds)))}</TableCell><TableCell>{format(mean(subset.map(row => row.total)), 0)}</TableCell><TableCell>{format(mean(subset.map(row => row.reasoning)), 0)}</TableCell></TableRow>; })}</TableBody></Table></TableContainer>
     </Panel>
