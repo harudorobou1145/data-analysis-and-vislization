@@ -62,6 +62,17 @@ h2 { font-size: 18px; font-weight: 700; }
 .toolbar-controls .MuiTextField-root { width: 190px; }
 .toolbar-controls .MuiInputBase-root, .chart-task-select.MuiInputBase-root { font-size: 12px; background: #fff; }
 .dataset-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.prompt-overview-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 24px; margin-bottom: 24px; }
+.prompt-overview-grid > .panel { margin-bottom: 0; }
+.prompt-overview-card .MuiButton-root { font-size: 12px; white-space: nowrap; }
+.prompt-overview-results table { width: calc(100% - 44px); margin: 4px 22px 18px; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+.prompt-overview-results th, .prompt-overview-results td { text-align: right; padding: 14px 7px; border-bottom: 1px solid #edf0f3; }
+.prompt-overview-results th:first-child { text-align: left; }
+.prompt-overview-results thead th { font-size: 12px; font-weight: 500; color: #637381; background: #f7f9fb; }
+.prompt-overview-results > p { margin: 0 24px 14px; font-size: 13px; line-height: 1.8; color: #637381; }
+.prompt-overview-results > p.prompt-overview-caveat { font-size: 12px; color: #8493a1; }
+@media (max-width: 1150px) { .prompt-overview-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 650px) { .direction-tabs.MuiToggleButtonGroup-root { gap: 8px; } .direction-tabs .MuiToggleButton-root { min-width: 0; flex: 1; gap: 6px; padding-inline: 2px; font-size: 12px; white-space: nowrap; } .direction-tabs .MuiToggleButton-root svg { flex: none; width: 17px; } }
 .dataset-card, .panel { background: #fff; border: 1px solid #edf0f3; border-radius: 8px; box-shadow: 0 8px 24px -12px #919eab24; min-width: 0; }
 .dataset-card { animation: appear 350ms ease both; }
 .dataset-card:nth-child(2n) { animation-delay: 60ms; }

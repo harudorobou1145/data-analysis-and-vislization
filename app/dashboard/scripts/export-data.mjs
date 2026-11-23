@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { exportTopbench } from './export-topbench.mjs';
 
 export const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const models = ['gpt-6.1-sol', 'gpt-6-luna', 'deepseek-flash'];
@@ -109,6 +110,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const data = exportData(path.resolve(appRoot, '../../data/processed'));
   fs.mkdirSync(path.join(appRoot, 'public'), { recursive: true });
   fs.writeFileSync(path.join(appRoot, 'public/analysis-data.json'), JSON.stringify(data));
+  exportTopbench(path.resolve(appRoot, '../../data/processed'), path.join(appRoot, 'public'));
   console.log(`Exported ${data.rows.length} metric-only records across ${data.datasets.length} datasets.`);
   for (const dataset of definitions) {
     console.log(dataset.id, data.rows.filter(row => row.dataset === dataset.id).length);

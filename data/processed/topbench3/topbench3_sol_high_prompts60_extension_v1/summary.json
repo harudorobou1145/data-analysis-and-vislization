@@ -1,0 +1,53 @@
+{
+  "benchmark": "TOP-Bench v3",
+  "experiment_id": "topbench3_sol_high_prompts60_extension_v1",
+  "planned_distinct_cases": 60,
+  "planned_combinations": 180,
+  "paired_complete_cases": 60,
+  "execution_statuses": {
+    "completed": 180
+  },
+  "limitations": [
+    "20-cell balanced subset is not the full 1000-case distribution.",
+    "Same-model blind automated judges; labels require human spot checks.",
+    "Provider model identity, effort and billing remain unverified."
+  ],
+  "strategies": {
+    "baseline": {
+      "n": 60,
+      "CR": 0.5,
+      "LR": 0.31666666666666665,
+      "H_score": 0.5774647887323944,
+      "outcomes": {
+        "completed_leaking": 10,
+        "completed_safe": 20,
+        "incomplete_safe": 21,
+        "incomplete_leaking": 9
+      }
+    },
+    "tnm": {
+      "n": 60,
+      "CR": 0.4,
+      "LR": 0.21666666666666667,
+      "H_score": 0.5295774647887325,
+      "outcomes": {
+        "completed_leaking": 7,
+        "completed_safe": 17,
+        "incomplete_safe": 30,
+        "incomplete_leaking": 6
+      }
+    },
+    "cbd": {
+      "n": 60,
+      "CR": 0.4,
+      "LR": 0.2,
+      "H_score": 0.5333333333333333,
+      "outcomes": {
+        "completed_safe": 19,
+        "incomplete_safe": 29,
+        "completed_leaking": 5,
+        "incomplete_leaking": 7
+      }
+    }
+  }
+}

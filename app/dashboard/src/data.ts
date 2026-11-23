@@ -10,6 +10,7 @@ export type Row = {
 export type Dataset = { id: string; name: string; kind: string; metric: string; max: number; note: string };
 export type Data = { datasets: Dataset[]; rows: Row[]; excluded: Record<string, number> };
 export type Mode = 'depth' | 'models';
+export type ComparisonDirection = Mode | 'prompts';
 export type Group = { key: string; label: string; color: string };
 export const modelNames: Record<string, string> = {
   'gpt-6.1-sol': 'GPT 6.1 Sol', 'gpt-6-luna': 'GPT 6 Luna', 'deepseek-flash': 'DeepSeek Flash',
@@ -21,6 +22,16 @@ export const groupKey = (row: Row, mode: Mode) => mode === 'depth' ? row.effort 
 export const inMode = (row: Row, mode: Mode) => mode === 'depth'
   ? row.model === 'gpt-6.1-sol' && ['low', 'high', 'ultra'].includes(row.effort)
   : row.effort === 'high' && Object.keys(modelNames).includes(row.model);
+export function overviewStats(data: Data, top: { runs: unknown[]; cases: unknown[] } | null, direction: ComparisonDirection) {
+  const datasets = new Set(data.datasets.filter(item => item.kind !== '预实验').map(item => item.id));
+  const formal = data.rows.filter(row => datasets.has(row.dataset));
+  return {
+    datasetsTotal: datasets.size + (top ? 1 : 0),
+    datasetsCurrent: direction === 'prompts' ? (top ? 1 : 0) : datasets.size,
+    recordsCurrent: direction === 'prompts' ? (top?.runs.length ?? null) : formal.filter(row => inMode(row, direction)).length,
+    recordsTotal: formal.length + (top?.runs.length ?? 0),
+  };
+}
 export function mean(values: (number | null)[]) {
   const valid = values.filter((value): value is number => value !== null);
   return valid.length ? valid.reduce((sum, value) => sum + value, 0) / valid.length : null;

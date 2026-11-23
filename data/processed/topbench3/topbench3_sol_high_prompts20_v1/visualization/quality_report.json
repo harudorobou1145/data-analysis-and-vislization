@@ -1,0 +1,73 @@
+{
+  "cases": 20,
+  "paired_cases": 20,
+  "runs": 60,
+  "requests": 240,
+  "graphs": 60,
+  "execution_statuses": {
+    "completed": 60
+  },
+  "evaluation_statuses": {
+    "completed": 60
+  },
+  "request_statuses": {
+    "completed": 240
+  },
+  "missing_by_field": {
+    "run_id": 0,
+    "task_id": 0,
+    "source_task_id": 0,
+    "strategy": 0,
+    "model": 0,
+    "reasoning_effort": 0,
+    "repeat": 0,
+    "privacy_domain": 0,
+    "difficulty": 0,
+    "execution_status": 0,
+    "evaluation_status": 0,
+    "task_completed": 0,
+    "privacy_leaked": 0,
+    "outcome": 0,
+    "selected_tool_ids": 0,
+    "tool_call_count": 0,
+    "native_tool_call_count": 0,
+    "noise_tool_count": 0,
+    "supporting_set_precision": 0,
+    "supporting_set_recall": 0,
+    "all_supporting_tools_selected": 0,
+    "solver_input_tokens": 0,
+    "solver_output_tokens": 0,
+    "solver_reasoning_tokens": 0,
+    "solver_cached_input_tokens": 0,
+    "solver_total_tokens": 0,
+    "solver_duration_seconds": 0,
+    "solver_http_attempts": 0,
+    "judge_input_tokens": 0,
+    "judge_output_tokens": 0,
+    "judge_reasoning_tokens": 0,
+    "judge_cached_input_tokens": 0,
+    "judge_total_tokens": 0,
+    "judge_duration_seconds": 0,
+    "judge_http_attempts": 0
+  },
+  "removed_duplicate_records": 0,
+  "label_imputation": false,
+  "original_files_modified": false,
+  "raw_content_in_payload": false,
+  "frontend_files_modified": false,
+  "validation_checks": [
+    "unique run and case/strategy identities",
+    "boolean verdicts and 4-state outcomes",
+    "paired 3-strategy denominator",
+    "tool selection matches graph nodes",
+    "request stage coverage",
+    "request/run solver and judge usage reconciled",
+    "null usage retained"
+  ],
+  "limitations": [
+    "20 cases only; domain n=4 and difficulty n=5; each domain/difficulty cell n=1.",
+    "No independent human labels yet; judge model is the same as the solver.",
+    "Model identity, effort support and prices remain unverified at the relay.",
+    "Reference supporting set is an annotated privacy-inference support set, not the task-optimal tool set."
+  ]
+}
