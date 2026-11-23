@@ -1,5 +1,5 @@
-import { Button } from '@mui/material';
-import { ShieldCheck } from 'lucide-react';
+import { IconButton, Tooltip } from '@mui/material';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 import type { EChartsOption } from 'echarts';
 import { Chart } from './Chart';
 import { commonCases, pct, strategyInfo, summarize } from './topbench-data';
@@ -11,8 +11,7 @@ export function PromptOverview({ data, onOpen }: { data: TopData; onOpen: () => 
   const option: EChartsOption = {
     animationDuration: 240,
     textStyle: { fontFamily: 'DM Sans Variable, Microsoft YaHei, sans-serif', color: '#637381' },
-    grid: { left: 52, right: 24, top: 55, bottom: 38 },
-    legend: { top: 8, icon: 'roundRect', itemWidth: 10, itemHeight: 7, textStyle: { color: '#637381', fontSize: 12 } },
+    grid: { left: 48, right: 24, top: 28, bottom: 38 },
     tooltip: { trigger: 'axis', confine: true, renderMode: 'richText', valueFormatter: v => `${v}%` },
     xAxis: { type: 'category', data: stats.map(s => strategyInfo[s.strategy].short), axisTick: { show: false }, axisLine: { lineStyle: { color: '#DFE5EC' } } },
     yAxis: { type: 'value', min: 0, max: 100, name: '%', splitLine: { lineStyle: { type: 'dashed', color: '#EDF0F3' } } },
@@ -22,7 +21,11 @@ export function PromptOverview({ data, onOpen }: { data: TopData; onOpen: () => 
     ],
   };
   return <div className="prompt-overview-grid">
-    <section className="dataset-card prompt-overview-card"><div className="dataset-card-heading"><div className="dataset-icon"><ShieldCheck size={21} /></div><div><h3>TOP-Bench v3</h3><span>提示词策略 · 任务完成与隐私泄漏</span></div><Button size="small" variant="outlined" onClick={onOpen}>进入分析</Button></div>
+    <section className="dataset-card chart-panel"><div className="dataset-card-heading"><div className="dataset-icon"><ShieldCheck size={21} /></div><div><h3>TOP-Bench v3</h3><span>提示词策略 · 任务完成与隐私泄漏</span></div><Tooltip title="查看 TOP-Bench v3"><IconButton aria-label="查看 TOP-Bench v3" onClick={onOpen}><ArrowRight size={19} /></IconButton></Tooltip></div>
+      <ul className="chart-legend" aria-label="TOP-Bench 结果图例">
+        <li><span className="legend-mark bar" style={{ backgroundColor: '#1877F2' }} aria-hidden="true" />完成率 CR（越高越好）</li>
+        <li><span className="legend-mark bar" style={{ backgroundColor: '#D69A3E' }} aria-hidden="true" />泄漏率 LR（越低越好）</li>
+      </ul>
       <Chart option={option} label="TOP-Bench三种提示策略的完成率和泄漏率" height={290} />
       <div className="dataset-card-footer"><span>{cases.length} 道同题 · {data.runs.length} 组实验 · {data.requests.length} 次HTTP请求（含评分）</span><span className="complete-text">三策略配对完整</span></div>
     </section>

@@ -5,6 +5,14 @@ button, input { font: inherit; }
 a { color: inherit; text-decoration: none; }
 h1, h2, h3, p { margin: 0; }
 .app-shell { min-height: 100vh; }
+.back-to-top.MuiFab-root {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 1050;
+  width: 44px;
+  height: 44px;
+}
 .desktop-nav { width: 264px; position: fixed; inset: 0 auto 0 0; padding: 32px 20px 22px; border-right: 1px dashed #dfe3e8; display: flex; flex-direction: column; overflow-y: auto; background: #f9fafb; z-index: 1100; }
 .brand { display: flex; align-items: center; gap: 10px; font-size: 25px; font-weight: 800; padding: 0 12px; margin-bottom: 26px; width: fit-content; }
 .brand-mark { color: #1877f2; display: grid; place-items: center; }
@@ -22,6 +30,7 @@ h1, h2, h3, p { margin: 0; }
 .dataset-dot { width: 6px; height: 6px; border-radius: 2px; background: #919eab; margin: 0 6px; flex: none; }
 .dataset-dot.pilot { background: #d47716; }
 .dataset-nav small { color: #919eab; font-size: 10px; }
+.sidebar-section, .sidebar-bottom, .brand, .research-label { flex-shrink: 0; }
 .sidebar-bottom { margin-top: auto; padding: 35px 14px 0; color: #637381; }
 .source-mark { display: flex; gap: 7px; align-items: center; font-size: 10px; font-weight: 700; color: #919eab; }
 .sidebar-bottom p { margin: 10px 0 5px; font-size: 13px; }
@@ -61,10 +70,23 @@ h2 { font-size: 18px; font-weight: 700; }
 .toolbar-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .toolbar-controls .MuiTextField-root { width: 190px; }
 .toolbar-controls .MuiInputBase-root, .chart-task-select.MuiInputBase-root { font-size: 12px; background: #fff; }
+.reset-button.MuiIconButton-root { width: 34px; height: 34px; flex-shrink: 0; border: 1px solid #dfe3e8; border-radius: 8px; background: #fff; }
+.page-heading .MuiButton-outlined, .reset-button.MuiIconButton-root, .MuiSelect-root.MuiOutlinedInput-root {
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+.MuiSelect-root.MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline { transition: border-color 150ms ease; }
+@media (hover: hover) {
+  :is(.page-heading .MuiButton-outlined, .reset-button.MuiIconButton-root, .MuiSelect-root.MuiOutlinedInput-root):not(.Mui-disabled):not(.Mui-error):hover {
+    background-color: #eef4fc;
+  }
+  :is(.page-heading .MuiButton-outlined, .reset-button.MuiIconButton-root):not(.Mui-disabled):hover,
+  .MuiSelect-root.MuiOutlinedInput-root:not(.Mui-disabled):not(.Mui-error):not(.Mui-focused):hover .MuiOutlinedInput-notchedOutline {
+    border-color: #a8bfdc;
+  }
+}
 .dataset-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .prompt-overview-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 24px; margin-bottom: 24px; }
 .prompt-overview-grid > .panel { margin-bottom: 0; }
-.prompt-overview-card .MuiButton-root { font-size: 12px; white-space: nowrap; }
 .prompt-overview-results table { width: calc(100% - 44px); margin: 4px 22px 18px; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
 .prompt-overview-results th, .prompt-overview-results td { text-align: right; padding: 14px 7px; border-bottom: 1px solid #edf0f3; }
 .prompt-overview-results th:first-child { text-align: left; }
@@ -73,7 +95,7 @@ h2 { font-size: 18px; font-weight: 700; }
 .prompt-overview-results > p.prompt-overview-caveat { font-size: 12px; color: #8493a1; }
 @media (max-width: 1150px) { .prompt-overview-grid { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 650px) { .direction-tabs.MuiToggleButtonGroup-root { gap: 8px; } .direction-tabs .MuiToggleButton-root { min-width: 0; flex: 1; gap: 6px; padding-inline: 2px; font-size: 12px; white-space: nowrap; } .direction-tabs .MuiToggleButton-root svg { flex: none; width: 17px; } }
-.dataset-card, .panel { background: #fff; border: 1px solid #edf0f3; border-radius: 8px; box-shadow: 0 8px 24px -12px #919eab24; min-width: 0; }
+.dataset-card, .panel, .tb-strategy-card { background: #fff; border: 1px solid #edf0f3; border-radius: 8px; box-shadow: 0 8px 24px -12px #919eab24; min-width: 0; }
 .dataset-card { animation: appear 350ms ease both; }
 .dataset-card:nth-child(2n) { animation-delay: 60ms; }
 .dataset-card-heading { padding: 22px 22px 4px; display: flex; align-items: center; gap: 12px; }
@@ -91,7 +113,6 @@ h3 { font-size: 15px; font-weight: 700; }
 .method-note strong { color: #454f5b; font-size: 12px; }
 footer { margin-top: 36px; padding: 20px 0; border-top: 1px solid #e8ebee; display: flex; justify-content: space-between; font-size: 10px; color: #919eab; gap: 12px; }
 .detail-controls { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin: -4px 0 22px; flex-wrap: wrap; }
-.detail-controls .MuiFormControlLabel-label { font-size: 12px; }
 .detail-controls .MuiSelect-select { font-size: 12px; }
 .detail-summary { margin-bottom: 16px; }
 .chart-workspace { display: grid; grid-template-columns: minmax(0, 1fr) 204px; gap: 20px; align-items: start; margin-bottom: 24px; }
@@ -114,8 +135,8 @@ footer { margin-top: 36px; padding: 20px 0; border-top: 1px solid #e8ebee; displ
 .resource-charts { padding-block-end: var(--chart-inline-inset); }
 .behavior-charts { padding-block-end: 12px; }
 .single-chart :is(.resource-charts, .behavior-charts) { padding-block-end: 0; }
-.resource-layout-toggle .MuiToggleButton-root { min-height: 34px; padding: 0 9px; font-size: 12px; line-height: 1.4; background-color: #fff; }
-.resource-layout-toggle .MuiToggleButton-root.Mui-selected { background-color: #e8f2fe; color: #0c44ae; }
+:is(.resource-layout-toggle, .chart-view-toggle) .MuiToggleButton-root { min-height: 34px; padding: 0 9px; font-size: 12px; line-height: 1.4; background-color: #fff; }
+:is(.resource-layout-toggle, .chart-view-toggle) .MuiToggleButton-root.Mui-selected { background-color: #e8f2fe; color: #0c44ae; }
 .chart-task-select.MuiInputBase-root { width: 182px; max-width: 100%; }
 .behavior-charts .chart-task-select.MuiInputBase-root { width: 88px; }
 .chart-task-menu.MuiPaper-root { overflow-y: auto; overscroll-behavior-y: contain; }
@@ -129,7 +150,9 @@ footer { margin-top: 36px; padding: 20px 0; border-top: 1px solid #e8ebee; displ
 .chart-filter-label { font-size: 12px; color: #454f5b; font-weight: 600; margin-inline-end: 2px; }
 .chart-condition-filter label { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; border: 1px solid #dfe3e8; border-radius: 6px; background: #fff; font-size: 12px; line-height: 18px; color: #454f5b; cursor: pointer; }
 .chart-condition-filter label:has(input:checked) { background: #eef1f4; }
-.chart-condition-filter input { width: 14px; height: 14px; flex: none; margin: 0; accent-color: #1877f2; }
+.chart-condition-filter .MuiCheckbox-root { flex: none; padding: 0; }
+.chart-condition-filter .MuiCheckbox-root .MuiSvgIcon-root { font-size: 16px; }
+.chart-condition-filter label:has(.Mui-focusVisible) { outline: 2px solid #1877f2; outline-offset: 2px; }
 .legend-mark, .table-condition i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
 .legend-mark.bar { width: 7px; height: 10px; border-radius: 2px; }
 .legend-mark.line { width: 12px; height: 3px; border-radius: 2px; }
@@ -161,5 +184,5 @@ footer { margin-top: 36px; padding: 20px 0; border-top: 1px solid #e8ebee; displ
   .chart-nav-item.MuiListItemButton-root { width: auto; min-height: 36px; }
   .chart-results { grid-row: 2; }
 }
-@media (max-width: 650px) { main { padding: 24px 16px 0; } .topbar { padding-inline: 12px; } .topbar-right { font-size: 0; gap: 4px; } .topbar-right .status-dot { display: none; } .breadcrumb-dataset { display: none; } .breadcrumbs { gap: 7px; font-size: 11px; } h1 { font-size: 23px; } .page-heading { align-items: flex-start; } .page-heading p { font-size: 11px; max-width: 230px; line-height: 1.7; } .page-heading .MuiButton-root { min-width: 36px; padding: 8px; font-size: 0; } .page-heading .MuiButton-startIcon { margin: 0; } .summary-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 23px 0; margin-bottom: 25px; } .summary-strip > div { padding-inline: 16px; } .summary-strip > div:nth-child(3) { padding-left: 0; } .summary-strip > div:nth-child(2n) { border: none; } .summary-strip strong { font-size: 26px; } .summary-strip span { font-size: 11px; } .dataset-grid, .detail-chart-grid { grid-template-columns: minmax(0, 1fr); gap: 18px; } .section-toolbar { flex-direction: column; gap: 15px; } .section-toolbar .toolbar-controls { width: 100%; justify-content: flex-start; } .toolbar-controls .MuiTextField-root { width: 174px; } .dataset-card-heading { padding: 19px 18px 4px; } .panel-heading { padding: 18px 16px 8px; } .detail-controls .toolbar-controls { gap: 5px; } .detail-controls .MuiFormControlLabel-root { margin-right: 0; } footer { flex-direction: column; } }
+@media (max-width: 650px) { main { padding: 24px 16px 0; } .topbar { padding-inline: 12px; } .topbar-right { font-size: 0; gap: 4px; } .topbar-right .status-dot { display: none; } .breadcrumb-dataset { display: none; } .breadcrumbs { gap: 7px; font-size: 11px; } h1 { font-size: 23px; } .page-heading { align-items: flex-start; } .page-heading p { font-size: 11px; max-width: 230px; line-height: 1.7; } .page-heading .MuiButton-root { min-width: 36px; padding: 8px; font-size: 0; } .page-heading .MuiButton-startIcon { margin: 0; } .summary-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 23px 0; margin-bottom: 25px; } .summary-strip > div { padding-inline: 16px; } .summary-strip > div:nth-child(3) { padding-left: 0; } .summary-strip > div:nth-child(2n) { border: none; } .summary-strip strong { font-size: 26px; } .summary-strip span { font-size: 11px; } .dataset-grid, .detail-chart-grid { grid-template-columns: minmax(0, 1fr); gap: 18px; } .section-toolbar { flex-direction: column; gap: 15px; } .section-toolbar .toolbar-controls { width: 100%; justify-content: flex-start; } .toolbar-controls .MuiTextField-root { width: 174px; } .dataset-card-heading { padding: 19px 18px 4px; } .panel-heading { padding: 18px 16px 8px; } .detail-controls .toolbar-controls { gap: 5px; } footer { flex-direction: column; } }
 @media (prefers-reduced-motion: reduce) { .dataset-card { animation: none; } }

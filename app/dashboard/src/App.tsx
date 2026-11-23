@@ -1,8 +1,9 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import { Alert, Avatar, Box, Button, Checkbox, Chip, CircularProgress, Collapse, Drawer, FormControlLabel, IconButton, InputAdornment, ListItemButton, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
-import { Activity, ArrowDownToLine, ArrowLeft, ArrowRight, BrainCircuit, ChartNoAxesCombined, ChevronRight, ClipboardPenLine, CodeXml, Database, FlaskConical, Layers3, Menu, MessagesSquare, RotateCcw, Route, ScanEye, Search, ShieldCheck, SlidersHorizontal, X } from 'lucide-react';
+import { Alert, Avatar, Box, Button, Checkbox, Chip, CircularProgress, Collapse, Drawer, Fab, IconButton, InputAdornment, ListItemButton, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, ToggleButton, ToggleButtonGroup, Tooltip, useScrollTrigger } from '@mui/material';
+import { Activity, ArrowDownToLine, ArrowLeft, ArrowRight, ArrowUp, BrainCircuit, ChartNoAxesCombined, ChevronRight, ClipboardPenLine, CodeXml, Database, FlaskConical, Layers3, Menu, MessagesSquare, RotateCcw, Route, ScanEye, Search, ShieldCheck, SlidersHorizontal, X } from 'lucide-react';
 import { Chart } from './Chart';
+import { ContextSection } from './ContextSection';
 import { DetailCharts, scoreOption } from './DetailCharts';
 import type { TokenMetric } from './DetailCharts';
 import { downloadRows, format, groupKey, groupsFor, inMode, matchingTasks, mean, median, modelNames, overviewStats, taskMean } from './data';
@@ -31,13 +32,6 @@ const datasetDescriptions: Record<string, string> = {
   mt_bench: '开放式对话任务，要求模型根据用户指令作答。当前预实验只记录耗时与 Token，没有可用评分。',
 };
 
-function ContextSection({ title, children }: { title: string; children: ReactNode }) {
-  return <Box component="section" aria-label={title} sx={{ py: 2, mb: 3, borderBlock: 1, borderColor: 'divider', color: 'text.secondary', lineHeight: 1.65, '& h2': { mt: 0, mb: 0.75, fontSize: '1.125rem', color: 'text.primary' }, '& p': { m: 0 }, '& p + p': { mt: 0.5 }, '& strong': { color: 'text.primary' } }}>
-    <h2>{title}</h2>
-    {children}
-  </Box>;
-}
-
 function Panel({ title, subtitle, children, action }: { title: string; subtitle?: string; children: ReactNode; action?: ReactNode }) {
   return <section className="panel"><div className="panel-heading"><div><h3>{title}</h3>{subtitle && <p>{subtitle}</p>}</div>{action}</div>{children}</section>;
 }
@@ -47,6 +41,24 @@ function AppState() {
   const direction: ComparisonDirection = hash.get('mode') === 'prompts' ? 'prompts' : hash.get('mode') === 'models' ? 'models' : 'depth';
   return { mode: (direction === 'models' ? 'models' : 'depth') as Mode, direction, dataset: ['gsm8k', 'mt_bench'].includes(dataset) ? 'overview' : dataset };
 }
+function BackToTop() {
+  const visible = useScrollTrigger({ threshold: 320, disableHysteresis: true });
+  if (!visible) return null;
+
+  const goToTop = () => {
+    document.getElementById('page-top')?.focus({ preventScroll: true });
+    window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  };
+
+  return (
+    <Tooltip title="返回顶部">
+      <Fab className="back-to-top" color="primary" size="small" aria-label="返回顶部" onClick={goToTop}>
+        <ArrowUp size={20} aria-hidden="true" />
+      </Fab>
+    </Tooltip>
+  );
+}
+
 export function App() {
   const [data, setData] = useState<Data | null>(null);
   const [topData, setTopData] = useState<TopData | null>(null);
@@ -54,7 +66,9 @@ export function App() {
   const [error, setError] = useState('');
   const [route, setRoute] = useState(AppState);
   const [mobile, setMobile] = useState(false);
-  const [expandedModes, setExpandedModes] = useState<Mode[]>(() => ['overview', 'topbench3'].includes(route.dataset) ? [] : [route.mode]);
+  const [expandedDirections, setExpandedDirections] = useState<ComparisonDirection[]>(() =>
+    route.dataset === 'overview' ? [] : [route.dataset === 'topbench3' ? 'prompts' : route.mode],
+  );
   const [search, setSearch] = useState('');
   useEffect(() => {
     const abort = new AbortController();
@@ -67,8 +81,9 @@ export function App() {
     const listener = () => {
       const next = AppState();
       setRoute(next);
-      if (!['overview', 'topbench3'].includes(next.dataset)) {
-        setExpandedModes(current => current.includes(next.mode) ? current : [...current, next.mode]);
+      if (next.dataset !== 'overview') {
+        const section = next.dataset === 'topbench3' ? 'prompts' : next.mode;
+        setExpandedDirections(current => current.includes(section) ? current : [...current, section]);
       }
     };
     addEventListener('hashchange', listener);
@@ -101,41 +116,51 @@ export function App() {
   };
   const modeRows = data.rows.filter(row => inMode(row, mode) && formalDatasets.some(item => item.id === row.dataset));
   const datasets = formalDatasets.filter(item => (item.name + item.kind).toLowerCase().includes(search.toLowerCase()));
-  const sidebar = <>
+  const researchDirections = [
+    { id: 'depth', name: '思考深度', icon: BrainCircuit, datasets: formalDatasets },
+    { id: 'models', name: '不同模型', icon: ChartNoAxesCombined, datasets: formalDatasets },
+    { id: 'prompts', name: '提示词策略', icon: ShieldCheck, datasets: [{ id: 'topbench3', name: 'TOP-Bench v3' }] },
+  ] as const;
+  const renderSidebar = (idPrefix: string) => <>
     <a className="brand" href="#mode=depth&dataset=overview" aria-label="CodeDepth 首页"><div className="brand-mark"><Layers3 size={24} /></div><span>CodeDepth<span className="brand-dot">.</span></span></a>
     <ListItemButton selected={!dataset && !isTopBench} onClick={() => navigateOverview(direction)} className="nav-item"><Activity size={20} /><span>比较总览</span></ListItemButton>
     <span className="nav-label research-label">研究方向</span>
-    {(['depth', 'models'] as const).map(direction => {
-      const expanded = expandedModes.includes(direction);
-      const label = direction === 'depth' ? '思考深度' : '不同模型';
-      const toggleExpanded = () => {
-        setExpandedModes(current => current.includes(direction)
-          ? current.filter(mode => mode !== direction)
-          : [...current, direction]);
-      };
-      return <div key={direction}>
-        <ListItemButton selected={!!dataset && mode === direction} onClick={toggleExpanded} className="nav-item" aria-expanded={expanded} aria-controls={`datasets-${direction}`}>
-          {direction === 'depth' ? <BrainCircuit size={20} /> : <ChartNoAxesCombined size={20} />}<span>{label}</span><ChevronRight size={15} className={`nav-chevron ${expanded ? 'expanded' : ''}`} />
-        </ListItemButton>
-        <Collapse in={expanded} unmountOnExit>
-          <div id={`datasets-${direction}`} className="dataset-submenu" role="group" aria-label={`${label}数据集`}>
-            {formalDatasets.map(item => <ListItemButton key={item.id} selected={mode === direction && dataset?.id === item.id} onClick={() => navigate(direction, item.id)} className="nav-item dataset-nav"><span className="dataset-dot" /><span>{item.name}</span></ListItemButton>)}
-          </div>
-        </Collapse>
-      </div>;
+    {researchDirections.map(({ id, name, icon: Icon, datasets }) => {
+      const expanded = expandedDirections.includes(id);
+      const selected = isTopBench ? id === 'prompts' : !!dataset && mode === id;
+      const submenuId = `${idPrefix}-datasets-${id}`;
+      return (
+        <div className="sidebar-section" key={id}>
+          <ListItemButton selected={selected} className="nav-item" aria-expanded={expanded} aria-controls={submenuId}
+            onClick={() => setExpandedDirections(current => current.includes(id)
+              ? current.filter(section => section !== id)
+              : [...current, id])}>
+            <Icon size={20} /><span>{name}</span>
+            <ChevronRight size={15} className={`nav-chevron ${expanded ? 'expanded' : ''}`} />
+          </ListItemButton>
+          <Collapse in={expanded} unmountOnExit>
+            <div id={submenuId} className="dataset-submenu" role="group" aria-label={`${name}数据集`}>
+              {datasets.map(item => (
+                <ListItemButton key={item.id} selected={selected && datasetId === item.id} className="nav-item dataset-nav"
+                  onClick={() => id === 'prompts' ? openTopBench() : navigate(id, item.id)}>
+                  <span className="dataset-dot" /><span>{item.name}</span>
+                </ListItemButton>
+              ))}
+            </div>
+          </Collapse>
+        </div>
+      );
     })}
-    <ListItemButton selected={isTopBench} onClick={openTopBench} className="nav-item" aria-expanded={isTopBench}><ShieldCheck size={20} /><span>提示词策略</span><ChevronRight size={15} className={`nav-chevron ${isTopBench ? 'expanded' : ''}`} /></ListItemButton>
-    <Collapse in={isTopBench}><div className="dataset-submenu" role="group" aria-label="提示词策略数据集"><ListItemButton selected onClick={openTopBench} className="nav-item dataset-nav"><span className="dataset-dot" /><span>TOP-Bench v3</span></ListItemButton></div></Collapse>
     <div className="sidebar-bottom"><div className="source-mark"><Database size={17} /> PROCESSED DATA</div><p>{isTopBench ? 'TOP-Bench v3' : `${coverage.recordsTotal.toLocaleString()} 条指标记录`}</p><small>{isTopBench ? '同题配对 · 三种提示策略' : `${coverage.datasetsTotal}个正式数据集 · 各方向分别统计`}</small><a href="https://github.com/minimal-ui-kit/material-kit-react" target="_blank" rel="noreferrer">Material Kit React ↗</a></div>
   </>;
   return <div className="app-shell">
-    <aside className="desktop-nav">{sidebar}</aside>
-    <Drawer open={mobile} onClose={() => setMobile(false)} slotProps={{ paper: { sx: { width: 270, p: 2.5 } } }}><IconButton aria-label="关闭导航" onClick={() => setMobile(false)} sx={{ alignSelf: 'flex-end' }}><X size={20} /></IconButton>{sidebar}</Drawer>
+    <aside className="desktop-nav">{renderSidebar('desktop')}</aside>
+    <Drawer open={mobile} onClose={() => setMobile(false)} slotProps={{ paper: { sx: { width: 270, p: 2.5 } } }}><IconButton aria-label="关闭导航" onClick={() => setMobile(false)} sx={{ alignSelf: 'flex-end' }}><X size={20} /></IconButton>{renderSidebar('mobile')}</Drawer>
     <div className="main-shell">
-      <header className="topbar"><div className="breadcrumbs"><IconButton className="mobile-menu" aria-label="打开导航" onClick={() => setMobile(true)}><Menu size={22} /></IconButton><span>CodeDepth</span><ChevronRight size={14} /><strong>{isTopBench ? '提示词策略' : dataset ? (mode === 'depth' ? '思考深度' : '不同模型') : '比较总览'}</strong>{(dataset || isTopBench) && <><ChevronRight size={14} /><span className="breadcrumb-dataset">{isTopBench ? 'TOP-Bench v3' : dataset?.name}</span></>}</div></header>
+      <header className="topbar" id="page-top" tabIndex={-1}><div className="breadcrumbs"><IconButton className="mobile-menu" aria-label="打开导航" onClick={() => setMobile(true)}><Menu size={22} /></IconButton><span>CodeDepth</span><ChevronRight size={14} /><strong>{isTopBench ? '提示词策略' : dataset ? (mode === 'depth' ? '思考深度' : '不同模型') : '比较总览'}</strong>{(dataset || isTopBench) && <><ChevronRight size={14} /><span className="breadcrumb-dataset">{isTopBench ? 'TOP-Bench v3' : dataset?.name}</span></>}</div></header>
       <main>
         {!isTopBench && <div className="page-heading"><div><div className="eyebrow">EXPERIMENT ANALYTICS</div><h1>{dataset?.name ?? '比较总览'}</h1>{dataset && <p>{mode === 'depth' ? 'GPT 6.1 Sol · Low / High / Ultra' : 'GPT 6.1 Sol / GPT 6 Luna / DeepSeek Flash · High'}</p>}</div><Button variant="outlined" startIcon={<ArrowDownToLine size={17} />} onClick={exportCurrent} disabled={isPromptOverview && !topData}>导出数据</Button></div>}
-        {isTopBench ? <Suspense fallback={<Box sx={{ py: 10, textAlign: 'center' }}><CircularProgress /></Box>}><TopBenchPage /></Suspense> : dataset ? <Detail key={`${mode}-${dataset.id}`} dataset={dataset} data={data} mode={mode} groups={groups} onBack={() => navigate(mode)} /> : <>
+        {isTopBench ? <Suspense fallback={<Box sx={{ py: 10, textAlign: 'center' }}><CircularProgress /></Box>}><TopBenchPage onBack={() => navigateOverview('prompts')} /></Suspense> : dataset ? <Detail key={`${mode}-${dataset.id}`} dataset={dataset} data={data} mode={mode} groups={groups} onBack={() => navigate(mode)} /> : <>
           <ContextSection title="实验内容说明">
             <p>我们用开放问答、图像理解、代码生成、环境交互和隐私保护任务，观察回答质量、任务完成度、信息泄漏、响应耗时与 Token 消耗如何变化。</p>
             <p><strong>思考深度：</strong>固定 GPT 6.1 Sol，比较 Low、High、Ultra 三档。</p>
@@ -157,7 +182,7 @@ export function App() {
             </div>
             <div><span>评分口径</span><strong className="text-stat">{isPromptOverview ? '完成与泄漏' : '按题等权'}<small>{isPromptOverview ? `${topData?.cases.length ?? '—'}道同题配对` : '缺失不计零分'}</small></strong></div>
           </div>
-          <div className="section-toolbar"><div><h2>数据集表现</h2><p>独立评分尺度 · 同题重复先取均值</p></div><div className="toolbar-controls"><TextField size="small" placeholder="查找数据集" aria-label="查找数据集" value={search} onChange={event => setSearch(event.target.value)} slotProps={{ input: { startAdornment: <InputAdornment position="start"><Search size={16} /></InputAdornment> } }} /></div></div>
+          <div className="section-toolbar"><div><h2>数据集表现</h2><p>{isPromptOverview ? '同题配对 · 比较任务完成率和隐私泄漏率' : '独立评分尺度 · 同题重复先取均值'}</p></div><div className="toolbar-controls"><TextField size="small" placeholder="查找数据集" aria-label="查找数据集" value={search} onChange={event => setSearch(event.target.value)} slotProps={{ input: { startAdornment: <InputAdornment position="start"><Search size={16} /></InputAdornment> } }} /></div></div>
           {isPromptOverview ? topError ? <Alert severity="error">提示词策略数据加载失败：{topError}</Alert> : !topData ? <Box sx={{ py: 8, textAlign: 'center' }}><CircularProgress /></Box> : !search || 'TOP-Bench v3 隐私 提示词策略'.toLowerCase().includes(search.toLowerCase()) ? <PromptOverview data={topData} onOpen={openTopBench} /> : <Alert severity="info">没有匹配的数据集。</Alert> : <><div className="dataset-grid">{datasets.map(item => {
             const rows = modeRows.filter(row => row.dataset === item.id);
             const missing = groups.filter(group => !rows.some(row => groupKey(row, mode) === group.key));
@@ -170,12 +195,12 @@ export function App() {
         <footer><span>CodeDepth · AI 对话行为分析</span><span>Material Kit React / Minimal UI</span></footer>
       </main>
     </div>
+    <BackToTop />
   </div>;
 }
 
 function Detail({ dataset, data, mode, groups, onBack }: { dataset: Dataset; data: Data; mode: Mode; groups: Group[]; onBack: () => void }) {
   const [type, setType] = useState('all');
-  const [paired, setPaired] = useState(() => data.rows.some(row => row.dataset === dataset.id && inMode(row, mode) && row.score !== null));
   const [token, setToken] = useState<TokenMetric>('reasoning');
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(0);
@@ -184,7 +209,7 @@ function Detail({ dataset, data, mode, groups, onBack }: { dataset: Dataset; dat
   const [hidden, setHidden] = useState<string[]>([]);
   const all = data.rows.filter(row => row.dataset === dataset.id && inMode(row, mode));
   const typed = all.filter(row => type === 'all' || row.type === type);
-  const pairedRows = paired ? matchingTasks(typed, mode, groups) : typed;
+  const pairedRows = all.some(row => row.score !== null) ? matchingTasks(typed, mode, groups) : typed;
   const rows = pairedRows.filter(row => !hidden.includes(groupKey(row, mode)));
   const missing = groups.filter(group => !all.some(row => groupKey(row, mode) === group.key));
   const types = [...new Set(all.map(row => row.type))].sort();
@@ -194,22 +219,36 @@ function Detail({ dataset, data, mode, groups, onBack }: { dataset: Dataset; dat
     setHidden(current => current.includes(key) ? current.filter(item => item !== key) : [...current, key]);
     setPage(0);
   };
-  const reset = () => { setType('all'); setPaired(true); setHidden([]); setQuery(''); setPage(0); setToken('reasoning'); };
+  const reset = () => { setType('all'); setHidden([]); setQuery(''); setPage(0); setToken('reasoning'); };
   return <>
     {datasetDescriptions[dataset.id] && <ContextSection title="数据集内容说明"><p>{datasetDescriptions[dataset.id]}</p></ContextSection>}
-    <div className="detail-controls"><Button startIcon={<ArrowLeft size={16} />} onClick={onBack}>比较总览</Button><div className="toolbar-controls"><SlidersHorizontal size={17} /><Select value={type} size="small" onChange={event => { setType(event.target.value); setPage(0); }} inputProps={{ 'aria-label': '任务类型' }}><MenuItem value="all">全部任务类型</MenuItem>{types.map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}</Select><FormControlLabel control={<Checkbox size="small" checked={paired} onChange={event => { setPaired(event.target.checked); setPage(0); }} />} label="共同题目" /><Tooltip title="重置筛选"><IconButton aria-label="重置筛选" onClick={reset}><RotateCcw size={17} /></IconButton></Tooltip></div></div>
+    <div className="detail-controls">
+      <Button startIcon={<ArrowLeft size={16} />} onClick={onBack}>比较总览</Button>
+      <div className="toolbar-controls">
+        <SlidersHorizontal size={17} />
+        <Select value={type} size="small" onChange={event => { setType(event.target.value); setPage(0); }} inputProps={{ 'aria-label': '任务类型' }}>
+          <MenuItem value="all">全部任务类型</MenuItem>
+          {types.map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}
+        </Select>
+        <Tooltip title="重置筛选">
+          <IconButton className="reset-button" aria-label="重置筛选" onClick={reset} size="small">
+            <RotateCcw size={17} />
+          </IconButton>
+        </Tooltip>
+      </div>
+    </div>
     <Alert severity={dataset.kind === '预实验' || missing.length ? 'warning' : 'info'} icon={<FlaskConical size={20} />} sx={{ mb: 3 }}>{dataset.note}{missing.length > 0 && ` 当前方向缺测：${missing.map(group => group.label).join('、')}。`}</Alert>
     <div className="summary-strip detail-summary"><div><span>有效评分 / 请求</span><strong>{valid.length}<small>/ {rows.length}</small></strong></div><div><span>共同题目 / 题目总数</span><strong>{new Set(pairedRows.map(row => row.task)).size}<small>/ {new Set(typed.map(row => row.task)).size}</small></strong></div><div><span>响应耗时中位数</span><strong>{format(median(rows.map(row => row.seconds)), 1)}<small>秒</small></strong></div><div><span>平均总 Token</span><strong>{format(mean(rows.map(row => row.total)), 0)}<small>tokens</small></strong></div></div>
     <div className="chart-condition-filter" role="group" aria-labelledby="chart-filter-title">
       <span id="chart-filter-title" className="chart-filter-label">{mode === 'models' ? '模型筛选' : '深度筛选'}</span>
       {groups.map(group => (
         <label key={group.key}>
-          <input type="checkbox" checked={!hidden.includes(group.key)} onChange={() => toggleGroup(group.key)} />
+          <Checkbox checked={!hidden.includes(group.key)} onChange={() => toggleGroup(group.key)} />
           {group.label}
         </label>
       ))}
     </div>
-    {!rows.length && <Alert severity="info" sx={{ mb: 2 }}>当前筛选没有可比较记录。可调整任务类型、共同题目或实验条件。</Alert>}
+    {!rows.length && <Alert severity="info" sx={{ mb: 2 }}>当前筛选没有可比较记录。可调整任务类型或实验条件。</Alert>}
     <DetailCharts dataset={dataset} mode={mode} groups={groups} rows={pairedRows} hidden={hidden}
       token={token} onTokenChange={setToken} />
     <Panel title="条件统计" subtitle="空值不参与均值；请求数包含未评分记录。">

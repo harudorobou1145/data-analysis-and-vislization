@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Box, Slider, Stack } from '@mui/material';
+import { Box, IconButton, Slider, Stack } from '@mui/material';
 import { RotateCcw } from 'lucide-react';
 import { Color, OrthographicCamera, Vector3 } from 'three';
 import { ChartTaskSelect } from './ChartTaskSelect';
@@ -67,8 +67,9 @@ export function ResourceWaterfall({ tasks, resourceMax, resourceLabel, resourceV
         onChange={setSelection} label="高亮题目" allLabel="全部题目" />
       <Stack direction="row" spacing={1} sx={{ alignItems: 'center', width: 144, px: 1 }}>
         <Slider size="small" aria-label="立体图视角" min={-65} max={-15} value={angle} onChange={(_, value) => setAngle(value)} />
-        <Box component="button" type="button" title="重置视角" aria-label="重置视角" onClick={() => setAngle(defaultAngle)}
-          sx={{ background: 'none', border: 0, color: 'text.secondary', cursor: 'pointer', display: 'inline-flex', p: 0.5 }}><RotateCcw size={17} /></Box>
+        <IconButton className="reset-button" size="small" title="重置视角" aria-label="重置视角" onClick={() => setAngle(defaultAngle)}>
+          <RotateCcw size={17} />
+        </IconButton>
       </Stack>
     </Stack>
     <Box ref={frame} sx={{ minWidth: 0, bgcolor: 'background.neutral', '& [data-task-layer]:is(:hover, :focus-visible) .layer-baseline': { strokeOpacity: 1, strokeWidth: 2 } }}>
