@@ -35,7 +35,7 @@ const cleaningCases = [
 
 function RecordExample() {
   const codeStyle = { m: 0, mt: 1, p: 1.5, minWidth: 0, bgcolor: '#f3f6f8', color: '#24394b', borderRadius: '8px', fontSize: '.8125rem', lineHeight: 1.6, whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' } as const;
-  return <section aria-labelledby="guide-record" data-chart-section="guide-record" tabIndex={-1}>
+  return <section className="glass-band" aria-labelledby="guide-record" data-chart-section="guide-record" tabIndex={-1}>
     <h2 id="guide-record">一条记录如何进入仪表盘</h2>
     <Typography component="p" variant="body2">以 HumanEval+ 的 EP000 为例。两侧 JSON 是同一次正式首轮运行的字段节选：左侧来自已归档的运行索引，不是 API 原始响应；右侧来自仪表盘的公开指标。</Typography>
     <Box component="figure" aria-labelledby="guide-record-caption" sx={{ mx: 0, my: 2, borderBlock: '1px solid #dce4ec', py: 2 }}>
@@ -71,10 +71,10 @@ const fields = [
 ];
 
 export function TaskGuide() {
-  return <Box sx={{ '& section': { mb: 4 }, '& h2': { mb: 1.5 }, '& h3': { m: 0 }, '& p': { mt: 0.5, mb: 0, color: 'text.secondary', lineHeight: 1.75 } }}>
+  return <Box className="information-page" sx={{ '& h2': { mb: 1.5 }, '& h3': { m: 0 }, '& p': { mt: 0.5, mb: 0, color: 'text.secondary', lineHeight: 1.75 } }}>
     <div className="page-heading"><div><div className="eyebrow">RESEARCH METHOD</div><h1>任务说明</h1><p>从研究问题、原始记录到可比较指标的处理流程</p></div></div>
 
-    <figure className="guide-pipeline" aria-labelledby="guide-pipeline-caption" data-chart-section="guide-pipeline" tabIndex={-1}>
+    <figure className="guide-pipeline glass-band" aria-labelledby="guide-pipeline-caption" data-chart-section="guide-pipeline" tabIndex={-1}>
       <figcaption id="guide-pipeline-caption"><span>图 01</span> 数据处理流程与阶段产物</figcaption>
       <ol role="list">
         {stages.map(({ title, icon: Icon }, index) => <li key={title}>
@@ -85,14 +85,14 @@ export function TaskGuide() {
       </ol>
     </figure>
 
-    <section aria-labelledby="guide-questions" data-chart-section="guide-questions" tabIndex={-1}>
+    <section className="glass-band" aria-labelledby="guide-questions" data-chart-section="guide-questions" tabIndex={-1}>
       <h2 id="guide-questions">研究问题</h2>
       <Box component="ol" sx={{ m: 0, pl: 3, display: 'grid', gap: 1.5 }}>
         {questions.map(([title, question]) => <li key={title}><strong>{title}</strong><Typography component="p" variant="body2">{question}</Typography></li>)}
       </Box>
     </section>
 
-    <section aria-labelledby="guide-workflow" data-chart-section="guide-workflow" tabIndex={-1}>
+    <section className="glass-band" aria-labelledby="guide-workflow" data-chart-section="guide-workflow" tabIndex={-1}>
       <h2 id="guide-workflow">各阶段处理规则</h2>
       <Box component="ol" sx={{ m: 0, pl: 3, display: 'grid', gap: 1.5 }}>
         {stages.map(({ title, text }) => <li key={title}>
@@ -103,7 +103,7 @@ export function TaskGuide() {
 
     <RecordExample />
 
-    <section aria-labelledby="guide-fields" data-chart-section="guide-fields" tabIndex={-1}>
+    <section className="glass-band" aria-labelledby="guide-fields" data-chart-section="guide-fields" tabIndex={-1}>
       <h2 id="guide-fields">字段来源与处理示例</h2>
       <Box component="dl" sx={{ m: 0, '& > div': { display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '9rem minmax(0, 1fr)' }, gap: { xs: 0.5, sm: 2 }, py: 1.5, borderTop: '1px solid', borderColor: 'divider' }, '& dt': { fontWeight: 700 }, '& dd': { m: 0, color: 'text.secondary', lineHeight: 1.75 } }}>
         {fields.map(([label, rule]) => <div key={label}><dt>{label}</dt><dd>{rule}</dd></div>)}

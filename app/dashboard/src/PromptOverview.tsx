@@ -21,7 +21,7 @@ export function PromptOverview({ data, onOpen }: { data: TopData; onOpen: () => 
     ],
   };
   return <div className="prompt-overview-grid">
-    <section className="dataset-card chart-panel"><div className="dataset-card-heading"><div className="dataset-icon"><ShieldCheck size={21} /></div><div><h3>TOP-Bench v3</h3><span>提示词策略 · 任务完成与隐私泄漏</span></div><Tooltip title="查看 TOP-Bench v3"><IconButton aria-label="查看 TOP-Bench v3" onClick={onOpen}><ArrowRight size={19} /></IconButton></Tooltip></div>
+    <section className="dataset-card chart-panel" data-navigable><div className="dataset-card-heading"><div className="dataset-icon"><ShieldCheck size={21} /></div><div><h3>TOP-Bench v3</h3><span>提示词策略 · 任务完成与隐私泄漏</span></div><Tooltip title="查看 TOP-Bench v3"><IconButton aria-label="查看 TOP-Bench v3" onClick={onOpen}><ArrowRight size={19} /></IconButton></Tooltip></div>
       <ul className="chart-legend" aria-label="TOP-Bench 结果图例">
         <li><span className="legend-mark bar" style={{ backgroundColor: '#1877F2' }} aria-hidden="true" />完成率 CR（越高越好）</li>
         <li><span className="legend-mark bar" style={{ backgroundColor: '#D69A3E' }} aria-hidden="true" />泄漏率 LR（越低越好）</li>

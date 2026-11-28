@@ -544,7 +544,8 @@ function RepairTimeline({ chains, groups, activeGroups }: { chains: RepairChain[
   const supplemental = chains.filter(chain => !shared.includes(chain.task) && activeGroups.some(group => group.key === chain.effort));
   const limit = Math.max(10, ...chains.map(chain => chain.firstPass ?? chain.attempts));
   const columns = `64px 52px repeat(${limit}, minmax(25px, 1fr)) minmax(152px, auto)`;
-  return <Box component="section" aria-label="逐题修复轨迹" sx={{ borderTop: '1px solid #E8ECEF', pt: 2, mt: 2, minWidth: 0 }}>
+  return <Box component="section" aria-label="逐题修复轨迹"
+    sx={{ borderTop: '1px solid #E8ECEF', pt: 2, mt: 2, mx: 'var(--chart-inline-inset)', minWidth: 0, '& h4': { m: 0, mb: 1, fontSize: 13 } }}>
     <h4>逐题修复轨迹</h4>
     <Box component="p" sx={{ color: 'text.secondary', fontSize: 13, my: 1 }}>仅包含首轮失败后实际补跑的样本。主图为三档都有修复记录的题目；Ultra 原始档位为 max。</Box>
     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 1, fontSize: 12, color: 'text.secondary' }}>
@@ -571,8 +572,8 @@ function RepairTimeline({ chains, groups, activeGroups }: { chains: RepairChain[
                 {Array.from({ length: limit }, (_, step) => <Box key={step} aria-hidden="true" sx={{
                   position: 'relative', textAlign: 'center', height: 24, lineHeight: '24px', color: outcome.color, fontWeight: 700, fontSize: 15,
                   borderLeft: '1px solid #EDF0F2',
-                  ...(step + 1 <= end && { '&::before': { content: '""', position: 'absolute', left: 0, right: step + 1 === end ? '50%' : 0, top: '50%', borderTop: `2px ${chain.firstPass !== null ? 'solid' : 'dashed'} ${group.color}`, opacity: 0.65 } }),
-                }}>{step + 1 === end && <Box component="span" sx={{ position: 'relative', bgcolor: 'background.paper' }}>{outcome.symbol}</Box>}</Box>)}
+                  ...(step + 1 <= end && { '&::before': { content: '""', position: 'absolute', left: 0, right: step + 1 === end ? 'calc(50% + 7px)' : 0, top: '50%', borderTop: `2px ${chain.firstPass !== null ? 'solid' : 'dashed'} ${group.color}`, opacity: 0.65 } }),
+                }}>{step + 1 === end && <Box component="span" sx={{ position: 'relative' }}>{outcome.symbol}</Box>}</Box>)}
                 <Box sx={{ pl: 1, color: 'text.secondary' }}>{label}</Box>
               </Box>;
             })}
@@ -669,7 +670,7 @@ export function PageSections({ items, children }: {
         </ListItemButton>
       ))}
     </nav>
-    {children}
+    <div className="page-section-content">{children}</div>
   </div>;
 }
 
@@ -683,7 +684,7 @@ export function DetailCharts({ dataset, mode, groups, rows, hidden, token, onTok
   onTokenChange: (metric: TokenMetric) => void;
   repairChains?: RepairChain[];
 }) {
-  const { results, current, jump } = useChartSections();
+  const [selectedView, setSelectedView] = useState<ChartId | 'overview'>('overview');
   const showResourceRelations = dataset.id === 'hss' || dataset.id === 'wildbench';
   const activeGroups = groups.filter(group => !hidden.includes(group.key));
   const scored = (row: Row) => row.score !== null;
@@ -733,26 +734,31 @@ export function DetailCharts({ dataset, mode, groups, rows, hidden, token, onTok
     }).join('；') + '。',
   });
   const navigation = [{ id: 'overview' as const, title: '总览', icon: Grid2X2 }, ...views];
+  const currentView = views.some(chart => chart.id === selectedView) ? selectedView : 'overview';
+  const overview = currentView === 'overview';
+  const visibleCharts = overview ? views : views.filter(chart => chart.id === currentView);
+
 
   return (
     <div className="chart-workspace">
-      <nav className="chart-navigation" aria-label="图表目录">
-        <h2>图表目录</h2>
+      <nav className="chart-navigation" aria-label="图表视图">
+        <h2>图表视图</h2>
         {navigation.map(({ id, title, icon: Icon }) => (
           <ListItemButton key={id} component="button" type="button" className="chart-nav-item"
-            selected={current === id} aria-current={current === id ? 'location' : undefined} onClick={() => jump(id)}>
+            selected={currentView === id} aria-pressed={currentView === id} onClick={() => setSelectedView(id)}>
             <Icon size={17} aria-hidden="true" />
             <span>{title}</span>
           </ListItemButton>
         ))}
       </nav>
-      <div className="chart-results" ref={results}>
-        <div className="detail-chart-grid">
-          {views.map(chart => {
+      <div className="chart-results">
+        <div className={overview ? 'detail-chart-grid' : 'detail-chart-grid single-chart'}>
+          {visibleCharts.map(chart => {
             const eligible = rows.filter(chart.includes);
             const observations = eligible.filter(row => !hidden.includes(groupKey(row, mode)));
             return (
-              <section className="panel chart-panel" key={chart.id} id={`chart-${chart.id}`} data-chart-section={chart.id} tabIndex={-1} aria-labelledby={`chart-${chart.id}-title`}>
+              <section className="panel chart-panel" key={chart.id} id={`chart-${chart.id}`} data-chart-section={chart.id} tabIndex={-1} aria-labelledby={`chart-${chart.id}-title`}
+                style={chart.id !== 'score' && chart.id !== 'requests' ? { gridColumn: '1 / -1' } : undefined}>
                 <div className="panel-heading">
                   <div>
                     <h3 id={`chart-${chart.id}-title`}>{chart.title}</h3>
@@ -784,7 +790,7 @@ export function DetailCharts({ dataset, mode, groups, rows, hidden, token, onTok
                     <div className="behavior-charts">
                       <TaskActionTrace rows={observations} mode={mode} groups={activeGroups} />
                     </div>
-                  </> : chart.option ? <Chart option={chart.option(observations)} label={chart.title} height={270} />
+                  </> : chart.option ? <Chart option={chart.option(observations)} label={chart.title} height={overview ? 270 : 390} />
                     : <ResourceSmallMultiples rows={observations} dataset={dataset} mode={mode} groups={activeGroups} axis={chart.id === 'time' ? 'seconds' : token} />}
                 {chart.id === 'test-results' && mode === 'depth' && repairChains &&
                   <RepairTimeline chains={repairChains} groups={groups} activeGroups={activeGroups} />}

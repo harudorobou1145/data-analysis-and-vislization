@@ -166,7 +166,7 @@ export function App() {
     if (event.pointerType !== 'mouse') return;
     const { currentTarget, target, clientX, clientY } = event;
     const surfaceSelector = '.dataset-card, .panel, .tb-strategy-card, .glass-band, .guide-pipeline';
-    const hoveredCard = target instanceof Element ? target.closest(surfaceSelector) : null;
+    const hoveredCard = target instanceof Element ? target.closest<HTMLElement>('[data-navigable]') : null;
     const surfaces = Array.from(currentTarget.querySelectorAll<HTMLElement>(surfaceSelector), surface => ({
       surface,
       rect: surface.getBoundingClientRect(),
@@ -201,10 +201,7 @@ export function App() {
       <main onPointerMove={moveSpotlight} onPointerLeave={clearSpotlight} onPointerCancel={clearSpotlight}>
         <div className={`route-content${isTopBench ? ' route-content-lazy' : ''}`} key={isTaskGuide ? 'task-guide' : `${direction}:${datasetId}`}>
         {!isTopBench && !isTaskGuide && !isCollaborative && <div className="page-heading"><div><div className="eyebrow">EXPERIMENT ANALYTICS</div><h1>{dataset?.name ?? '比较总览'}</h1>{dataset && <p>{mode === 'depth' ? 'GPT 6.1 Sol · Low / High / Ultra' : 'GPT 6.1 Sol / GPT 6 Luna / DeepSeek Flash · High'}</p>}</div><Button variant="outlined" startIcon={<ArrowDownToLine size={17} />} onClick={exportCurrent} disabled={isPromptOverview && !topData}>导出数据</Button></div>}
-        {isCollaborative ? <PageSections items={[
-          ['collaborative-compare', '同场景对比'], ['collaborative-groups', '分组详情'],
-          ['collaborative-flows', '结果迁移'], ['collaborative-matrix', '场景指纹矩阵'],
-        ]}><CollaborativePage mode={mode} /></PageSections> : isTaskGuide ? <PageSections items={[
+        {isCollaborative ? <CollaborativePage mode={mode} /> : isTaskGuide ? <PageSections items={[
           ['guide-pipeline', '数据处理流程'], ['guide-questions', '研究问题'], ['guide-workflow', '各阶段处理规则'],
           ['guide-record', '记录实例'], ['guide-fields', '字段来源'],
         ]}><TaskGuide /></PageSections> : isTopBench ? <Suspense fallback={<Box sx={{ py: 10, textAlign: 'center' }}><CircularProgress /></Box>}><TopBenchPage onBack={() => navigateOverview('prompts')} /></Suspense> : dataset ? <Detail key={`${mode}-${dataset.id}`} dataset={dataset} data={data} mode={mode} groups={groups} onBack={() => navigate(mode)} /> : <PageSections items={[
@@ -238,7 +235,7 @@ export function App() {
             const rows = modeRows.filter(row => row.dataset === item.id);
             const missing = groups.filter(group => !rows.some(row => groupKey(row, mode) === group.key));
             const DatasetIcon = datasetIcons[item.id] ?? Database;
-            return <section className="dataset-card" key={item.id}><div className="dataset-card-heading"><div className="dataset-icon"><DatasetIcon size={20} aria-hidden="true" /></div><div><h3>{item.name}</h3><span>{item.kind} · {item.metric}{item.max === 100 ? ' (%)' : ' / 10'}</span></div><Tooltip title={`查看 ${item.name}`}><IconButton aria-label={`查看 ${item.name}`} onClick={() => navigate(mode, item.id)}><ArrowRight size={19} /></IconButton></Tooltip></div><Chart option={scoreOption(rows, item, mode, groups)} label={`${item.name}评分比较`} height={218} /><div className="dataset-card-footer"><span>{rows.filter(row => row.score !== null).length} 条有效评分 · {new Set(rows.map(row => row.task)).size} 道题</span><span className={missing.length ? 'missing-text' : 'complete-text'}>{missing.length ? `缺测 ${missing.map(group => group.label).join(' / ')}` : '条件齐全'}</span></div></section>;
+            return <section className="dataset-card" data-navigable key={item.id}><div className="dataset-card-heading"><div className="dataset-icon"><DatasetIcon size={20} aria-hidden="true" /></div><div><h3>{item.name}</h3><span>{item.kind} · {item.metric}{item.max === 100 ? ' (%)' : ' / 10'}</span></div><Tooltip title={`查看 ${item.name}`}><IconButton aria-label={`查看 ${item.name}`} onClick={() => navigate(mode, item.id)}><ArrowRight size={19} /></IconButton></Tooltip></div><Chart option={scoreOption(rows, item, mode, groups)} label={`${item.name}评分比较`} height={218} /><div className="dataset-card-footer"><span>{rows.filter(row => row.score !== null).length} 条有效评分 · {new Set(rows.map(row => row.task)).size} 道题</span><span className={missing.length ? 'missing-text' : 'complete-text'}>{missing.length ? `缺测 ${missing.map(group => group.label).join(' / ')}` : '条件齐全'}</span></div></section>;
           })}</div>
           {!datasets.length && <Alert severity="info">没有匹配的数据集。</Alert>}</>}
           <div className="method-note"><FlaskConical size={19} /><div><strong>分析口径</strong><p>{isPromptOverview ? 'TOP-Bench使用80道不重复题目、240组实验。作答与评分产生的960次HTTP请求单独统计；自动评分尚需人工抽检。三个研究方向分别统计，不合成为总能力分。' : '正式主图排除历史、补跑、修复及辅助运行。TOP-Bench在“提示词策略”方向独立比较；不同数据集不汇总为单一能力分。HumanEval+ 和 ALFWorld 的 Sol 首轮 max 按本次实验口径归入 Ultra。'}</p></div></div>
