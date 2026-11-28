@@ -56,8 +56,10 @@ export default function TopBenchPage({ onBack }: { onBack: () => void }) {
 function Workspace({ data, onBack }: { data: TopData; onBack: () => void }) {
   const [domain, setDomain] = useState('all');
   const [difficulty, setDifficulty] = useState('all');
-  const [selected, setSelected] = useState<string[] | null>(null);
-  const [previousFlowSelection, setPreviousFlowSelection] = useState<{ tasks: string[] | null } | null>(null);
+  const [{ tasks: selected, flowHistory }, setTaskSelection] = useState<{
+    tasks: string[] | null;
+    flowHistory: (string[] | null)[];
+  }>({ tasks: null, flowHistory: [] });
   const [focusedTask, setFocusedTask] = useState('TOP001');
   const [strategy, setStrategy] = useState<Strategy>('baseline');
   const [hovered, setHovered] = useState<Strategy | null>(null);
@@ -86,9 +88,18 @@ function Workspace({ data, onBack }: { data: TopData; onBack: () => void }) {
   const reset = () => { setDomain('all'); setDifficulty('all'); selectTasks(null); setFocusedTask('TOP001'); setStrategy('baseline'); setHovered(null); setSort('task'); };
   function selectTasks(ids: string[] | null, source?: 'flow') {
     if (source === 'flow' && ids?.length === taskIds.length) return;
-    setPreviousFlowSelection(source === 'flow' ? { tasks: selected } : null);
-    setSelected(ids);
+    setTaskSelection(current => ({
+      tasks: ids,
+      flowHistory: source === 'flow' ? [...current.flowHistory, current.tasks] : [],
+    }));
     if (ids?.length && !ids.includes(focusedTask)) setFocusedTask(ids[0]);
+  }
+  function undoFlowSelection() {
+    setTaskSelection(current => {
+      const previous = current.flowHistory.at(-1);
+      if (previous === undefined) return current;
+      return { tasks: previous, flowHistory: current.flowHistory.slice(0, -1) };
+    });
   }
   const scatter: EChartsOption = useMemo(() => ({
     animationDurationUpdate: 220,
@@ -224,8 +235,25 @@ function Workspace({ data, onBack }: { data: TopData; onBack: () => void }) {
         <div className="chart-analysis tb-chart-insight"><h4>图表分析</h4><p>{stats.every(s => s.n > 0) ? <>当前选择下，TNM相对原始提示的泄漏率变化为 <strong>{signed((stats[1].lr! - stats[0].lr!) * 100)} 个百分点</strong>，完成率变化为 <strong>{signed((stats[1].cr! - stats[0].cr!) * 100)} 个百分点</strong>。</> : '请选择至少一道完整配对题目。'}</p></div>
       </section>
     </div>
-    <section className="panel chart-panel tb-process-panel"><div className="panel-heading"><div><h3>从结果回到工具选择</h3><p>{focus ? `${focus.task_id} · ${domainNames[focus.privacy_domain]} · ${focus.difficulty}` : '当前筛选下没有题目'} · 所有工具返回均为静态数据</p></div><div className="tb-mini-actions">{focus && <ChartTaskSelect tasks={visibleCases.map(item => item.task_id)} value={focus.task_id} onChange={setFocusedTask} label="查看题目" />}<Button size="small" onClick={() => setDrawer(true)} disabled={!activeRun}>指标详情</Button></div></div>
-      <div className="tb-process-tabs"><ToggleButtonGroup className="chart-view-toggle" size="small" exclusive value={processView} onChange={(_, v) => v && setProcessView(v)} aria-label="案例视图"><ToggleButton value="tools"><GitBranch size={16} />工具选择关系</ToggleButton><ToggleButton value="timeline"><Clock3 size={16} />四阶段请求时间线</ToggleButton></ToggleButtonGroup><span>选择关系可观测，内部推理过程不可观测</span></div>
+    <section className="panel chart-panel tb-process-panel">
+      <div className="panel-heading">
+        <div>
+          <h3>从结果回到工具选择</h3>
+          <p className="tb-current-case" aria-live="polite" aria-atomic="true">
+            {focus ? <>
+              <span>当前题目</span>
+              <strong>{focus.task_id}</strong>
+              <span>{domainNames[focus.privacy_domain]} · {focus.difficulty}</span>
+            </> : '当前筛选下没有题目'}
+          </p>
+        </div>
+        <div className="tb-mini-actions">
+          {focus && <ChartTaskSelect tasks={visibleCases.map(item => item.task_id)} value={focus.task_id}
+            onChange={setFocusedTask} label="查看题目" />}
+          <Button size="small" onClick={() => setDrawer(true)} disabled={!activeRun}>指标详情</Button>
+        </div>
+      </div>
+      <div className="tb-process-tabs"><ToggleButtonGroup className="chart-view-toggle" size="small" exclusive value={processView} onChange={(_, v) => v && setProcessView(v)} aria-label="案例视图"><ToggleButton value="tools"><GitBranch size={16} />工具选择关系</ToggleButton><ToggleButton value="timeline"><Clock3 size={16} />四阶段请求时间线</ToggleButton></ToggleButtonGroup><span>所有工具返回均为静态数据。选择关系可观测，内部推理过程不可观测。</span></div>
       {focus ? processView === 'tools' ? <ToolGraph data={data} task={focus.task_id} strategy={strategy} onStrategy={setStrategy} /> : <RequestTimeline data={data} task={focus.task_id} onRun={s => { setStrategy(s); setDrawer(true); }} /> : <p className="tb-empty">请选择有数据的领域与难度。</p>}
       <div className="tb-case-results">{strategies.map(s => {
         const row = focusRuns.find(r => r.strategy === s); const state = outcomeInfo[outcome(row)];
@@ -244,11 +272,10 @@ function Workspace({ data, onBack }: { data: TopData; onBack: () => void }) {
             <ToggleButton value="tnm">原始提示 → TNM</ToggleButton>
             <ToggleButton value="cbd">原始提示 → CBD</ToggleButton>
           </ToggleButtonGroup>
-          <Tooltip title="撤销连线筛选">
+          <Tooltip title={flowHistory.length ? `撤销连线筛选（还可撤销 ${flowHistory.length} 步）` : '暂无可撤销的连线筛选'} describeChild>
             <span>
               <IconButton className="reset-button" size="small" aria-label="撤销连线筛选"
-                disabled={previousFlowSelection === null}
-                onClick={() => { if (previousFlowSelection) selectTasks(previousFlowSelection.tasks); }}>
+                disabled={flowHistory.length === 0} onClick={undoFlowSelection}>
                 <Undo2 size={17} />
               </IconButton>
             </span>
