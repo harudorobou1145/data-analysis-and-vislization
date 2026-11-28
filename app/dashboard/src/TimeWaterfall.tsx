@@ -72,7 +72,13 @@ export function ResourceWaterfall({ tasks, resourceMax, resourceLabel, resourceV
         </IconButton>
       </Stack>
     </Stack>
-    <Box ref={frame} sx={{ minWidth: 0, bgcolor: 'background.neutral', '& [data-task-layer]:is(:hover, :focus-visible) .layer-baseline': { strokeOpacity: 1, strokeWidth: 2 } }}>
+    <Box ref={frame} sx={{
+      minWidth: 0,
+      bgcolor: 'background.neutral',
+      '& [data-task-layer]:focus': { outline: 'none' },
+      '& [data-task-layer]:hover .layer-baseline': { strokeOpacity: 1, strokeWidth: 2 },
+      '& [data-task-layer]:focus-visible .layer-baseline': { stroke: '#0c44ae', strokeOpacity: 1, strokeWidth: 3 },
+    }}>
       <svg role="group" aria-label={`${tasks.length} 道题的${resourceLabel}与${metric}立体分层图`} width="100%" height={height}
         viewBox={`0 0 ${width} ${height}`} style={{ display: 'block', fontSize: 11 }}>
         <polygon points={[coordinates(-halfWidth, 0, depth), coordinates(halfWidth, 0, depth), coordinates(halfWidth, 0, -depth), coordinates(-halfWidth, 0, -depth)].join(' ')} fill="#eef3f6" stroke="#b9c7d2" />
