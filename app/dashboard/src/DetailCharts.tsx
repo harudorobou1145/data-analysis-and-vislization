@@ -1,4 +1,5 @@
-import { useId, useState } from 'react';
+import type { RepairChain } from './data';
+import { useEffect, useId, useRef, useState } from 'react';
 import type { EChartsOption, TooltipComponentOption } from 'echarts';
 import { Box, Dialog, DialogContent, DialogTitle, IconButton, ListItemButton, MenuItem, Pagination, Select, Table, TableBody, TableCell, TableHead, TableRow, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { BarChart3, Clock3, Grid2X2, Hash, LineChart, ListChecks, Workflow, X, ZoomIn } from 'lucide-react';
@@ -531,7 +532,148 @@ type ChartView = {
   analysis: (observations: Row[]) => string;
 };
 
-export function DetailCharts({ dataset, mode, groups, rows, hidden, token, onTokenChange }: {
+const repairOutcomes = {
+  solved: { symbol: '●', label: '首次通过', color: '#118D57' },
+  exhausted: { symbol: '□', label: '达上限未记录通过', color: '#637381' },
+  interrupted: { symbol: '×', label: '中断未记录通过', color: '#B54708' },
+};
+
+function RepairTimeline({ chains, groups, activeGroups }: { chains: RepairChain[]; groups: Group[]; activeGroups: Group[] }) {
+  const tasks = [...new Set(chains.map(chain => chain.task))].sort();
+  const shared = tasks.filter(task => groups.every(group => chains.some(chain => chain.task === task && chain.effort === group.key)));
+  const supplemental = chains.filter(chain => !shared.includes(chain.task) && activeGroups.some(group => group.key === chain.effort));
+  const limit = Math.max(10, ...chains.map(chain => chain.firstPass ?? chain.attempts));
+  const columns = `64px 52px repeat(${limit}, minmax(25px, 1fr)) minmax(152px, auto)`;
+  return <Box component="section" aria-label="逐题修复轨迹" sx={{ borderTop: '1px solid #E8ECEF', pt: 2, mt: 2, minWidth: 0 }}>
+    <h4>逐题修复轨迹</h4>
+    <Box component="p" sx={{ color: 'text.secondary', fontSize: 13, my: 1 }}>仅包含首轮失败后实际补跑的样本。主图为三档都有修复记录的题目；Ultra 原始档位为 max。</Box>
+    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 1, fontSize: 12, color: 'text.secondary' }}>
+      {Object.values(repairOutcomes).map(outcome => <span key={outcome.label}><span aria-hidden="true" style={{ color: outcome.color }}>{outcome.symbol}</span> {outcome.label}</span>)}
+    </Box>
+    {shared.length > 0 && activeGroups.length > 0 ?
+      <Box role="group" aria-label="三档共同题修复轮次" tabIndex={0} sx={{ overflowX: 'auto', maxWidth: '100%' }}>
+        <Box sx={{ minWidth: 268 + 25 * limit, fontSize: 12 }}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: columns, alignItems: 'center', color: 'text.secondary', py: 1 }}>
+            <span>题目</span><span>档位</span>
+            {Array.from({ length: limit }, (_, index) => <Box key={index} sx={{ textAlign: 'center' }}>{index + 1}</Box>)}
+            <Box sx={{ pl: 1 }}>修复结果</Box>
+          </Box>
+          {shared.map(task => <Box key={task} role="group" aria-label={task} sx={{ borderTop: '1px solid #E8ECEF', py: 0.5 }}>
+            {activeGroups.map((group, index) => {
+              const chain = chains.find(row => row.task === task && row.effort === group.key);
+              if (!chain) return null;
+              const outcome = repairOutcomes[chain.status];
+              const end = chain.firstPass ?? chain.attempts;
+              const label = chain.firstPass !== null ? `第 ${end} 轮通过` : `${end} 轮 · ${chain.status === 'exhausted' ? '达上限未通过' : '中断未通过'}`;
+              const detail = `${task} ${group.label}：${label}（${chain.attempts} 次尝试，${chain.evaluated} 次有效评测）`;
+              return <Box key={group.key} role="img" aria-label={detail} title={detail} sx={{ display: 'grid', gridTemplateColumns: columns, alignItems: 'center', minHeight: 29 }}>
+                <strong>{index === 0 ? task : ''}</strong><Box sx={{ color: group.color, fontWeight: 700 }}>{group.label}</Box>
+                {Array.from({ length: limit }, (_, step) => <Box key={step} aria-hidden="true" sx={{
+                  position: 'relative', textAlign: 'center', height: 24, lineHeight: '24px', color: outcome.color, fontWeight: 700, fontSize: 15,
+                  borderLeft: '1px solid #EDF0F2',
+                  ...(step + 1 <= end && { '&::before': { content: '""', position: 'absolute', left: 0, right: step + 1 === end ? '50%' : 0, top: '50%', borderTop: `2px ${chain.firstPass !== null ? 'solid' : 'dashed'} ${group.color}`, opacity: 0.65 } }),
+                }}>{step + 1 === end && <Box component="span" sx={{ position: 'relative', bgcolor: 'background.paper' }}>{outcome.symbol}</Box>}</Box>)}
+                <Box sx={{ pl: 1, color: 'text.secondary' }}>{label}</Box>
+              </Box>;
+            })}
+          </Box>)}
+        </Box>
+      </Box> : <p className="chart-empty">当前筛选无可绘制的共同修复题。</p>}
+    {supplemental.map(chain => <Box component="p" key={`${chain.task}-${chain.effort}`} sx={{ fontSize: 12, color: 'text.secondary', my: 1 }}>
+      补充记录：{chain.task} · {activeGroups.find(group => group.key === chain.effort)?.label} · {chain.firstPass !== null ? `第 ${chain.firstPass} 轮通过` : `${chain.attempts} 轮，${repairOutcomes[chain.status].label}`}（不计入同题比较）
+    </Box>)}
+    <Box component="p" sx={{ fontSize: 12, color: 'text.secondary', mb: 0 }}>横轴：首轮之后的额外修复轮次。尝试次数不等于有效评测次数；中断不是提前通过。</Box>
+  </Box>;
+}
+
+const chapterOffset = 64;
+
+function useChartSections() {
+  const [current, setCurrent] = useState('overview');
+  const results = useRef<HTMLDivElement>(null);
+  const animation = useRef(0);
+
+  useEffect(() => {
+    const container = results.current;
+    if (!container) return;
+    function update() {
+      if (animation.current) return;
+      const sections = Array.from(container!.querySelectorAll<HTMLElement>('[data-chart-section]'));
+      const last = sections[sections.length - 1];
+      const atBottom = window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+      const active = atBottom && last?.getBoundingClientRect().top < window.innerHeight ? last
+        : sections.reverse().find(section => section.getBoundingClientRect().top <= chapterOffset + 1);
+      setCurrent(active?.dataset.chartSection ?? 'overview');
+    }
+    function interrupt() {
+      if (!animation.current) return;
+      cancelAnimationFrame(animation.current);
+      animation.current = 0;
+      update();
+    }
+    const observer = new ResizeObserver(update);
+    observer.observe(container);
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('wheel', interrupt, { passive: true });
+    window.addEventListener('touchstart', interrupt, { passive: true });
+    update();
+    return () => {
+      cancelAnimationFrame(animation.current);
+      animation.current = 0;
+      observer.disconnect();
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('wheel', interrupt);
+      window.removeEventListener('touchstart', interrupt);
+    };
+  }, []);
+
+  function jump(id: string) {
+    const section = id === 'overview' ? document.getElementById('page-top')
+      : results.current?.querySelector<HTMLElement>(`[data-chart-section="${id}"]`);
+    if (!section) return;
+    cancelAnimationFrame(animation.current);
+    animation.current = 0;
+    setCurrent(id);
+    section.focus({ preventScroll: true });
+    const start = window.scrollY;
+    const destination = Math.max(0, start + section.getBoundingClientRect().top - chapterOffset);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || Math.abs(destination - start) < 1) {
+      window.scrollTo({ top: destination, behavior: 'instant' });
+      return;
+    }
+    const started = performance.now();
+    function step(now: number) {
+      const progress = Math.min(1, (now - started) / 600);
+      const eased = progress * progress * (3 - 2 * progress);
+      window.scrollTo({ top: start + (destination - start) * eased, behavior: 'instant' });
+      animation.current = progress < 1 ? requestAnimationFrame(step) : 0;
+    }
+    animation.current = requestAnimationFrame(step);
+  }
+
+  return { results, current, jump };
+}
+
+export function PageSections({ items, children }: {
+  items: ReadonlyArray<readonly [string, string]>;
+  children: import('react').ReactNode;
+}) {
+  const { results, current, jump } = useChartSections();
+  return <div className="page-sections" ref={results}>
+    <nav className="chart-navigation page-section-nav" aria-label="章节目录">
+      <h2>章节目录</h2>
+      {[['overview', '页首'], ...items].map(([id, title]) => (
+        <ListItemButton key={id} component="button" type="button" className="chart-nav-item"
+          selected={current === id} aria-current={current === id ? 'location' : undefined} onClick={() => jump(id)}>
+          {title}
+        </ListItemButton>
+      ))}
+    </nav>
+    {children}
+  </div>;
+}
+
+export function DetailCharts({ dataset, mode, groups, rows, hidden, token, onTokenChange, repairChains }: {
   dataset: Dataset;
   mode: Mode;
   groups: Group[];
@@ -539,8 +681,9 @@ export function DetailCharts({ dataset, mode, groups, rows, hidden, token, onTok
   hidden: string[];
   token: TokenMetric;
   onTokenChange: (metric: TokenMetric) => void;
+  repairChains?: RepairChain[];
 }) {
-  const [selectedView, setView] = useState<ChartId | 'overview'>('overview');
+  const { results, current, jump } = useChartSections();
   const showResourceRelations = dataset.id === 'hss' || dataset.id === 'wildbench';
   const activeGroups = groups.filter(group => !hidden.includes(group.key));
   const scored = (row: Row) => row.score !== null;
@@ -589,31 +732,27 @@ export function DetailCharts({ dataset, mode, groups, rows, hidden, token, onTok
       return records.length ? [`${group.label}：${testOutcomes.map(outcome => `${outcome.name} ${records.filter(outcome.includes).length} 条`).join('，')}`] : [];
     }).join('；') + '。',
   });
-  const view = views.some(chart => chart.id === selectedView) ? selectedView : 'overview';
-  const overview = view === 'overview';
-  const currentViews = overview ? views : views.filter(chart => chart.id === view);
   const navigation = [{ id: 'overview' as const, title: '总览', icon: Grid2X2 }, ...views];
 
   return (
     <div className="chart-workspace">
-      <nav className="chart-navigation" aria-label="图表视图">
-        <h2>图表视图</h2>
+      <nav className="chart-navigation" aria-label="图表目录">
+        <h2>图表目录</h2>
         {navigation.map(({ id, title, icon: Icon }) => (
           <ListItemButton key={id} component="button" type="button" className="chart-nav-item"
-            selected={view === id} aria-pressed={view === id} onClick={() => setView(id)}>
+            selected={current === id} aria-current={current === id ? 'location' : undefined} onClick={() => jump(id)}>
             <Icon size={17} aria-hidden="true" />
             <span>{title}</span>
           </ListItemButton>
         ))}
       </nav>
-      <div className="chart-results">
-        <div className={overview ? 'detail-chart-grid' : 'detail-chart-grid single-chart'}>
-          {currentViews.map(chart => {
+      <div className="chart-results" ref={results}>
+        <div className="detail-chart-grid">
+          {views.map(chart => {
             const eligible = rows.filter(chart.includes);
             const observations = eligible.filter(row => !hidden.includes(groupKey(row, mode)));
             return (
-              <section className="panel chart-panel" key={chart.id} aria-labelledby={`chart-${chart.id}-title`}
-                style={chart.id !== 'score' && chart.id !== 'requests' ? { gridColumn: '1 / -1' } : undefined}>
+              <section className="panel chart-panel" key={chart.id} id={`chart-${chart.id}`} data-chart-section={chart.id} tabIndex={-1} aria-labelledby={`chart-${chart.id}-title`}>
                 <div className="panel-heading">
                   <div>
                     <h3 id={`chart-${chart.id}-title`}>{chart.title}</h3>
@@ -645,14 +784,14 @@ export function DetailCharts({ dataset, mode, groups, rows, hidden, token, onTok
                     <div className="behavior-charts">
                       <TaskActionTrace rows={observations} mode={mode} groups={activeGroups} />
                     </div>
-                  </> : chart.option ? <Chart option={chart.option(observations)} label={chart.title} height={overview ? 270 : 390} />
+                  </> : chart.option ? <Chart option={chart.option(observations)} label={chart.title} height={270} />
                     : <ResourceSmallMultiples rows={observations} dataset={dataset} mode={mode} groups={activeGroups} axis={chart.id === 'time' ? 'seconds' : token} />}
-                {!overview && (
-                  <div className="chart-analysis">
-                    <h4>图表分析</h4>
-                    <p>{observations.length ? chart.analysis(observations) : '可调整任务类型、共同题目或实验条件后查看。'}</p>
-                  </div>
-                )}
+                {chart.id === 'test-results' && mode === 'depth' && repairChains &&
+                  <RepairTimeline chains={repairChains} groups={groups} activeGroups={activeGroups} />}
+                <div className="chart-analysis">
+                  <h4>图表分析</h4>
+                  <p>{observations.length ? chart.analysis(observations) : '可调整任务类型、共同题目或实验条件后查看。'}</p>
+                </div>
               </section>
             );
           })}

@@ -7,6 +7,7 @@ import { ArrowDownToLine, ArrowLeft, CircleHelp, Clock3, GitBranch, MousePointer
 import { Chart } from './Chart';
 import { ChartTaskSelect } from './ChartTaskSelect';
 import { ContextSection } from './ContextSection';
+import { PageSections } from './DetailCharts';
 import { commonCases, domainNames, exportTopRows, number, outcome, outcomeInfo, pairedFlows, pct, strategies, strategyInfo, summarize } from './topbench-data';
 import type { Outcome, Strategy, TopCase, TopData, TopRun } from './topbench-data';
 import './topbench.css';
@@ -50,7 +51,10 @@ export default function TopBenchPage({ onBack }: { onBack: () => void }) {
   }, []);
   if (error) return <Alert severity="error">TOP-Bench 数据加载失败：{error}<Button onClick={() => location.reload()}>重新加载</Button></Alert>;
   if (!data) return <Box sx={{ py: 12, textAlign: 'center' }}><CircularProgress /><p>加载提示词实验…</p></Box>;
-  return <Workspace data={data} onBack={onBack} />;
+  return <div className="route-loaded"><PageSections items={[
+    ['tb-strategies', '策略概览'], ['tb-results', '同题结果与权衡'],
+    ['tb-tools', '工具选择'], ['tb-flow', '同题结果迁移'],
+  ]}><Workspace data={data} onBack={onBack} /></PageSections></div>;
 }
 
 function Workspace({ data, onBack }: { data: TopData; onBack: () => void }) {
@@ -182,7 +186,7 @@ function Workspace({ data, onBack }: { data: TopData; onBack: () => void }) {
       <div><span>实验条件</span><strong>{strategies.length}<small>种提示策略</small></strong></div>
       <div><span>评分口径</span><strong className="text-stat">完成与泄漏<small>同题配对</small></strong></div>
     </div>
-    <div className="tb-strategy-grid">{stats.map(s => {
+    <div className="tb-strategy-grid" data-chart-section="tb-strategies" tabIndex={-1}>{stats.map(s => {
       const info = strategyInfo[s.strategy];
       return <button type="button" key={s.strategy} className={`tb-strategy-card ${strategy === s.strategy ? 'is-active' : ''}`} style={{ '--strategy-color': info.color } as CSSProperties}
         aria-pressed={strategy === s.strategy} aria-label={`高亮${info.label}`} onClick={() => setStrategy(s.strategy)} onMouseEnter={() => setHovered(s.strategy)} onMouseLeave={() => setHovered(null)}>
@@ -192,7 +196,7 @@ function Workspace({ data, onBack }: { data: TopData; onBack: () => void }) {
       </button>;
     })}</div>
     {!visibleCases.length && <Alert severity="info" sx={{ mb: 3 }}>当前条件没有完整配对题目，请调整领域或难度。</Alert>}
-    <div className="tb-overview-grid">
+    <div className="tb-overview-grid" data-chart-section="tb-results" tabIndex={-1}>
       <section className="panel chart-panel tb-matrix-panel">
         <div className="panel-heading">
           <div>
@@ -235,7 +239,7 @@ function Workspace({ data, onBack }: { data: TopData; onBack: () => void }) {
         <div className="chart-analysis tb-chart-insight"><h4>图表分析</h4><p>{stats.every(s => s.n > 0) ? <>当前选择下，TNM相对原始提示的泄漏率变化为 <strong>{signed((stats[1].lr! - stats[0].lr!) * 100)} 个百分点</strong>，完成率变化为 <strong>{signed((stats[1].cr! - stats[0].cr!) * 100)} 个百分点</strong>。</> : '请选择至少一道完整配对题目。'}</p></div>
       </section>
     </div>
-    <section className="panel chart-panel tb-process-panel">
+    <section className="panel chart-panel tb-process-panel" data-chart-section="tb-tools" tabIndex={-1}>
       <div className="panel-heading">
         <div>
           <h3>从结果回到工具选择</h3>
@@ -260,7 +264,7 @@ function Workspace({ data, onBack }: { data: TopData; onBack: () => void }) {
         return <button type="button" key={s} onClick={() => { setStrategy(s); setDrawer(true); }} disabled={!row} className={strategy === s ? 'is-active' : ''}><span style={{ color: strategyInfo[s].color }}>{strategyInfo[s].short}</span><b style={{ color: state.color }}>{state.label}</b><small>{row ? `${row.tool_call_count} 个工具 · ${number(row.solver_total_tokens, 0)} Token` : '—'}</small></button>;
       })}</div>
     </section>
-    <section className="panel chart-panel tb-flow-panel">
+    <section className="panel chart-panel tb-flow-panel" data-chart-section="tb-flow" tabIndex={-1}>
       <div className="panel-heading">
         <div>
           <h3>同题结果如何变化</h3>

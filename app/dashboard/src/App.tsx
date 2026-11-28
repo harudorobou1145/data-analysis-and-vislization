@@ -1,18 +1,21 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
-import type { ReactNode } from 'react';
+import type { PointerEvent, ReactNode } from 'react';
 import { Alert, Avatar, Box, Button, Checkbox, Chip, CircularProgress, Collapse, Drawer, Fab, IconButton, InputAdornment, ListItemButton, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, ToggleButton, ToggleButtonGroup, Tooltip, useScrollTrigger } from '@mui/material';
 import { Activity, ArrowDownToLine, ArrowLeft, ArrowRight, ArrowUp, BrainCircuit, ChartNoAxesCombined, ChevronRight, ClipboardPenLine, CodeXml, Database, FlaskConical, Layers3, Menu, MessagesSquare, RotateCcw, Route, ScanEye, Search, ShieldCheck, SlidersHorizontal, X } from 'lucide-react';
 import { Chart } from './Chart';
 import { ContextSection } from './ContextSection';
-import { DetailCharts, scoreOption } from './DetailCharts';
+import { DetailCharts, PageSections, scoreOption } from './DetailCharts';
 import type { TokenMetric } from './DetailCharts';
 import { downloadRows, format, groupKey, groupsFor, inMode, matchingTasks, mean, median, modelNames, overviewStats, taskMean } from './data';
 import type { ComparisonDirection, Data, Dataset, Group, Mode, Row } from './data';
 import { commonCases, exportTopRows } from './topbench-data';
 import type { TopData } from './topbench-data';
 import { PromptOverview } from './PromptOverview';
+import { TaskGuide } from './TaskGuide';
+import { CollaborativePage } from './CollaborativePage';
 
 const TopBenchPage = lazy(() => import('./TopBenchPage'));
+const collaborativeItem = { id: 'collaborative', name: '协作实验' };
 
 const datasetIcons: Partial<Record<string, typeof Database>> = {
   subjective_60: ClipboardPenLine,
@@ -38,7 +41,7 @@ function Panel({ title, subtitle, children, action }: { title: string; subtitle?
 function AppState() {
   const hash = new URLSearchParams(location.hash.slice(1));
   const dataset = hash.get('dataset') ?? 'overview';
-  const direction: ComparisonDirection = hash.get('mode') === 'prompts' ? 'prompts' : hash.get('mode') === 'models' ? 'models' : 'depth';
+  const direction: ComparisonDirection = hash.get('mode') === 'prompts' && dataset !== collaborativeItem.id ? 'prompts' : hash.get('mode') === 'models' ? 'models' : 'depth';
   return { mode: (direction === 'models' ? 'models' : 'depth') as Mode, direction, dataset: ['gsm8k', 'mt_bench'].includes(dataset) ? 'overview' : dataset };
 }
 function BackToTop() {
@@ -67,7 +70,7 @@ export function App() {
   const [route, setRoute] = useState(AppState);
   const [mobile, setMobile] = useState(false);
   const [expandedDirections, setExpandedDirections] = useState<ComparisonDirection[]>(() =>
-    route.dataset === 'overview' ? [] : [route.dataset === 'topbench3' ? 'prompts' : route.mode],
+    ['overview', 'task-guide'].includes(route.dataset) ? [] : [route.dataset === 'topbench3' ? 'prompts' : route.mode],
   );
   const [search, setSearch] = useState('');
   useEffect(() => {
@@ -81,7 +84,7 @@ export function App() {
     const listener = () => {
       const next = AppState();
       setRoute(next);
-      if (next.dataset !== 'overview') {
+      if (!['overview', 'task-guide'].includes(next.dataset)) {
         const section = next.dataset === 'topbench3' ? 'prompts' : next.mode;
         setExpandedDirections(current => current.includes(section) ? current : [...current, section]);
       }
@@ -103,6 +106,10 @@ export function App() {
   if (!data) return <div className="load-state"><CircularProgress /><p>加载实验指标…</p></div>;
   const { mode, direction, dataset: datasetId } = route;
   const isTopBench = datasetId === 'topbench3';
+  const isTaskGuide = datasetId === 'task-guide';
+  const isCollaborative = datasetId === collaborativeItem.id;
+  const comparisonLabel = mode === 'depth' ? '思考深度' : '不同模型';
+  const taskGuideHref = `#${new URLSearchParams({ mode: direction, dataset: 'task-guide' })}`;
   const openTopBench = () => { location.hash = 'mode=prompts&dataset=topbench3'; setMobile(false); setSearch(''); };
   const groups = groupsFor(mode);
   const formalDatasets = data.datasets.filter(item => item.kind !== '预实验');
@@ -116,18 +123,20 @@ export function App() {
   };
   const modeRows = data.rows.filter(row => inMode(row, mode) && formalDatasets.some(item => item.id === row.dataset));
   const datasets = formalDatasets.filter(item => (item.name + item.kind).toLowerCase().includes(search.toLowerCase()));
+  const comparisonDatasets = [...formalDatasets, collaborativeItem];
   const researchDirections = [
-    { id: 'depth', name: '思考深度', icon: BrainCircuit, datasets: formalDatasets },
-    { id: 'models', name: '不同模型', icon: ChartNoAxesCombined, datasets: formalDatasets },
+    { id: 'depth', name: '思考深度', icon: BrainCircuit, datasets: comparisonDatasets },
+    { id: 'models', name: '不同模型', icon: ChartNoAxesCombined, datasets: comparisonDatasets },
     { id: 'prompts', name: '提示词策略', icon: ShieldCheck, datasets: [{ id: 'topbench3', name: 'TOP-Bench v3' }] },
   ] as const;
   const renderSidebar = (idPrefix: string) => <>
     <a className="brand" href="#mode=depth&dataset=overview" aria-label="CodeDepth 首页"><div className="brand-mark"><Layers3 size={24} /></div><span>CodeDepth<span className="brand-dot">.</span></span></a>
-    <ListItemButton selected={!dataset && !isTopBench} onClick={() => navigateOverview(direction)} className="nav-item"><Activity size={20} /><span>比较总览</span></ListItemButton>
+    <ListItemButton selected={!dataset && !isTopBench && !isTaskGuide && !isCollaborative} onClick={() => navigateOverview(direction)} className="nav-item"><Activity size={20} /><span>比较总览</span></ListItemButton>
+    <ListItemButton component="a" href={taskGuideHref} selected={isTaskGuide} aria-current={isTaskGuide ? 'page' : undefined} onClick={() => { setMobile(false); setSearch(''); }} className="nav-item"><ClipboardPenLine size={20} /><span>任务说明</span></ListItemButton>
     <span className="nav-label research-label">研究方向</span>
     {researchDirections.map(({ id, name, icon: Icon, datasets }) => {
       const expanded = expandedDirections.includes(id);
-      const selected = isTopBench ? id === 'prompts' : !!dataset && mode === id;
+      const selected = isTopBench ? id === 'prompts' : (!!dataset || isCollaborative) && mode === id;
       const submenuId = `${idPrefix}-datasets-${id}`;
       return (
         <div className="sidebar-section" key={id}>
@@ -141,7 +150,7 @@ export function App() {
           <Collapse in={expanded} unmountOnExit>
             <div id={submenuId} className="dataset-submenu" role="group" aria-label={`${name}数据集`}>
               {datasets.map(item => (
-                <ListItemButton key={item.id} selected={selected && datasetId === item.id} className="nav-item dataset-nav"
+                <ListItemButton key={item.id} selected={selected && datasetId === item.id} aria-current={selected && datasetId === item.id ? 'page' : undefined} className="nav-item dataset-nav"
                   onClick={() => id === 'prompts' ? openTopBench() : navigate(id, item.id)}>
                   <span className="dataset-dot" /><span>{item.name}</span>
                 </ListItemButton>
@@ -153,14 +162,55 @@ export function App() {
     })}
     <div className="sidebar-bottom"><div className="source-mark"><Database size={17} /> PROCESSED DATA</div><p>{isTopBench ? 'TOP-Bench v3' : `${coverage.recordsTotal.toLocaleString()} 条指标记录`}</p><small>{isTopBench ? '同题配对 · 三种提示策略' : `${coverage.datasetsTotal}个正式数据集 · 各方向分别统计`}</small><a href="https://github.com/minimal-ui-kit/material-kit-react" target="_blank" rel="noreferrer">Material Kit React ↗</a></div>
   </>;
+  function moveSpotlight(event: PointerEvent<HTMLElement>) {
+    if (event.pointerType !== 'mouse') return;
+    const { currentTarget, target, clientX, clientY } = event;
+    const surfaceSelector = '.dataset-card, .panel, .tb-strategy-card, .glass-band, .guide-pipeline';
+    const hoveredCard = target instanceof Element ? target.closest(surfaceSelector) : null;
+    const surfaces = Array.from(currentTarget.querySelectorAll<HTMLElement>(surfaceSelector), surface => ({
+      surface,
+      rect: surface.getBoundingClientRect(),
+    }));
+    for (const { surface, rect } of surfaces) {
+      surface.style.setProperty('--spotlight-x', `${clientX - rect.left - surface.clientLeft}px`);
+      surface.style.setProperty('--spotlight-y', `${clientY - rect.top - surface.clientTop}px`);
+      if (surface === hoveredCard && rect.width && rect.height) {
+        const horizontal = 2 * (clientX - rect.left) / rect.width - 1;
+        const vertical = 2 * (clientY - rect.top) / rect.height - 1;
+        const limit = Math.max(1, Math.hypot(horizontal, vertical));
+        const tilt = surface.matches('.dataset-card, .tb-strategy-card') ? 8 : 2;
+        surface.style.setProperty('--tilt-x', `${-vertical * tilt / limit}deg`);
+        surface.style.setProperty('--tilt-y', `${horizontal * tilt / limit}deg`);
+      }
+    }
+    currentTarget.querySelector('[data-tilting]')?.removeAttribute('data-tilting');
+    if (hoveredCard && currentTarget.contains(hoveredCard)) hoveredCard.setAttribute('data-tilting', '');
+    currentTarget.setAttribute('data-spotlight', '');
+  }
+
+  function clearSpotlight(event: PointerEvent<HTMLElement>) {
+    event.currentTarget.removeAttribute('data-spotlight');
+    event.currentTarget.querySelector('[data-tilting]')?.removeAttribute('data-tilting');
+  }
+
   return <div className="app-shell">
     <aside className="desktop-nav">{renderSidebar('desktop')}</aside>
-    <Drawer open={mobile} onClose={() => setMobile(false)} slotProps={{ paper: { sx: { width: 270, p: 2.5 } } }}><IconButton aria-label="关闭导航" onClick={() => setMobile(false)} sx={{ alignSelf: 'flex-end' }}><X size={20} /></IconButton>{renderSidebar('mobile')}</Drawer>
+    <Drawer open={mobile} onClose={() => setMobile(false)} slotProps={{ paper: { sx: { width: 270, p: 2.5, background: 'var(--canvas-gradient), var(--canvas-base)' } } }}><IconButton aria-label="关闭导航" onClick={() => setMobile(false)} sx={{ alignSelf: 'flex-end' }}><X size={20} /></IconButton>{renderSidebar('mobile')}</Drawer>
     <div className="main-shell">
-      <header className="topbar" id="page-top" tabIndex={-1}><div className="breadcrumbs"><IconButton className="mobile-menu" aria-label="打开导航" onClick={() => setMobile(true)}><Menu size={22} /></IconButton><span>CodeDepth</span><ChevronRight size={14} /><strong>{isTopBench ? '提示词策略' : dataset ? (mode === 'depth' ? '思考深度' : '不同模型') : '比较总览'}</strong>{(dataset || isTopBench) && <><ChevronRight size={14} /><span className="breadcrumb-dataset">{isTopBench ? 'TOP-Bench v3' : dataset?.name}</span></>}</div></header>
-      <main>
-        {!isTopBench && <div className="page-heading"><div><div className="eyebrow">EXPERIMENT ANALYTICS</div><h1>{dataset?.name ?? '比较总览'}</h1>{dataset && <p>{mode === 'depth' ? 'GPT 6.1 Sol · Low / High / Ultra' : 'GPT 6.1 Sol / GPT 6 Luna / DeepSeek Flash · High'}</p>}</div><Button variant="outlined" startIcon={<ArrowDownToLine size={17} />} onClick={exportCurrent} disabled={isPromptOverview && !topData}>导出数据</Button></div>}
-        {isTopBench ? <Suspense fallback={<Box sx={{ py: 10, textAlign: 'center' }}><CircularProgress /></Box>}><TopBenchPage onBack={() => navigateOverview('prompts')} /></Suspense> : dataset ? <Detail key={`${mode}-${dataset.id}`} dataset={dataset} data={data} mode={mode} groups={groups} onBack={() => navigate(mode)} /> : <>
+      <header className="topbar" id="page-top" tabIndex={-1}><div className="breadcrumbs"><IconButton className="mobile-menu" aria-label="打开导航" onClick={() => setMobile(true)}><Menu size={22} /></IconButton><span>CodeDepth</span><ChevronRight size={14} /><strong>{isTaskGuide ? '任务说明' : isTopBench ? '提示词策略' : dataset || isCollaborative ? comparisonLabel : '比较总览'}</strong>{(dataset || isTopBench || isCollaborative) && <><ChevronRight size={14} /><span className="breadcrumb-dataset">{isTopBench ? 'TOP-Bench v3' : isCollaborative ? collaborativeItem.name : dataset?.name}</span></>}</div></header>
+      <main onPointerMove={moveSpotlight} onPointerLeave={clearSpotlight} onPointerCancel={clearSpotlight}>
+        <div className={`route-content${isTopBench ? ' route-content-lazy' : ''}`} key={isTaskGuide ? 'task-guide' : `${direction}:${datasetId}`}>
+        {!isTopBench && !isTaskGuide && !isCollaborative && <div className="page-heading"><div><div className="eyebrow">EXPERIMENT ANALYTICS</div><h1>{dataset?.name ?? '比较总览'}</h1>{dataset && <p>{mode === 'depth' ? 'GPT 6.1 Sol · Low / High / Ultra' : 'GPT 6.1 Sol / GPT 6 Luna / DeepSeek Flash · High'}</p>}</div><Button variant="outlined" startIcon={<ArrowDownToLine size={17} />} onClick={exportCurrent} disabled={isPromptOverview && !topData}>导出数据</Button></div>}
+        {isCollaborative ? <PageSections items={[
+          ['collaborative-compare', '同场景对比'], ['collaborative-groups', '分组详情'],
+          ['collaborative-flows', '结果迁移'], ['collaborative-matrix', '场景指纹矩阵'],
+        ]}><CollaborativePage mode={mode} /></PageSections> : isTaskGuide ? <PageSections items={[
+          ['guide-pipeline', '数据处理流程'], ['guide-questions', '研究问题'], ['guide-workflow', '各阶段处理规则'],
+          ['guide-record', '记录实例'], ['guide-fields', '字段来源'],
+        ]}><TaskGuide /></PageSections> : isTopBench ? <Suspense fallback={<Box sx={{ py: 10, textAlign: 'center' }}><CircularProgress /></Box>}><TopBenchPage onBack={() => navigateOverview('prompts')} /></Suspense> : dataset ? <Detail key={`${mode}-${dataset.id}`} dataset={dataset} data={data} mode={mode} groups={groups} onBack={() => navigate(mode)} /> : <PageSections items={[
+          ['overview-context', '实验内容说明'], ['overview-comparison', '当前比较'], ['overview-results', '数据集表现'],
+        ]}>
+          <div data-chart-section="overview-context" tabIndex={-1}>
           <ContextSection title="实验内容说明">
             <p>我们用开放问答、图像理解、代码生成、环境交互和隐私保护任务，观察回答质量、任务完成度、信息泄漏、响应耗时与 Token 消耗如何变化。</p>
             <p><strong>思考深度：</strong>固定 GPT 6.1 Sol，比较 Low、High、Ultra 三档。</p>
@@ -168,8 +218,9 @@ export function App() {
             <p><strong>提示词策略：</strong>固定 GPT 6.1 Sol、High，在 TOP-Bench 的80道同题上比较原始提示、TNM和CBD，观察完成度与隐私保护的权衡。</p>
             <p>评分按各数据集的规则分别统计，同题重复作答先取均值，不把不同数据集的得分合成一个总分。</p>
           </ContextSection>
+          </div>
           <ToggleButtonGroup exclusive value={direction} onChange={(_, value: ComparisonDirection | null) => value && navigateOverview(value)} className="direction-tabs" aria-label="研究方向"><ToggleButton value="depth"><BrainCircuit size={18} />思考深度</ToggleButton><ToggleButton value="models"><ChartNoAxesCombined size={18} />不同模型</ToggleButton><ToggleButton value="prompts"><ShieldCheck size={18} />提示词策略</ToggleButton></ToggleButtonGroup>
-          <p className="current-comparison">
+          <p className="current-comparison" data-chart-section="overview-comparison" tabIndex={-1}>
             <strong>当前比较</strong>
             <span>{isPromptOverview ? '固定 GPT 6.1 Sol、High，比较原始提示、TNM、CBD；同一80题上的完成率与泄漏率。' : <>固定 {mode === 'depth' ? 'GPT 6.1 Sol' : 'High 档'}，比较 {groups.map(group => group.label).join('、')}。</>}</span>
           </p>
@@ -182,7 +233,7 @@ export function App() {
             </div>
             <div><span>评分口径</span><strong className="text-stat">{isPromptOverview ? '完成与泄漏' : '按题等权'}<small>{isPromptOverview ? `${topData?.cases.length ?? '—'}道同题配对` : '缺失不计零分'}</small></strong></div>
           </div>
-          <div className="section-toolbar"><div><h2>数据集表现</h2><p>{isPromptOverview ? '同题配对 · 比较任务完成率和隐私泄漏率' : '独立评分尺度 · 同题重复先取均值'}</p></div><div className="toolbar-controls"><TextField size="small" placeholder="查找数据集" aria-label="查找数据集" value={search} onChange={event => setSearch(event.target.value)} slotProps={{ input: { startAdornment: <InputAdornment position="start"><Search size={16} /></InputAdornment> } }} /></div></div>
+          <div className="section-toolbar" data-chart-section="overview-results" tabIndex={-1}><div><h2>数据集表现</h2><p>{isPromptOverview ? '同题配对 · 比较任务完成率和隐私泄漏率' : '独立评分尺度 · 同题重复先取均值'}</p></div><div className="toolbar-controls"><TextField size="small" placeholder="查找数据集" aria-label="查找数据集" value={search} onChange={event => setSearch(event.target.value)} slotProps={{ input: { startAdornment: <InputAdornment position="start"><Search size={16} /></InputAdornment> } }} /></div></div>
           {isPromptOverview ? topError ? <Alert severity="error">提示词策略数据加载失败：{topError}</Alert> : !topData ? <Box sx={{ py: 8, textAlign: 'center' }}><CircularProgress /></Box> : !search || 'TOP-Bench v3 隐私 提示词策略'.toLowerCase().includes(search.toLowerCase()) ? <PromptOverview data={topData} onOpen={openTopBench} /> : <Alert severity="info">没有匹配的数据集。</Alert> : <><div className="dataset-grid">{datasets.map(item => {
             const rows = modeRows.filter(row => row.dataset === item.id);
             const missing = groups.filter(group => !rows.some(row => groupKey(row, mode) === group.key));
@@ -191,7 +242,8 @@ export function App() {
           })}</div>
           {!datasets.length && <Alert severity="info">没有匹配的数据集。</Alert>}</>}
           <div className="method-note"><FlaskConical size={19} /><div><strong>分析口径</strong><p>{isPromptOverview ? 'TOP-Bench使用80道不重复题目、240组实验。作答与评分产生的960次HTTP请求单独统计；自动评分尚需人工抽检。三个研究方向分别统计，不合成为总能力分。' : '正式主图排除历史、补跑、修复及辅助运行。TOP-Bench在“提示词策略”方向独立比较；不同数据集不汇总为单一能力分。HumanEval+ 和 ALFWorld 的 Sol 首轮 max 按本次实验口径归入 Ultra。'}</p></div></div>
-        </>}
+        </PageSections>}
+        </div>
         <footer><span>CodeDepth · AI 对话行为分析</span><span>Material Kit React / Minimal UI</span></footer>
       </main>
     </div>
@@ -250,7 +302,9 @@ function Detail({ dataset, data, mode, groups, onBack }: { dataset: Dataset; dat
     </div>
     {!rows.length && <Alert severity="info" sx={{ mb: 2 }}>当前筛选没有可比较记录。可调整任务类型或实验条件。</Alert>}
     <DetailCharts dataset={dataset} mode={mode} groups={groups} rows={pairedRows} hidden={hidden}
-      token={token} onTokenChange={setToken} />
+  token={token} onTokenChange={setToken}
+      repairChains={dataset.id === 'humanevalplus' && mode === 'depth'
+        ? data.repairChains?.filter(chain => typed.some(row => row.task === chain.task)) : undefined} />
     <Panel title="条件统计" subtitle="空值不参与均值；请求数包含未评分记录。">
       <TableContainer><Table size="small"><TableHead><TableRow>{['实验条件', '请求', '已评分', '题目', dataset.metric, '耗时中位数 (s)', '平均总 Token', '平均推理 Token'].map(item => <TableCell key={item}>{item}</TableCell>)}</TableRow></TableHead><TableBody>{groups.map(group => { const subset = rows.filter(row => groupKey(row, mode) === group.key); return <TableRow key={group.key}><TableCell><span className="table-condition"><i style={{ background: group.color }} />{group.label}</span></TableCell><TableCell>{subset.length}</TableCell><TableCell>{subset.filter(row => row.score !== null).length}</TableCell><TableCell>{new Set(subset.map(row => row.task)).size}</TableCell><TableCell>{format(taskMean(subset))}{dataset.max === 100 && subset.some(row => row.score !== null) ? '%' : ''}</TableCell><TableCell>{format(median(subset.map(row => row.seconds)))}</TableCell><TableCell>{format(mean(subset.map(row => row.total)), 0)}</TableCell><TableCell>{format(mean(subset.map(row => row.reasoning)), 0)}</TableCell></TableRow>; })}</TableBody></Table></TableContainer>
     </Panel>

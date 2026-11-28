@@ -71,6 +71,24 @@ function readStepEvents(directory) {
   return traces;
 }
 
+function readRepairChains(dataRoot) {
+  const file = path.join(dataRoot, 'humanevalplus', 'gpt-6.1-sol', 'repair_chains.json');
+  if (!fs.existsSync(file)) return [];
+  return JSON.parse(fs.readFileSync(file, 'utf8'))
+    .filter(chain => chain.model === 'gpt-6.1-sol' && (
+      (chain.family === 'sol_lmh_repair' && ['low', 'high'].includes(chain.reasoning_effort)) ||
+      (chain.family === 'sol_max_repair' && chain.reasoning_effort === 'max')
+    ))
+    .map(chain => ({
+      task: chain.task_id,
+      effort: chain.reasoning_effort === 'max' ? 'ultra' : chain.reasoning_effort,
+      attempts: chain.observed_attempts,
+      evaluated: chain.official_evaluated_attempts,
+      firstPass: chain.first_success_additional_round ?? null,
+      status: chain.status,
+    }));
+}
+
 export function exportData(dataRoot) {
   const rows = [];
   const seen = new Set();
@@ -103,7 +121,7 @@ export function exportData(dataRoot) {
       }
     }
   }
-  return { datasets: definitions, rows, excluded };
+  return { datasets: definitions, rows, excluded, repairChains: readRepairChains(dataRoot) };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

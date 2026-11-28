@@ -8,7 +8,11 @@ export type Row = {
   baseStatus?: 'pass' | 'fail' | null; plusStatus?: 'pass' | 'fail' | null;
 };
 export type Dataset = { id: string; name: string; kind: string; metric: string; max: number; note: string };
-export type Data = { datasets: Dataset[]; rows: Row[]; excluded: Record<string, number> };
+export type RepairChain = {
+  task: string; effort: 'low' | 'high' | 'ultra'; attempts: number; evaluated: number;
+  firstPass: number | null; status: 'solved' | 'exhausted' | 'interrupted';
+};
+export type Data = { datasets: Dataset[]; rows: Row[]; excluded: Record<string, number>; repairChains?: RepairChain[] };
 export type Mode = 'depth' | 'models';
 export type ComparisonDirection = Mode | 'prompts';
 export type Group = { key: string; label: string; color: string };
